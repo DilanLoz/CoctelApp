@@ -15,7 +15,7 @@
 </head>
 <body>
 <div class="collapse navbar-collapse" id="menu">
-        <?php require_once("vista/menui.php") ?>
+        <?php require_once("views/menui.php") ?>
     </div>
     <nav class="navbar navbar-expand-lg">
         <a href="#" target="_blank"><img src="img/logo.png" id="logo" alt="logodos" height="50px"></a>
@@ -27,57 +27,57 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="menu">
-            <?PHP require_once("vista/menuh.php") ?>
+            <?PHP require_once("views/menuh.php") ?>
         </div>
     </nav>
 
     <section>
-        <?PHP require_once("vista/menuh.php");
+        <?PHP require_once("views/menuh.php");
             $pg = isset($_GET["pg"]) ? $_GET["pg"]:NULL;
             if(!$pg) 
             require_once("home.php");
             if($pg=="101") 
-            require_once("vista/vusini.php");
+            require_once("views/vusini.php");
             if($pg=="102") 
-            require_once("vista/vuscoct.php");
+            require_once("views/vuscoct.php");
             if($pg=="103") 
-            require_once("vista/vusvino.php");
+            require_once("views/vusvino.php");
             if($pg=="104") 
-            require_once("vista/vuslicor.php");
+            require_once("views/vuslicor.php");
             if($pg=="105") 
-            require_once("vista/vusbares.php");
+            require_once("views/vusbares.php");
             if($pg=="106") 
-            require_once("vista/vuscarcomp.php");
+            require_once("views/vuscarcomp.php");
             if($pg=="107") 
-            require_once("vista/vushipe.php");
+            require_once("views/vushipe.php");
             if($pg=="108") 
-            require_once("vista/vpusu.php");
+            require_once("views/vpusu.php");
             if($pg=="11") 
-            require_once("vista/vusprodgrand.php");
+            require_once("views/vusprodgrand.php");
             if($pg=="111") 
-            require_once("vista/vuscocgrand.php");
+            require_once("views/vuscocgrand.php");
             if($pg=="109") 
             require_once("index.php");
             if($pg=="201") 
-            require_once("vista/vempedproc.php");
+            require_once("views/vempedproc.php");
             if($pg=="202") 
-            require_once("vista/vemhipe.php");
+            require_once("views/vemhipe.php");
             if($pg=="203") 
-            require_once("vista/vemgan.php");
+            require_once("views/vemgan.php");
             if($pg=="204") 
-            require_once("vista/vpemp.php");
+            require_once("views/vpemp.php");
             if($pg=="2001") 
-            require_once("vista/vempedgrand.php");
+            require_once("views/vempedgrand.php");
             if($pg=="205") 
             require_once("index.php");
             if($pg=="301") 
-            require_once("vista/vbargan.php");
+            require_once("views/vbargan.php");
             if($pg=="302") 
-            require_once("vista/vbarxprod.php");
+            require_once("views/vbarxprod.php");
             if($pg=="303") 
-            require_once("vista/vbarxem.php");
+            require_once("views/vbarxem.php");
             if($pg=="304") 
-            require_once("vista/vpbar.php");
+            require_once("views/vpbar.php");
             if($pg=="305") 
             require_once("index.php");
     ?>
@@ -85,7 +85,7 @@
     </section>
     <footer class="bg-black">
         <?php
-            require_once("vista/vfooter.php");
+            require_once("views/vfooter.php");
         ?>
     </footer>
     <script src="js.carcomp.js"></script>

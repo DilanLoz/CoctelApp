@@ -24,41 +24,41 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="menu">
-        <?php require_once("vista/menui.php") ?>
+        <?php require_once("views/menui.php") ?>
     </div>
 </nav>
     <section>
-        <?PHP require_once("vista/menui.php");
+        <?PHP require_once("views/menui.php");
             $pg = isset($_GET["pg"]) ? $_GET["pg"]:NULL;
             if(!$pg) 
             require_once("index.php");
             if(!$pg=="1001") 
-            require_once("vista/carrusel.php");
+            require_once("views/carrusel.php");
             if($pg=="1002") 
-            require_once("vista/vusini.php");
+            require_once("views/vusini.php");
             if($pg=="01") 
-            require_once("vista/vusprodgrand.php");
+            require_once("views/vusprodgrand.php");
             if($pg=="1003") 
-            require_once("vista/vuscoct.php");
+            require_once("views/vuscoct.php");
             if($pg=="02") 
-            require_once("vista/vuscocgrand.php");
+            require_once("views/vuscocgrand.php");
             if($pg=="1004") 
-            require_once("vista/vusvino.php");
+            require_once("views/vusvino.php");
             if($pg=="1005") 
-            require_once("vista/vuslicor.php");
+            require_once("views/vuslicor.php");
             if($pg=="1006") 
-            require_once("vista/vusbares.php");
+            require_once("views/vusbares.php");
             if($pg=="1007") 
-            require_once("vista/vlogreg.php");
+            require_once("views/vlogreg.php");
             if($pg=="1008")
-            require_once("vista/vuscarcomp.php");
+            require_once("views/vuscarcomp.php");
             if($pg=="1009") 
-            require_once("vista/vushipe.php");
+            require_once("views/vushipe.php");
             ?>
     </section>
     <footer class="bg-black">
         <?php
-            require_once("vista/vfooter.php");
+            require_once("views/vfooter.php");
         ?>
     </footer>
     <script src="js/carcomp.js"></script>
