@@ -8,25 +8,25 @@
     <h2 class="section-title"><i class="fa-solid fa-wine-bottle"></i> Vinos</h2>
     <div class="shop-content">
         <div class="product-box">
-            <a href="#"><img src="img/vinosuno.png" alt="" class="product-img"></a>
+            <a href="#"><img src="img/refimg.png" alt="" class="product-img"></a>
             <h2 class="product-title">Hola mundo</h2>
             <span class="price">$100</span>
             <i class='bx bxs-cart add-cart'></i>
         </div>
         <div class="product-box">
-            <a href="#"><img src="img/cocteldos.png" alt="" class="product-img"></a>
+            <a href="#"><img src="img/refimg.png" alt="" class="product-img"></a>
             <h2 class="product-title">Hola mundo</h2>
             <span class="price">$100</span>
             <i class='bx bxs-cart add-cart'></i>
         </div>
         <div class="product-box">
-            <a href=""><img src="img/cocteltres.png" alt="" class="product-img"></a>
+            <a href="#"><img src="img/refimg.png" alt="" class="product-img"></a>
             <h2 class="product-title">HOODED PARKA</h2>
             <span class="price">$45</span>
             <i class='bx bxs-cart add-cart'></i>
         </div>
         <div class="product-box">
-            <a href="#"><img src="img/coctelcuatro.png" alt="" class="product-img"></a>
+            <a href="#"><img src="img/refimg.png" alt="" class="product-img"></a>
             <h2 class="product-title">Hola mundo</h2>
             <span class="price">$100</span>
             <i class='bx bxs-cart add-cart'></i>
