@@ -156,7 +156,6 @@ label {
   transition: 0.4s;
 }
 
-
 .input-field {
   border-bottom-color: #000000;
 }
@@ -271,8 +270,6 @@ main.sign-up-mode .carousel {
   overflow: hidden;
   transition: 0.8s ease-in-out;
 }
-
-
 
 .text-wrap {
   max-height: 2.2rem;
@@ -390,4 +387,27 @@ main.sign-up-mode .carousel {
   form {
     padding: 1rem 2rem 1.5rem;
   }
+}
+
+/* Footer CSS */
+#info a {
+    font-size: 16px;
+    text-transform: capitalize;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 300;
+    color: #bbbbbb;
+    display: block;
+    transition: all 0.3s ease;
+    transform-origin: left; /* Establece el origen de la transformación en el lado izquierdo */
+}
+
+#info a:hover {
+    color: #ffffff;
+    transform: translateX(5px); /* Desplaza el texto 5px hacia la derecha al pasar el cursor */
+}
+
+footer h4 {
+    color: #fff;
+    font-weight: bold;
 }

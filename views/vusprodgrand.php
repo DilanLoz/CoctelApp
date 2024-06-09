@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4 mt-5 mb-5">
-            <img src="img/tequilauno.png" alt="tequila" class="img-fluid" id="imagenCoctel">
+            <img src="img/refimg.png" alt="tequila" class="img-fluid" id="imagenCoctel">
             <div class="mt-4 mb-3 border border-black border-4 rounded-3 text-center"><h4 class="fw-bold">40% de Alcohol</h4></div>
         </div>
         <div class="col-8">

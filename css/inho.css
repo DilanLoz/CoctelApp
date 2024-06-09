@@ -179,6 +179,9 @@ margin-top: 50px;
 /*------------------------MEDIAS PARA MOVIL ----------------------- */
 
 @media screen and (max-width: 780px) {
+    .barra-busqueda input[type="text"] {
+        width: 100px; /* ajusta el tamaño según sea necesario */
+    }
     #vlrprod{
         width: 190px;
     }
@@ -209,6 +212,7 @@ margin-top: 50px;
 }
 
 /*------------------------MEDIAS PARA MOVIL ----------------------- */
+
 
 
 

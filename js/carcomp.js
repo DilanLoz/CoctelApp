@@ -136,3 +136,5 @@ function addCartClicked(event) {
     addProductToCart(title, price, productImg);
     updatetotal();
 }
+
+

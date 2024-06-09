@@ -11,7 +11,6 @@
     <title>CoctelApp</title>
     <link rel="icon" href="img/favicon.png">
 </head>
-
 <body>
 
 <nav class="navbar navbar-expand-lg">
@@ -19,10 +18,10 @@
     <div class="barra-busqueda">
         <input type="text" placeholder="Buscar..." onkeydown="if(event.keyCode==13) event.preventDefault();">
     </div>
-    <button class="navbar-toggler navbar-toggler-custom" type="button" data-bs-toggle="collapse"
-            data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="menu">
         <?php require_once("views/menui.php") ?>
     </div>
@@ -35,25 +34,25 @@
             if(!$pg=="1001") 
             require_once("views/carrusel.php");
             if($pg=="1002") 
-            require_once("views/vusini.php");
-            if($pg=="01") 
-            require_once("views/vusprodgrand.php");
-            if($pg=="1003") 
-            require_once("views/vuscoct.php");
-            if($pg=="02") 
-            require_once("views/vuscocgrand.php");
-            if($pg=="1004") 
-            require_once("views/vusvino.php");
-            if($pg=="1005") 
-            require_once("views/vuslicor.php");
-            if($pg=="1006") 
             require_once("views/vusbares.php");
+            if($pg=="1003") 
+            require_once("views/vusrecom.php");
+            if($pg=="1004") 
+            require_once("views/vuscoct.php");
+            if($pg=="1005") 
+            require_once("views/vusvino.php");
+            if($pg=="1006") 
+            require_once("views/vuslicor.php");
             if($pg=="1007") 
             require_once("views/vlogreg.php");
             if($pg=="1008")
             require_once("views/vuscarcomp.php");
             if($pg=="1009") 
             require_once("views/vushipe.php");
+            if($pg=="01") 
+            require_once("views/vusprodgrand.php");
+            if($pg=="02") 
+            require_once("views/vuscocgrand.php");
             ?>
     </section>
     <footer class="bg-black">

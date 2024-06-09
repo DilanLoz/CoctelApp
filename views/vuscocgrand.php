@@ -3,11 +3,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../css/style.css">
 
-<div class="container">
-
+<div class="container mb-5">
     <div class="row">
         <div class="col-md-4 mt-5">
-            <img src="../img/cocteluno.png" alt="coctel" class="img-fluid" id="imagenCoctel">
+            <img src="img/refimg.png" alt="coctel" class="img-fluid" id="imagenCoctel">
             <div class="mt-4 mb-3 border border-black border-4 rounded-3 text-center" id="imagenReferencia"><h4>IMAGEN DE REFERENCIA</h4></div>
         </div>
         <div class="col-8">
