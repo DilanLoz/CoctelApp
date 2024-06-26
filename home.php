@@ -14,9 +14,6 @@
 
 </head>
 <body>
-<div class="collapse navbar-collapse" id="menu">
-        <?php require_once("views/menui.php") ?>
-    </div>
     <nav class="navbar navbar-expand-lg">
         <a href="#" target="_blank"><img src="img/logo.png" id="logo" alt="logodos" height="50px"></a>
         <div class="barra-busqueda">
