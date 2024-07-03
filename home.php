@@ -14,7 +14,7 @@
 
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg">
+    
         <a href="#" target="_blank"><img src="img/logo.png" id="logo" alt="logodos" height="50px"></a>
         <div class="barra-busqueda">
             <input type="text" placeholder="Buscar..." onkeydown="if(event.keyCode==13) event.preventDefault();">
@@ -23,6 +23,7 @@
             data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+    <nav class="navbar navbar-expand-lg">
         <div class="collapse navbar-collapse" id="menu">
             <?PHP require_once("views/menuh.php") ?>
         </div>
