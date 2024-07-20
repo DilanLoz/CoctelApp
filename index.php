@@ -11,7 +11,7 @@
     <title>CoctelApp</title>
     <link rel="icon" href="img/favicon.png">
 </head>
-<body>s
+<body>holaaaaaaa
 
 <nav class="navbar navbar-expand-lg">
     <a href="#" target="_blank"><img src="img/logo.png" id="logo" alt="logo" height="50px"></a>
