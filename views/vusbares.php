@@ -7,7 +7,7 @@
         <h1><i class="fa-solid fa-shop"></i> Bares</h1>
         <div class="col-md-3 mt-4">
             <div class="imguno rounded">
-            <img src="img/bar1.jpg" alt="baruno" class="img-fluid rounded">
+                <a href=""><img src="img/bar1.jpg" alt="baruno" class="img-fluid rounded"></a>
             </div>
             <div class="text-center">
                 <h4 class="fw-bold">Bar del norte</h4>
@@ -22,7 +22,7 @@
         </div>
         <div class="col-md-3 mt-4">
             <div class="imguno rounded">
-                <img src="img/bar2.jpg" alt="bardos" class="img-fluid rounded">
+                <a href=""><img src="img/bar2.jpg" alt="bardos" class="img-fluid rounded"></a>
             </div>
             <div class="text-center">
                 <h4 class="fw-bold">Bazzar</h4>
@@ -37,7 +37,7 @@
         </div>
         <div class="col-md-3 mt-4">
             <div class="imguno rounded">
-                <img src="img/bar3.jpg" alt="bartres" class="img-fluid rounded">
+                <a href=""><img src="img/bar3.jpg" alt="bartres" class="img-fluid rounded"></a>
             </div>
             <div class="text-center">
                 <h4 class="fw-bold">Cocteleria Mar</h4>
@@ -52,7 +52,7 @@
         </div>
         <div class="col-md-3 mt-4">
             <div class="imguno rounded">
-                <img src="img/bar4.jpg" alt="barcuatro" class="img-fluid rounded">
+                <a href=""><img src="img/bar4.jpg" alt="barcuatro" class="img-fluid rounded"></a>
             </div>
             <div class="text-center">
                 <h4 class="fw-bold">Bar Playas</h4>
