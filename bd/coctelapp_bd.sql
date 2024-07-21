@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-05-2024 a las 23:25:07
+-- Tiempo de generación: 21-07-2024 a las 19:54:30
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -30,45 +30,28 @@ SET time_zone = "+00:00";
 CREATE TABLE `bar` (
   `idbar` bigint(10) NOT NULL,
   `nombar` varchar(100) DEFAULT NULL,
-  `nit` int(10) DEFAULT NULL,
+  `nit` bigint(10) NOT NULL,
   `emabar` varchar(100) DEFAULT NULL,
   `telbar` int(12) DEFAULT NULL,
-  `codubi` int(6) DEFAULT NULL
+  `codubi` int(6) DEFAULT NULL,
+  `idper` bigint(10) NOT NULL,
+  `idval` bigint(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detpedido`
+-- Estructura de tabla para la tabla `detfact`
 --
 
-CREATE TABLE `detpedido` (
-  `idfact` bigint(20) DEFAULT NULL,
+CREATE TABLE `detfact` (
+  `iddetfact` bigint(20) NOT NULL,
+  `idfact` bigint(20) NOT NULL,
   `idprod` bigint(20) DEFAULT NULL,
-  `nomprod` varchar(50) DEFAULT NULL,
-  `virprod` bigint(11) DEFAULT NULL,
-  `idserv` tinyint(2) DEFAULT NULL,
-  `nomusu` varchar(150) DEFAULT NULL,
-  `celusu` int(10) DEFAULT NULL,
-  `ubixped` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `detpedxfact`
---
-
-CREATE TABLE `detpedxfact` (
-  `idfact` bigint(20) DEFAULT NULL,
-  `idemp` bigint(10) DEFAULT NULL,
-  `idprod` bigint(20) DEFAULT NULL,
-  `nomprod` varchar(50) DEFAULT NULL,
-  `virprod` bigint(11) DEFAULT NULL,
-  `idserv` tinyint(2) DEFAULT NULL,
-  `nomusu` varchar(150) DEFAULT NULL,
-  `celusu` int(10) DEFAULT NULL,
-  `ubixped` varchar(255) DEFAULT NULL
+  `cantidad` int(8) DEFAULT NULL,
+  `precio_unitario` decimal(10,2) DEFAULT NULL,
+  `subtotal` decimal(10,2) DEFAULT NULL,
+  `idemp` bigint(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -79,7 +62,7 @@ CREATE TABLE `detpedxfact` (
 
 CREATE TABLE `dominio` (
   `iddom` int(4) NOT NULL,
-  `nomdom` text DEFAULT NULL
+  `nomdom` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -94,11 +77,13 @@ CREATE TABLE `empleado` (
   `emaemp` varchar(255) DEFAULT NULL,
   `celemp` int(10) DEFAULT NULL,
   `fecnaemp` date DEFAULT NULL,
-  `tipdocu` int(15) DEFAULT NULL,
+  `numdocu` bigint(10) NOT NULL,
   `fotiden` varchar(255) DEFAULT NULL,
   `idserv` tinyint(2) DEFAULT NULL,
   `idbar` bigint(10) DEFAULT NULL,
-  `codubi` int(6) DEFAULT NULL
+  `codubi` int(6) DEFAULT NULL,
+  `idper` bigint(10) NOT NULL,
+  `idval` bigint(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -109,14 +94,10 @@ CREATE TABLE `empleado` (
 
 CREATE TABLE `factura` (
   `idfact` bigint(20) NOT NULL,
-  `fecfact` date DEFAULT NULL,
-  `idprod` bigint(20) DEFAULT NULL,
-  `nomprod` varchar(50) DEFAULT NULL,
-  `virprod` bigint(11) DEFAULT NULL,
-  `idserv` tinyint(2) DEFAULT NULL,
-  `nomusu` varchar(150) DEFAULT NULL,
-  `celusu` int(10) DEFAULT NULL,
-  `nomubi` varchar(255) DEFAULT NULL
+  `fecha` date DEFAULT NULL,
+  `idbar` bigint(10) DEFAULT NULL,
+  `total` decimal(10,2) DEFAULT NULL,
+  `idusu` bigint(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -126,7 +107,7 @@ CREATE TABLE `factura` (
 --
 
 CREATE TABLE `pagina` (
-  `idpag` int(5) DEFAULT NULL,
+  `idpag` int(5) NOT NULL,
   `nompag` varchar(255) DEFAULT NULL,
   `rutpag` varchar(255) DEFAULT NULL,
   `mospag` tinyint(1) DEFAULT NULL,
@@ -137,14 +118,23 @@ CREATE TABLE `pagina` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `pagper`
+--
+
+CREATE TABLE `pagper` (
+  `idpag` int(5) NOT NULL,
+  `idper` bigint(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `perfiles`
 --
 
 CREATE TABLE `perfiles` (
   `idper` bigint(10) NOT NULL,
-  `idusu` bigint(10) DEFAULT NULL,
-  `idbar` bigint(10) DEFAULT NULL,
-  `idemp` bigint(10) DEFAULT NULL
+  `nomper` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -157,27 +147,13 @@ CREATE TABLE `producto` (
   `idprod` bigint(20) NOT NULL,
   `nomprod` varchar(50) DEFAULT NULL,
   `desprod` varchar(255) DEFAULT NULL,
-  `virprod` bigint(11) DEFAULT NULL,
+  `vlrprod` decimal(10,2) DEFAULT NULL,
   `fotprod` varchar(255) DEFAULT NULL,
-  `idcate` bigint(20) DEFAULT NULL,
+  `idval` bigint(10) DEFAULT NULL,
   `idbar` bigint(10) DEFAULT NULL,
   `cantprod` int(8) DEFAULT NULL,
-  `idusu` bigint(10) DEFAULT NULL,
-  `idserv` tinyint(2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pxp`
---
-
-CREATE TABLE `pxp` (
-  `idpag` int(5) NOT NULL,
-  `idusu` bigint(10) DEFAULT NULL,
-  `idemp` bigint(10) DEFAULT NULL,
-  `idbar` bigint(10) DEFAULT NULL,
-  `idper` bigint(10) DEFAULT NULL
+  `idserv` tinyint(2) DEFAULT NULL,
+  `idusu` bigint(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -215,9 +191,11 @@ CREATE TABLE `usuario` (
   `emausu` varchar(100) DEFAULT NULL,
   `celusu` int(10) DEFAULT NULL,
   `fotiden` varchar(255) DEFAULT NULL,
-  `tipdocu` int(20) DEFAULT NULL,
+  `numdocu` bigint(10) NOT NULL,
   `fecnausu` date DEFAULT NULL,
-  `codubi` int(6) DEFAULT NULL
+  `codubi` int(6) DEFAULT NULL,
+  `idper` bigint(10) NOT NULL,
+  `idval` bigint(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -227,7 +205,7 @@ CREATE TABLE `usuario` (
 --
 
 CREATE TABLE `valor` (
-  `idcate` bigint(20) NOT NULL,
+  `idval` bigint(10) NOT NULL,
   `iddom` int(4) DEFAULT NULL,
   `nomval` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -242,21 +220,17 @@ CREATE TABLE `valor` (
 ALTER TABLE `bar`
   ADD PRIMARY KEY (`idbar`),
   ADD UNIQUE KEY `nit` (`nit`),
-  ADD KEY `nombar` (`nombar`,`telbar`,`codubi`),
-  ADD KEY `codubi` (`codubi`);
+  ADD KEY `codubi` (`codubi`),
+  ADD KEY `idper` (`idper`),
+  ADD KEY `idval` (`idval`);
 
 --
--- Indices de la tabla `detpedido`
+-- Indices de la tabla `detfact`
 --
-ALTER TABLE `detpedido`
-  ADD KEY `idfact` (`idfact`,`idprod`,`nomprod`,`virprod`,`idserv`,`nomusu`,`celusu`,`ubixped`),
-  ADD KEY `idprod` (`idprod`);
-
---
--- Indices de la tabla `detpedxfact`
---
-ALTER TABLE `detpedxfact`
-  ADD KEY `idfact` (`idfact`,`idemp`,`idprod`,`nomprod`,`virprod`,`idserv`,`nomusu`,`celusu`,`ubixped`),
+ALTER TABLE `detfact`
+  ADD PRIMARY KEY (`iddetfact`),
+  ADD KEY `idfact` (`idfact`),
+  ADD KEY `idprod` (`idprod`),
   ADD KEY `idemp` (`idemp`);
 
 --
@@ -270,51 +244,47 @@ ALTER TABLE `dominio`
 --
 ALTER TABLE `empleado`
   ADD PRIMARY KEY (`idemp`),
-  ADD UNIQUE KEY `tipdocu` (`tipdocu`),
-  ADD KEY `nomemp` (`nomemp`,`celemp`,`idserv`,`idbar`,`codubi`),
+  ADD UNIQUE KEY `numdocu` (`numdocu`),
+  ADD KEY `idbar` (`idbar`),
   ADD KEY `codubi` (`codubi`),
-  ADD KEY `idserv` (`idserv`);
+  ADD KEY `idper` (`idper`),
+  ADD KEY `idval` (`idval`);
 
 --
 -- Indices de la tabla `factura`
 --
 ALTER TABLE `factura`
   ADD PRIMARY KEY (`idfact`),
-  ADD KEY `idprod` (`idprod`,`nomprod`,`virprod`,`idserv`,`nomusu`,`celusu`);
+  ADD KEY `idbar` (`idbar`),
+  ADD KEY `factura_ibfk_2` (`idusu`);
 
 --
 -- Indices de la tabla `pagina`
 --
 ALTER TABLE `pagina`
-  ADD KEY `idpag` (`idpag`);
+  ADD PRIMARY KEY (`idpag`);
+
+--
+-- Indices de la tabla `pagper`
+--
+ALTER TABLE `pagper`
+  ADD PRIMARY KEY (`idpag`),
+  ADD KEY `idper` (`idper`);
 
 --
 -- Indices de la tabla `perfiles`
 --
 ALTER TABLE `perfiles`
-  ADD PRIMARY KEY (`idper`),
-  ADD KEY `idusu` (`idusu`,`idbar`,`idemp`),
-  ADD KEY `idbar` (`idbar`),
-  ADD KEY `idemp` (`idemp`);
+  ADD PRIMARY KEY (`idper`);
 
 --
 -- Indices de la tabla `producto`
 --
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`idprod`),
-  ADD KEY `idcate` (`idcate`),
-  ADD KEY `nomprod` (`nomprod`,`desprod`,`virprod`,`idbar`,`cantprod`,`idusu`,`idserv`),
-  ADD KEY `idusu` (`idusu`),
-  ADD KEY `idserv` (`idserv`),
-  ADD KEY `idbar` (`idbar`);
-
---
--- Indices de la tabla `pxp`
---
-ALTER TABLE `pxp`
-  ADD PRIMARY KEY (`idpag`),
-  ADD KEY `idusu` (`idusu`,`idemp`,`idbar`,`idper`),
-  ADD KEY `idper` (`idper`);
+  ADD KEY `idval` (`idval`),
+  ADD KEY `idbar` (`idbar`),
+  ADD KEY `idusu` (`idusu`);
 
 --
 -- Indices de la tabla `servicio`
@@ -326,22 +296,23 @@ ALTER TABLE `servicio`
 -- Indices de la tabla `ubicacion`
 --
 ALTER TABLE `ubicacion`
-  ADD PRIMARY KEY (`codubi`),
-  ADD KEY `depubi` (`depubi`);
+  ADD PRIMARY KEY (`codubi`);
 
 --
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`idusu`),
-  ADD KEY `nomusu` (`nomusu`,`celusu`,`codubi`),
-  ADD KEY `codubi` (`codubi`);
+  ADD UNIQUE KEY `numdocu` (`numdocu`),
+  ADD KEY `codubi` (`codubi`),
+  ADD KEY `idper` (`idper`),
+  ADD KEY `idval` (`idval`);
 
 --
 -- Indices de la tabla `valor`
 --
 ALTER TABLE `valor`
-  ADD PRIMARY KEY (`idcate`),
+  ADD PRIMARY KEY (`idval`),
   ADD KEY `iddom` (`iddom`);
 
 --
@@ -353,6 +324,12 @@ ALTER TABLE `valor`
 --
 ALTER TABLE `bar`
   MODIFY `idbar` bigint(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `detfact`
+--
+ALTER TABLE `detfact`
+  MODIFY `iddetfact` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `dominio`
@@ -373,28 +350,16 @@ ALTER TABLE `factura`
   MODIFY `idfact` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `perfiles`
+-- AUTO_INCREMENT de la tabla `pagina`
 --
-ALTER TABLE `perfiles`
-  MODIFY `idper` bigint(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `pagina`
+  MODIFY `idpag` int(5) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
   MODIFY `idprod` bigint(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `pxp`
---
-ALTER TABLE `pxp`
-  MODIFY `idpag` int(5) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `servicio`
---
-ALTER TABLE `servicio`
-  MODIFY `idserv` tinyint(2) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `ubicacion`
@@ -412,7 +377,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `valor`
 --
 ALTER TABLE `valor`
-  MODIFY `idcate` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `idval` bigint(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -422,63 +387,55 @@ ALTER TABLE `valor`
 -- Filtros para la tabla `bar`
 --
 ALTER TABLE `bar`
-  ADD CONSTRAINT `bar_ibfk_1` FOREIGN KEY (`codubi`) REFERENCES `ubicacion` (`codubi`);
+  ADD CONSTRAINT `bar_ibfk_1` FOREIGN KEY (`codubi`) REFERENCES `ubicacion` (`codubi`),
+  ADD CONSTRAINT `bar_ibfk_2` FOREIGN KEY (`idper`) REFERENCES `perfiles` (`idper`),
+  ADD CONSTRAINT `bar_ibfk_3` FOREIGN KEY (`idval`) REFERENCES `valor` (`idval`);
 
 --
--- Filtros para la tabla `detpedido`
+-- Filtros para la tabla `detfact`
 --
-ALTER TABLE `detpedido`
-  ADD CONSTRAINT `detpedido_ibfk_1` FOREIGN KEY (`idfact`) REFERENCES `factura` (`idfact`),
-  ADD CONSTRAINT `detpedido_ibfk_2` FOREIGN KEY (`idprod`) REFERENCES `producto` (`idprod`);
-
---
--- Filtros para la tabla `detpedxfact`
---
-ALTER TABLE `detpedxfact`
-  ADD CONSTRAINT `detpedxfact_ibfk_1` FOREIGN KEY (`idemp`) REFERENCES `empleado` (`idemp`),
-  ADD CONSTRAINT `detpedxfact_ibfk_2` FOREIGN KEY (`idfact`) REFERENCES `factura` (`idfact`);
+ALTER TABLE `detfact`
+  ADD CONSTRAINT `detfact_ibfk_1` FOREIGN KEY (`idfact`) REFERENCES `factura` (`idfact`),
+  ADD CONSTRAINT `detfact_ibfk_2` FOREIGN KEY (`idprod`) REFERENCES `producto` (`idprod`),
+  ADD CONSTRAINT `detfact_ibfk_3` FOREIGN KEY (`idemp`) REFERENCES `empleado` (`idemp`);
 
 --
 -- Filtros para la tabla `empleado`
 --
 ALTER TABLE `empleado`
-  ADD CONSTRAINT `empleado_ibfk_1` FOREIGN KEY (`codubi`) REFERENCES `ubicacion` (`codubi`),
-  ADD CONSTRAINT `empleado_ibfk_2` FOREIGN KEY (`idserv`) REFERENCES `servicio` (`idserv`);
+  ADD CONSTRAINT `empleado_ibfk_1` FOREIGN KEY (`idbar`) REFERENCES `bar` (`idbar`),
+  ADD CONSTRAINT `empleado_ibfk_2` FOREIGN KEY (`codubi`) REFERENCES `ubicacion` (`codubi`),
+  ADD CONSTRAINT `empleado_ibfk_3` FOREIGN KEY (`idper`) REFERENCES `perfiles` (`idper`),
+  ADD CONSTRAINT `empleado_ibfk_4` FOREIGN KEY (`idval`) REFERENCES `valor` (`idval`);
 
 --
--- Filtros para la tabla `pagina`
+-- Filtros para la tabla `factura`
 --
-ALTER TABLE `pagina`
-  ADD CONSTRAINT `pagina_ibfk_1` FOREIGN KEY (`idpag`) REFERENCES `pxp` (`idpag`);
+ALTER TABLE `factura`
+  ADD CONSTRAINT `factura_ibfk_1` FOREIGN KEY (`idbar`) REFERENCES `bar` (`idbar`),
+  ADD CONSTRAINT `factura_ibfk_2` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
 
 --
--- Filtros para la tabla `perfiles`
+-- Filtros para la tabla `pagper`
 --
-ALTER TABLE `perfiles`
-  ADD CONSTRAINT `perfiles_ibfk_1` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`),
-  ADD CONSTRAINT `perfiles_ibfk_2` FOREIGN KEY (`idbar`) REFERENCES `bar` (`idbar`),
-  ADD CONSTRAINT `perfiles_ibfk_3` FOREIGN KEY (`idemp`) REFERENCES `empleado` (`idemp`);
+ALTER TABLE `pagper`
+  ADD CONSTRAINT `pagper_ibfk_1` FOREIGN KEY (`idpag`) REFERENCES `pagina` (`idpag`),
+  ADD CONSTRAINT `pagper_ibfk_2` FOREIGN KEY (`idper`) REFERENCES `perfiles` (`idper`);
 
 --
 -- Filtros para la tabla `producto`
 --
 ALTER TABLE `producto`
-  ADD CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`idcate`) REFERENCES `valor` (`idcate`),
-  ADD CONSTRAINT `producto_ibfk_2` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`),
-  ADD CONSTRAINT `producto_ibfk_3` FOREIGN KEY (`idserv`) REFERENCES `servicio` (`idserv`),
-  ADD CONSTRAINT `producto_ibfk_4` FOREIGN KEY (`idbar`) REFERENCES `bar` (`idbar`);
-
---
--- Filtros para la tabla `pxp`
---
-ALTER TABLE `pxp`
-  ADD CONSTRAINT `pxp_ibfk_1` FOREIGN KEY (`idper`) REFERENCES `perfiles` (`idper`);
+  ADD CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`idval`) REFERENCES `valor` (`idval`),
+  ADD CONSTRAINT `producto_ibfk_2` FOREIGN KEY (`idbar`) REFERENCES `bar` (`idbar`);
 
 --
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`codubi`) REFERENCES `ubicacion` (`codubi`);
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`codubi`) REFERENCES `ubicacion` (`codubi`),
+  ADD CONSTRAINT `usuario_ibfk_2` FOREIGN KEY (`idper`) REFERENCES `perfiles` (`idper`),
+  ADD CONSTRAINT `usuario_ibfk_3` FOREIGN KEY (`idval`) REFERENCES `valor` (`idval`);
 
 --
 -- Filtros para la tabla `valor`

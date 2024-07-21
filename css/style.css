@@ -117,3 +117,37 @@ margin-top: 50px;
     }
 }
 
+/*-----------------------CSS PARA LA IMAGEN DE BAR PARA PRODUCTOS------------------*/
+.header-image {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    justify-content: end;
+}
+/*-----------------------CSS PARA LA IMAGEN DE BAR PARA PRODUCTOS------------------*/
+
+/*-----------------------CSS PEDIDOS EN PROCESO DE BAR Y EMPLEADO------------------*/
+.dtpedproc {
+    display: block; /* Hacer que el enlace sea un bloque para que pueda centrarse */
+    color: white;
+    text-decoration: none; /* Eliminar el subrayado */
+    text-align: center; /* Centrar el texto */
+    padding: 10px; /* Añadir un poco de relleno para el espacio visual */
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.bg-black {
+    background-color: black;
+    border-radius: 5px; /* Ajusta según sea necesario */
+}
+
+.dtped {
+    border: 1.5px solid #ffc107; /* O usa border-warning de Bootstrap para el borde amarillo */
+    border-radius: 5px; /* Opcional: para redondear los bordes */
+    padding: 15px; /* Opcional: para agregar espacio interno */
+}
+
+
+
+/*-----------------------CSS PEDIDOS EN PROCESO DE BAR Y EMPLEADO------------------*/

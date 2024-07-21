@@ -22,7 +22,7 @@
 <!-- Menú para empleados -->
 <nav class="collapse navbar-collapse" id="menue">
     <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link" href="home.php?pg=201">Pedidos en proceso</a></li>
+        <li class="nav-item"><a class="nav-link" href="home.php?pg=201">Pedidos</a></li>
         <li class="nav-item"><a class="nav-link" href="home.php?pg=202">Historial de pedido</a></li>
         <li class="nav-item"><a class="nav-link" href="home.php?pg=203">Ver ganancias</a></li>
     </ul>
@@ -35,6 +35,7 @@
 <!-- Menú para administradores -->
 <nav class="collapse navbar-collapse" id="menub">
     <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" href="home.php?pg=201">Pedidos</a></li>
         <li class="nav-item"><a class="nav-link" href="home.php?pg=301">Ver Ganancias</a></li>
         <li class="nav-item"><a class="nav-link" href="home.php?pg=302">Crear Producto</a></li>
         <li class="nav-item"><a class="nav-link" href="home.php?pg=303">Crear Empleado</a></li>

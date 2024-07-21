@@ -4,14 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="css/inho.css">
     <title>CoctelApp</title>
-
+    <link rel="icon" href="img/favicon.png">
 </head>
 <body>
     
@@ -34,18 +32,14 @@
             $pg = isset($_GET["pg"]) ? $_GET["pg"]:NULL;
             if(!$pg) 
             require_once("home.php");
-            if($pg=="101") 
-            require_once("views/vusini.php");
             if($pg=="102") 
-            require_once("views/vuscoct.php");
-            if($pg=="103") 
-            require_once("views/vusvino.php");
-            if($pg=="104") 
-            require_once("views/vuslicor.php");
-            if($pg=="105") 
             require_once("views/vusbares.php");
+            if($pg=="104") 
+            require_once("views/vuscoct.php");
+            if($pg=="105") 
+            require_once("views/vusvino.php");
             if($pg=="106") 
-            require_once("views/vuscarcomp.php");
+            require_once("views/vuslicor.php");
             if($pg=="107") 
             require_once("views/vushipe.php");
             if($pg=="108") 
@@ -57,7 +51,7 @@
             if($pg=="109") 
             require_once("index.php");
             if($pg=="201") 
-            require_once("views/vempedproc.php");
+            require_once("views/vexbpedproc.php");
             if($pg=="202") 
             require_once("views/vemhipe.php");
             if($pg=="203") 
@@ -65,7 +59,7 @@
             if($pg=="204") 
             require_once("views/vpemp.php");
             if($pg=="2001") 
-            require_once("views/vempedgrand.php");
+            require_once("views/vexbpedgrand.php");
             if($pg=="205") 
             require_once("index.php");
             if($pg=="301") 

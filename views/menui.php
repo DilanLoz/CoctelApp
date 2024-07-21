@@ -5,7 +5,6 @@
 <nav class="collapse navbar-collapse" id="menu">
     <ul class="navbar-nav me-auto">
         <li class="nav-item"><a class="nav-link" href="index.php?pg=1002">Bares</a></li>
-        <li class="nav-item"><a class="nav-link" href="index.php?pg=1003">Recomendados</a></li>
         <li class="nav-item"><a class="nav-link" href="index.php?pg=1004">Cocteles</a></li>
         <li class="nav-item"><a class="nav-link" href="index.php?pg=1005">Vinos</a></li>
         <li class="nav-item"><a class="nav-link" href="index.php?pg=1006">Licores</a></li>

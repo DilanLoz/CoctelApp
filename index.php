@@ -35,8 +35,6 @@
             require_once("views/carrusel.php");
             if($pg=="1002") 
             require_once("views/vusbares.php");
-            if($pg=="1003") 
-            require_once("views/vusrecom.php");
             if($pg=="1004") 
             require_once("views/vuscoct.php");
             if($pg=="1005") 
@@ -53,6 +51,8 @@
             require_once("views/vusprodgrand.php");
             if($pg=="02") 
             require_once("views/vuscocgrand.php");
+            if($pg=="1022") 
+            require_once("views/vusbarxprod.php");
             ?>
     </section>
     <footer class="bg-black">
