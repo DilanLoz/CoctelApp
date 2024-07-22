@@ -10,9 +10,9 @@
     <div class="box">
         <div class="inner-box">
             <div class="forms-wrap"> 
-            <form action="home.php" method="GET" autocomplete="off" class="sign-in-form">
+            <form action="login.php" method="POST" autocomplete="off" class="sign-in-form">
                     <div class="logo">
-                        <img src="img/coctelapp.png"/>
+                        <img src="img/coctelapp.png" alt="CoctelApp"/>
                     </div>
 
                     <div class="heading">
@@ -21,19 +21,22 @@
                         <a href="#" class="toggle fw-bold">Registro</a>
                     </div>
 
-                    <div class="actual-form">
+                    <div class="actual-form" action="../models/control.php" method="POST">
                         <div class="input-wrap">
-                            <input type="text" minlength="4" id="email" name="tipo_usuario" class="input-field" autocomplete="off" required />
-                            <label><i class="fa-regular fa-address-card" style="color: #ffffff;"></i>  Identificacion o NIT</label>
+                            <input type="text" minlength="4" id="Usuario" name="ema" class="input-field" autocomplete="off" required />
+                            <label><i class="fa-regular fa-address-card" style="color: #ffffff;"></i> Correo Electronico</label>
                         </div>
 
                         <div class="input-wrap">
-                            <input type="password" minlength="4" id="password" name="password" class="input-field" autocomplete="off" required />
-                            <label><i class="fa-solid fa-lock" style="color: #ffffff;"></i>  Contraseña</label>
+                            <input type="password" minlength="4" id="Contraseña" name="pss" class="input-field" autocomplete="off" required />
+                            <label><i class="fa-solid fa-lock" style="color: #ffffff;"></i> Contraseña</label>
                         </div>
-
-                        <input onclick="login()" type="submit" value="Iniciar Sesion" class="sign-btn" />
-
+                        <?php
+                            $err = isset($_GET['err']) ? $_GET['err']:NULL;
+                            if($err=='oK') echo "<span class='dtinv'>Datos invalidos</span>"
+                        ?>
+                        <input type="submit" value="Iniciar Sesión" class="sign-btn" />
+                        
                         <p class="text fw-bold">
                             ¿Olvidaste la contraseña?
                             <a href="#" class="toggle fw-bold">Recuperar Contraseña</a>

@@ -38,7 +38,7 @@ function ingrUsuario($ema, $pss)
     $res = NULL;
     $pss = sha1(md5($pss . 'dlHagO#')); // Aplicar hashing a la contraseña
     
-    $sql = "SELECT idusu, nomusu, tipdocu FROM usuario WHERE emausu = :emausu AND pssusu = :pssusu";
+    $sql = "SELECT u.idusu, u.nomusu, u.docusu, f.idper, f.nomper, f.pagini FROM usuario AS p INNER JOIN perfil AS f ON u.idper=f.idper AND u.emausu = :emausu AND u.pssusu = :pssusu";
     
     $modelo = new Conexion();
     $conexion = $modelo->get_conexion();
@@ -49,7 +49,7 @@ function ingrUsuario($ema, $pss)
     $res = $result->fetch(PDO::FETCH_ASSOC);
 
     if ($res) {
-        iniciarSesion($res['idusu'], $res['nomusu'], $res['tipdocu']);
+        iniciarSesion($res['idusu'], $res['nomusu'], $res['nomper'], $res['idper'], $res['pagini']);
     } else {
         red();
     }
@@ -60,7 +60,7 @@ function ingrEmpleado($ema, $pss)
     $res = NULL;
     $pss = sha1(md5($pss . 'dlHagO#')); // Aplicar hashing a la contraseña
     
-    $sql = "SELECT idemp, nomemp, tipdocu FROM empleado WHERE emaemp = :emaemp AND pssemp = :pssemp";
+    $sql = "SELECT e.idemp, e.nomemp, e.numdocu, f.idper, f.nomper, f.pagini FROM empleado AS e INNER JOIN perfil AS f ON e.idper=f.idper AND e.emaemp = :emaemp AND e.pssemp = :pssemp";
     
     $modelo = new Conexion();
     $conexion = $modelo->get_conexion();
@@ -71,7 +71,7 @@ function ingrEmpleado($ema, $pss)
     $res = $result->fetch(PDO::FETCH_ASSOC);
 
     if ($res) {
-        iniciarSesion($res['idemp'], $res['nomemp'], $res['tipdocu']);
+        iniciarSesion($res['idemp'], $res['nomemp'], $res['nomper'], $res['idper'], $res['pagini']);
     } else {
         red();
     }
@@ -82,7 +82,7 @@ function ingrBar($ema, $pss)
     $res = NULL;
     $pss = sha1(md5($pss . 'dlHagO#')); // Aplicar hashing a la contraseña
     
-    $sql = "SELECT idbar, nombar FROM bar WHERE emabar = :emabar AND pssbar = :pssbar";
+    $sql = "SELECT b.idbar, b.nombar, b.nit, f.idper, f.nomper, f.pagini FROM bar AS b INNER JOIN perfil AS f ON b.idper=f.idper AND b.emabar = :emabar AND b.pssbar = :pssbar";
     
     $modelo = new Conexion();
     $conexion = $modelo->get_conexion();
@@ -93,18 +93,17 @@ function ingrBar($ema, $pss)
     $res = $result->fetch(PDO::FETCH_ASSOC);
 
     if ($res) {
-        iniciarSesion($res['idbar'], $res['nombar'], 'bar');
+        iniciarSesion($res['idbar'], $res['nombar'], $res['nomper'], $res['idper'], $res['pagini']);
     } else {
         red();
     }
 }
 
-function iniciarSesion($id, $nombre, $tipo)
+function iniciarSesion($id, $nombre, $perfil, $idper, $pagini)
 {
     session_start();
-    $_SESSION['id'] = $id;
-    $_SESSION['nombre'] = $nombre;
-    $_SESSION['tipo'] = $tipo;
+    $_SESSION['idper'] = $idper;
+    $_SESSION['pagini'] = $pagini;
     echo "<script>window.location='../home.php';</script>";
 }
 ?>
