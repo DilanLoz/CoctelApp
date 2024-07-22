@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-07-2024 a las 19:54:30
+-- Tiempo de generación: 22-07-2024 a las 04:13:21
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -33,6 +33,7 @@ CREATE TABLE `bar` (
   `nit` bigint(10) NOT NULL,
   `emabar` varchar(100) DEFAULT NULL,
   `telbar` int(12) DEFAULT NULL,
+  `pssbar` varchar(100) NOT NULL,
   `codubi` int(6) DEFAULT NULL,
   `idper` bigint(10) NOT NULL,
   `idval` bigint(10) NOT NULL
@@ -65,6 +66,13 @@ CREATE TABLE `dominio` (
   `nomdom` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `dominio`
+--
+
+INSERT INTO `dominio` (`iddom`, `nomdom`) VALUES
+(10, 'documentos');
+
 -- --------------------------------------------------------
 
 --
@@ -79,6 +87,7 @@ CREATE TABLE `empleado` (
   `fecnaemp` date DEFAULT NULL,
   `numdocu` bigint(10) NOT NULL,
   `fotiden` varchar(255) DEFAULT NULL,
+  `pssemp` varchar(100) NOT NULL,
   `idserv` tinyint(2) DEFAULT NULL,
   `idbar` bigint(10) DEFAULT NULL,
   `codubi` int(6) DEFAULT NULL,
@@ -112,8 +121,30 @@ CREATE TABLE `pagina` (
   `rutpag` varchar(255) DEFAULT NULL,
   `mospag` tinyint(1) DEFAULT NULL,
   `ordpag` int(5) DEFAULT NULL,
-  `icopag` varchar(5) DEFAULT NULL
+  `icopag` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `pagina`
+--
+
+INSERT INTO `pagina` (`idpag`, `nompag`, `rutpag`, `mospag`, `ordpag`, `icopag`) VALUES
+(1002, 'Bares', 'views/vusbares.php', 1, 1, NULL),
+(1004, 'Cócteles', 'views/vuscoct.php', 1, 2, NULL),
+(1005, 'Vinos', 'views/vusvino.php', 1, 3, NULL),
+(1006, 'Licores', 'views/vuslicor.php', 1, 4, NULL),
+(1007, 'Perfil', 'views/vpusu.php', 1, 5, 'fa-regular fa-user'),
+(1008, 'Historial de pedidos', 'views/vushipe.php', 1, 8, 'fa-solid fa-clipboard-list'),
+(2001, 'Pedidos', 'views/vexbpedproc.php', 1, 1, NULL),
+(2002, 'Historial de pedidos', 'views/vemhipe.php', 1, 2, NULL),
+(2003, 'Ganancias', 'views/vemgan.php', 1, 3, NULL),
+(2004, 'Perfil', 'views/vpemp.php', 1, 4, 'fa-regular fa-user'),
+(3001, 'Pedidos', 'views/vexbpedproc.php', 1, 1, NULL),
+(3002, 'Historial de pedidos', 'views/vbarhipe.php', 1, 2, 'fa-solid fa-clipboard-list'),
+(3003, 'Ganancias', 'views/vemgan.php', 1, 3, NULL),
+(3004, 'Crear Productos', 'views/vbarxprod.php', 1, 4, NULL),
+(3005, 'Crear Empleados', 'views/vbarxem.php', 1, 5, NULL),
+(3006, 'Perfil', 'views/vpbar.php', 1, 6, 'fa-regular fa-user');
 
 -- --------------------------------------------------------
 
@@ -126,6 +157,28 @@ CREATE TABLE `pagper` (
   `idper` bigint(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `pagper`
+--
+
+INSERT INTO `pagper` (`idpag`, `idper`) VALUES
+(1002, 10),
+(1004, 10),
+(1005, 10),
+(1006, 10),
+(1007, 10),
+(1008, 10),
+(2001, 20),
+(2002, 20),
+(2003, 20),
+(2004, 20),
+(3001, 30),
+(3002, 30),
+(3003, 30),
+(3004, 30),
+(3005, 30),
+(3006, 30);
+
 -- --------------------------------------------------------
 
 --
@@ -134,8 +187,18 @@ CREATE TABLE `pagper` (
 
 CREATE TABLE `perfiles` (
   `idper` bigint(10) NOT NULL,
-  `nomper` varchar(50) NOT NULL
+  `nomper` varchar(50) NOT NULL,
+  `pagini` bigint(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `perfiles`
+--
+
+INSERT INTO `perfiles` (`idper`, `nomper`, `pagini`) VALUES
+(10, 'usuarios', 1002),
+(20, 'empleados', 2001),
+(30, 'bares', 3001);
 
 -- --------------------------------------------------------
 
@@ -193,10 +256,22 @@ CREATE TABLE `usuario` (
   `fotiden` varchar(255) DEFAULT NULL,
   `numdocu` bigint(10) NOT NULL,
   `fecnausu` date DEFAULT NULL,
+  `pssusu` varchar(100) NOT NULL,
   `codubi` int(6) DEFAULT NULL,
   `idper` bigint(10) NOT NULL,
   `idval` bigint(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`idusu`, `nomusu`, `emausu`, `celusu`, `fotiden`, `numdocu`, `fecnausu`, `pssusu`, `codubi`, `idper`, `idval`) VALUES
+(1, 'Dilan Lopez', 'dilan@gmail.com', NULL, NULL, 1053, '2004-09-11', 'dilan123', NULL, 10, 101),
+(2, 'Felipe Arias', 'felipe@gmail.com', NULL, NULL, 1010, NULL, 'felipe123', NULL, 10, 101),
+(3, 'Daniel Felipe', 'daniel@gmail.com', NULL, NULL, 2020, NULL, 'daniel123', NULL, 10, 101),
+(4, 'Sebastian Martinez', 'sebas@gmail.com', NULL, NULL, 3030, NULL, 'sebas123', NULL, 10, 101),
+(5, 'Victor Cortez', 'victor@gmail.com', NULL, NULL, 4040, NULL, 'victor123', NULL, 10, 101);
 
 -- --------------------------------------------------------
 
@@ -209,6 +284,15 @@ CREATE TABLE `valor` (
   `iddom` int(4) DEFAULT NULL,
   `nomval` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `valor`
+--
+
+INSERT INTO `valor` (`idval`, `iddom`, `nomval`) VALUES
+(101, 10, 'CC'),
+(102, 10, 'NIT'),
+(103, 10, 'CE');
 
 --
 -- Índices para tablas volcadas
@@ -335,7 +419,7 @@ ALTER TABLE `detfact`
 -- AUTO_INCREMENT de la tabla `dominio`
 --
 ALTER TABLE `dominio`
-  MODIFY `iddom` int(4) NOT NULL AUTO_INCREMENT;
+  MODIFY `iddom` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado`
@@ -353,7 +437,7 @@ ALTER TABLE `factura`
 -- AUTO_INCREMENT de la tabla `pagina`
 --
 ALTER TABLE `pagina`
-  MODIFY `idpag` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `idpag` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3007;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
@@ -371,13 +455,13 @@ ALTER TABLE `ubicacion`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idusu` bigint(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `idusu` bigint(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `valor`
 --
 ALTER TABLE `valor`
-  MODIFY `idval` bigint(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `idval` bigint(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- Restricciones para tablas volcadas
