@@ -12,9 +12,7 @@
     <link rel="icon" href="img/favicon.png">
 </head>
 <body>
-<?php include ("models/conexion.php");
-	date_default_timezone_set('America/Bogota');
-	$pg= isset($_REQUEST["pg"]) ? $_REQUEST["pg"]:NULL; ?>
+
 <nav class="navbar navbar-expand-lg">
     <a href="#" target="_blank"><img src="img/logo.png" id="logo" alt="logo" height="50px"></a>
     <div class="barra-busqueda">
@@ -25,7 +23,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="menu">
-        <?php include("views/menui.php") ?>
+        <?php require_once("views/menui.php") ?>
     </div>
 </nav>
     <section>
@@ -35,8 +33,26 @@
             require_once("index.php");
             if(!$pg=="1001") 
             require_once("views/carrusel.php");
+            if($pg=="1002") 
+            require_once("views/vusbares.php");
+            if($pg=="1004") 
+            require_once("views/vuscoct.php");
+            if($pg=="1005") 
+            require_once("views/vusvino.php");
+            if($pg=="1006") 
+            require_once("views/vuslicor.php");
             if($pg=="1007") 
             require_once("views/vlogreg.php");
+            if($pg=="1008")
+            require_once("views/vuscarcomp.php");
+            if($pg=="1009") 
+            require_once("views/vushipe.php");
+            if($pg=="01") 
+            require_once("views/vusprodgrand.php");
+            if($pg=="02") 
+            require_once("views/vuscocgrand.php");
+            if($pg=="1022") 
+            require_once("views/vusbarxprod.php");
             ?>
     </section>
     <footer class="bg-black">

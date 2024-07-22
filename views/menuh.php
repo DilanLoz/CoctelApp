@@ -5,16 +5,16 @@
 
 <nav class="collapse navbar-collapse" id="menu">
     <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link" href="home.php?pg=101">Inicio</a></li>
-        <li class="nav-item"><a class="nav-link" href="home.php?pg=102">Cocteles</a></li>
-        <li class="nav-item"><a class="nav-link" href="home.php?pg=103">Vinos</a></li>
-        <li class="nav-item"><a class="nav-link" href="home.php?pg=104">Licores y otros</a></li>
-        <li class="nav-item"><a class="nav-link" href="home.php?pg=105">Bares</a></li>
+    <li class="nav-item"><a class="nav-link" href="home.php?pg=102">Bares</a></li>
+        <li class="nav-item"><a class="nav-link" href="home.php?pg=104">Cocteles</a></li>
+        <li class="nav-item"><a class="nav-link" href="home.php?pg=105">Vinos</a></li>
+        <li class="nav-item"><a class="nav-link" href="home.php?pg=106">Licores</a></li>
+        
     </ul>
     <ul class="navbar-nav ml-auto" id="menuu">
-        <li class="nav-item"><a class="nav-link" href="home.php?pg=107"><i class="fa-regular fa-user" style="color: #F0C403;"></i></a></li>
+        <li class="nav-item"><a class="nav-link" href="home.php?pg=108"><i class="fa-regular fa-user" style="color: #F0C403;"></i></a></li>
         <li class="nav-item"><a class="nav-link" id="open-cart" style="cursor: pointer;"><i class="fa-solid fa-cart-shopping" style="color: #F0C403;"></i></a></li>
-        <li class="nav-item"><a class="nav-link" href="home.php?pg=108"><i class="fa-solid fa-clipboard-list" style="color: #F0C403;"></i></a></li>
+        <li class="nav-item"><a class="nav-link" href="home.php?pg=107"><i class="fa-solid fa-clipboard-list" style="color: #F0C403;"></i></a></li>
         <li class="nav-item"><a class="nav-link" href="index.php"><i class="fa-solid fa-right-from-bracket" style="color: #F0C403;"></i></a></li>
     </ul>
 </nav>
