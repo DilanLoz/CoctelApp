@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-07-2024 a las 04:13:21
+-- Tiempo de generación: 27-07-2024 a las 00:51:40
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `coctelapp`
 --
--- base de coctelapp
+
 -- --------------------------------------------------------
 
 --
@@ -30,10 +30,12 @@ SET time_zone = "+00:00";
 CREATE TABLE `bar` (
   `idbar` bigint(10) NOT NULL,
   `nombar` varchar(100) DEFAULT NULL,
+  `nompro` varchar(50) NOT NULL,
   `nit` bigint(10) NOT NULL,
   `emabar` varchar(100) DEFAULT NULL,
   `telbar` int(12) DEFAULT NULL,
   `pssbar` varchar(100) NOT NULL,
+  `dircbar` varchar(100) NOT NULL,
   `codubi` int(6) DEFAULT NULL,
   `idper` bigint(10) NOT NULL,
   `idval` bigint(10) NOT NULL
@@ -107,6 +109,20 @@ CREATE TABLE `factura` (
   `idbar` bigint(10) DEFAULT NULL,
   `total` decimal(10,2) DEFAULT NULL,
   `idusu` bigint(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ganancias`
+--
+
+CREATE TABLE `ganancias` (
+  `idganancia` bigint(20) NOT NULL,
+  `idemp` bigint(10) NOT NULL,
+  `idfact` bigint(20) NOT NULL,
+  `monto` decimal(10,2) NOT NULL,
+  `fecha` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -332,7 +348,8 @@ ALTER TABLE `empleado`
   ADD KEY `idbar` (`idbar`),
   ADD KEY `codubi` (`codubi`),
   ADD KEY `idper` (`idper`),
-  ADD KEY `idval` (`idval`);
+  ADD KEY `idval` (`idval`),
+  ADD KEY `idserv` (`idserv`);
 
 --
 -- Indices de la tabla `factura`
@@ -341,6 +358,14 @@ ALTER TABLE `factura`
   ADD PRIMARY KEY (`idfact`),
   ADD KEY `idbar` (`idbar`),
   ADD KEY `factura_ibfk_2` (`idusu`);
+
+--
+-- Indices de la tabla `ganancias`
+--
+ALTER TABLE `ganancias`
+  ADD PRIMARY KEY (`idganancia`),
+  ADD KEY `idemp` (`idemp`),
+  ADD KEY `idfact` (`idfact`);
 
 --
 -- Indices de la tabla `pagina`
@@ -368,7 +393,8 @@ ALTER TABLE `producto`
   ADD PRIMARY KEY (`idprod`),
   ADD KEY `idval` (`idval`),
   ADD KEY `idbar` (`idbar`),
-  ADD KEY `idusu` (`idusu`);
+  ADD KEY `idusu` (`idusu`),
+  ADD KEY `idserv` (`idserv`);
 
 --
 -- Indices de la tabla `servicio`
@@ -434,6 +460,12 @@ ALTER TABLE `factura`
   MODIFY `idfact` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `ganancias`
+--
+ALTER TABLE `ganancias`
+  MODIFY `idganancia` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `pagina`
 --
 ALTER TABLE `pagina`
@@ -490,7 +522,8 @@ ALTER TABLE `empleado`
   ADD CONSTRAINT `empleado_ibfk_1` FOREIGN KEY (`idbar`) REFERENCES `bar` (`idbar`),
   ADD CONSTRAINT `empleado_ibfk_2` FOREIGN KEY (`codubi`) REFERENCES `ubicacion` (`codubi`),
   ADD CONSTRAINT `empleado_ibfk_3` FOREIGN KEY (`idper`) REFERENCES `perfiles` (`idper`),
-  ADD CONSTRAINT `empleado_ibfk_4` FOREIGN KEY (`idval`) REFERENCES `valor` (`idval`);
+  ADD CONSTRAINT `empleado_ibfk_4` FOREIGN KEY (`idval`) REFERENCES `valor` (`idval`),
+  ADD CONSTRAINT `empleado_ibfk_5` FOREIGN KEY (`idserv`) REFERENCES `servicio` (`idserv`);
 
 --
 -- Filtros para la tabla `factura`
@@ -498,6 +531,13 @@ ALTER TABLE `empleado`
 ALTER TABLE `factura`
   ADD CONSTRAINT `factura_ibfk_1` FOREIGN KEY (`idbar`) REFERENCES `bar` (`idbar`),
   ADD CONSTRAINT `factura_ibfk_2` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
+
+--
+-- Filtros para la tabla `ganancias`
+--
+ALTER TABLE `ganancias`
+  ADD CONSTRAINT `ganancias_ibfk_1` FOREIGN KEY (`idemp`) REFERENCES `empleado` (`idemp`),
+  ADD CONSTRAINT `ganancias_ibfk_2` FOREIGN KEY (`idfact`) REFERENCES `factura` (`idfact`);
 
 --
 -- Filtros para la tabla `pagper`
@@ -511,7 +551,8 @@ ALTER TABLE `pagper`
 --
 ALTER TABLE `producto`
   ADD CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`idval`) REFERENCES `valor` (`idval`),
-  ADD CONSTRAINT `producto_ibfk_2` FOREIGN KEY (`idbar`) REFERENCES `bar` (`idbar`);
+  ADD CONSTRAINT `producto_ibfk_2` FOREIGN KEY (`idbar`) REFERENCES `bar` (`idbar`),
+  ADD CONSTRAINT `producto_ibfk_3` FOREIGN KEY (`idserv`) REFERENCES `servicio` (`idserv`);
 
 --
 -- Filtros para la tabla `usuario`
