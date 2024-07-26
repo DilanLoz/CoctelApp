@@ -10,9 +10,9 @@
     <div class="box">
         <div class="inner-box">
             <div class="forms-wrap"> 
-            <form action="home.php" method="GET" autocomplete="off" class="sign-in-form">
+                <form action="models/control.php" method="POST" autocomplete="off" class="sign-in-form">
                     <div class="logo">
-                        <img src="img/coctelapp.png"/>
+                        <img src="img/coctelapp.png" alt="Logo"/>
                     </div>
 
                     <div class="heading">
@@ -23,16 +23,20 @@
 
                     <div class="actual-form">
                         <div class="input-wrap">
-                            <input type="text" minlength="4" id="email" name="tipo_usuario" class="input-field" autocomplete="off" required />
-                            <label><i class="fa-regular fa-address-card" style="color: #ffffff;"></i>  Identificacion o NIT</label>
+                            <input type="text" minlength="4" id="email" name="usu" class="input-field" autocomplete="off" required />
+                            <label><i class="fa-regular fa-address-card" style="color: #ffffff;"></i> Identificación o NIT</label>
                         </div>
 
                         <div class="input-wrap">
-                            <input type="password" minlength="4" id="password" name="password" class="input-field" autocomplete="off" required />
-                            <label><i class="fa-solid fa-lock" style="color: #ffffff;"></i>  Contraseña</label>
+                            <input type="password" minlength="4" id="password" name="pss" class="input-field" autocomplete="off" required />
+                            <label><i class="fa-solid fa-lock" style="color: #ffffff;"></i> Contraseña</label>
                         </div>
+                        <?php
+				$err = isset($_GET['err']) ? $_GET['err']:NULL;
+				if($err=='oK') echo "<span class='dtinv'>Datos invalidos</span>"
+			?>
 
-                        <input onclick="login()" type="submit" value="Iniciar Sesion" class="sign-btn" />
+                        <input type="submit" value="Iniciar Sesión" class="sign-btn" />
 
                         <p class="text fw-bold">
                             ¿Olvidaste la contraseña?
@@ -40,6 +44,7 @@
                         </p>
                     </div>
                 </form>
+
 
                 <form action="home.html" autocomplete="off" class="sign-up-form">
                     <div class="heading">
