@@ -36,11 +36,9 @@ function red()
 function ingrUsuario($ema, $pss)
 {
     $res = NULL;
-    $pss = sha1(md5($pss . 'dlHagO#'));
-    echo $pss;
-    die; // Aplicar hashing a la contraseña
+    $pss = sha1(md5($pss . 'dlHagO#')); // Aplicar hashing a la contraseña
     
-    $sql = "SELECT u.idusu, u.nomusu, u.docusu, f.idper, f.nomper, f.pagini FROM usuario AS p INNER JOIN perfil AS f ON u.idper=f.idper AND u.emausu = :emausu AND u.pssusu = :pssusu";
+    $sql = "SELECT u.idusu, u.nomusu, u.docusu, f.idper, f.nomper, f.pagini FROM usuario AS u INNER JOIN perfil AS f ON u.idper=f.idper AND u.emausu = :emausu AND u.pssusu = :pssusu";
     
     $modelo = new Conexion();
     $conexion = $modelo->get_conexion();

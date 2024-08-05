@@ -95,7 +95,7 @@ class Mpemp{
 	public function setFecnaemp($fecnaemp){
 		$this->fecnaemp = $fecnaemp;
 	}
-	public function setNumdocu($numdocu{
+	public function setNumdocu($numdocu){
 		$this->numdocu = $numdocu;
 	}
 	public function setFotiden($fotiden){
