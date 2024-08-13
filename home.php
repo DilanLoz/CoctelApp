@@ -25,7 +25,7 @@
         <div class="collapse navbar-collapse" id="menu">
             <?PHP require_once("views/menuh.php") ?>
         </div>
-    </nav>
+    </nav>s
 
     <section>
         <?PHP require_once("views/menuh.php");
