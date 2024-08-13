@@ -32,12 +32,11 @@ main {
 }
 
 .box {
-    border: 2px solid #000000;
     position: relative;
     width: 100%;
     max-width: 1020px;
     height: 640px;
-    background-color: rgba(232, 232, 232, 0.123); /* Color negro con opacidad del 50% */
+    background-color: rgba(0, 0, 0, 0.334); /* Color negro con opacidad del 50% */
     border-radius: 3.3rem;
     backdrop-filter: blur(20px); /* Efecto de desenfoque */
     box-shadow: 0 60px 40px -30px rgba(0, 0, 0, 0.863);
@@ -114,7 +113,7 @@ form.sign-up-form {
 }
 
 .toggle {
-  color: #151111;
+  color: #ffffff;
   text-decoration: none;
   font-size: 0.75rem;
   font-weight: 500;
@@ -122,6 +121,9 @@ form.sign-up-form {
 }
 
 .toggle:hover {
+  color: #F0C403;
+}
+.titul{
   color: #F0C403;
 }
 
@@ -229,7 +231,7 @@ label {
 }
 
 .text a {
-  color: #000000;
+  color: #ffffff;
   transition: 0.3s;
 }
 

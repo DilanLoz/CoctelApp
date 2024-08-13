@@ -16,15 +16,14 @@
                     </div>
 
                     <div class="heading">
-                        <h4 class="fw-bold">Licores y cocteles a un clic.</h4>
-                        <h6 class="fw-bold">¿No tienes una cuenta?</h6>
-                        <a href="#" class="toggle fw-bold">Registro</a>
+                        <h6 class="fw-bold">¿Aún no posee una cuenta?</h6>
+                        <a href="#" class="toggle fw-bold">Presione aquí para registrarse.</a>
                     </div>
 
                     <div class="actual-form">
                         <div class="input-wrap">
                             <input type="text" minlength="4" id="email" name="usu" class="input-field" autocomplete="off" required />
-                            <label><i class="fa-regular fa-address-card" style="color: #ffffff;"></i> Identificación o NIT</label>
+                            <label><i class="fa-solid fa-envelope" style="color: #ffffff;"></i> Correo Electronico</label>
                         </div>
 
                         <div class="input-wrap">
@@ -39,8 +38,8 @@
                         <input type="submit" value="Iniciar Sesión" class="sign-btn" />
 
                         <p class="text fw-bold">
-                            ¿Olvidaste la contraseña?
-                            <a href="#" class="toggle fw-bold">Recuperar Contraseña</a>
+                        ¿Ha olvidado su contraseña?
+                            <a href="#" class="toggle fw-bold">Presione aquí para recuperarla.</a>
                         </p>
                     </div>
                 </form>
