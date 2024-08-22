@@ -10,9 +10,9 @@
         <li class="nav-item"><a class="nav-link" href="index.php?pg=1006">Licores</a></li>
     </ul>
     <ul class="navbar-nav ml-auto" id="menuu">
-        <li class="nav-item"><a class="nav-link" href="index.php?pg=1007"><i class="fa-regular fa-user" style="color: #ffc107;"></i></a></li>
-        <li class="nav-item"><a class="nav-link" id="open-cart" style="cursor: pointer;"><i class="fa-solid fa-cart-shopping" style="color: #ffc107;"></i></a></li>
-        <li class="nav-item"><a class="nav-link" href="index.php?pg=1009"><i class="fa-solid fa-clipboard-list" style="color: #ffc107;"></i></a></li>
+        <li class="nav-item"><a class="nav-link" href="index.php?pg=1007"><i class="fa-regular fa-user" ></i></a></li>
+        <li class="nav-item"><a class="nav-link" id="open-cart" style="cursor: pointer;"><i class="fa-solid fa-cart-shopping" ></i></a></li>
+        <li class="nav-item"><a class="nav-link" href="index.php?pg=1009"><i class="fa-solid fa-clipboard-list" ></i></a></li>
     </ul>
 </nav>
 
