@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-
+hola como estas el dia de hoy
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,7 +25,7 @@
         <div class="collapse navbar-collapse" id="menu">
             <?PHP require_once("views/menuh.php") ?>
         </div>
-    </nav>hola
+    </nav>
     <section>
         <?PHP require_once("views/menuh.php");
             $pg = isset($_GET["pg"]) ? $_GET["pg"]:NULL;
