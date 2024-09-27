@@ -25,8 +25,7 @@
         <div class="collapse navbar-collapse" id="menu">
             <?PHP require_once("views/menuh.php") ?>
         </div>
-    </nav>
-
+    </nav>hola
     <section>
         <?PHP require_once("views/menuh.php");
             $pg = isset($_GET["pg"]) ? $_GET["pg"]:NULL;
