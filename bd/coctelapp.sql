@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-07-2024 a las 00:51:40
+-- Tiempo de generación: 22-10-2024 a las 22:07:48
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -28,18 +28,26 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `bar` (
-  `idbar` bigint(10) NOT NULL,
-  `nombar` varchar(100) DEFAULT NULL,
-  `nompro` varchar(50) NOT NULL,
-  `nit` bigint(10) NOT NULL,
-  `emabar` varchar(100) DEFAULT NULL,
-  `telbar` int(12) DEFAULT NULL,
-  `pssbar` varchar(100) NOT NULL,
-  `dircbar` varchar(100) NOT NULL,
-  `codubi` int(6) DEFAULT NULL,
-  `idper` bigint(10) NOT NULL,
-  `idval` bigint(10) NOT NULL
+  `idbar` bigint(10) NOT NULL COMMENT 'id de bar',
+  `nombar` varchar(100) DEFAULT NULL COMMENT 'nombre del bar',
+  `nompropi` varchar(50) NOT NULL COMMENT 'nombre del propietario',
+  `nit` bigint(10) NOT NULL COMMENT 'numero de nit',
+  `emabar` varchar(100) DEFAULT NULL COMMENT 'email del bar',
+  `telbar` int(12) DEFAULT NULL COMMENT 'teléfono del bar',
+  `pssbar` varchar(100) NOT NULL COMMENT 'contraseña del bar',
+  `dircbar` varchar(100) NOT NULL COMMENT 'dirección del bar',
+  `codubi` int(6) DEFAULT NULL COMMENT 'código de ubicacion',
+  `idper` bigint(10) NOT NULL COMMENT 'id del perfil',
+  `idval` bigint(10) NOT NULL COMMENT 'id del valor'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `bar`
+--
+
+INSERT INTO `bar` (`idbar`, `nombar`, `nompropi`, `nit`, `emabar`, `telbar`, `pssbar`, `dircbar`, `codubi`, `idper`, `idval`) VALUES
+(2, 'Bazzar', 'Mateo', 211312, 'baz@gmail.com', 21312312, 'bazz', '', 1, 30, 102),
+(3, 'Mar', 'Martin', 12123, 'mar@gmail.com', 2312321, '', '', 1, 30, 102);
 
 -- --------------------------------------------------------
 
@@ -48,14 +56,23 @@ CREATE TABLE `bar` (
 --
 
 CREATE TABLE `detfact` (
-  `iddetfact` bigint(20) NOT NULL,
-  `idfact` bigint(20) NOT NULL,
-  `idprod` bigint(20) DEFAULT NULL,
-  `cantidad` int(8) DEFAULT NULL,
-  `precio_unitario` decimal(10,2) DEFAULT NULL,
-  `subtotal` decimal(10,2) DEFAULT NULL,
-  `idemp` bigint(10) DEFAULT NULL
+  `iddetfact` bigint(20) NOT NULL COMMENT 'id de detalle de factura',
+  `idfact` bigint(20) NOT NULL COMMENT 'id de factura',
+  `idprod` bigint(20) DEFAULT NULL COMMENT 'id del producto',
+  `estado` tinyint(1) NOT NULL COMMENT 'estado del pedido',
+  `cantidad` int(8) DEFAULT NULL COMMENT 'cantidad de productos',
+  `precio_unitario` decimal(10,2) DEFAULT NULL COMMENT 'precio por producto',
+  `subtotal` decimal(10,2) DEFAULT NULL COMMENT 'subtotal del pedido',
+  `idemp` bigint(10) DEFAULT NULL COMMENT 'id del empleado',
+  `idbar` bigint(10) NOT NULL COMMENT 'id del bar'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `detfact`
+--
+
+INSERT INTO `detfact` (`iddetfact`, `idfact`, `idprod`, `estado`, `cantidad`, `precio_unitario`, `subtotal`, `idemp`, `idbar`) VALUES
+(1, 1, 2, 1, 2, 80.00, 80.00, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -64,8 +81,8 @@ CREATE TABLE `detfact` (
 --
 
 CREATE TABLE `dominio` (
-  `iddom` int(4) NOT NULL,
-  `nomdom` varchar(50) DEFAULT NULL
+  `iddom` int(4) NOT NULL COMMENT 'id de dominio',
+  `nomdom` varchar(50) DEFAULT NULL COMMENT 'nombre del dominio\r\nnombre del dominio'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -73,7 +90,8 @@ CREATE TABLE `dominio` (
 --
 
 INSERT INTO `dominio` (`iddom`, `nomdom`) VALUES
-(10, 'documentos');
+(10, 'documentos'),
+(20, 'categorias');
 
 -- --------------------------------------------------------
 
@@ -82,20 +100,27 @@ INSERT INTO `dominio` (`iddom`, `nomdom`) VALUES
 --
 
 CREATE TABLE `empleado` (
-  `idemp` bigint(10) NOT NULL,
-  `nomemp` varchar(100) DEFAULT NULL,
-  `emaemp` varchar(255) DEFAULT NULL,
-  `celemp` int(10) DEFAULT NULL,
-  `fecnaemp` date DEFAULT NULL,
-  `numdocu` bigint(10) NOT NULL,
-  `fotiden` varchar(255) DEFAULT NULL,
-  `pssemp` varchar(100) NOT NULL,
-  `idserv` tinyint(2) DEFAULT NULL,
-  `idbar` bigint(10) DEFAULT NULL,
-  `codubi` int(6) DEFAULT NULL,
-  `idper` bigint(10) NOT NULL,
-  `idval` bigint(10) NOT NULL
+  `idemp` bigint(10) NOT NULL COMMENT 'id del empleado',
+  `nomemp` varchar(100) DEFAULT NULL COMMENT 'nombre del empleado',
+  `emaemp` varchar(255) DEFAULT NULL COMMENT 'email del empleado',
+  `celemp` int(10) DEFAULT NULL COMMENT 'celular del empleado',
+  `fecnaemp` date DEFAULT NULL COMMENT 'fecha de nacimiento',
+  `numdocu` bigint(10) NOT NULL COMMENT 'numero de documento del empleado',
+  `fotiden` varchar(255) DEFAULT NULL COMMENT 'foto de identificación ',
+  `pssemp` varchar(100) NOT NULL COMMENT 'contraseña del empleado',
+  `idserv` tinyint(2) DEFAULT NULL COMMENT 'id del servicio',
+  `idbar` bigint(10) DEFAULT NULL COMMENT 'id del bar',
+  `codubi` int(6) DEFAULT NULL COMMENT 'codigo de ubicacion ',
+  `idper` bigint(10) NOT NULL COMMENT 'id del perfil',
+  `idval` bigint(10) NOT NULL COMMENT 'id de valor'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `empleado`
+--
+
+INSERT INTO `empleado` (`idemp`, `nomemp`, `emaemp`, `celemp`, `fecnaemp`, `numdocu`, `fotiden`, `pssemp`, `idserv`, `idbar`, `codubi`, `idper`, `idval`) VALUES
+(2, 'Jose', 'Martin', 1212, '2004-08-01', 123123, '', '', 1, 2, 1, 20, 101);
 
 -- --------------------------------------------------------
 
@@ -104,12 +129,19 @@ CREATE TABLE `empleado` (
 --
 
 CREATE TABLE `factura` (
-  `idfact` bigint(20) NOT NULL,
-  `fecha` date DEFAULT NULL,
-  `idbar` bigint(10) DEFAULT NULL,
-  `total` decimal(10,2) DEFAULT NULL,
-  `idusu` bigint(10) DEFAULT NULL
+  `idfact` bigint(20) NOT NULL COMMENT 'id de factura',
+  `fecha` date DEFAULT NULL COMMENT 'fecha de la factura',
+  `idbar` bigint(10) DEFAULT NULL COMMENT 'id del bar',
+  `total` decimal(10,2) DEFAULT NULL COMMENT 'total de compra',
+  `idusu` bigint(10) DEFAULT NULL COMMENT 'id de usuario '
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `factura`
+--
+
+INSERT INTO `factura` (`idfact`, `fecha`, `idbar`, `total`, `idusu`) VALUES
+(1, '2024-08-22', 2, 200.00, 2);
 
 -- --------------------------------------------------------
 
@@ -118,12 +150,21 @@ CREATE TABLE `factura` (
 --
 
 CREATE TABLE `ganancias` (
-  `idganancia` bigint(20) NOT NULL,
-  `idemp` bigint(10) NOT NULL,
-  `idfact` bigint(20) NOT NULL,
-  `monto` decimal(10,2) NOT NULL,
-  `fecha` date DEFAULT NULL
+  `idganancia` bigint(20) NOT NULL COMMENT 'id de ganancias ',
+  `idemp` bigint(10) DEFAULT NULL COMMENT 'id del empleado',
+  `idbar` bigint(10) DEFAULT NULL COMMENT 'id del bar',
+  `idfact` bigint(20) NOT NULL COMMENT 'id de factura',
+  `monto` bigint(10) NOT NULL COMMENT 'monto de la ganancia',
+  `fecha` date DEFAULT NULL COMMENT 'fecha de la ganancia'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ganancias`
+--
+
+INSERT INTO `ganancias` (`idganancia`, `idemp`, `idbar`, `idfact`, `monto`, `fecha`) VALUES
+(1, 2, NULL, 1, 1200, '2024-08-22'),
+(4, NULL, 2, 1, 3000, '2024-08-22');
 
 -- --------------------------------------------------------
 
@@ -132,12 +173,12 @@ CREATE TABLE `ganancias` (
 --
 
 CREATE TABLE `pagina` (
-  `idpag` int(5) NOT NULL,
-  `nompag` varchar(255) DEFAULT NULL,
-  `rutpag` varchar(255) DEFAULT NULL,
-  `mospag` tinyint(1) DEFAULT NULL,
-  `ordpag` int(5) DEFAULT NULL,
-  `icopag` varchar(50) DEFAULT NULL
+  `idpag` int(5) NOT NULL COMMENT 'id de pagina',
+  `nompag` varchar(255) DEFAULT NULL COMMENT 'nombre de la pagina',
+  `rutpag` varchar(255) DEFAULT NULL COMMENT 'ruta de la pagina',
+  `mospag` tinyint(1) DEFAULT NULL COMMENT 'mostrar la pagina',
+  `ordpag` int(5) DEFAULT NULL COMMENT 'orden de la pagina',
+  `icopag` varchar(50) DEFAULT NULL COMMENT 'icono de la pagina'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -169,8 +210,8 @@ INSERT INTO `pagina` (`idpag`, `nompag`, `rutpag`, `mospag`, `ordpag`, `icopag`)
 --
 
 CREATE TABLE `pagper` (
-  `idpag` int(5) NOT NULL,
-  `idper` bigint(10) DEFAULT NULL
+  `idpag` int(5) NOT NULL COMMENT 'id de pagina',
+  `idper` bigint(10) DEFAULT NULL COMMENT 'id de perfil'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -202,9 +243,9 @@ INSERT INTO `pagper` (`idpag`, `idper`) VALUES
 --
 
 CREATE TABLE `perfiles` (
-  `idper` bigint(10) NOT NULL,
-  `nomper` varchar(50) NOT NULL,
-  `pagini` bigint(10) NOT NULL
+  `idper` bigint(10) NOT NULL COMMENT 'id de perfil',
+  `nomper` varchar(50) NOT NULL COMMENT 'nombre del perfil',
+  `pagini` bigint(10) NOT NULL COMMENT 'pagina inicial'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -223,17 +264,24 @@ INSERT INTO `perfiles` (`idper`, `nomper`, `pagini`) VALUES
 --
 
 CREATE TABLE `producto` (
-  `idprod` bigint(20) NOT NULL,
-  `nomprod` varchar(50) DEFAULT NULL,
-  `desprod` varchar(255) DEFAULT NULL,
-  `vlrprod` decimal(10,2) DEFAULT NULL,
-  `fotprod` varchar(255) DEFAULT NULL,
-  `idval` bigint(10) DEFAULT NULL,
-  `idbar` bigint(10) DEFAULT NULL,
-  `cantprod` int(8) DEFAULT NULL,
-  `idserv` tinyint(2) DEFAULT NULL,
-  `idusu` bigint(10) DEFAULT NULL
+  `idprod` bigint(20) NOT NULL COMMENT 'id de producto',
+  `nomprod` varchar(50) DEFAULT NULL COMMENT 'nombre del producto',
+  `desprod` varchar(255) DEFAULT NULL COMMENT 'descripcion del producto',
+  `vlrprod` decimal(10,2) DEFAULT NULL COMMENT 'valor del producto',
+  `fotprod` varchar(255) DEFAULT NULL COMMENT 'foto del producto',
+  `idval` bigint(10) DEFAULT NULL COMMENT 'id del valor',
+  `idbar` bigint(10) DEFAULT NULL COMMENT 'id del bar',
+  `cantprod` int(8) DEFAULT NULL COMMENT 'cantidad del producto',
+  `idserv` tinyint(2) DEFAULT NULL COMMENT 'id del servicio',
+  `idusu` bigint(10) DEFAULT NULL COMMENT 'id de usuario'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`idprod`, `nomprod`, `desprod`, `vlrprod`, `fotprod`, `idval`, `idbar`, `cantprod`, `idserv`, `idusu`) VALUES
+(2, 'Ron', 'Ron caldas', 40.00, '', 104, 2, 222, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -242,9 +290,16 @@ CREATE TABLE `producto` (
 --
 
 CREATE TABLE `servicio` (
-  `idserv` tinyint(2) NOT NULL,
-  `nomserv` varchar(50) DEFAULT NULL
+  `idserv` tinyint(2) NOT NULL COMMENT 'id de servicio',
+  `nomserv` varchar(50) DEFAULT NULL COMMENT 'nombre del servicio'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `servicio`
+--
+
+INSERT INTO `servicio` (`idserv`, `nomserv`) VALUES
+(1, 'domicilio');
 
 -- --------------------------------------------------------
 
@@ -253,10 +308,17 @@ CREATE TABLE `servicio` (
 --
 
 CREATE TABLE `ubicacion` (
-  `codubi` int(6) NOT NULL,
-  `nomubi` varchar(255) DEFAULT NULL,
-  `depubi` varchar(255) DEFAULT NULL
+  `codubi` int(6) NOT NULL COMMENT 'codigo de ubicacion',
+  `nomubi` varchar(255) DEFAULT NULL COMMENT 'nombre de ubicacion',
+  `depubi` varchar(255) DEFAULT NULL COMMENT 'dependencia de ubicacion'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ubicacion`
+--
+
+INSERT INTO `ubicacion` (`codubi`, `nomubi`, `depubi`) VALUES
+(1, 'bogota', 'bogota');
 
 -- --------------------------------------------------------
 
@@ -265,17 +327,17 @@ CREATE TABLE `ubicacion` (
 --
 
 CREATE TABLE `usuario` (
-  `idusu` bigint(10) NOT NULL,
-  `nomusu` varchar(150) DEFAULT NULL,
-  `emausu` varchar(100) DEFAULT NULL,
-  `celusu` int(10) DEFAULT NULL,
-  `fotiden` varchar(255) DEFAULT NULL,
-  `numdocu` bigint(10) NOT NULL,
-  `fecnausu` date DEFAULT NULL,
-  `pssusu` varchar(100) NOT NULL,
-  `codubi` int(6) DEFAULT NULL,
-  `idper` bigint(10) NOT NULL,
-  `idval` bigint(10) NOT NULL
+  `idusu` bigint(10) NOT NULL COMMENT 'id de usuario',
+  `nomusu` varchar(150) DEFAULT NULL COMMENT 'nombre de usuario',
+  `emausu` varchar(100) DEFAULT NULL COMMENT 'email de usuario',
+  `celusu` int(10) DEFAULT NULL COMMENT 'celular de usuario',
+  `fotiden` varchar(255) DEFAULT NULL COMMENT 'foto de identificación',
+  `numdocu` bigint(10) NOT NULL COMMENT 'numero de documento',
+  `fecnausu` date DEFAULT NULL COMMENT 'fecha de nacimiento',
+  `pssusu` varchar(100) NOT NULL COMMENT 'contraseña del usuario',
+  `codubi` int(6) DEFAULT NULL COMMENT 'codigo de ubicacion',
+  `idper` bigint(10) NOT NULL COMMENT 'id del perfil',
+  `idval` bigint(10) NOT NULL COMMENT 'id valor'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -296,9 +358,9 @@ INSERT INTO `usuario` (`idusu`, `nomusu`, `emausu`, `celusu`, `fotiden`, `numdoc
 --
 
 CREATE TABLE `valor` (
-  `idval` bigint(10) NOT NULL,
-  `iddom` int(4) DEFAULT NULL,
-  `nomval` varchar(50) DEFAULT NULL
+  `idval` bigint(10) NOT NULL COMMENT 'id de valor',
+  `iddom` int(4) DEFAULT NULL COMMENT 'id de dominio',
+  `nomval` varchar(50) DEFAULT NULL COMMENT 'nombre del valor'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -308,7 +370,8 @@ CREATE TABLE `valor` (
 INSERT INTO `valor` (`idval`, `iddom`, `nomval`) VALUES
 (101, 10, 'CC'),
 (102, 10, 'NIT'),
-(103, 10, 'CE');
+(103, 10, 'CE'),
+(104, 20, 'Licores');
 
 --
 -- Índices para tablas volcadas
@@ -331,7 +394,8 @@ ALTER TABLE `detfact`
   ADD PRIMARY KEY (`iddetfact`),
   ADD KEY `idfact` (`idfact`),
   ADD KEY `idprod` (`idprod`),
-  ADD KEY `idemp` (`idemp`);
+  ADD KEY `idemp` (`idemp`),
+  ADD KEY `idbar` (`idbar`);
 
 --
 -- Indices de la tabla `dominio`
@@ -364,8 +428,9 @@ ALTER TABLE `factura`
 --
 ALTER TABLE `ganancias`
   ADD PRIMARY KEY (`idganancia`),
-  ADD KEY `idemp` (`idemp`),
-  ADD KEY `idfact` (`idfact`);
+  ADD KEY `idfact` (`idfact`),
+  ADD KEY `idbar` (`idbar`),
+  ADD KEY `idemp` (`idemp`);
 
 --
 -- Indices de la tabla `pagina`
@@ -433,67 +498,73 @@ ALTER TABLE `valor`
 -- AUTO_INCREMENT de la tabla `bar`
 --
 ALTER TABLE `bar`
-  MODIFY `idbar` bigint(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `idbar` bigint(10) NOT NULL AUTO_INCREMENT COMMENT 'id de bar', AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `detfact`
 --
 ALTER TABLE `detfact`
-  MODIFY `iddetfact` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `iddetfact` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id de detalle de factura', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `dominio`
 --
 ALTER TABLE `dominio`
-  MODIFY `iddom` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `iddom` int(4) NOT NULL AUTO_INCREMENT COMMENT 'id de dominio', AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `empleado`
 --
 ALTER TABLE `empleado`
-  MODIFY `idemp` bigint(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `idemp` bigint(10) NOT NULL AUTO_INCREMENT COMMENT 'id del empleado', AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `idfact` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `idfact` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id de factura', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `ganancias`
 --
 ALTER TABLE `ganancias`
-  MODIFY `idganancia` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `idganancia` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id de ganancias ', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `pagina`
 --
 ALTER TABLE `pagina`
-  MODIFY `idpag` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3007;
+  MODIFY `idpag` int(5) NOT NULL AUTO_INCREMENT COMMENT 'id de pagina', AUTO_INCREMENT=3007;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `idprod` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `idprod` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id de producto', AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `servicio`
+--
+ALTER TABLE `servicio`
+  MODIFY `idserv` tinyint(2) NOT NULL AUTO_INCREMENT COMMENT 'id de servicio', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `ubicacion`
 --
 ALTER TABLE `ubicacion`
-  MODIFY `codubi` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `codubi` int(6) NOT NULL AUTO_INCREMENT COMMENT 'codigo de ubicacion', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idusu` bigint(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idusu` bigint(10) NOT NULL AUTO_INCREMENT COMMENT 'id de usuario', AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `valor`
 --
 ALTER TABLE `valor`
-  MODIFY `idval` bigint(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `idval` bigint(10) NOT NULL AUTO_INCREMENT COMMENT 'id de valor', AUTO_INCREMENT=105;
 
 --
 -- Restricciones para tablas volcadas
@@ -513,7 +584,8 @@ ALTER TABLE `bar`
 ALTER TABLE `detfact`
   ADD CONSTRAINT `detfact_ibfk_1` FOREIGN KEY (`idfact`) REFERENCES `factura` (`idfact`),
   ADD CONSTRAINT `detfact_ibfk_2` FOREIGN KEY (`idprod`) REFERENCES `producto` (`idprod`),
-  ADD CONSTRAINT `detfact_ibfk_3` FOREIGN KEY (`idemp`) REFERENCES `empleado` (`idemp`);
+  ADD CONSTRAINT `detfact_ibfk_3` FOREIGN KEY (`idemp`) REFERENCES `empleado` (`idemp`),
+  ADD CONSTRAINT `detfact_ibfk_4` FOREIGN KEY (`idbar`) REFERENCES `bar` (`idbar`);
 
 --
 -- Filtros para la tabla `empleado`
@@ -537,7 +609,8 @@ ALTER TABLE `factura`
 --
 ALTER TABLE `ganancias`
   ADD CONSTRAINT `ganancias_ibfk_1` FOREIGN KEY (`idemp`) REFERENCES `empleado` (`idemp`),
-  ADD CONSTRAINT `ganancias_ibfk_2` FOREIGN KEY (`idfact`) REFERENCES `factura` (`idfact`);
+  ADD CONSTRAINT `ganancias_ibfk_2` FOREIGN KEY (`idfact`) REFERENCES `factura` (`idfact`),
+  ADD CONSTRAINT `ganancias_ibfk_3` FOREIGN KEY (`idbar`) REFERENCES `bar` (`idbar`);
 
 --
 -- Filtros para la tabla `pagper`
@@ -552,7 +625,8 @@ ALTER TABLE `pagper`
 ALTER TABLE `producto`
   ADD CONSTRAINT `producto_ibfk_1` FOREIGN KEY (`idval`) REFERENCES `valor` (`idval`),
   ADD CONSTRAINT `producto_ibfk_2` FOREIGN KEY (`idbar`) REFERENCES `bar` (`idbar`),
-  ADD CONSTRAINT `producto_ibfk_3` FOREIGN KEY (`idserv`) REFERENCES `servicio` (`idserv`);
+  ADD CONSTRAINT `producto_ibfk_3` FOREIGN KEY (`idserv`) REFERENCES `servicio` (`idserv`),
+  ADD CONSTRAINT `producto_ibfk_4` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
 
 --
 -- Filtros para la tabla `usuario`
