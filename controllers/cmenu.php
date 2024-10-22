@@ -1,7 +1,5 @@
 <?php 
-session_start(); // Make sure the session is started
 include "models/mmenu.php";
-
 $mmenu = new Mmenu();
 $dtAll = $mmenu->getMenu();
 

@@ -1,109 +1,75 @@
 <?php
 require_once('conexion.php');
 
-$ema = isset($_POST['ema']) ? $_POST['ema'] : NULL;
-$pss = isset($_POST['pss']) ? $_POST['pss'] : NULL;
-$tipo = isset($_POST['tipo']) ? $_POST['tipo'] : NULL; // Tipo de usuario seleccionado
+// Obtener los datos del formulario de inicio de sesión
+$usu = isset($_POST['usu']) ? $_POST['usu'] : NULL;
+$pas = isset($_POST['pss']) ? $_POST['pss'] : NULL;
 
-if ($ema && $pss && $tipo) {
-    valida($ema, $pss, $tipo);
-} else {
-    red();
+if (!$usu || !$pas) {
+    red('empty');  // Si faltan datos
 }
 
-function valida($ema, $pss, $tipo)
-{
-    switch ($tipo) {
-        case 'usuario':
-            ingrUsuario($ema, $pss);
-            break;
-        case 'empleado':
-            ingrEmpleado($ema, $pss);
-            break;
-        case 'bar':
-            ingrBar($ema, $pss);
-            break;
-        default:
-            red();
-    }
+// Verificar que el email tenga el formato @gmail.com
+if (!validaActor($usu)) {
+    red('invalid_email');  // Si el formato del email es incorrecto
 }
 
-function red()
-{
-    echo "<script>window.location='../index.php?err=oK';</script>";
-}
-
-function ingrUsuario($ema, $pss)
-{
-    $res = NULL;
-    $pss = sha1(md5($pss . 'dlHagO#')); // Aplicar hashing a la contraseña
-    
-    $sql = "SELECT u.idusu, u.nomusu, u.docusu, f.idper, f.nomper, f.pagini FROM usuario AS u INNER JOIN perfil AS f ON u.idper=f.idper AND u.emausu = :emausu AND u.pssusu = :pssusu";
-    
-    $modelo = new Conexion();
-    $conexion = $modelo->get_conexion();
-    $result = $conexion->prepare($sql);
-    $result->bindParam(":emausu", $ema);
-    $result->bindParam(":pssusu", $pss);
-    $result->execute();
-    $res = $result->fetch(PDO::FETCH_ASSOC);
-
-    if ($res) {
-        iniciarSesion($res['idusu'], $res['nomusu'], $res['nomper'], $res['idper'], $res['pagini']);
-    } else {
-        red();
-    }
-}
-
-function ingrEmpleado($ema, $pss)
-{
-    $res = NULL;
-    $pss = sha1(md5($pss . 'dlHagO#')); // Aplicar hashing a la contraseña
-    
-    $sql = "SELECT e.idemp, e.nomemp, e.numdocu, f.idper, f.nomper, f.pagini FROM empleado AS e INNER JOIN perfil AS f ON e.idper=f.idper AND e.emaemp = :emaemp AND e.pssemp = :pssemp";
-    
-    $modelo = new Conexion();
-    $conexion = $modelo->get_conexion();
-    $result = $conexion->prepare($sql);
-    $result->bindParam(":emaemp", $ema);
-    $result->bindParam(":pssemp", $pss);
-    $result->execute();
-    $res = $result->fetch(PDO::FETCH_ASSOC);
-
-    if ($res) {
-        iniciarSesion($res['idemp'], $res['nomemp'], $res['nomper'], $res['idper'], $res['pagini']);
-    } else {
-        red();
-    }
-}
-
-function ingrBar($ema, $pss)
-{
-    $res = NULL;
-    $pss = sha1(md5($pss . 'dlHagO#')); // Aplicar hashing a la contraseña
-    
-    $sql = "SELECT b.idbar, b.nombar, b.nit, f.idper, f.nomper, f.pagini FROM bar AS b INNER JOIN perfil AS f ON b.idper=f.idper AND b.emabar = :emabar AND b.pssbar = :pssbar";
-    
-    $modelo = new Conexion();
-    $conexion = $modelo->get_conexion();
-    $result = $conexion->prepare($sql);
-    $result->bindParam(":emabar", $ema);
-    $result->bindParam(":pssbar", $pss);
-    $result->execute();
-    $res = $result->fetch(PDO::FETCH_ASSOC);
-
-    if ($res) {
-        iniciarSesion($res['idbar'], $res['nombar'], $res['nomper'], $res['idper'], $res['pagini']);
-    } else {
-        red();
-    }
-}
-
-function iniciarSesion($id, $nombre, $perfil, $idper, $pagini)
-{
+// Verificar credenciales
+$userData = valida($usu, $pas);
+if ($userData) {
+    // Si las credenciales son correctas, iniciar sesión
     session_start();
-    $_SESSION['idper'] = $idper;
-    $_SESSION['pagini'] = $pagini;
-    echo "<script>window.location='../home.php';</script>";
+    $_SESSION['id'] = $userData['id'];        // Guardar ID del actor
+    $_SESSION['nombre'] = $userData['nombre'];  // Guardar nombre del actor
+    $_SESSION['idper'] = $userData['idper'];      // Guardar el idper del actor
+
+    // Redirigir a la página de inicio correspondiente
+    header('Location: home.php');  // Cambia a la página que corresponda
+} else {
+    red('wrong_credentials');  // Si las credenciales son incorrectas
+}
+
+// Función para determinar el perfil basado en el formato del email
+function validaActor($usu) {
+    // Verificar que el email tenga el formato @gmail.com
+    if (strpos($usu, '@gmail.com') !== false) {
+        return true; // Puede ser un actor válido
+    }
+    return NULL; // Email no válido
+}
+
+// Función para validar credenciales del usuario, bar o empleado
+function valida($email, $password) {
+    global $conn;
+
+    // Preparar la consulta para verificar credenciales
+    $sql = "SELECT idusu AS id, nomusu AS nombre, pssusu AS password, idper 
+            FROM usuario WHERE emausu = ? AND pssusu = ?
+            UNION
+            SELECT idbar AS id, nombar AS nombre, pssbar AS password, idper 
+            FROM bar WHERE emabar = ? AND pssbar = ?
+            UNION
+            SELECT idemp AS id, nomemp AS nombre, pssemp AS password, idper 
+            FROM empleado WHERE emaemp = ? AND pssemp = ?";
+
+    $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        die("Error en la preparación de la consulta: " . $conn->error);
+    }
+
+    $stmt->bind_param("ssssss", $email, $password, $email, $password, $email, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        return $result->fetch_assoc();  // Retornar los datos del actor
+    }
+    return false;  // Retornar falso si no coincide el email o la contraseña
+}
+
+// Función para redirigir en caso de error
+function red($error) {
+    header('Location: ../index.php?err=' . $error);
+    exit();
 }
 ?>

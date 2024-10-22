@@ -1,22 +1,24 @@
+<?php include "controllers/cmenu.php"; ?>
 <link rel="stylesheet" href="../css/carcomp.css">
 <link rel="stylesheet" href="../css/inho.css">
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <nav class="collapse navbar-collapse" id="menu">
+<?php if (!empty($dtAll)) { 
+            foreach ($dtAll as $dt) { ?>
     <ul class="navbar-nav me-auto">
-    <li class="nav-item"><a class="nav-link" href="home.php?pg=102">Bares</a></li>
-        <li class="nav-item"><a class="nav-link" href="home.php?pg=104">Cocteles</a></li>
-        <li class="nav-item"><a class="nav-link" href="home.php?pg=105">Vinos</a></li>
-        <li class="nav-item"><a class="nav-link" href="home.php?pg=106">Licores</a></li>
+        <li class="nav-item"><a class="nav-link" href="<?= htmlspecialchars($dt['rutpag']); ?>"><?= htmlspecialchars($dt['nompag']); ?></a></li>
         
     </ul>
+    <?php }}?>
     <ul class="navbar-nav ml-auto" id="menuu">
         <li class="nav-item"><a class="nav-link" href="home.php?pg=108"><i class="fa-regular fa-user" style="color: #F0C403;"></i></a></li>
         <li class="nav-item"><a class="nav-link" id="open-cart" style="cursor: pointer;"><i class="fa-solid fa-cart-shopping" style="color: #F0C403;"></i></a></li>
         <li class="nav-item"><a class="nav-link" href="home.php?pg=107"><i class="fa-solid fa-clipboard-list" style="color: #F0C403;"></i></a></li>
         <li class="nav-item"><a class="nav-link" href="index.php"><i class="fa-solid fa-right-from-bracket" style="color: #F0C403;"></i></a></li>
     </ul>
+    
 </nav>
 
 <!-- Menú para empleados -->

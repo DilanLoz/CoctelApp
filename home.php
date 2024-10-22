@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-hola como estas el dia de hoy
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +11,11 @@ hola como estas el dia de hoy
     <link rel="icon" href="img/favicon.png">
 </head>
 <body>
-    
+<?php include ("models/conexion.php");
+        date_default_timezone_set('America/Bogota');
+        $pg= isset($_REQUEST["pg"]) ? $_REQUEST["pg"]:NULL; 
+        if(!$pg AND $_SESSION['pagini']) $pg=$_SESSION['pagini'];
+        ?>
         <a href="#" target="_blank"><img src="img/logo.png" id="logo" alt="logodos" height="50px"></a>
         <div class="barra-busqueda">
             <input type="text" placeholder="Buscar..." onkeydown="if(event.keyCode==13) event.preventDefault();">
@@ -27,52 +30,14 @@ hola como estas el dia de hoy
         </div>
     </nav>
     <section>
-        <?PHP require_once("views/menuh.php");
-            $pg = isset($_GET["pg"]) ? $_GET["pg"]:NULL;
-            if(!$pg) 
-            require_once("home.php");
-            if($pg=="102") 
-            require_once("views/vusbares.php");
-            if($pg=="104") 
-            require_once("views/vuscoct.php");
-            if($pg=="105") 
-            require_once("views/vusvino.php");
-            if($pg=="106") 
-            require_once("views/vuslicor.php");
-            if($pg=="107") 
-            require_once("views/vushipe.php");
-            if($pg=="108") 
-            require_once("views/vpusu.php");
-            if($pg=="11") 
-            require_once("views/vusprodgrand.php");
-            if($pg=="111") 
-            require_once("views/vuscocgrand.php");
-            if($pg=="109") 
-            require_once("index.php");
-            if($pg=="201") 
-            require_once("views/vexbpedproc.php");
-            if($pg=="202") 
-            require_once("views/vemhipe.php");
-            if($pg=="203") 
-            require_once("views/vemgan.php");
-            if($pg=="204") 
-            require_once("views/vpemp.php");
-            if($pg=="2001") 
-            require_once("views/vexbpedgrand.php");
-            if($pg=="205") 
-            require_once("index.php");
-            if($pg=="301") 
-            require_once("views/vbargan.php");
-            if($pg=="302") 
-            require_once("views/vbarxprod.php");
-            if($pg=="303") 
-            require_once("views/vbarxem.php");
-            if($pg=="304") 
-            require_once("views/vpbar.php");
-            if($pg=="305") 
-            require_once("index.php");
-    ?>
-
+    <?php
+		$rut = validar($pg);
+		if($rut){
+			include ($rut[0]['rutpag']);
+		} else {
+			echo "<br><br><br><br><br><br> <h3> No tiene permisos para ingresar a este sitio </h3> <br><br><br><br><br><br>";
+		}
+		?>
     </section>
     <footer class="bg-black">
         <?php
