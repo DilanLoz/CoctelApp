@@ -30,13 +30,13 @@
                             <input type="password" minlength="4" id="password" name="pss" class="input-field" autocomplete="off" required />
                             <label><i class="fa-solid fa-lock" style="color: #ffffff;"></i> Contraseña</label>
                         </div>
-
-                        <!-- Mostrar error si los datos son inválidos -->
                         <?php
-                            $err = isset($_GET['err']) ? $_GET['err'] : NULL;
-                            if($err == 'oK') echo "<span class='dtinv'>Datos inválidos</span>";
+                            $error = isset($_GET['error']) ? $_GET['error']:NULL;
+                            if($error=="ok"){
+                                echo "Datos invalidos. Vuelve a intentarlo.";
+                                echo "<script>alert('Datos invalidos. Vuelve a intentarlo.');</script>";
+                            }
                         ?>
-
                         <input type="submit" value="Iniciar Sesión" class="sign-btn" />
 
                         <p class="text fw-bold">
