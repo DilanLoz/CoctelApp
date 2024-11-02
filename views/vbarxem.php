@@ -61,5 +61,47 @@
             <input type="submit" value="Crear empleado" class="btn btn-warning" id="crearemBtn">
         </div>
     </form>
+    <div>
+    <table id="example" class="table table-striped" style="width:100%">
+    <thead>
+        <tr>
+			<th>Id</th>
+			<th>Nombre</th>
+			<th>No. Documento</th>
+			<th>Telefono</th>
+			<th></th>
+		</tr>
+    </thead>
+	<tbody><!--
+		<?php if($dat){ foreach ($dat as $dt) { ?>
+			<tr>
+				<td>
+					<?php if (file_exists($dt["fotiden"])) { ?>
+						<img src="<?=$dt["fotiden"];?>" width="150px"> 
+					<?php } ?>-->
+				</td>
+				<td><?=$dt["idemp"];?> <?=$dt["nomemp"];?></td>
+				<td><?=$dt["numdocu"];?></td>
+				<td><?=$dt["celemp"];?></td>
+				<td>
+					<a href="home.php?pg=160&ope=del&id=<?=$dt["id"];?>" onclick="return eli();" title="Eliminar"><i class="fa-solid fa-trash"></i></a>
+					<a href="home.php?pg=160&ope=edi&id=<?=$dt["id"];?>" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
+				</td>
+			</tr>
+		<?php }} ?>
+	</tbody>
+
+    <tfoot>
+        <tr>
+			<th>Id</th>
+			<th>Nombre</th>
+			<th>No. Documento</th>
+			<th>Telefono</th>
+			<th></th>
+		</tr>
+    </tfoot>
+</table>
+
+    </div>
     <script src="js/alertas.js"></script>
 </div>

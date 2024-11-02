@@ -1,0 +1,100 @@
+<?php 
+    require_once 'models/mpef.php';
+    $mpef = new Mpef();
+
+    $idpef = isset($_REQUEST['idpef']) ? $_REQUEST['idpef']:NULL;
+    $nompef = isset($_POST['nompef']) ? $_POST['nompef']:NULL;
+    $pagpri = isset($_POST['pagpri']) ? $_POST['pagpri']:NULL;
+    $pagi = isset($_POST['pagi']) ? $_POST['pagi']:NULL;
+    
+    $ope = isset($_REQUEST['ope']) ? $_REQUEST['ope']:NULL;
+    $pag = 1103;
+
+//echo "<br>".$idpef."-". $nompef ."-". $pagpri ."-".$ope;
+
+$mpef->setIdpef($idpef);
+if($ope=="save"){
+    if($nompef && $pagpri){
+        $mpef->setNompef($nompef);
+        $mpef->setPagpri($pagpri);
+        
+        if(!$idpef){
+            $mpef->save();
+        }else{
+            $mpef->edit();
+        }
+    }
+}
+//Insertar PXP
+if($ope=="InsPxP"){
+    if($idpef && $pagi){
+        $mpef->delPXP();
+        for($i=0;$i<count($pagi);$i++){
+            $mpef->setIdpag($pagi[$i]);
+            $mpef->insPxP();
+        }
+    }
+    $idpef="";
+}
+//Eliminar
+if($ope=="eli"){
+    $mpef->delPXP();
+    $mpef->del();
+} 
+
+//Eliminar PXP
+if($ope=="EliPxP") $mpef->delPXP();
+
+//mostrar todos los datos
+$dat = $mpef->getAll();
+$datpag = $mpef->getPag();
+$datOne = NUll;
+if($ope=="edi" and $idpef) $datOne = $mpef->getOne();
+
+function modal($idpef, $nompef, $pg){
+    $mpef = new mpef();
+    $datpag = $mpef->getPag();
+    $html = '';
+
+    $html .= '<div class="modal" id="myModal'.$idpef.'" tabindex="-1" role="dialog">';
+        $html .= '<div class="modal-dialog">';
+            $html .= '<div class="modal-content">';
+                $html .= '<form name="frm3" action="home.php?pg='.$pg.'" method="POST">';
+                    $html .= '<div class="modal-header">';
+                        $html .= '<h3 class="modal-title">Páginas</h3>';
+                        $html .= '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+                    $html .= '</div>';
+                    
+                        $html .= '<div class="modal-body"  style="text-align: left;">';
+                            $html .= '<h5>Perfil: '.$nompef.'</h5>';
+                            $html .= '<div class="row">';
+                            if($datpag){
+                                foreach ($datpag  as $dt) {
+                                    $mpef->setIdpef($idpef);
+                                    $mpef->setIdpag($dt['idpag']);
+                                    $dtpxp = $mpef->getPxP();
+                                    $html .= '<div class="form-group col-md-4">';
+                                        $html .= '<input type="checkbox" name="pagi[]" value="'.$dt['idpag'].'"';
+                                        if($dtpxp) $html .= " checked ";
+                                        $html .= '>';
+                                            $html .= "&nbsp;&nbsp;&nbsp;".$dt['nompag'];
+                                    $html .= '</div>';
+                                    
+                                }
+                            }
+                            $html .= '</div>';
+                        $html .= '<input type="hidden" name="ope" value="InsPxP">';
+                        $html .= '<input type="hidden" name="idpef" value="'.$idpef.'">';
+                        $html .= '</div>';
+                    $html .= '<div class="modal-footer">';
+                        $html .= '<button type="button" class="btn btn-secondary" style="margin-top: 26px;padding: 6px 50px;" data-bs-dismiss="modal">Cerrar</button>';
+                        $html .= '<input type="submit" class="btn btn-primary" value="Guardar">';
+                    $html .= '</div>';
+                $html .= '</form>';
+            $html .= '</div>';
+        $html .= '</div>';
+    $html .= '</div>';
+    return $html;
+}
+    
+?>

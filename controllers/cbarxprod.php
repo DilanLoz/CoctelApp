@@ -1,5 +1,6 @@
 <?php
 require_once ('models/mbarxprod.php');
+require_once 'models/conexion.php';
 
 $mbarxprod = new Mbarxprod();
 

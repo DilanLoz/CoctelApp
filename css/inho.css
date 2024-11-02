@@ -3,39 +3,83 @@ body{
     font-family: 'Montserrat',sans-serif;
     overflow-x: hidden;
 }
-nav{
-    background-color: #ffffff;
+/* Estilos para el contenedor de navegación */
+.navs {
+    background-color: #fff; /* Cambia el color de fondo según tu diseño */
+    position: fixed; /* Fijar el contenedor en la parte superior */
+    top: 0; /* Posición en la parte superior */
+    left: 0; /* Posición a la izquierda */
+    width: 100%; /* Ancho completo */
+    height: 80px; /* Altura del navbar */
+    z-index: 1000; /* Asegura que esté encima de otros elementos */
+    box-shadow: 0 2px 4px rgba(78, 78, 78, 0.043); /* Sombra sutil para dar profundidad */
+    display: flex; /* Usar flexbox para alinear elementos */
+    align-items: center; /* Centrar verticalmente los elementos */
+    padding: 10px 20px; /* Espaciado interno */
 }
 
-#menuu{
-    padding-right: 30px;
+/* Logo dentro del contenedor */
+#logo {
+    margin-right: 20px; /* Espacio a la derecha del logo */
+    margin-left: 10px; /* Espacio a la izquierda del logo */
 }
-#menu{
-    padding-left: 1rem;
+
+/* Estilos para la barra de búsqueda */
+.barra-busqueda {
+    display: flex; /* Usar flexbox para alinear el input */
+    align-items: center; /* Centrar verticalmente los elementos */
+    flex-grow: 1; /* Ocupa el espacio disponible */
+    margin-right: 20px; /* Espacio a la derecha del input */
 }
+
+.barra-busqueda input {
+    border: 1px solid #000000; /* Borde del input */
+    padding: 8px; /* Espaciado interno del input */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #ffc107; /* Color de fondo del input */
+}
+
+.barra-busqueda ::placeholder {
+    color: #000000 !important; /* Color del placeholder */
+}
+
+/* Menú colapsable */
+.collapse {
+    display: none; /* Ocultar por defecto */
+}
+
+.collapse.active {
+    display: block; /* Mostrar cuando está activo */
+}
+
+/* Estilos para los enlaces del menú */
 #menu .navbar-nav .nav-link {
     color: #000000!important; 
     position: relative;
     padding: 10px;
     text-decoration: none;
 }
+
 #menu .navbar-nav .nav-link:after {
     content: "";
     position: absolute;
     height: 2px;
     width: 100%;
-    background-color: #ffc107;
+    background-color: #ffc107; /* Color de la línea */
     bottom: 0;
     left: 0;
     transform: scaleX(0);
     transition: transform 0.5s ease;
 }
+
 #menu .navbar-nav .nav-link.active:after {
     transform: scaleX(1);
 }
+
 #menu .navbar-nav .nav-link:hover:after {
     transform: scaleX(1);
 }
+
 #logo {
     margin-right: 20px;
     margin-left: 10px;

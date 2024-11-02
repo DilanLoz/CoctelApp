@@ -213,6 +213,7 @@ header {
 }
 
 .price {
+    align-items: flex-start;
     font-weight: bold;
     font-size: 20px;
 }

@@ -127,7 +127,7 @@ class Mpusu{
     	$result->execute();
 	}
 	public function edit(){
-		$sql = "UPDATE usuario SET nomusu=:nomusu, emausu=:emausu,celusu=:celusu, pssusu=:pssusu, codusu=:codusu, idper=:idper idval=:idaval WHERE idusu=:idusu";
+        $sql = "UPDATE usuario SET nomusu=:nomusu, emausu=:emausu, celusu=:celusu, pssusu=:pssusu, codubi=:codubi, idper=:idper, idval=:idval WHERE idusu=:idusu";
 		$modelo = new Conexion();
 		$conexion = $modelo->get_conexion();
 		$result = $conexion->prepare($sql);

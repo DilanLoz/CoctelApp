@@ -1,4 +1,5 @@
 <?php
+require_once 'models/conexion.php';
 class Mbarxprod{
 
 	private $idprod;

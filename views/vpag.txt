@@ -1,0 +1,109 @@
+<?php 
+require_once 'controllers/cpag.php';
+echo titulo("<i class='".$icono."'></i> Páginas");
+?>
+<div id="ocultar">
+    <form class="m-tb-40" action="home.php?pg=<?=$pg;?>" method="POST">
+        <div class="row">
+            <input type="hidden" class="form-control form-control-sm" id="idpag" name="idpag" value="<?=isset($datOne) ? $datOne[0]['idpag'] : ''; ?>" />
+            <div class="form-group col-md-6">
+                <label for="nompag">Nombre</label>
+                <input type="text" name="nompag" id="nompag" maxlength="70" class="form-control" required value="<?php if($datOne) echo $datOne[0]['nompag']; ?>">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="rutpag">Ruta</label>
+                <input type="text" name="rutpag" id="rutpag" class="form-control" required value="<?php if($datOne) echo $datOne[0]['rutpag']; ?>">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="mospag">Mostrar</label>
+                <select name="mospag" id="mospag" class="form-select">
+                    <option value="1"
+                    <?php if($datOne && $datOne[0]['mospag']==1) echo " selected "; ?>>Mostrar</option>
+                    <option value="2"
+                    <?php if($datOne && $datOne[0]['mospag']==2) echo " selected "; ?>>No mostrar</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="ordpag">Ordenar</label>
+                <input type="number" name="ordpag" id="ordpag" class="form-control" required value="<?php if($datOne) echo $datOne[0]['ordpag']; ?>">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="icopag">Icono</label>
+                <input type="text" name="icopag" id="icopag" class="form-control" value="<?php if($datOne) echo $datOne[0]['icopag']; ?>">
+                <br>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="icopag">Descripción</label>
+                <textarea name="despag" id="despag" class="form-control"><?php if($datOne) echo $datOne[0]['despag']; ?></textarea>
+                <br>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="submit" class="btn btn-primary" value="Registrar">
+                <input type="hidden" name="ope" value="save" />
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<table id="myt" class="table table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>Página</th>
+            <th>Ord.</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+            if($dat){
+                foreach($dat AS $d){
+        ?>            
+            <tr>
+                <td>
+                    <div class="txtfot1">
+                        <i class="<?=$d['icopag'];?> fa-2x"></i>
+                    </div>
+                    <div class="txtfot2">
+                        <strong><?=$d['idpag'];?> - <?=$d['nompag'];?></strong><br>
+                        <small><strong>Ruta: </strong><?=$d['rutpag'];?><br><strong>Nombre del icono: </strong><?=$d['icopag'];?>&nbsp;&nbsp;&nbsp;</small>
+                        <?php if($d['despag']){ ?><i class="fa-solid fa-comment" title="<?=$d['despag'];?>"></i><?php } ?>
+                    </div>
+                </td>
+                <td style="text-align: center;">
+                    <?=$d['ordpag'];?>
+                </td>
+                <td style="text-align:right;">
+                    <span style="opacity: 0;">
+                        <?=$d['mospag'];?><br>
+                    </span>
+                    <?php if($d['mospag']==1){?>
+                        <a href="home.php?pg=<?=$pag;?>&mospag=2&idpag=<?=$d['idpag'];?>" class="faok">
+                            <i class="fa-solid fa-circle-check fa-2x btnact"></i>
+                        </a>
+                    <?php }else{ ?>
+                        <a href="home.php?pg=<?=$pag;?>&mospag=1&idpag=<?=$d['idpag'];?>" class="faok">
+                            <i class="fa-solid fa-circle-xmark fa-2x btndesact"></i>
+                        </a>
+                    <?php } ?>
+                    <a href="home.php?pg=<?=$pag;?>&ope=edi&idpag=<?=$d['idpag'];?>"  class="faok">
+                        <i class="fa-solid fa-pen-to-square fa-2x" title="Editar" style="margin: 5px;"></i>
+                    </a>
+                    <a href="home.php?pg=<?=$pag;?>&idpag=<?=$d['idpag'];?>&ope=eli" class="faok" onclick="return eli();">
+                        <i class="fa-solid fa-trash-can fa-2x" title="Eliminar" style="margin: 5px;"></i>
+                    </a>
+                </td>
+            </tr>
+        <?php
+                    }
+                }
+        ?>        
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Página</th>
+            <th>Ord.</th>
+            <th></th>
+        </tr>
+    </tfoot>
+</table>

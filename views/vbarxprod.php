@@ -1,71 +1,93 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="style.css">
-
-
-<div class="container mt-3 mb-5">
-    <h1 class="mb-4">Crear producto</h1>
-    <form action="#" method="post">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="name">Nombre del empleado:</label>
-                    <input type="text" id="name" name="name" class="form-control" required>
-                </div>
-                <div class="form-group">
-                <label for="exampleInputPassword1" class="form-label me-3">Descripcion del producto:</label>
-                <input type="Descripcion" class="form-control" id="exampleInputPassword1">
-                </div>
-                <div class="form-group">
-                        <label for="ubicacion" class="form-label">Categorias:</label>
-                        <select id="employee-type" name="employee-type" class="form-control" required>
-                            <option value="cocteles">Cocteles</option>
-                            <option value="vinos">Vinos</option>
-                            <option value="licores">Licores</option>
-                        </select>
-                </div>
-                <div class="form-group">
-                    <label for="cantprod" class="form-label">Cantidad de producto:</label>
-                    <input type="number" class="form-control" id="cantprod" name="cantprod" min="10" step="10" required>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="fotprod">Foto del producto:</label>
-                    <input type="file" id="fotprod" name="fotprod" accept="image/*" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="coubi" class="form-label">Ciudades para venta:</label>
-                    <select id="employee-type" name="employee-type" class="form-control" required>
-                        <option value="bogota">Bogota DC</option>
-                        <option value="medellin">Medellin</option>
-                        <option value="cartagena">Cartagena</option>
-                        <option value="bucaramanga">Bucaramanga</option>
-                        <option value="nariño">Nariño</option>
-                    </select>
-                </div>
-                <div class="row form-group">
-                    <div class="col-md-3">
-                    <label for="descprod" class="form-label">Descuento:</label>
-                    <select id="employee-type" name="employee-type" class="form-control" required>
-                        <option value="01">5%</option>
-                        <option value="02">10%</option>
-                        <option value="03">15%</option>
-                        <option value="04">20%</option>
-                        <option value="05">30%</option>
-                    </select>
-                    </div>
-                    <div class="col-md-9">
-                        <label for="exampleInputEmail1" class="form-label">Codigo de descuento:</label>
-                        <input type="Ingrese" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    </div>
-                </div>
-                <div class="text-end mt-3">
-                    <input type="submit" value="Crear producto" class="btn btn-warning" id="crearprodBtn">
-                </div>
-            </div>
+<?php require_once ('controllers/cbarxprod.php');?>
+<h1><i class=""></i>  Crear producto y Historial del producto</h1>
+<hr>
+<br>
+<div class="container">
+<form id="frmins" action="home.php?pg=<?=$pg;?>" method="POST">
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="nomprod"><strong>Producto</strong></label>
+            <input type="text" name="nomprod" id="nomprod" class="form-control" cursive-label="Default select example"value="<?php if($datOne) echo $datOne[0]['nomprod']; else echo "Aguardiente"; ?>" required>
         </div>
-    </form>
-    <script src="js/alertas.js"></script>
+        <div class="form-group col-md-6">
+            <label for="desprod"><strong>Descripcion producto</strong></label>
+            <input type="text" name="desprod" id="desprod" class="form-control" cursive-label="Default select example"value="<?php if($datOne) echo $datOne[0]['desprod'];?>" required></div>
+        <div class="form-group col-md-6">
+            <label for="vlrprod"><strong>Valor de producto</strong></label>
+            <input type="text" name="vlrprod" id="vlrprod" class="form-control" cursive-label="Default select example"value="<?php if($datOne) echo $datOne[0]['vlrprod'];?>" required>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="cantprod"><strong>Cantidad de producto</strong></label>
+            <input type="text" name="cantprod" id="cantprod" class="form-control" cursive-label="Default select example"value="<?php if($datOne) echo $datOne[0]['cantprod'];?>" required>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="fotprod">Imagen</label>
+            <input type="file" class="form-control form-control" name="fots" accept="image/*" id="fotprod">
+            <input type="hidden" name="fotprod" value="<?php if(isset($datOne) && $datOne[0]['fotprod']) echo $datOne[0]['fotprod']; ?>">
+        </div>
+        <div class="form-group col-md-6">
+    <br>
+    <input class="btn btn-primary" type="submit" value="Enviar">
+    <input type="hidden" name="ope" value="save">
+    <input type="hidden" name="idprod" id="idprod" value="<?php if(isset($datOne) && !empty($datOne)) echo $datOne[0]['idprod']; ?>">
+</div>
+</form>
+
+<br>
+
+<table id="example" class="table table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php if (isset($datAll) && !empty($datAll)) { foreach ($datAll as $dta) { ?>
+    <tr>
+        <td>
+            <?php 
+            if (!empty($dta["fotprod"]) && file_exists("img/" . $dta["fotprod"])) { ?>
+                <img src="img/<?=$dta["fotprod"];?>" width="120px"> 
+            <?php } else { ?>
+                <img src="img/logo.png" width="120px">
+            <?php } ?>
+            <strong><?=$dta['idprod'];?> - <?=$dta['nomprod'];?></strong><br>
+            <small><small>
+                <strong>Descripción: </strong><?=$dta['desprod'];?><br>
+                <strong>Valor producto: </strong><?=$dta['vlrprod'];?><br>
+                <strong>Cantidad Producto: </strong><?=$dta['cantprod'];?><br>
+                <strong>Foto Producto: </strong><?=$dta['fotprod'];?>
+            </small></small>
+        </td>
+        <td style="text-align:center;">
+            <a href="home.php?pg=<?=$pg;?>&idprod=<?=$dta['idprod'];?>&ope=edi" title="Editar">
+                <i class="fa-solid fa-pen-to-square fa"></i>
+            </a>
+            <a href="home.php?pg=<?=$pg;?>&idprod=<?=$dta['idprod'];?>&ope=eli" title="Eliminar" onclick="return eliminar();">
+                <i class="fa-solid fa-trash-can fa"></i>
+            </a>
+        </td>
+    </tr>
+    <?php }} ?>
+    </tbody>
+</table>
+
+    <tfoot>
+        <tr>
+            <th>Producto</th>
+            <th></th>
+        </tr>
+    </tfoot>
+</table>
+<nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#">Siguiente</a>
+    </li>
+  </ul>
+</nav>
 </div>
