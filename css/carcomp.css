@@ -186,10 +186,12 @@ header {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* Mostrar cuatro productos por fila en pantallas grandes */
     gap: 1.5rem;
+    padding-top: 5px;
 }
 
 .product-box {
     position: relative;
+    padding-top: 20px;
 }
 
 .product-box:hover {
@@ -215,7 +217,7 @@ header {
 .price {
     align-items: flex-start;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .add-cart {
@@ -237,11 +239,15 @@ header {
     .shop-content {
         grid-template-columns: repeat(3, 1fr); /* Cambiar a dos productos por fila en dispositivos medianos */
     }
-    .bar {
-        border-top-width: 200px; /* Establecer el ancho del borde superior */
-    border-bottom-width: 200px; /* Establecer el ancho del borde inferior */
-        border-style: solid; /* Establecer el estilo del borde */
-        justify-content: left !important; /* Ajustar la justificación al contenido */
+    .product-title{
+        font-size: 26px;
+    }
+    .price{
+        font-size: 24px;
+    }
+    .bar{
+        font-size: 22px !important;
+        width: 50%;
     }
 }
 
@@ -257,6 +263,16 @@ header {
     }
     .cart {
         width: 320px;
+    }
+    .product-title{
+        font-size: 16px;
+    }
+    .price{
+        font-size: 14px;
+    }
+    .bar{
+        font-size: 12px;
+        width: 50%;
     }
 }
 
