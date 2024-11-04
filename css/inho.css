@@ -52,6 +52,9 @@ body{
 .collapse.active {
     display: block; /* Mostrar cuando está activo */
 }
+section{
+    padding-top: 80px;
+}
 
 /* Estilos para los enlaces del menú */
 #menu .navbar-nav .nav-link {

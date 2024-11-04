@@ -19,7 +19,7 @@
 	$pg= isset($_REQUEST["pg"]) ? $_REQUEST["pg"]:NULL;
     if(!$pg AND $_SESSION['pagini']) $pg=$_SESSION['pagini'];
     ?>
-    <div class="navs">
+<div class="navs">
     <a href="#" target="_blank">
         <img src="img/logo.png" id="logo" alt="logodos" height="50px">
     </a>

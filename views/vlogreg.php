@@ -96,7 +96,7 @@
                             <label><i class="fa-solid fa-lock" style="color: #ffffff;"></i>  Contraseña</label>
                         </div>
 
-                        <input type="submit" value="Registrar" class="registro-btn" />S
+                        <input type="submit" value="Registrar" class="registro-btn" />
                     </div>
                 </form>
                 <form action="home.html" autocomplete="off" class="recovery-form" style="display: none;">
@@ -125,7 +125,7 @@
                 </form>
             </div>
 
-            <div class="container text-center">
+            <div class="container-carousel text-center">
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -134,13 +134,13 @@
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active" data-bs-interval="5000">
-                            <img src="img/pub1.jpg" style="height: 700px;">
+                            <img src="img/pub1.jpg" >
                         </div>
                         <div class="carousel-item" data-bs-interval="5000">
-                            <img src="img/pub2.jpg" style="height: 700px;">
+                            <img src="img/pub2.jpg" >
                         </div>
                         <div class="carousel-item" data-bs-interval="5000">
-                            <img src="img/pub3.jpg" style="height: 700px;">
+                            <img src="img/pub3.jpg" >
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
