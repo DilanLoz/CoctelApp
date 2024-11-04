@@ -1,19 +1,17 @@
-
-
 /*css de vistas*/
-#ganan{
+#ganan {
     background-color: #000000;
 }
 /*css de coctel linea amarilla*/
-#lineatil{
+#lineatil {
     width: 20px;
     height: 20px;
 }
 /*css de productos seleccion de ml*/
-#selecmili{
+#selecmili {
     width: 200px;
 }
-#contenedordeventa{
+#contenedordeventa {
     font-size: 15px;
     width: 225px;
     margin: auto;
@@ -24,20 +22,18 @@
     border-radius: 5px;
     margin-top: 4px;
 }
-#btnSi{
+#btnSi {
     width: 200px;
 }
-#btnNo{
+#btnNo {
     width: 200px;
 }
-
 #imagenReferencia {
     width: 400px;
 }
-#imagenCoctel{
+#imagenCoctel {
     height: 500px;
 }
-
 /* para historial pedidos*/
 .number {
     width: 100%;
@@ -45,76 +41,68 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
-#usnumped{
+#usnumped {
     margin-left: 10%;
 }
 /*css de compra final*/
 #imgcompra {
-    max-width: 200px; /* Define el ancho máximo */
-    max-height: 200px; /* Define la altura máxima */
-    display: block; /* Hace que la imagen sea un bloque para poder centrarla */
-    margin: 0 auto; /* Centra horizontalmente */
+    max-width: 200px;
+    max-height: 200px;
+    display: block;
+    margin: 0 auto;
 }
-#logococ{
-    width: 100px; 
+#logococ {
+    width: 100px;
     height: auto;
 }
-
 .btn-order {
-margin-left: 4px;
+    margin-left: 4px;
 }
-
 .product-description {
-margin-top: 50px;
+    margin-top: 50px;
 }
-
-
-
 /*margenes de los bares*/
 .imguno {
-    width: 100%; 
-    height: 200px; 
-    overflow: hidden; 
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
 }
 .imguno img {
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 /*css de ubicomp de detalles de pedido*/
-#detpedpq{
+#detpedpq {
     color: #ffffff !important;
 }
 
+/* Responsive adjustments */
 @media screen and (max-width: 780px) {
-    #vlrprod{
+    #vlrprod {
         width: 190px;
     }
     #intro {
         width: 90% !important;
     }
     .marg {
-        margin-bottom: 20px; /* Agrega espacio entre los elementos en dispositivos móviles */
+        margin-bottom: 20px;
     }
-
     .marg ul {
-        padding-left: 0; /* Quita el padding izquierdo de las listas en dispositivos móviles */
+        padding-left: 0;
     }
-
     .marg ul li {
-        margin-left: 0; /* Quita el margen izquierdo de los elementos de lista en dispositivos móviles */
+        margin-left: 0;
     }
 }
 @media screen and (max-width: 480px) {
     #borrarprd {
-        margin-left: 10px; /* Cambia el margen izquierdo */
+        margin-left: 10px;
     }
-
     #opcprd {
-        margin-top: 20px; /* Cambia la margen superior */
-        width: 30px; /* Cambia el ancho del select */
+        margin-top: 20px;
+        width: 30px;
     }
 }
 
@@ -129,26 +117,33 @@ margin-top: 50px;
 
 /*-----------------------CSS PEDIDOS EN PROCESO DE BAR Y EMPLEADO------------------*/
 .dtpedproc {
-    display: block; /* Hacer que el enlace sea un bloque para que pueda centrarse */
+    display: block;
     color: white;
-    text-decoration: none; /* Eliminar el subrayado */
-    text-align: center; /* Centrar el texto */
-    padding: 10px; /* Añadir un poco de relleno para el espacio visual */
+    text-decoration: none;
+    text-align: center;
+    padding: 10px;
     font-size: 20px;
     font-weight: bold;
 }
-
 .bg-black {
     background-color: black;
-    border-radius: 5px; /* Ajusta según sea necesario */
+    border-radius: 5px;
 }
-
 .dtped {
-    border: 1.5px solid #ffc107; /* O usa border-warning de Bootstrap para el borde amarillo */
-    border-radius: 5px; /* Opcional: para redondear los bordes */
-    padding: 15px; /* Opcional: para agregar espacio interno */
+    border: 1.5px solid #ffc107;
+    border-radius: 5px;
+    padding: 15px;
 }
-
-
-
 /*-----------------------CSS PEDIDOS EN PROCESO DE BAR Y EMPLEADO------------------*/
+
+/*-----------------------CSS PARA CARRUSEL DE IMÁGENES------------------*/
+.carousel-inner {
+    width: 100%;
+    height: 900px; /* Ajusta este valor a la altura deseada */
+}
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Hace que la imagen se recorte para llenar el contenedor */
+    object-position: center; /* Centra la imagen dentro del contenedor */
+}

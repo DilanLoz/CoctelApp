@@ -18,13 +18,12 @@
     <div class="barra-busqueda">
         <input type="text" placeholder="Buscar..." onkeydown="if(event.keyCode==13) event.preventDefault();">
     </div>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
     <div class="collapse navbar-collapse" id="menu">
         <?php require_once("views/menui.php") ?>
     </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 </nav>
     <section>
         <?PHP require_once("views/menui.php");

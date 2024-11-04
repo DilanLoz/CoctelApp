@@ -30,6 +30,9 @@
         <div class="collapse navbar-collapse" id="menu">
             <?php require_once("views/menuh.php"); ?>
         </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
     </nav>
 </div>
 
