@@ -1,5 +1,5 @@
 
-<link rel="stylesheet" href="style.css">
+
 
 <div class="container mt-5 mb-5" style="text-align: left; display: block;">
     <h1 class="mb-4">Crear Empleado</h1>
