@@ -125,41 +125,46 @@ section{
     .navbar-collapse {
         position: fixed;
         top: 0;
-        right: 0; /* Ajusta aquí a `left: 0` si prefieres que aparezca desde la izquierda */
-        width: 75%; /* Ocupa un 75% de la pantalla */
+        right: 0; 
+        width: 75%; 
         height: 100%;
         background-color: #fff;
         z-index: 1050;
         display: flex;
         flex-direction: column;
         padding-top: 20px;
-        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
-        transform: translateX(100%); /* Inicia fuera de la pantalla */
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); 
+        transform: translateX(100%); /* Fuera de la pantalla */
         transition: transform 0.3s ease-in-out;
     }
 
     .navbar-collapse.show {
-        transform: translateX(0); /* Desliza hacia adentro al activarse */
+        transform: translateX(0); /* Cuando se muestra, está en la pantalla */
     }
 
     .nav-link {
         font-size: 1.2rem;
         padding: 15px;
         color: #000000 !important;
-        text-align: left; /* Alineación de los enlaces */
+        text-align: left;
         width: 100%;
     }
 
     /* Estilo del botón de cierre */
     .navbar-toggler {
         position: absolute;
-        top: 15px;
-        right: 15px;
+        top: 50%; /* Centra verticalmente */
+        left: 50%; /* Centra horizontalmente */
+        transform: translate(-50%, -50%); /* Ajusta para que el centro del botón esté exactamente en el centro */
         font-size: 1.5rem;
         background: none;
         border: none;
         z-index: 1100;
     }
+    .navbar-toggler, i{
+        margin-right: 55px;
+    }
+    
 
     .navbar-toggler .close-icon {
         display: none;
@@ -284,7 +289,7 @@ margin-top: 50px;
 
 @media screen and (max-width: 780px) {
     .barra-busqueda input[type="text"] {
-        width: 100px; /* ajusta el tamaño según sea necesario */
+        width: 200px; /* ajusta el tamaño según sea necesario */
     }
     #vlrprod{
         width: 190px;

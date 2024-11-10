@@ -26,7 +26,6 @@
     <div class="barra-busqueda">
         <input type="text" placeholder="Buscar..." onkeydown="if(event.keyCode==13) event.preventDefault();">
     </div>
-    <!-- Contenedor de navegación con aside -->
 <nav class="navbar navbar-expand-md">
     <div class="collapse navbar-collapse" id="menu">
             <?php require_once("views/menuh.php"); ?>

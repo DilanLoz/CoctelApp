@@ -20,6 +20,7 @@
         <ul class="navbar-nav ml-auto" id="menuu">
             <li class="nav-item"><a class="nav-link" href="views/vsal.php" title="Salir"><i class="fa-solid fa-right-from-bracket"></i></a></li>
         </ul>
+        
     
 </nav>
 
