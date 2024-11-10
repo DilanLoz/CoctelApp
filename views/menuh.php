@@ -8,7 +8,7 @@
 <nav class="collapse navbar-collapse" id="menu">
         <ul class="navbar-nav me-auto">
             <?php if (!empty($dtAll)): ?>
-                <?php foreach ($dtAll as $dt): ?> <!-- Itera sobre todos los elementos -->
+                <?php foreach ($dtAll as $dt): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="home.php?pg=<?=$dt['idpag'];?>" title="<?=$dt['nompag'];?>">
                             <i class="<?=$dt['icopag'];?>"></i><?=$dt['nompag'];?>

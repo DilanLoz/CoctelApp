@@ -26,14 +26,18 @@
     <div class="barra-busqueda">
         <input type="text" placeholder="Buscar..." onkeydown="if(event.keyCode==13) event.preventDefault();">
     </div>
-    <nav class="navbar navbar-expand-md">
-        <div class="collapse navbar-collapse" id="menu">
-            <?php require_once("views/menuh.php") ?>
-        </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </nav>
+    <!-- Contenedor de navegación con aside -->
+<nav class="navbar navbar-expand-md">
+    <div class="collapse navbar-collapse" id="menu">
+            <?php require_once("views/menuh.php"); ?>
+    </div>
+    <button class="navbar-toggler" type="button" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars hamburger-icon"></i>
+        <i class="fa-solid fa-xmark close-icon"></i>
+    </button>
+</nav>
+
+
 </div>
 
     
@@ -68,6 +72,7 @@
     
     <script src="js/carcomp.js"></script>
     <script src="js/index.js"></script>
+    <script src="js/menu.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

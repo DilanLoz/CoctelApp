@@ -120,6 +120,61 @@ section{
     font-weight: bold;
     transition: transform 0.5s ease;
 }
+/* Estilos de menú solo para móviles */
+@media (max-width: 768px) {
+    .navbar-collapse {
+        position: fixed;
+        top: 0;
+        right: 0; /* Ajusta aquí a `left: 0` si prefieres que aparezca desde la izquierda */
+        width: 75%; /* Ocupa un 75% de la pantalla */
+        height: 100%;
+        background-color: #fff;
+        z-index: 1050;
+        display: flex;
+        flex-direction: column;
+        padding-top: 20px;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+        transform: translateX(100%); /* Inicia fuera de la pantalla */
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .navbar-collapse.show {
+        transform: translateX(0); /* Desliza hacia adentro al activarse */
+    }
+
+    .nav-link {
+        font-size: 1.2rem;
+        padding: 15px;
+        color: #000000 !important;
+        text-align: left; /* Alineación de los enlaces */
+        width: 100%;
+    }
+
+    /* Estilo del botón de cierre */
+    .navbar-toggler {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 1.5rem;
+        background: none;
+        border: none;
+        z-index: 1100;
+    }
+
+    .navbar-toggler .close-icon {
+        display: none;
+    }
+
+    /* Cambia el icono de hamburguesa a "X" al abrir */
+    .navbar-collapse.show + .navbar-toggler .hamburger-icon {
+        display: none;
+    }
+
+    .navbar-collapse.show + .navbar-toggler .close-icon {
+        display: inline;
+    }
+}
+
 #info a {
     font-size: 16px;
     text-transform: capitalize;
@@ -141,6 +196,7 @@ footer h4{
     color: #fff;
     font-weight: bold;
 }
+
 
 /*------------------------FOOTER Y MENU ----------------------- */
 /* ---------------------------BARES-----------------------*/
