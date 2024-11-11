@@ -143,3 +143,138 @@
     object-fit: cover;
     margin-right: 15px;
 }
+/* CSS de productos y carrito */
+.product-item {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.prodcar {
+    border-radius: 30%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.selcprod{
+    border-radius: 5px;
+    background-color: #fff;
+}
+.costenvio{
+    margin-left: 130px;
+}
+@media (max-width: 768px) {
+    /* Para pantallas pequeñas y medianas (tablets y móviles) */
+    .product-item {
+        flex-direction: row; /* Mostramos los productos en fila */
+        align-items: center; /* Alineamos verticalmente los items */
+        padding: 10px 0;
+    }
+
+    .prodcar {
+        width: 60px; /* Hacemos la imagen un poco más pequeña */
+        height: 60px;
+    }
+
+    .col-7, .col-8 {
+        margin-top: 5px; /* Reducimos los márgenes */
+        font-size: 14px; /* Hacemos el texto un poco más pequeño */
+    }
+
+    .col-2 {
+        margin-top: 10px;
+    }
+
+    /* Aseguramos que los botones y select se alineen mejor */
+    select {
+        width: 80%; /* Ajustamos el tamaño del select */
+        font-size: 14px;
+    }
+
+    .btn-warning {
+        font-size: 14px; /* Reducimos el tamaño del botón */
+        width: 100%;
+    }
+
+    .text-warning {
+        font-size: 20px; /* Hacemos el título un poco más pequeño */
+    }
+}
+
+@media (max-width: 480px) {
+    /* Para pantallas muy pequeñas (móviles) */
+    .product-item {
+        flex-direction: row; /* Seguimos mostrando en fila */
+        padding: 8px 0;
+    }
+
+    .prodcar {
+        width: 50px; /* Hacemos la imagen más pequeña */
+        height: 50px;
+    }
+
+    .col-8 {
+        text-align: left; /* Alineamos el texto al centro */
+        margin-top: 5px;
+    }
+
+    .col-2 {
+        margin-top: 5px;
+    }
+
+    .col-md-6 {
+        width: 100%;
+    }
+
+    .btn-warning {
+        width: 100%;
+        font-size: 12px; /* Reducimos el tamaño del botón */
+    }
+
+    .text-warning {
+        font-size: 18px; /* Hacemos el texto aún más pequeño */
+    }
+    .trash{
+        margin-left: 60px;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Para pantallas móviles en resolución muy baja */
+    .prodcar {
+        width: 40px; /* Más pequeño */
+        height: 40px;
+    }
+    
+
+    .col-8 {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 12px; /* Hacemos el texto más pequeño */
+    }
+
+    .product-item {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    select {
+        width: 80%;
+        font-size: 12px; /* Reducimos aún más el tamaño del select */
+    }
+}
+
+/* Ajustes generales para mejorar la apariencia en pantallas pequeñas */
+.container {
+    padding: 5px; /* Reducimos los márgenes */
+}
+
+.text-warning {
+    font-size: 18px;
+}
+
+.border-warning {
+    border-color: #ffc107 !important;
+}
