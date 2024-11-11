@@ -46,7 +46,7 @@
                         <input type="text" class="form-control" id="fecha_vencimiento" name="fecha_vencimiento" maxlength="7" placeholder="MM/AAAA" required>
                         </div>
                         <div class="col-md-4">
-                            <label for="codigo_seguridad" class="form-label">CVV:</label>
+                            <label for="codigo_seguridad" class="form-label">CVC:</label>
                             <input type="number" class="form-control" id="codigo_seguridad" name="codigo_seguridad" required inputmode="numeric" maxlength="4" placeholder="123">
                         </div>
                     </div>
