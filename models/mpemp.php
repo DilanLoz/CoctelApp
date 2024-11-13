@@ -18,7 +18,6 @@ class Mpemp{
 	private $idbar;
 	private $codubi;
 	private $idval;
-
 	//metodos get perfiles
 	public function getIdper(){
 		return $this->idper;
@@ -67,7 +66,6 @@ class Mpemp{
 	public function getIdval(){
 		return $this->idval;
 	}
-
 	//metodo set perfiles
 	public function setIdper($idper){
 		$this->idper = $idper;
@@ -119,18 +117,22 @@ class Mpemp{
 
 	//Funciones empleado
 	function getAllEmp(){
-		try{
-			$sql = "SELECT idemp, nomemp, emaemp, celemp, fecnaemp, numdocu, fotiden, pssemp, idserv, idbar, codubi, idval FROM empleado";
-			$modelo = new conexion();
-			$conexion = $modelo->get_conexion();
-			$result = $conexion->prepare($sql);
-			$result->execute();
-			$res = $result->fetchAll(PDO::FETCH_ASSOC);
-			return $res;
-		}catch(Exception $e){
-			echo "Error: ".$e;
-		}
-	}
+    try{
+       $sql = "SELECT e.idemp, e.nomemp, e.emaemp, e.celemp, e.fecnaemp, e.numdocu, e.fotiden, e.pssemp, e.idserv, e.idbar, e.codubi, e.idval, u.nomubi, b.nombar
+        FROM empleado AS e 
+        INNER JOIN ubicacion AS u ON e.codubi = u.codubi 
+        LEFT JOIN bar AS b ON e.idbar = b.idbar";
+        $modelo = new conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+        $result->execute();
+        $res = $result->fetchAll(PDO::FETCH_ASSOC);
+        return $res;
+    } catch(Exception $e){
+        echo "Error: " . $e;
+    }
+}
+
 	function getOneEmp(){
 		try{
 			$sql = "SELECT idemp, nomemp, emaemp, celemp, fecnaemp, numdocu, fotiden, pssemp, idserv, idbar, codubi, idval FROM empleado WHERE idemp=:idemp";
