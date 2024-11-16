@@ -7,7 +7,7 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="nomprod"><strong>Producto</strong></label>
-                <input type="text" name="nomprod" id="nomprod" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne[0]['nomprod']) ? $datOne[0]['nomprod'] : 'Aguardiente'; ?>" required>
+                <input type="text" name="nomprod" id="nomprod" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne[0]['nomprod']) ? $datOne[0]['nomprod'] : ''; ?>" required>
             </div>
 
             <div class="form-group col-md-6">

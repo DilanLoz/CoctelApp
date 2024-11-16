@@ -12,7 +12,7 @@ $mbarxprod = new Mbarxprod();
         <!-- Bar 1 -->
         <div class="col-md-3 mt-4">
             <div class="imguno rounded">
-                <a href="views/vusbarxprod.php?id=1"><img src="img/bar1.jpg" alt="baruno" class="img-fluid rounded"></a>
+                <a href="views/vusbarxprod.php?id=1"><img src="img/coctelapp/bar1.jpg" alt="baruno" class="img-fluid rounded"></a>
             </div>
             <div class="text-center">
                 <h4 class="fw-bold">Bar del Norte</h4>
@@ -29,7 +29,7 @@ $mbarxprod = new Mbarxprod();
         <!-- Bar 2 -->
         <div class="col-md-3 mt-4">
             <div class="imguno rounded">
-                <a href="views/vusbarxprod.php?id=2"><img src="img/bar2.jpg" alt="bardos" class="img-fluid rounded"></a>
+                <a href="views/vusbarxprod.php?id=2"><img src="img/coctelapp/bar2.jpg" alt="bardos" class="img-fluid rounded"></a>
             </div>
             <div class="text-center">
                 <h4 class="fw-bold">Bazzar</h4>
@@ -46,7 +46,7 @@ $mbarxprod = new Mbarxprod();
         <!-- Bar 3 -->
         <div class="col-md-3 mt-4">
             <div class="imguno rounded">
-                <a href="views/vusbarxprod.php?id=3"><img src="img/bar3.jpg" alt="bartres" class="img-fluid rounded"></a>
+                <a href="views/vusbarxprod.php?id=3"><img src="img/coctelapp/bar3.jpg" alt="bartres" class="img-fluid rounded"></a>
             </div>
             <div class="text-center">
                 <h4 class="fw-bold">Coctelería Mar</h4>
@@ -63,7 +63,7 @@ $mbarxprod = new Mbarxprod();
         <!-- Bar 4 -->
         <div class="col-md-3 mt-4">
             <div class="imguno rounded">
-                <a href="views/vusbarxprod.php?id=4"><img src="img/bar4.jpg" alt="barcuatro" class="img-fluid rounded"></a>
+                <a href="views/vusbarxprod.php?id=4"><img src="img/coctelapp/bar4.jpg" alt="barcuatro" class="img-fluid rounded"></a>
             </div>
             <div class="text-center">
                 <h4 class="fw-bold">Bar Playas</h4>

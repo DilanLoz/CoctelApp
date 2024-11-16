@@ -17,7 +17,7 @@
             <div class="forms-wrap"> 
                 <form action="./models/control.php" method="POST" autocomplete="off" class="sign-in-form">
                     <div class="logo">
-                        <img src="img/coctelapp.png" alt="Logo"/>
+                        <img src="img/coctelapp/coctelapp.png" alt="Logo"/>
                     </div>
 
                     <div class="heading">
@@ -134,13 +134,13 @@
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active" data-bs-interval="5000">
-                            <img src="img/pub1.jpg" >
+                            <img src="img/coctelapp/pub1.jpg" >
                         </div>
                         <div class="carousel-item" data-bs-interval="5000">
-                            <img src="img/pub2.jpg" >
+                            <img src="img/coctelapp/pub2.jpg" >
                         </div>
                         <div class="carousel-item" data-bs-interval="5000">
-                            <img src="img/pub3.jpg" >
+                            <img src="img/coctelapp/pub3.jpg" >
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">

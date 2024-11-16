@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 text-center " id="fotlog">
-                    <img src="img/coctelapp.png" class="img-fluid mb-3 mt-2" alt="coctel" height="160px" width="160px">
+                    <img src="img/coctelapp/coctelapp.png" class="img-fluid mb-3 mt-2" alt="coctel" height="160px" width="160px">
                 </div>
                 <div class="col-md-4 mb-4 mt-5">
                     <div class="col-md">

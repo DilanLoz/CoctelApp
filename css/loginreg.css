@@ -20,7 +20,7 @@ main {
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  background-image: url(../img/logreg1.jpg);
+  background-image: url(../img/coctelapp/logreg1.jpg);
   background-size: cover; /* Ajusta la imagen para cubrir el contenedor */
   background-position: center; /* Centra la imagen */
   padding: 2rem;
