@@ -77,5 +77,12 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script  src="https://code.jquery.com/jquery-3.1.1.min.js"  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" ></script>
 </body>
 </html>

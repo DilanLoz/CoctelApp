@@ -6,15 +6,16 @@
 
 <nav class="collapse navbar-collapse" id="menu">
     <ul class="navbar-nav me-auto">
-        <?php if (!empty($menuFiltrado)): ?>
-            <?php foreach ($menuFiltrado as $dt): ?>
+        <?php if($dat){ foreach ($dat as $dt) { ?> 
                 <li class="nav-item">
                     <a class="nav-link" href="home.php?pg=<?=$dt['idpag'];?>" title="<?=$dt['nompag'];?>">
                         <i class="<?=$dt['icopag'];?>"></i> <?=$dt['nompag'];?>
                     </a>
                 </li>
-            <?php endforeach; ?>
-        <?php endif; ?>
+                <?php 
+				}
+			}
+			?>
     </ul>
     <ul class="navbar-nav ml-auto" id="menuu">
         <li class="nav-item">
