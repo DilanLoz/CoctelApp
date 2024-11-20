@@ -38,6 +38,21 @@
             require_once("views/carrusel.php");
             if($pg=="1002") 
             require_once("views/vlogreg.php");
+            else{
+                echo "
+                <br>
+                <div style='max-width: 600px; margin: auto; padding: 40px; border: 1px solid #e0e0e0; border-radius: 10px; background-color: #f9f9f9; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);'>
+                    <h1 style='color: #FF6347;'>Error 404: Página No Encontrada</h1>
+                    <p style='font-size: 18px; color: #666;'>Lo sentimos, pero la página que estás buscando no está disponible o no tienes permisos para acceder.</p>
+                    <p style='font-size: 16px; color: #888; line-height: 1.6;'>
+                        Puedes intentar lo siguiente:
+                        <br>Revisar la URL: Asegúrate de que la dirección está escrita correctamente.
+                        <br>Volver al inicio: <a href='index.php' style='color: #FF6347; text-decoration: none;'>Haz clic aquí</a> para regresar a nuestra página principal.
+                        <br>Contactarnos: Si necesitas ayuda, puedes escribirnos a <a href='mailto:coctelapp.info@gmail.com' style='color: #FF6347; text-decoration: none;'>coctelapp.info@gmail.com</a>.
+                    </p>
+                    <br><br>
+                </div>";
+            }
             ?>
     </section>
     <footer class="bg-black">
