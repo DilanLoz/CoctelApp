@@ -8,7 +8,7 @@
     <ul class="navbar-nav me-auto">
         <?php if($dat){ foreach ($dat as $dt) { ?> 
                 <li class="nav-item">
-                    <a class="nav-link" href="home.php?pg=<?=$dt['idpag'];?>" title="<?=$dt['nompag'];?>">
+                    <a class="nav-link" href="home.php?pg=<?=$dt['idpag'];?>" title="<?=$dt['titupag'];?>">
                         <i class="<?=$dt['icopag'];?>"></i> <?=$dt['nompag'];?>
                     </a>
                 </li>
@@ -17,7 +17,7 @@
 			}
 			?>
     </ul>
-    <ul class="navbar-nav ml-auto" id="menuu">
+    <ul class="navbar-nav ml-auto border border-grey rounded-3" id="menuu">
         <li class="nav-item">
             <a class="nav-link" href="views/vsal.php" title="Salir">
                 <i class="fa-solid fa-right-from-bracket"></i>
