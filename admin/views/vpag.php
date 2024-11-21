@@ -2,7 +2,7 @@
 
 <div class="conte mt-5" style="text-align: left;"> 
     <div class="inser">
-        <form id="frmins" action="home.php?pg=<?=$pg;?>" method="POST">
+        <form action="home.php?pg=<?=$pg;?>" method="POST" >
             <div class="row">
                 <h1>Paginas</h1>
                 <div class="form-group col-md-6">
