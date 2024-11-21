@@ -1,3 +1,4 @@
+
 <footer class="bg-black">
         <div class="container">
             <div class="footer-links row" id="info">
@@ -6,9 +7,9 @@
                         <div>
                             <h4>Siguenos en</h4>
                             <div class="col-md-6 border border-warning border-1 rounded-3 mb-3"></div>
-                            <a href="#" class="d-block mb-2"><i class="fab fa-facebook-f"></i> Facebook</a>
-                            <a href="#" class="d-block mb-2"><i class="fab fa-instagram"></i> Instagram</a>
-                            <a href="#" class="d-block mb-2"><i class="fab fa-youtube"></i> Youtube</a>
+                            <a href="#" class="d-block mb-2"><i class="fa-brands fa-square-facebook"></i> Facebook</a>
+                            <a href="#" class="d-block mb-2"><i class="fa-brands fa-square-instagram"></i> Instagram</a>
+                            <a href="#" class="d-block mb-2"><i class="fa-brands fa-square-youtube"></i> Youtube</a>
                         </div>
                     </div>
                 </div>
