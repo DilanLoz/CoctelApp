@@ -1,7 +1,13 @@
 <?php 
 include("models/mpusu.php");
 
-$idusu = isset($_POST['idusu']) ? $_POST['idusu'] : NULL;
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Obtenemos el id del usuario desde la sesión si está autenticado
+$idusu = isset($_SESSION['idusu']) ? $_SESSION['idusu'] : NULL;
+
 $nomusu = isset($_POST['nomusu']) ? $_POST['nomusu'] : NULL;
 $emausu = isset($_POST['emausu']) ? $_POST['emausu'] : NULL;
 $celusu = isset($_POST['celusu']) ? $_POST['celusu'] : NULL;
@@ -14,8 +20,11 @@ $idper = isset($_POST['idper']) ? $_POST['idper'] : NULL;
 $idval = isset($_POST['idval']) ? $_POST['idval'] : NULL;
 $ope = isset($_POST['ope']) ? $_POST['ope'] : NULL;
 
+// Instancia del modelo
 $mpusu = new Mpusu();
+
 if ($ope == "save") {
+    // Configuración de datos para guardar o actualizar
     $mpusu->setIdusu($idusu);
     $mpusu->setNomusu($nomusu);
     $mpusu->setEmausu($emausu);
@@ -28,6 +37,7 @@ if ($ope == "save") {
     $mpusu->setIdper($idper);
     $mpusu->setIdval($idval);
 
+    // Guardar o actualizar según el valor de idusu
     if ($idusu) {
         $mpusu->edit();
     } else {
@@ -35,13 +45,20 @@ if ($ope == "save") {
     }
 }
 
+// Determina el modo de la operación y obtiene los datos de usuario
 $m = 2;
 if (isset($_GET['ope']) && $_GET['ope'] == "edi" && $idusu) {
-    $dtOne = $mpusu->getOne();
+    $dtOne = $mpusu->getOne(); // Obtiene los datos del usuario específico
     $m = 1;
 } else {
     $dtOne = NULL;
 }
 
+// Obtiene todos los usuarios
 $dat = $mpusu->getAll();
+
+// Obtiene los datos del usuario autenticado para la vista
+$datus = $mpusu->datusu();
+
 ?>
+

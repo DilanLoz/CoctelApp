@@ -1,5 +1,8 @@
 <?php
 require_once('models/mpemp.php');
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Inicializar el objeto de Mpemp
 $mpemp = new Mpemp();
@@ -7,7 +10,7 @@ $mpemp = new Mpemp();
 $fecnaemp = date("Y-m-d H:i:s");
 
 // Métodos request para empleado y perfil
-$idemp = isset($_REQUEST['idemp']) ? $_REQUEST['idemp'] : NULL;
+$idemp = isset($_SESSION['idemp']) ? $_SESSION['idemp'] : NULL;
 $idper = isset($_REQUEST['idper']) ? $_REQUEST['idper'] : NULL;
 
 // Métodos post para empleado

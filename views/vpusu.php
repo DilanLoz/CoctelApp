@@ -1,4 +1,33 @@
-<?php include("controllers/cpusu.php"); ?>
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+include("controllers/cpusu.php"); ?>
+
+<?php
+// Iniciar sesión si aún no está iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Verificar si hay una sesión activa y si contiene el ID del usuario
+if (isset($_SESSION['idusu'])) {
+    // Mostrar la ID de sesión y los datos almacenados en la sesión
+    echo "<h3>Datos del Usuario en Sesión:</h3>";
+    echo "ID de Usuario: " . $_SESSION['idusu'] . "<br>";
+    echo "Nombre de Usuario: " . $_SESSION['nomusu'] . "<br>";
+    echo "Email de Usuario: " . $_SESSION['emausu'] . "<br>";
+    echo "Celular: " . $_SESSION['celusu'] . "<br>";
+    echo "Número de Documento: " . $_SESSION['numdocu'] . "<br>";
+    // Agrega más datos de la sesión si es necesario
+} else {
+    // Mensaje si no hay datos de sesión válidos
+    echo "<h3>Datos inválidos: No se encontró una sesión activa.</h3>";
+}
+?>
+
+
 
 <div id="usuario" class="container mt-5 mb-5" style="text-align: left; display: block;">
     <form action="#" method="post" enctype="multipart/form-data">
@@ -12,7 +41,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="nombres" class="form-label" style="text-align: left; display: block;">Nombres y apellidos:</label>
-                    <input type="text" class="form-control" name="nomusu" id="nomusu" value="<?= $dat && isset($dat[0]['nomusu']) ? $dat[0]['nomusu'] : ''; ?>" required>
+                    <input type="text" class="form-control" name="nomusu" id="nomusu" value="<?= $dat && isset($dat[0]['nomusu']) ? $dat[0]['nomusu'] : ''; ?>" required readonly>
                     <span class="text-muted">No se puede modificar</span>
                 </div>
                 <div class="mb-3">
@@ -44,10 +73,6 @@
                         <option value="bucaramanga" <?= (isset($dat[0]['codubi']) && $dat[0]['codubi'] == 'bucaramanga') ? 'selected' : ''; ?>>Bucaramanga</option>
                         <option value="nariño" <?= (isset($dat[0]['codubi']) && $dat[0]['codubi'] == 'nariño') ? 'selected' : ''; ?>>Nariño</option>
                     </select>
-                </div>
-                <div class="mb-4">
-                    <label for="contrasena" class="form-label" style="text-align: left; display: block;">Contraseña:</label>
-                    <input type="password" class="form-control" name="pssusu" id="pssusu" value="<?= $dat && isset($dat[0]['pssusu']) ? $dat[0]['pssusu'] : ''; ?>" required>
                 </div>
                 <div class="mt-4">
                     <label for="fotiden" class="form-label" style="text-align: left; display: block;">Foto de Identificación:</label>

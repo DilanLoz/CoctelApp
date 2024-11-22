@@ -116,22 +116,56 @@ class Mpemp{
 	}
 
 	//Funciones empleado
-	function getAllEmp(){
-    try{
-       $sql = "SELECT e.idemp, e.nomemp, e.emaemp, e.celemp, e.fecnaemp, e.numdocu, e.fotiden, e.pssemp, e.idserv, e.idbar, e.codubi, e.idval, u.nomubi, b.nombar
-        FROM empleado AS e 
-        INNER JOIN ubicacion AS u ON e.codubi = u.codubi 
-        LEFT JOIN bar AS b ON e.idbar = b.idbar";
-        $modelo = new conexion();
-        $conexion = $modelo->get_conexion();
-        $result = $conexion->prepare($sql);
-        $result->execute();
-        $res = $result->fetchAll(PDO::FETCH_ASSOC);
+public function getAllEmp() {
+        $res = NULL;
+    
+        // Verificamos que la sesión esté iniciada
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+    
+        // Validamos que exista un id de usuario en la sesión
+        if (isset($_SESSION['idemp'])) {
+            $idemp = $_SESSION['idemp'];
+           	$sql = "SELECT e.idemp, e.nomemp, e.emaemp, e.celemp, e.fecnaemp, e.numdocu, e.fotiden, e.pssemp, e.idserv, e.idbar, e.codubi, e.idval, u.nomubi, b.nombar
+        	FROM empleado AS e 
+        	INNER JOIN ubicacion AS u ON e.codubi = u.codubi 
+        	LEFT JOIN bar AS b ON e.idbar = b.idbar";
+            
+            $modelo = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            $result->bindParam(":idemp", $idemp);
+            $nomemp = $this->getNomemp();
+			$result->bindParam(":nomemp",$nomemp);
+			$emaemp = $this->getEmaemp();
+			$result->bindParam(":emaemp",$emaemp);
+			$celemp = $this->getCelemp();
+			$result->bindParam(":celemp",$celemp);
+			$fecnaemp = $this->getFecnaemp();
+			$result->bindParam(":fecnaemp",$fecnaemp);
+			$numdocu = $this->getnumdocu();
+			$result->bindParam(":numdocu",$numdocu);
+			$fotiden = $this->getFotiden();
+			$result->bindParam(":fotiden",$fotiden);
+			$pssemp = $this->getPssemp();
+			$result->bindParam(":pssemp",$pssemp);
+			$idserv = $this->getIdserv();
+			$result->bindParam(":idserv",$idserv);
+			$idbar = $this->getIdbar();
+			$result->bindParam(":idbar",$idbar);
+			$codubi = $this->getCodubi();
+			$result->bindParam(":codubi",$codubi);
+			$idval = $this->getIdval();
+			$result->bindParam(":idval",$idval);
+            $result->execute();
+            $res = $result->fetchAll(PDO::FETCH_ASSOC);
+        }
+    
         return $res;
-    } catch(Exception $e){
-        echo "Error: " . $e;
     }
-}
+
+
 
 	function getOneEmp(){
 		try{
