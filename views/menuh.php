@@ -17,10 +17,10 @@
 			}
 			?>
     </ul>
-    <ul class="navbar-nav ml-auto border border-grey rounded-3" id="menuu">
+    <ul class="navbar-nav ml-auto " id="menuu">
         <li class="nav-item">
             <a class="nav-link" href="views/vsal.php" title="Salir">
-                <i class="fa-solid fa-right-from-bracket"></i>
+                <i class="fa-solid fa-right-from-bracket" style="color: red;"></i>
             </a>
         </li>
     </ul>

@@ -285,6 +285,13 @@ margin-top: 50px;
 }
 
 /*------------------------HISTORIAL PEDIDOS----------------------- */
+/*------------------------COMPRA FINAL----------------------- */
+.btn-seleccionado {
+    background-color: #ffc107; /* Color del botón seleccionado */
+    color: #000;
+    border-color: #ffc107;
+}
+/*------------------------COMPRA FINAL----------------------- */
 /*------------------------MEDIAS PARA MOVIL ----------------------- */
 
 @media screen and (max-width: 780px) {

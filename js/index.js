@@ -78,3 +78,41 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+/*-----------------------Compra final----------------------- */
+const btnTarjeta = document.getElementById('btn-tarjeta');
+        const btnPse = document.getElementById('btn-pse');
+        const formTarjeta = document.getElementById('form-tarjeta');
+        const avisoMetodo = document.getElementById('aviso-metodo');
+        const botones = [btnTarjeta, btnPse];
+
+        // Función para cambiar el estilo del botón seleccionado
+        const seleccionarBoton = (botonSeleccionado) => {
+            botones.forEach(boton => boton.classList.remove('btn-seleccionado'));
+            botonSeleccionado.classList.add('btn-seleccionado');
+        };
+
+        // Eventos para cada botón
+        btnTarjeta.addEventListener('click', () => {
+            formTarjeta.classList.remove('d-none');
+            avisoMetodo.classList.add('d-none');
+            seleccionarBoton(btnTarjeta);
+        });
+
+        btnPse.addEventListener('click', () => {
+            formTarjeta.classList.add('d-none');
+            avisoMetodo.classList.remove('d-none');
+            seleccionarBoton(btnPse);
+        });
+
+        // Formatear automáticamente la fecha de vencimiento
+        const fechaVencimiento = document.getElementById('fecha_vencimiento');
+        fechaVencimiento.addEventListener('input', () => {
+            const value = fechaVencimiento.value.replace(/\D/g, ''); // Eliminar caracteres no numéricos
+            if (value.length > 2) {
+                fechaVencimiento.value = `${value.slice(0, 2)}/${value.slice(2, 6)}`;
+            } else {
+                fechaVencimiento.value = value;
+            }
+        });
+/*-----------------------Compra final----------------------- */
