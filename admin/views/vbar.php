@@ -83,7 +83,7 @@
             <th>NIT</th>
             <th>Direccion del bar</th>
             <th>Codigo de ubicacion</th>
-            <th>Acciones</th> <!-- Columna extra para las acciones -->
+            <th></th> <!-- Columna extra para las acciones -->
         </tr>
     </thead>
     <tbody>
@@ -119,8 +119,7 @@
             <th>NIT</th>
             <th>Direccion del bar</th>
             <th>Codigo de ubicacion</th>
-            <th>Acciones</th> <!-- Columna extra para las acciones -->
+            <th></th> <!-- Columna extra para las acciones -->
         </tr>
     </tfoot>
 </table>
-
