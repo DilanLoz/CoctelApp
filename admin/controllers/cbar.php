@@ -6,7 +6,6 @@ require_once 'models/conexion.php';
 
 // Inicializar el modelo de Bar
 $mbar = new Mbar();
-$dep = $mbar->getDep(0);
 // Recoger datos enviados a través de POST o GET
 $idbar = isset($_REQUEST['idbar']) ? $_REQUEST['idbar'] : NULL;
 $nombar = isset($_POST['nombar']) ? $_POST['nombar'] : NULL;
@@ -78,9 +77,13 @@ if ($ope == "save") {
 // Si la operación es editar, obtener los datos del bar
 if ($ope == 'edit' && $idbar) {
     // Asegúrate de que el ID del bar no sea NULL antes de intentar obtener datos
-    $datOne = $mbar->selectOne($idbar);
+
 }
 // Obtener todos los bares
-$bars = $mbar->select(); // Llamada al método select() en el modelo Mbar
-foreach ($bars as $bar);
+try {
+    $bars = $mbar->getAll();
+} catch (Exception $e) {
+    echo "Error al obtener los registros: " . $e->getMessage();
+}
+
 ?>

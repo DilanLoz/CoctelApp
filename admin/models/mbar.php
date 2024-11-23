@@ -14,25 +14,6 @@ class Mbar {
     private $fotbar;
 
     // Método para obtener todos los bares
-    public function select() {
-        // Crear la conexión a la base de datos usando la clase Conexion
-        $db = new Conexion();
-        $conexion = $db->get_conexion(); // Obtener la conexión PDO
-
-        // Preparar la consulta SQL
-        $sql = "SELECT * FROM bar"; // Asegúrate de que la tabla se llama "bares"
-        
-        // Preparar la consulta
-        $stmt = $conexion->prepare($sql);
-        
-        // Ejecutar la consulta
-        $stmt->execute();
-        
-        // Obtener todos los resultados
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        return $result;
-    }
     public function getIdbar() {
         return $this->idbar;
     }
@@ -223,17 +204,6 @@ class Mbar {
         $result->bindParam(":idbar", $idbar);
         $result->execute();
     }
-    public function getDep($codubi){
-        $resultado = NULL;
-        $modelo = new Conexion();
-        $conexion = $modelo->get_conexion();
-        $sql="SELECT * FROM ubicacion WHERE codubi=:codubi
-            ORDER BY nomubi";
-        $result = $conexion->prepare($sql);
-        $result->bindParam(":codubi", $codubi);
-        $result->execute();
-        $resultado=$result->fetchall(PDO::FETCH_ASSOC);
-        return $resultado;
-    }
+    
 }
 ?>
