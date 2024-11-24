@@ -1,4 +1,4 @@
-<?php 
+<?php
 class Mpusu {
     private $idusu;
     private $nomusu;
@@ -11,6 +11,11 @@ class Mpusu {
     private $codubi;
     private $idper;
     private $idval;
+    private $idserv;
+    private $idbar;
+    private $nompropi;
+    private $dircbar;
+    private $horbar;
 
     // Métodos GET
     public function getIdusu() {
@@ -38,13 +43,28 @@ class Mpusu {
         return $this->pssusu;
     }
     public function getCodubi() {
-        return $this->codubi; // Corregido para devolver codubi en lugar de fotiden
+        return $this->codubi;
     }
     public function getIdper() {
         return $this->idper;
     }
     public function getIdval() {
         return $this->idval;
+    }
+    public function getIdserv() {
+        return $this->idserv;
+    }
+    public function getIdbar() {
+        return $this->idbar;
+    }
+    public function getNompropi() {
+        return $this->nompropi;
+    }
+    public function getDircbar() {
+        return $this->dircbar;
+    }
+    public function getHorbar() {
+        return $this->horbar;
     }
 
     // Métodos SET
@@ -81,11 +101,39 @@ class Mpusu {
     public function setIdval($idval) {
         $this->idval = $idval;
     }
+    public function setIdserv($idserv) {
+        $this->idserv = $idserv;
+    }
+    public function setIdbar($idbar) {
+        $this->idbar = $idbar;
+    }
+    public function setNompropi($nompropi) {
+        $this->nompropi = $nompropi;
+    }
+    public function setDircbar($dircbar) {
+        $this->dircbar = $dircbar;
+    }
+    public function setHorbar($horbar) {
+        $this->horbar = $horbar;
+    }
 
     // Métodos para la base de datos
     public function getAll() {
         $res = NULL;
-        $sql = "SELECT * FROM usuario";
+        $sql = "SELECT 
+                    u.idusu, u.nomusu, u.emausu, u.celusu, u.numdocu, u.fotiden, 
+                    u.fecnausu, u.pssusu, u.codubi, u.idbar, u.idserv, u.idval, u.idper, 
+                    b.nombar, b.nompropi, b.dircbar, b.horbar, 
+                    s.nomserv, 
+                    v.nomval, 
+                    p.nomper, 
+                    ub.nomubi 
+                FROM usuario AS u
+                INNER JOIN ubicacion AS ub ON u.codubi = ub.codubi
+                INNER JOIN servicio AS s ON u.idserv = s.idserv
+                INNER JOIN bar AS b ON u.idbar = b.idbar
+                INNER JOIN valor AS v ON u.idval = v.idval
+                INNER JOIN perfiles AS p ON u.idper = p.idper";
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
         $result = $conexion->prepare($sql);
@@ -96,63 +144,65 @@ class Mpusu {
 
     public function getOne() {
         $res = NULL;
-    
-        // Verificamos que la sesión esté iniciada
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-    
-        // Validamos que exista un id de usuario en la sesión
         if (isset($_SESSION['idusu'])) {
             $idusu = $_SESSION['idusu'];
-            $sql = "SELECT nomusu, emausu, celusu, numdocu, fotiden, fecnausu, pssusu, codubi, idval, idper 
-                    FROM usuario 
-                    WHERE idusu = :idusu";
-            
+            $sql = "SELECT 
+                        u.idusu, u.nomusu, u.emausu, u.celusu, u.numdocu, u.fotiden, 
+                        u.fecnausu, u.pssusu, u.codubi, u.idbar, u.idserv, u.idval, u.idper, 
+                        b.nombar, b.nompropi, b.dircbar, b.horbar, 
+                        s.nomserv, 
+                        v.nomval, 
+                        p.nomper, 
+                        ub.nomubi 
+                    FROM usuario AS u
+                    INNER JOIN ubicacion AS ub ON u.codubi = ub.codubi
+                    INNER JOIN servicio AS s ON u.idserv = s.idserv
+                    INNER JOIN bar AS b ON u.idbar = b.idbar
+                    INNER JOIN valor AS v ON u.idval = v.idval
+                    INNER JOIN perfiles AS p ON u.idper = p.idper
+                    WHERE u.idusu = :idusu";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
             $result->bindParam(":idusu", $idusu);
             $result->execute();
-            $res = $result->fetchAll(PDO::FETCH_ASSOC);
+            $res = $result->fetch(PDO::FETCH_ASSOC);
         }
-    
-        return $res;
-    }
-    
-
-    public function datusu() {
-        $res = NULL;
-        if (isset($_SESSION['idusu'])) {
-            $idusu = $_SESSION['idusu'];
-            $sql = "SELECT nomusu, emausu, celusu, numdocu FROM usuario WHERE idusu = :idusu";
-            $modelo = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $result = $conexion->prepare($sql);
-            $result->bindParam(":idusu", $idusu);
-            $result->execute();
-            $res = $result->fetchAll(PDO::FETCH_ASSOC);
-            }
         return $res;
     }
 
     public function save() {
-        $sql = "INSERT INTO usuario (nomusu, emausu, celusu, pssusu, codubi, idper, idval) VALUES (:nomusu, :emausu, :celusu, :pssusu, :codubi, :idper, :idval)";
+        $sql = "INSERT INTO usuario 
+                    (nomusu, emausu, celusu, fotiden, numdocu, fecnausu, pssusu, codubi, idper, idval, idserv, idbar) 
+                VALUES 
+                    (:nomusu, :emausu, :celusu, :fotiden, :numdocu, :fecnausu, :pssusu, :codubi, :idper, :idval, :idserv, :idbar)";
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
         $result = $conexion->prepare($sql);
         $result->bindParam(":nomusu", $this->nomusu);
         $result->bindParam(":emausu", $this->emausu);
         $result->bindParam(":celusu", $this->celusu);
+        $result->bindParam(":fotiden", $this->fotiden);
+        $result->bindParam(":numdocu", $this->numdocu);
+        $result->bindParam(":fecnausu", $this->fecnausu);
         $result->bindParam(":pssusu", $this->pssusu);
         $result->bindParam(":codubi", $this->codubi);
         $result->bindParam(":idper", $this->idper);
         $result->bindParam(":idval", $this->idval);
+        $result->bindParam(":idserv", $this->idserv);
+        $result->bindParam(":idbar", $this->idbar);
         $result->execute();
     }
 
     public function edit() {
-        $sql = "UPDATE usuario SET nomusu=:nomusu, emausu=:emausu, celusu=:celusu, pssusu=:pssusu, codubi=:codubi, idper=:idper, idval=:idval WHERE idusu=:idusu";
+        $sql = "UPDATE usuario SET 
+                    nomusu=:nomusu, emausu=:emausu, celusu=:celusu, fotiden=:fotiden, 
+                    numdocu=:numdocu, fecnausu=:fecnausu, pssusu=:pssusu, codubi=:codubi, 
+                    idper=:idper, idval=:idval, idserv=:idserv, idbar=:idbar 
+                WHERE idusu=:idusu";
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
         $result = $conexion->prepare($sql);
@@ -160,14 +210,19 @@ class Mpusu {
         $result->bindParam(":nomusu", $this->nomusu);
         $result->bindParam(":emausu", $this->emausu);
         $result->bindParam(":celusu", $this->celusu);
+        $result->bindParam(":fotiden", $this->fotiden);
+        $result->bindParam(":numdocu", $this->numdocu);
+        $result->bindParam(":fecnausu", $this->fecnausu);
         $result->bindParam(":pssusu", $this->pssusu);
         $result->bindParam(":codubi", $this->codubi);
         $result->bindParam(":idper", $this->idper);
         $result->bindParam(":idval", $this->idval);
+        $result->bindParam(":idserv", $this->idserv);
+        $result->bindParam(":idbar", $this->idbar);
         $result->execute();
     }
 
-    public function del() {
+    public function delete() {
         $sql = "DELETE FROM usuario WHERE idusu=:idusu";
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();

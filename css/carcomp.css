@@ -192,6 +192,8 @@ header {
 .product-box {
     position: relative;
     padding-top: 20px;
+    text-align: left;
+    padding-left: 10px;
 }
 
 .product-box:hover {
@@ -202,9 +204,22 @@ header {
 }
 
 .product-img {
-    width: 100%;
-    height: auto;
+    width: 200px;
+    height: 250px;
     margin-bottom: 0.5rem;
+    overflow: hidden; /* Esconde la parte de la imagen que exceda el contenedor */
+    display: flex;    /* Asegura el posicionamiento interno */
+    align-items: center; /* Centra la imagen verticalmente */
+    justify-content: center; /* Centra la imagen horizontalmente */
+}
+
+.product-img img {
+    width: 100%; /* Ajusta el ancho de la imagen al 100% del contenedor */
+    height: 100%; /* Ajusta la altura al 100% del contenedor */
+    object-fit: cover; /* Recorta y ajusta la imagen al tamaño del contenedor */
+}
+#add-cart{
+    font-size: 20px;
 }
 
 .product-title {

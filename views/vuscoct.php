@@ -32,7 +32,7 @@ $datAll = $mbarxprod->getAll();
                         <strong style="font-size: 20px; color: green;">$<?=$formattedPrice;?></strong> <!-- Color amarillo -->
                         <br>
                         <strong style="font-size: 20px"><?=$dta['nombar'];?></strong>
-                        <i class='bx bxs-cart add-cart'></i>
+                        <i class='bx bxs-cart add-cart' id="add-cart"></i>
                     </div>
         <?php 
                 }

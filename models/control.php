@@ -22,8 +22,19 @@ function valida($usu, $pas) {
         $_SESSION['fecnausu'] = $res[0]['fecnausu'];
         $_SESSION['pssusu'] = $res[0]['pssusu'];
         $_SESSION['codubi'] = $res[0]['codubi'];
+        $_SESSION['nomubi'] = $res[0]['nomubi']; // Nombre ubicación
         $_SESSION['idval'] = $res[0]['idval'];
-        
+        $_SESSION['nomval'] = $res[0]['nomval']; // Nombre valor
+        $_SESSION['fotiden'] = $res[0]['fotiden'];
+        //Empleado
+        $_SESSION['idserv'] = $res[0]['idserv'];
+        $_SESSION['nomserv'] = $res[0]['nomserv']; // Nombre servicio
+        $_SESSION['idbar'] = $res[0]['idbar'];
+        $_SESSION['nombar'] = $res[0]['nombar']; // Nombre bar
+        //Bar
+        $_SESSION['nompropi'] = $res[0]['nompropi'];
+        $_SESSION['horbar'] = $res[0]['horbar'];
+        $_SESSION['dircbar'] = $res[0]['dircbar'];
         // Datos de perfil
         $_SESSION['idper'] = $res[0]['idper'];
         $_SESSION['nomper'] = $res[0]['nomper'];
@@ -41,12 +52,20 @@ function red() {
 
 function ingr($usu, $pas) {
     $res = NULL;
-    $pas = sha1(md5($pas . 'Jd#'));
-    
-    $sql = "SELECT u.idusu, u.nomusu, u.emausu, u.celusu, u.fotiden, u.numdocu, u.fecnausu, u.pssusu, u.codubi, u.idper, u.idval, f.nomper, f.pagini 
-            FROM usuario AS u 
-            INNER JOIN perfiles AS f ON u.idper = f.idper 
+    $sql = "SELECT 
+                u.idusu, u.nomusu, u.emausu, u.celusu, u.fotiden, 
+                u.numdocu, u.fecnausu, u.pssusu, u.codubi, 
+                u.idper, u.idval, f.nomper, f.pagini, 
+                ub.nomubi, v.nomval, s.nomserv, b.nombar, 
+                b.nompropi, b.horbar, b.dircbar 
+            FROM usuario AS u
+            INNER JOIN perfiles AS f ON u.idper = f.idper
+            LEFT JOIN ubicacion AS ub ON u.codubi = ub.codubi
+            LEFT JOIN valor AS v ON u.idval = v.idval
+            LEFT JOIN servicio AS s ON u.idserv = s.idserv
+            LEFT JOIN bar AS b ON u.idbar = b.idbar
             WHERE u.emausu = :emausu AND u.pssusu = :pssusu";
+            
     $modelo = new Conexion();
     $conexion = $modelo->get_conexion();
     $result = $conexion->prepare($sql);
