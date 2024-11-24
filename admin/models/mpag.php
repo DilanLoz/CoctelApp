@@ -8,6 +8,7 @@ class Mpag {
     private $rutpag;
     private $mospag;
     private $ordpag;
+    private $titupag;
     private $icopag;
     private $despag;
 
@@ -34,6 +35,10 @@ class Mpag {
 
     public function getOrdpag() {
         return $this->ordpag;
+    }
+    
+    public function getTitupag() {
+        return $this->titupag;
     }
 
     public function getIcopag() {
@@ -68,6 +73,10 @@ class Mpag {
     public function setOrdpag($ordpag) {
         $this->ordpag = $ordpag;
     }
+    
+    public function setTitupag($titupag) {
+        $this->titupag = $titupag;
+    }
 
     public function setIcopag($icopag) {
         $this->icopag = $icopag;
@@ -81,7 +90,7 @@ class Mpag {
     public function getAll() {
         try {
             $sql = "SELECT p.idpag, p.idper, pg.nompag, pg.rutpag, pg.mospag, 
-                           pg.ordpag, pg.icopag, pg.despag, pr.nomper, pr.pagini 
+                           pg.ordpag, pg.titupag, pg.icopag, pg.despag, pr.nomper, pr.pagini 
                     FROM pagper AS p 
                     INNER JOIN pagina AS pg ON p.idpag = pg.idpag 
                     INNER JOIN perfiles AS pr ON p.idper = pr.idper";
@@ -99,7 +108,7 @@ class Mpag {
     public function getOne() {
         try {
             $sql = "SELECT p.idpag, p.idper, pg.nompag, pg.rutpag, pg.mospag, 
-                           pg.ordpag, pg.icopag, pg.despag, pr.nomper, pr.pagini 
+                           pg.ordpag, pg.titupag, pg.icopag, pg.despag, pr.nomper, pr.pagini 
                     FROM pagper AS p 
                     INNER JOIN pagina AS pg ON p.idpag = pg.idpag 
                     INNER JOIN perfiles AS pr ON p.idper = pr.idper 
@@ -116,42 +125,31 @@ class Mpag {
     }
 
     // Método para guardar
-    public function save() {
+    // Método para guardar
+public function save() {
     try {
-        $sql = "INSERT INTO pagina (nompag, rutpag, mospag, ordpag, icopag, despag) 
-                VALUES (:nompag, :rutpag, :mospag, :ordpag, :icopag, :despag)";
+        $sql = "INSERT INTO pagina (idpag, nompag, rutpag, mospag, ordpag, titupag, icopag, despag) 
+                VALUES (:idpag, :nompag, :rutpag, :mospag, :ordpag, :titupag, :icopag, :despag)";
         $modelo = new conexion();
         $conexion = $modelo->get_conexion();
         $result = $conexion->prepare($sql);
-        
-        // Debug
-        error_log("Valores a insertar:");
-        error_log("nompag: " . $this->getNompag());
-        error_log("rutpag: " . $this->getRutpag());
-        error_log("mospag: " . $this->getMospag());
-        error_log("ordpag: " . $this->getOrdpag());
-        error_log("icopag: " . $this->getIcopag());
-        error_log("despag: " . $this->getDespag());
-        
+
+        // Enlazar parámetros
+        $result->bindParam(":idpag", $this->idpag);
         $result->bindParam(":nompag", $this->nompag);
         $result->bindParam(":rutpag", $this->rutpag);
         $result->bindParam(":mospag", $this->mospag);
         $result->bindParam(":ordpag", $this->ordpag);
+        $result->bindParam(":titupag", $this->titupag);
         $result->bindParam(":icopag", $this->icopag);
         $result->bindParam(":despag", $this->despag);
-        
-        $success = $result->execute();
-        
-        if (!$success) {
-            error_log("Error SQL: " . print_r($result->errorInfo(), true));
-        }
-        
-        return $success;
+
+        return $result->execute();
     } catch (Exception $e) {
-        error_log("Error en save(): " . $e->getMessage());
         throw new Exception("Error al guardar: " . $e->getMessage());
     }
 }
+
 
     // Método para editar
     public function edit() {
@@ -160,7 +158,8 @@ class Mpag {
                     SET nompag = :nompag, 
                         rutpag = :rutpag, 
                         mospag = :mospag, 
-                        ordpag = :ordpag, 
+                        ordpag = :ordpag,
+                        titupag = :titupag, 
                         icopag = :icopag, 
                         despag = :despag 
                     WHERE idpag = :idpag";
@@ -173,6 +172,7 @@ class Mpag {
             $result->bindParam(":rutpag", $this->rutpag);
             $result->bindParam(":mospag", $this->mospag);
             $result->bindParam(":ordpag", $this->ordpag);
+            $result->bindParam(":titupag", $this->titupag);
             $result->bindParam(":icopag", $this->icopag);
             $result->bindParam(":despag", $this->despag);
             

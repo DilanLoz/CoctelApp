@@ -7,6 +7,7 @@ $nompag = isset($_POST['nompag']) ? $_POST['nompag']:NULL;
 $rutpag = isset($_POST['rutpag']) ? $_POST['rutpag']:NULL;
 $mospag = isset($_REQUEST['mospag']) ? $_REQUEST['mospag']:NULL;
 $ordpag = isset($_POST['ordpag']) ? $_POST['ordpag']:NULL;
+$titupag = isset($_POST['titupag']) ? $_POST['titupag']:NULL;
 $icopag = isset($_POST['icopag']) ? $_POST['icopag']:NULL;
 $idmod = isset($_POST['idmod']) ? $_POST['idmod']:NULL;
 $despag = isset($_POST['despag']) ? $_POST['despag']:NULL;
@@ -19,6 +20,7 @@ if($opera=="save"){
     $mpag->setRutpag($rutpag);
     $mpag->setMospag($mospag);
     $mpag->setOrdpag($ordpag);
+    $mpag->setTitupag($titupag);
     $mpag->setIcopag($icopag);
     $mpag->setDespag($despag);
     if(!$idpag) $mpag->save();else $mpag->edit();

@@ -38,8 +38,18 @@ if (session_status() == PHP_SESSION_NONE) {
                     <input type="text" name="nombar" id="nombar" class="form-control" value="<?php echo isset($_SESSION['nombar']) ? $_SESSION['nombar'] : ''; ?>" readonly>
                 </div>
                 <div class="form-group col-md-12">
-                    <label for="nomubi"><strong>Ubicación</strong></label>
-                    <input type="text" name="nomubi" id="nomubi" class="form-control" value="<?php echo isset($_SESSION['nomubi']) ? $_SESSION['nomubi'] : ''; ?>" readonly>
+                    <label for="codubi"><strong>Ubicacion</strong></label>
+                    <select name="codubi" id="codubi" class="form-select" required>
+                        <option value="" disabled selected>Seleccionar</option> <!-- Opción inicial -->
+                        <?php
+                        $ubi = $mbar->getAllCiu(); // Método que obtiene todas las ciudades
+                        foreach ($ubi as $ci) {
+                            // Determinar si la ciudad actual debe ser seleccionada
+                            $selected = (isset($datOne[0]['codubi']) && $datOne[0]['codubi'] == $ci['codubi']) ? 'selected' : '';
+                        ?>
+                            <option value="<?= $ci['codubi']; ?>" <?= $selected; ?>><?= $ci['nomubi']; ?></option>
+                        <?php } ?>
+                    </select>
                 </div>
                 <div class="form-group col-md-12">
                     <label for="fecnausu"><strong>Fecha de nacimiento</strong></label>

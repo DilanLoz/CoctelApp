@@ -1,12 +1,17 @@
-<?php require_once ('admin/controllers/cpag.php'); ?>
+<?php require_once ('admin/controllers/cpag.php'); 
+?>
 
 <div class="conte mt-5" style="text-align: left;"> 
     <div class="inser">
         <form action="home.php?pg=<?=$pg;?>" method="POST" >
             <div class="row">
                 <h1>Paginas</h1>
+                <!--<div class="form-group col-md-6">
+                        <label for="idpag">Id de pagina</label>
+                        <input type="numer" name="idpag" id="idpag" maxlength="70" class="form-control" value="<?php if($datOne) echo $datOne[0]['idpag']; ?>" required>
+                </div>-->
                 <div class="form-group col-md-6">
-                        <label for="nompag">Nombre</label>
+                        <label for="nompag">Nombre en menu</label>
                         <input type="text" name="nompag" id="nompag" maxlength="70" class="form-control" value="<?php if($datOne) echo $datOne[0]['nompag']; ?>" required>
                 </div>
                 <div class="form-group col-md-6">
@@ -25,15 +30,19 @@
                         <input type="number" name="ordpag" id="ordpag" class="form-control" required value="<?php if($datOne) echo $datOne[0]['ordpag']; ?>">
                 </div>
                 <div class="form-group col-md-6">
+                        <label for="titupag">Titulo en pagina</label>
+                        <input type="text" name="titupag" id="titupag" class="form-control" required value="<?php if($datOne) echo $datOne[0]['titupag']; ?>">
+                </div>
+                <div class="form-group col-md-6">
                         <label for="icopag">Icono</label>
                         <input type="text" name="icopag" id="icopag" class="form-control" value="<?php if($datOne) echo $datOne[0]['icopag']; ?>">
                 </div>
                 <div class="form-group col-md-6">
                         <label for="despag">Descripción</label>
-                        <textarea name="despag" id="despag" rows="3" class="form-control"><?php if($datOne) echo $datOne[0]['despag'];?></textarea>
+                        <textarea type="text" name="despag" id="despag" rows="3" class="form-control"><?php if($datOne) echo $datOne[0]['despag'];?></textarea>
                 </div>
-                <div class="form-group col-md-6" style="margin:auto;">
-                    <input class="btn btn-primary" type="submit" value="Enviar">
+                <div class="form-group col-md-6" style="margin:auto; padding-top: 20px;">
+                    <input class="btn btn-warning" type="submit" value="Enviar">
                     <input type="hidden" name="opera" value="save">
                     <input type="hidden" name="idpag" id="idpag" value="<?php if($datOne) echo $datOne[0]['idpag'];?>">
                 </div>
@@ -48,12 +57,7 @@
             <th>Icono</th>
             <th>Página</th>
             <th>Mostrar</th>
-            
-            <th style="text-align: right;">
-                <a href="views/pdfpag.php" title="PDF" target="_blank">
-                    <i class="fa-solid fa-file-pdf fa-2x" style="color: #117f09;"></i>
-                </a>
-            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -61,10 +65,12 @@
             <tr>
                 <td style="text-align: center; vertical-align: middle;"><i class="<?=$dta['icopag'];?>" style="font-size: 25px;"></i></td>
                 <td>
-                    <strong><?=$dta['idpag'];?> - <?=$dta['nompag'];?></strong><br>
+                    <strong><?=$dta['idpag'];?> - <?=$dta['titupag'];?></strong><br>
                     <small>
+                        <strong>Nombre en menu: </strong><?=$dta['nompag'];?>&nbsp;<br>
                         <strong>Ruta: </strong><?=$dta['rutpag'];?><br><strong>Nombre del icono: </strong>
-                        <?=$dta['icopag'];?>&nbsp;<br>
+                        <?=$dta['icopag'];?>&nbsp;
+                        
                         <?php if ($dta['despag']){?>
                             <br><strong>Descripción: </strong>
                             <?=$dta['despag'];?>
@@ -99,7 +105,6 @@
             <th>Icono</th>
             <th>Página</th>
             <th>Mostrar</th>
-            
             <th></th>
         </tr>
     </tfoot>

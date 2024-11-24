@@ -66,13 +66,13 @@ if ($ope == "save") {
 
     // Redirigir según el tipo de producto
     if ($tipoprod == "licor") {
-        header("Location: home.php?pg=1006");
+        header("Location: home.php?pg=3003");
         exit; // Termina la ejecución del script después de redirigir
     } elseif ($tipoprod == "vino") {
-        header("Location: home.php?pg=1005");
+        header("Location: home.php?pg=3003");
         exit; // Termina la ejecución del script después de redirigir
     } elseif ($tipoprod == "coctel") {
-        header("Location: home.php?pg=1004");
+        header("Location: home.php?pg=3003");
         exit; // Termina la ejecución del script después de redirigir
     } else {
         // Si no es ninguno de esos tipos, redirige a una página general
