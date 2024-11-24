@@ -1,4 +1,6 @@
-<?php require_once 'admin/controllers/cbar.php'; ?>
+<?php require_once 'admin/controllers/cbar.php'; 
+require_once 'admin/controllers/cubi.php';
+?>
 
 <br><br><br>
 
@@ -52,19 +54,18 @@
                         value="<?= isset($datOne[0]['dircbar']) ? $datOne[0]['dircbar'] : ''; ?>" required>
                 </div>
                 <div class="form-group col-md-6">
-    <label for="codubi"><strong>Seleccione la ciudad</strong></label>
-    <select name="codubi" id="codubi" class="form-select" required>
-        <option value="" disabled selected>Seleccionar</option> <!-- Opción inicial -->
-        <?php
-        $ubi = $mbar->getAllCiu(); // Método que obtiene todas las ciudades
-        foreach ($ubi as $ci) {
-            // Determinar si la ciudad actual debe ser seleccionada
-            $selected = (isset($datOne[0]['codubi']) && $datOne[0]['codubi'] == $ci['codubi']) ? 'selected' : '';
-        ?>
-            <option value="<?= $ci['codubi']; ?>" <?= $selected; ?>><?= $ci['nomubi']; ?></option>
-        <?php } ?>
-    </select>
-</div>
+                    <label for="codubi"><b>Ubicacion</b></label>
+                    <select name="codubi" id="codubi" class="form-control form-select" required>
+                        <option value="" disabled selected>Seleccione una ciudad</option>
+                        <?php if ($datAll) { 
+                            foreach ($datAll as $dta) { ?>
+                                <option value="<?=$dta['codubi'];?>" <?php if($datOne && $datOne[0]['codubi'] == $dta['codubi']) echo 'selected'; ?>>
+                                    <?=$dta['nomubi'];?>
+                                </option>
+                            <?php }
+                        } ?>
+                    </select>
+                </div>
                 <div class="form-group col-md-6">
                     <label for="idval"><strong>Numero de valor</strong></label>
                     <select name="idval" id="idval" class="form-select">
@@ -102,46 +103,42 @@
 </div>
 
 <!-- Tabla de bares registrados -->
-<table id="example" class="table table-striped">
+<table id="example" class="table table-striped" width="100%" style="text-align: left">
     <thead>
         <tr>
-            <th>Foto del bar</th>
-            <th>ID del bar</th>
-            <th>Bares</th>
-            <th>Nombre Propietario</th>
+            <th>Foto</th>
             <th>NIT</th>
-            <th>Email Del bar</th>
-            <th>Teléfono</th>
-            <th>Clave del bar</th>
-            <th>Dirección</th>
-            <th>Ciudad</th>
-            <th>Tipo de Identidad</th>
+            <th>Nombre del bar</th>
+            <th>Email</th>
+            <th>Contraseña</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         <?php if($bars) { foreach ($bars as $bar) { ?>
         <tr>
+            <!-- Foto del bar -->
             <td>
-                <div style="display: flex; align-items: center;">
-                            <?php if (!empty($dta["fotbar"]) && file_exists("img/" . $dta["fotbar"])) { ?>
-                                <img src="img/<?=$dta["fotbar"];?>" width="120px" style="margin-right: 10px;">
-                            <?php } else { ?>
-                                <img src="img/coctelapp/bar1.jpg" width="120px" style="margin-right: 10px;">
-                            <?php } ?> 
-                            <div>
+                <?php if (!empty($bar["fotbar"]) && file_exists("img/" . $bar["fotbar"])) { ?>
+                    <img src="img/<?=$bar["fotbar"];?>" width="120px">
+                <?php } else { ?>
+                    <img src="img/coctelapp/bar1.jpg" width="120px">
+                <?php } ?>
             </td>
-            <td><?= $bar['idbar']; ?></td>
+            <!-- NIT -->
+            <td><b>NIT: </b><?= $bar['nit']; ?><br>
+                <b>Telefono: </b><?= $bar['telbar']; ?><br>
+                <b>Nombre Propietario: </b><?= $bar['nompropi']; ?><br>
+                <b>Horario: </b><?= $bar['horbar']; ?><br>
+                <b>Direccion: </b><?= $bar['dircbar']; ?></td>
+            <!-- Nombre del Bar -->
             <td><?= $bar['nombar']; ?></td>
-            <td><?= $bar['nompropi']; ?></td>
-            <td><?= $bar['nit']; ?></td>
+            <!-- Email del Bar -->
             <td><?= $bar['emabar']; ?></td>
-            <td><?= $bar['telbar']; ?></td>
+            <!-- Contraseña -->
             <td><?= $bar['pssbar']; ?></td>
-            <td><?= $bar['dircbar']; ?></td>
-            <td><?= $bar['nomubi']; ?></td>
-            <td><?= $bar['nomval']; ?></td>
-            <td>   
+            <!-- Acciones (Editar y Eliminar) -->
+            <td>
                 <a href="home.php?pg=<?=$pg;?>&idbar=<?=$bar['idbar'];?>&ope=edi" title="Editar">
                     <i class="fa-solid fa-pen-to-square fa"></i>
                 </a>
@@ -149,22 +146,8 @@
                     <i class="fa-solid fa-trash-can fa"></i>
                 </a>
             </td>
-
         </tr>
         <?php }} ?>
     </tbody>
-    <tr>
-            <th>Foto del bar</th>
-            <th>ID del bar</th>
-            <th>Bares</th>
-            <th>Nombre Propietario</th>
-            <th>NIT</th>
-            <th>Email Del bar</th>
-            <th>Teléfono</th>
-            <th>Clave del bar</th>
-            <th>Dirección</th>
-            <th>Ciudad</th>
-            <th>Tipo de Identidad</th>
-            <th></th>
-        </tr>
 </table>
+

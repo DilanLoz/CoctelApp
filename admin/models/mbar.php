@@ -13,6 +13,8 @@ class Mbar {
     private $idper;
     private $idval;
     private $fotbar;
+    private $horbar;
+
     // ubicacion
     private $nomubi;
     private $depubi;
@@ -34,6 +36,9 @@ class Mbar {
     }
     public function getEmabar() {
         return $this->emabar;
+    }
+    public function getHorbar() {
+        return $this->horbar;
     }
     public function getTelbar() {
         return $this->telbar;
@@ -89,6 +94,9 @@ class Mbar {
     public function setTelbar($telbar) {
         $this->telbar = $telbar;
     }
+    public function setHorbar($horbar) {
+        $this->horbar = $horbar;
+    }
     public function setPssbar($pssbar) {
         $this->pssbar = $pssbar;
     }
@@ -127,7 +135,7 @@ class Mbar {
 
     public function getAll() {
     	$res = NULL;
-    	$sql = "SELECT b.idbar, b.nombar, b.nompropi, b.nit, b.emabar, b.telbar, b.pssbar, b.dircbar, v.iddom, v.nomval, b.codubi, u.nomubi, u.depubi, b.idper, b.idval, b.fotbar FROM bar AS b INNER JOIN ubicacion AS u ON b.codubi=u.codubi LEFT JOIN valor AS v ON b.idval=v.idval";
+    	$sql = "SELECT b.idbar, b.nombar, b.nompropi, b.nit, b.emabar, b.telbar, b.pssbar, b.dircbar, b.horbar, v.iddom, v.nomval, b.codubi, u.nomubi, u.depubi, b.idper, b.idval, b.fotbar FROM bar AS b INNER JOIN ubicacion AS u ON b.codubi=u.codubi LEFT JOIN valor AS v ON b.idval=v.idval";
     	$modelo = new Conexion();
     	$conexion = $modelo->get_conexion();
     	$result = $conexion->prepare($sql);
@@ -171,8 +179,8 @@ public function getAllVal() {
     }
     public function save() {
     try {
-        $sql = "INSERT INTO bar (nombar, nompropi, nit, emabar, telbar, pssbar, dircbar, codubi, idper, idval, fotbar, nomubi) 
-                VALUES (:nombar, :nompropi, :nit, :emabar, :telbar, :pssbar, :dircbar, :codubi, :idper, :idval, :fotbar, :nomubi)";
+        $sql = "INSERT INTO bar (nombar, nompropi, nit, emabar, telbar, pssbar, dircbar, codubi, idper, idval, horbar, fotbar, nomubi) 
+                VALUES (:nombar, :nompropi, :nit, :emabar, :telbar, :pssbar, :dircbar, :codubi, :idper, :idval, :horbar, :fotbar, :nomubi)";
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
         $result = $conexion->prepare($sql);
@@ -207,6 +215,9 @@ public function getAllVal() {
         $idval = $this->getIdval();
         $result->bindParam(":idval", $idval);
 
+        $horbar = $this->getHorbar();
+        $result->bindParam(":horbar", $horbar);
+
         $fotbar = $this->getFotbar();
         $result->bindParam(":fotbar", $fotbar);
 
@@ -220,7 +231,7 @@ public function getAllVal() {
 }
 
     public function edit() {
-        $sql = "UPDATE bar SET nombar = :nombar, nompropi = :nompropi, nit = :nit, emabar = :emabar, telbar = :telbar, pssbar = :pssbar, dircbar = :dircbar, codubi = :codubi, idper = :idper, idval = :idval, fotbar = :fotbar, nomubi = :nomubi  WHERE idbar = :idbar";
+        $sql = "UPDATE bar SET nombar = :nombar, nompropi = :nompropi, nit = :nit, emabar = :emabar, telbar = :telbar, pssbar = :pssbar, dircbar = :dircbar, codubi = :codubi, idper = :idper, idval = :idval, horbar = :hornar, fotbar = :fotbar, nomubi = :nomubi  WHERE idbar = :idbar";
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
         $result = $conexion->prepare($sql);
@@ -246,6 +257,8 @@ public function getAllVal() {
         $result->bindParam(":idper", $idper);
         $idval = $this->getIdval();
         $result->bindParam(":idval", $idval);
+        $horbar = $this->getHorbar();
+        $result->bindParam(":horbar", $horbar);
         $fotbar = $this->getFotbar();
         $result->bindParam(":fotbar", $fotbar);
         $nomubi = $this->getNomubi();
