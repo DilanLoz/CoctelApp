@@ -1,5 +1,6 @@
 <?php
 class Mbar {
+    //bar
     private $idbar;
     private $nombar;
     private $nompropi;
@@ -12,7 +13,12 @@ class Mbar {
     private $idper;
     private $idval;
     private $fotbar;
-
+    // ubicacion
+    private $nomubi;
+    private $depubi;
+    // Valor
+    private $iddom;
+    private $nomval;
     // Método para obtener todos los bares
     public function getIdbar() {
         return $this->idbar;
@@ -50,7 +56,21 @@ class Mbar {
     public function getFotbar() {
         return $this->fotbar;
     }
-
+    //Metodos get ubi
+    public function getNomubi() {
+        return $this->nomubi;
+    }
+    public function getDepubi() {
+        return $this->depubi;
+    }
+    //Metodos get val
+    public function getIddom() {
+        return $this->iddom;
+    }
+    public function getNomval() {
+        return $this->nomval;
+    }
+    //Metodos set bar
     public function setIdbar($idbar) {
         $this->idbar = $idbar;
     }
@@ -87,16 +107,55 @@ class Mbar {
     public function setFotbar($fotbar) {
         $this->fotbar = $fotbar;
     }
+    public function setNomubi($nomubi) {
+        $this->nomubi = $nomubi;
+    }
+    //Metodos set ubi
+    public function setDepubi($depubi) {
+        $this->depubi = $depubi;
+    }
+    //Metodos set Val
+    public function setIddom($iddom) {
+        $this->iddom = $iddom;
+    }
+    public function setNomval($nomval) {
+        $this->nomval = $nomval;
+    }
+
+
+
 
     public function getAll() {
     	$res = NULL;
-    	$sql = "SELECT b.idbar, b.nombar, b.nompropi, b.nit, b.emabar, b.telbar, b.pssbar, b.dircbar, v.iddom, v.nomval, b.codubi, u.nomubi, b.idper, b.idval, b.fotbar FROM bar AS b INNER JOIN ubicacion AS u ON b.codubi=u.codubi LEFT JOIN valor AS v ON b.idval=v.idval";
+    	$sql = "SELECT b.idbar, b.nombar, b.nompropi, b.nit, b.emabar, b.telbar, b.pssbar, b.dircbar, v.iddom, v.nomval, b.codubi, u.nomubi, u.depubi, b.idper, b.idval, b.fotbar FROM bar AS b INNER JOIN ubicacion AS u ON b.codubi=u.codubi LEFT JOIN valor AS v ON b.idval=v.idval";
     	$modelo = new Conexion();
     	$conexion = $modelo->get_conexion();
     	$result = $conexion->prepare($sql);
     	$result->execute();
     	$res = $result->fetchAll(PDO::FETCH_ASSOC);
    	 	return $res;
+}
+//Tabla ubi
+public function getAllCiu()
+{
+    $sql = "SELECT codubi, nomubi, depubi FROM ubicacion"; // Ajusta el nombre de la tabla
+    $modelo = new Conexion();
+    $conexion = $modelo->get_conexion();
+    $result = $conexion->prepare($sql);
+    $result->execute();
+    $res = $result->fetchAll(PDO::FETCH_ASSOC);
+    return $res;
+}
+//tabla valor
+public function getAllVal() {
+        $res = NULL;
+        $sql = "SELECT idval, iddom, nomval  FROM valor";
+        $modelo = new Conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+        $result->execute();
+        $res = $result->fetchAll(PDO::FETCH_ASSOC);
+        return $res;
 }
     public function getOne() {
         $res = NULL;
@@ -110,61 +169,58 @@ class Mbar {
         $res = $result->fetchAll(PDO::FETCH_ASSOC);
         return $res;
     }
-
     public function save() {
-    // Verificar si el codubi existe en la tabla ubicacion
-    $codubi = $this->getCodubi();
-    $idper = $this->getIdper(); // Obtener el valor de idper
+    try {
+        $sql = "INSERT INTO bar (nombar, nompropi, nit, emabar, telbar, pssbar, dircbar, codubi, idper, idval, fotbar, nomubi) 
+                VALUES (:nombar, :nompropi, :nit, :emabar, :telbar, :pssbar, :dircbar, :codubi, :idper, :idval, :fotbar, :nomubi)";
+        $modelo = new Conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
 
-    // Asegurarse de que idper no sea NULL
-    if ($idper === NULL) {
-        // Asignar un valor predeterminado si es necesario
-        // Por ejemplo, si idper es obligatorio, deberías manejar el error o asignar un valor por defecto
-        $idper = 1; // Asignar un valor predeterminado si es necesario
+        $nombar = $this->getNombar();
+        $result->bindParam(":nombar", $nombar);
+
+        $nompropi = $this->getNompropi();
+        $result->bindParam(":nompropi", $nompropi);
+
+        $nit = $this->getNit();
+        $result->bindParam(":nit", $nit);
+
+        $emabar = $this->getEmabar();
+        $result->bindParam(":emabar", $emabar);
+
+        $telbar = $this->getTelbar();
+        $result->bindParam(":telbar", $telbar);
+
+        $pssbar = $this->getPssbar();
+        $result->bindParam(":pssbar", $pssbar);
+
+        $dircbar = $this->getDircbar();
+        $result->bindParam(":dircbar", $dircbar);
+
+        $codubi = $this->getCodubi();
+        $result->bindParam(":codubi", $codubi);
+
+        $idper = $this->getIdper();
+        $result->bindParam(":idper", $idper);
+
+        $idval = $this->getIdval();
+        $result->bindParam(":idval", $idval);
+
+        $fotbar = $this->getFotbar();
+        $result->bindParam(":fotbar", $fotbar);
+
+        $nomubi = $this->getNomubi();
+        $result->bindParam(":nomubi", $nomubi);
+
+        $result->execute();
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
     }
-
-    $modelo = new Conexion();
-    $conexion = $modelo->get_conexion();
-
-    // Verificar existencia de codubi en la tabla ubicacion
-    $sqlCheck = "SELECT COUNT(*) FROM ubicacion WHERE codubi = :codubi";
-    $stmt = $conexion->prepare($sqlCheck);
-    $stmt->bindParam(":codubi", $codubi);
-    $stmt->execute();
-    $count = $stmt->fetchColumn();
-    
-    // Si existe, continuar con la inserción en la tabla bar
-    $sql = "INSERT INTO bar (nombar, nompropi, nit, emabar, telbar, pssbar, dircbar, codubi, idper, idval, fotbar) 
-            VALUES (:nombar, :nompropi, :nit, :emabar, :telbar, :pssbar, :dircbar, :codubi, :idper, :idval, :fotbar)";
-    
-    $result = $conexion->prepare($sql);
-
-    $nombar = $this->getNombar();
-    $result->bindParam(":nombar", $nombar);
-    $nompropi = $this->getNompropi();
-    $result->bindParam(":nompropi", $nompropi);
-    $nit = $this->getNit();
-    $result->bindParam(":nit", $nit);
-    $emabar = $this->getEmabar();
-    $result->bindParam(":emabar", $emabar);
-    $telbar = $this->getTelbar();
-    $result->bindParam(":telbar", $telbar);
-    $pssbar = $this->getPssbar();
-    $result->bindParam(":pssbar", $pssbar);
-    $dircbar = $this->getDircbar();
-    $result->bindParam(":dircbar", $dircbar);
-    $result->bindParam(":codubi", $codubi);
-    $result->bindParam(":idper", $idper);  // Asegurarse de que idper tenga un valor
-    $idval = $this->getIdval();
-    $result->bindParam(":idval", $idval);
-    $fotbar = $this->getFotbar();
-    $result->bindParam(":fotbar", $fotbar);
-    $result->execute();
 }
 
-
     public function edit() {
-        $sql = "UPDATE bar SET nombar = :nombar, nompropi = :nompropi, nit = :nit, emabar = :emabar, telbar = :telbar, pssbar = :pssbar, dircbar = :dircbar, codubi = :codubi, idper = :idper, idval = :idval, fotbar = :fotbar  WHERE idbar = :idbar";
+        $sql = "UPDATE bar SET nombar = :nombar, nompropi = :nompropi, nit = :nit, emabar = :emabar, telbar = :telbar, pssbar = :pssbar, dircbar = :dircbar, codubi = :codubi, idper = :idper, idval = :idval, fotbar = :fotbar, nomubi = :nomubi  WHERE idbar = :idbar";
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
         $result = $conexion->prepare($sql);
@@ -192,6 +248,8 @@ class Mbar {
         $result->bindParam(":idval", $idval);
         $fotbar = $this->getFotbar();
         $result->bindParam(":fotbar", $fotbar);
+        $nomubi = $this->getNomubi();
+        $result->bindParam(":nomubi", $nomubi);
         $result->execute();
     }
 

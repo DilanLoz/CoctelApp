@@ -27,25 +27,24 @@
                         value="<?= isset($datOne[0]['nompropi']) ? $datOne[0]['nompropi'] : ''; ?>" required>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="nit"><strong>NIT</strong></label>
-                    <select name="nit" id="nit" class="form-select">
-                    <option value="" disabled selected></option> <!-- Opción inicial -->
-                    <?php
-                    $bars = $mbar->getAll(); // Método que obtiene todas las ciudades
-                    foreach ($bars as $ni) {
-                        // Verificar si la ciudad actual está seleccionada
-                        $selected = (isset($datOne[0]['nit']) && $datOne[0]['nit'] == $ni['nit']) ? 'selected' : '';
-                    ?>
-                        <option value="<?= $ni['nit']; ?>" <?= $selected; ?>>
-                <?= $ni['nit']; ?>
-                        </option>
-                    <?php } ?>
-                </select>
+                    <label for="nit"><strong>NIT Del bar</strong></label>
+                    <input type="text" name="nit" id="nit" class="form-control" 
+                        value="<?= isset($datOne[0]['nit']) ? $datOne[0]['nit'] : ''; ?>" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="emabar"><strong>Email Del bar</strong></label>
+                    <input type="text" name="emabar" id="emabar" class="form-control" 
+                        value="<?= isset($datOne[0]['emabar']) ? $datOne[0]['emabar'] : ''; ?>" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="telbar"><strong>Teléfono</strong></label>
                     <input type="text" name="telbar" id="telbar" class="form-control" 
                         value="<?= isset($datOne[0]['telbar']) ? $datOne[0]['telbar'] : ''; ?>" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="pssbar"><strong>Contraseña del bar</strong></label>
+                    <input type="text" name="pssbar" id="telbar" class="form-control" 
+                        value="<?= isset($datOne[0]['pssbar']) ? $datOne[0]['pssbar'] : ''; ?>" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="dircbar"><strong>Dirección</strong></label>
@@ -54,75 +53,118 @@
                 </div>
                 <div class="form-group col-md-6">
     <label for="codubi"><strong>Seleccione la ciudad</strong></label>
-    <select name="codubi" id="codubi" class="form-select">
+    <select name="codubi" id="codubi" class="form-select" required>
         <option value="" disabled selected>Seleccionar</option> <!-- Opción inicial -->
         <?php
-        $ubi = $mbar->getAll(); // Método que obtiene todas las ciudades
+        $ubi = $mbar->getAllCiu(); // Método que obtiene todas las ciudades
         foreach ($ubi as $ci) {
-            // Verificar si la ciudad actual está seleccionada
-            $selected = (isset($datOne[0]['depubi']) && $datOne[0]['depubi'] == $ci['depubi']) ? 'selected' : '';
+            // Determinar si la ciudad actual debe ser seleccionada
+            $selected = (isset($datOne[0]['codubi']) && $datOne[0]['codubi'] == $ci['codubi']) ? 'selected' : '';
         ?>
-            <option value="<?=$ci['codubi'];?>" <?php if($datOne && $datOne[0]['depubi']==$ci['codubi']) echo "selected";?>><?=$ci['depubi'];?></option>
+            <option value="<?= $ci['codubi']; ?>" <?= $selected; ?>><?= $ci['nomubi']; ?></option>
         <?php } ?>
     </select>
 </div>
-
-
                 <div class="form-group col-md-6">
-                    <label for="pssbar"><strong>Contraseña del bar</strong></label>
-                    <input type="text" name="pssbar" id="pssbar" class="form-control" 
-                        value="<?= isset($datOne[0]['pssbar']) ? $datOne[0]['pssbar'] : ''; ?>" required>
+                    <label for="idval"><strong>Numero de valor</strong></label>
+                    <select name="idval" id="idval" class="form-select">
+                    <option value="" disabled selected></option> <!-- Opción inicial -->
+                    <?php
+                    $vals = $mbar->getAllVal(); // Método que obtiene todas las ciudades
+                    foreach ($vals as $va) {
+                        // Verificar si la ciudad actual está seleccionada
+                        $selected = (isset($datOne[0]['idval']) && $datOne[0]['idval'] == $va['idval']) ? 'selected' : '';
+                    ?>
+                        <option value="<?= $va['idval']; ?>" <?= $selected; ?>>
+                <?= $va['nomval']; ?>
+                        </option>
+                    <?php } ?>
+                </select>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="fotbar">Imagen Bar</label>
+                    <label for="fotbar"><strong>Imagen Bar</strong></label>
                     <input type="file" class="form-control" name="fots" accept="image/*" id="fotbar">
                     <input type="hidden" name="fotbar" 
                         value="<?= isset($datOne[0]['fotbar']) ? $datOne[0]['fotbar'] : ''; ?>">
                 </div>
-                <br><br>
+                <br>
+                <br>
+                <br>
             </div>
-            <div class="form-group col-md-6" style="margin:auto;">
+            <div class="form-group col-md-6">
+                <br>
                 <input class="btn btn-primary" type="submit" value="Enviar">
-                <input type="hidden" name="ope" value="save">
-                <input type="hidden" name="idbar" value="<?= isset($datOne[0]['idbar']) ? $datOne[0]['idbar'] : ''; ?>">
+                <input type="hidden" name="opera" value="save">
+                <input type="hidden" name="idbar" id="idbar" value="<?php echo isset($datOne[0]['idbar']) ? $datOne[0]['idbar'] : ''; ?>">
             </div>
         </form>
     </div>
 </div>
 
 <!-- Tabla de bares registrados -->
-<table id="example" class="table table-striped" style="width:100%;">
+<table id="example" class="table table-striped">
     <thead>
         <tr>
             <th>Foto del bar</th>
+            <th>ID del bar</th>
             <th>Bares</th>
             <th>Nombre Propietario</th>
-            <th>Teléfono</th>
             <th>NIT</th>
-            <th>Dirección del bar</th>
-            <th>Código de ubicación</th>
-            <th>Acciones</th>
+            <th>Email Del bar</th>
+            <th>Teléfono</th>
+            <th>Clave del bar</th>
+            <th>Dirección</th>
+            <th>Ciudad</th>
+            <th>Tipo de Identidad</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        <?php if($bars){ foreach ($bars as $bar) { ?>
+        <?php if($bars) { foreach ($bars as $bar) { ?>
         <tr>
-            <td><?= $bar['fotbar']; ?></td>
+            <td>
+                <div style="display: flex; align-items: center;">
+                            <?php if (!empty($dta["fotbar"]) && file_exists("img/" . $dta["fotbar"])) { ?>
+                                <img src="img/<?=$dta["fotbar"];?>" width="120px" style="margin-right: 10px;">
+                            <?php } else { ?>
+                                <img src="img/coctelapp/bar1.jpg" width="120px" style="margin-right: 10px;">
+                            <?php } ?> 
+                            <div>
+            </td>
+            <td><?= $bar['idbar']; ?></td>
             <td><?= $bar['nombar']; ?></td>
             <td><?= $bar['nompropi']; ?></td>
-            <td><?= $bar['telbar']; ?></td>
             <td><?= $bar['nit']; ?></td>
+            <td><?= $bar['emabar']; ?></td>
+            <td><?= $bar['telbar']; ?></td>
+            <td><?= $bar['pssbar']; ?></td>
             <td><?= $bar['dircbar']; ?></td>
-            <td><?= $bar['codubi']; ?></td>
-            <td style="text-align:center;">
-                <a href="home.php?pg=<?= $pg; ?>&idbar=<?= $bar['idbar']; ?>&ope=edi" title="Editar">
+            <td><?= $bar['nomubi']; ?></td>
+            <td><?= $bar['nomval']; ?></td>
+            <td>   
+                <a href="home.php?pg=<?=$pg;?>&idbar=<?=$bar['idbar'];?>&ope=edi" title="Editar">
                     <i class="fa-solid fa-pen-to-square fa"></i>
                 </a>
-                <a href="home.php?pg=<?= $pg; ?>&idbar=<?= $bar['idbar']; ?>&ope=eli" title="Eliminar" onclick="return eliminar();">
+                <a href="home.php?pg=<?=$pg;?>&idbar=<?=$bar['idbar'];?>&ope=del" title="Eliminar" onclick="return eliminar();">
                     <i class="fa-solid fa-trash-can fa"></i>
                 </a>
             </td>
+
         </tr>
         <?php }} ?>
     </tbody>
+    <tr>
+            <th>Foto del bar</th>
+            <th>ID del bar</th>
+            <th>Bares</th>
+            <th>Nombre Propietario</th>
+            <th>NIT</th>
+            <th>Email Del bar</th>
+            <th>Teléfono</th>
+            <th>Clave del bar</th>
+            <th>Dirección</th>
+            <th>Ciudad</th>
+            <th>Tipo de Identidad</th>
+            <th></th>
+        </tr>
 </table>

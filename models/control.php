@@ -52,11 +52,14 @@ function red() {
 
 function ingr($usu, $pas) {
     $res = NULL;
+    $pas = sha1(md5($pas . 'Jd#'));
+    //echo $pas;
+    //die;
     $sql = "SELECT 
                 u.idusu, u.nomusu, u.emausu, u.celusu, u.fotiden, 
                 u.numdocu, u.fecnausu, u.pssusu, u.codubi, 
                 u.idper, u.idval, f.nomper, f.pagini, 
-                ub.nomubi, v.nomval, s.nomserv, b.nombar, 
+                ub.nomubi, v.nomval, s.idserv, s.nomserv, b.nombar, b.idbar,
                 b.nompropi, b.horbar, b.dircbar 
             FROM usuario AS u
             INNER JOIN perfiles AS f ON u.idper = f.idper
