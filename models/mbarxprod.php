@@ -102,7 +102,7 @@ class Mbarxprod {
         $this->tipoprod = $tipoprod;
     }
 
-    // Methods (getAll, getOne, save, edit, del) should be closed with `}`
+    // Methods (getAll, getOne, save, edit, del) should be closed with }
     public function getAll() {
         try {
             $sql = "SELECT p.idprod, p.nomprod, p.desprod, p.vlrprod, p.fotprod, p.idval, p.idbar, p.cantprod, p.idserv, p.idusu, b.nombar, p.tipoprod FROM producto AS p INNER JOIN bar AS b ON p.idbar=b.idbar";
@@ -116,7 +116,6 @@ class Mbarxprod {
             echo "Error: " . $e;
         }
     }
-
     public function getOne() {
         try {
             $sql = "SELECT idprod, nomprod, desprod, vlrprod, fotprod, idval, idbar, cantprod, idserv, idusu, tipoprod FROM producto WHERE idprod=:idprod";

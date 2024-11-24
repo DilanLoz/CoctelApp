@@ -2,10 +2,13 @@
 ob_start();  // Inicia el buffer de salida
 
 require_once ('models/mbarxprod.php');
+include ('admin/models/mbar.php');
 require_once 'models/conexion.php';
 
 $imageCounter = 0;
 $mbarxprod = new Mbarxprod();
+$mbar = new Mbar();
+
 
 //$fecdia = date("Y-m-d H:i:s");
 
@@ -93,6 +96,6 @@ if ($ope == "edi" && $idprod) {
 
 // Obtener todos los productos
 $datAll = $mbarxprod->getAll();
-
+$bars=$mbar->getAll();
 ob_end_flush();  // Envía el contenido al navegador después de la redirección
 ?>

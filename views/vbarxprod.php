@@ -1,5 +1,31 @@
-<?php require_once ('controllers/cbarxprod.php'); ?>
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
+ require_once ('controllers/cbarxprod.php'); ?>
+
+<?php
+// Iniciar sesión si aún no está iniciada
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Verificar si hay una sesión activa y si contiene el ID del usuario
+if (isset($_SESSION['idusu'])) {
+    // Mostrar la ID de sesión y los datos almacenados en la sesión
+    echo "<h3>Datos del Usuario en Sesión:</h3>";
+    echo "ID de Usuario: " . $_SESSION['idusu'] . "<br>";
+    echo "Nombre de Usuario: " . $_SESSION['nomusu'] . "<br>";
+    echo "Email de Usuario: " . $_SESSION['emausu'] . "<br>";
+    echo "Celular: " . $_SESSION['celusu'] . "<br>";
+    echo "Número de Documento: " . $_SESSION['numdocu'] . "<br>";
+    // Agrega más datos de la sesión si es necesario
+} else {
+    // Mensaje si no hay datos de sesión válidos
+    echo "<h3>Datos inválidos: No se encontró una sesión activa.</h3>";
+}
+?>
 <div class="container" style="text-align: left;">
     <br><br><br>
     <form id="frmins" action="home.php?pg=3003" enctype="multipart/form-data" method="POST">
@@ -33,11 +59,20 @@
                     <option value="coctel" <?php echo (isset($datOne[0]['tipoprod']) && $datOne[0]['tipoprod'] == 'coctel') ? 'selected' : ''; ?>>Coctel</option>
                 </select>
             </div>
-
             <div class="form-group col-md-6">
-                <label for="idbar"><strong>ID del bar</strong></label>
-                <input type="text" name="idbar" id="idbar" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne[0]['idbar']) ? $datOne[0]['idbar'] : ''; ?>" required>
-            </div>
+    <label for="idbar"><strong>Selecciona el ID de tu bar</strong></label>
+    <select name="idbar" id="idbar" class="form-select" required>
+        <option value="" disabled selected>Seleccionar</option> <!-- Opción inicial -->
+        <?php
+        $bars = $mbar->getAll(); // Método que obtiene todas las ciudades
+        foreach ($bars as $idb) {
+            // Determinar si la ciudad actual debe ser seleccionada
+            $selected = (isset($datOne[0]['idbar']) && $datOne[0]['idbar'] == $idb['idbar']) ? 'selected' : '';
+        ?>
+            <option value="<?= $idb['idbar']; ?>" <?= $selected; ?>><?= $idb['idbar']; ?></option>
+        <?php } ?>
+    </select>
+</div>
 
             <div class="form-group col-md-4">
                 <label for="fotprod">Imagen</label>
@@ -60,7 +95,7 @@
                     <th>Producto</th>
                     <th>Acciones</th>
                 </tr>
-            </thead>
+            </thead>    
             <tbody>
                 <?php if (isset($datAll) && !empty($datAll)) { foreach ($datAll as $dta) { ?>
                 <tr>
@@ -69,7 +104,7 @@
                             <?php if (!empty($dta["fotprod"]) && file_exists("img/" . $dta["fotprod"])) { ?>
                                 <img src="img/<?=$dta["fotprod"];?>" width="120px" style="margin-right: 10px;">
                             <?php } else { ?>
-                                <img src="img/logo.png" width="120px" style="margin-right: 10px;">
+                                <img src="img/coctelapp/logo.png" width="120px" style="margin-right: 10px;">
                             <?php } ?> 
                             <div>
                                 <strong><?=$dta['idprod'];?> - <?=$dta['nomprod'];?></strong><br>
@@ -102,15 +137,4 @@
             </tr>
         </thead>
     </table>
-    <nav aria-label="...">
-        <ul class="pagination">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Siguiente</a>
-            </li>
-        </ul>
-    </nav>
 </div>
