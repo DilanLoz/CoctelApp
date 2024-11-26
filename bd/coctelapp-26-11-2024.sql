@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-11-2024 a las 00:21:43
+-- Tiempo de generación: 26-11-2024 a las 20:18:53
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -36,6 +36,8 @@ CREATE TABLE `bar` (
   `telbar` int(12) DEFAULT NULL COMMENT 'teléfono del bar',
   `pssbar` varchar(100) NOT NULL COMMENT 'contraseña del bar',
   `dircbar` varchar(100) NOT NULL COMMENT 'dirección del bar',
+  `horbar` varchar(50) DEFAULT NULL,
+  `fotbar` varchar(255) DEFAULT NULL,
   `codubi` int(6) DEFAULT NULL COMMENT 'código de ubicacion',
   `idper` bigint(10) NOT NULL COMMENT 'id del perfil',
   `idval` bigint(10) NOT NULL COMMENT 'id del valor'
@@ -45,9 +47,21 @@ CREATE TABLE `bar` (
 -- Volcado de datos para la tabla `bar`
 --
 
-INSERT INTO `bar` (`idbar`, `nombar`, `nompropi`, `nit`, `emabar`, `telbar`, `pssbar`, `dircbar`, `codubi`, `idper`, `idval`) VALUES
-(2, 'Bazzar', 'Mateo', 211312, 'baz@gmail.com', 21312312, 'bazz', '', 1, 30, 102),
-(3, 'Mar', 'Martin', 12123, 'mar@gmail.com', 2312321, '', '', 1, 30, 102);
+INSERT INTO `bar` (`idbar`, `nombar`, `nompropi`, `nit`, `emabar`, `telbar`, `pssbar`, `dircbar`, `horbar`, `fotbar`, `codubi`, `idper`, `idval`) VALUES
+(2002, 'Cabañas', 'Juan Martinez', 8029812, 'caba@gmail.com', 300940912, 'e0851d399bb2954f554d93328662c70f79273f5a', 'Calle 20 #40-60 Norte', NULL, NULL, 1, 30, 102),
+(2003, 'Bazar', 'Jose Perez', 8039923, 'baz@gmail.com', 300828821, 'a7c9f5b4f15002ac1275c418d5c77f316ae749db', 'Transversal 7 #30-50 ', NULL, NULL, 2, 30, 102);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `carrito`
+--
+
+CREATE TABLE `carrito` (
+  `idcarrito` bigint(20) NOT NULL,
+  `idusu` bigint(10) NOT NULL,
+  `fecha_creacion` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -73,7 +87,6 @@ CREATE TABLE `detfact` (
   `iddetfact` bigint(20) NOT NULL COMMENT 'id de detalle de factura',
   `idfact` bigint(20) NOT NULL COMMENT 'id de factura',
   `idprod` bigint(20) DEFAULT NULL COMMENT 'id del producto',
-  `estado` tinyint(1) NOT NULL COMMENT 'estado del pedido',
   `cantidad` int(8) DEFAULT NULL COMMENT 'cantidad de productos',
   `precio_unitario` decimal(10,2) DEFAULT NULL COMMENT 'precio por producto',
   `subtotal` decimal(10,2) DEFAULT NULL COMMENT 'subtotal del pedido',
@@ -81,12 +94,20 @@ CREATE TABLE `detfact` (
   `idbar` bigint(10) NOT NULL COMMENT 'id del bar'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `detfact`
+-- Estructura de tabla para la tabla `detpedido`
 --
 
-INSERT INTO `detfact` (`iddetfact`, `idfact`, `idprod`, `estado`, `cantidad`, `precio_unitario`, `subtotal`, `idemp`, `idbar`) VALUES
-(1, 1, 2, 1, 2, 80.00, 80.00, 2, 2);
+CREATE TABLE `detpedido` (
+  `iddetpedido` bigint(20) NOT NULL,
+  `idpedido` bigint(20) NOT NULL,
+  `idprod` bigint(20) NOT NULL,
+  `cantidad` int(8) DEFAULT NULL,
+  `precio_unitario` decimal(10,2) DEFAULT NULL,
+  `subtotal` decimal(10,2) GENERATED ALWAYS AS (`cantidad` * `precio_unitario`) STORED
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -134,7 +155,8 @@ CREATE TABLE `empleado` (
 --
 
 INSERT INTO `empleado` (`idemp`, `nomemp`, `emaemp`, `celemp`, `fecnaemp`, `numdocu`, `fotiden`, `pssemp`, `idserv`, `idbar`, `codubi`, `idper`, `idval`) VALUES
-(2, 'Jose', 'Martin', 1212, '2004-08-01', 123123, '', '', 1, 2, 1, 20, 101);
+(2000, 'Martin Casas', 'martin@gmail.com', 3001782, '2000-11-20', 109020, NULL, '78adbe311449919b44220c57d7089ee5b8f306ad', 1, NULL, 1, 20, 101),
+(2001, 'Jose', 'jose@gmail.com', 3001782, '2000-11-09', 102891, NULL, '15bb060fd110a4f67c6b5b287072524f345ec1b7', 2, NULL, 2, 20, 101);
 
 -- --------------------------------------------------------
 
@@ -144,41 +166,32 @@ INSERT INTO `empleado` (`idemp`, `nomemp`, `emaemp`, `celemp`, `fecnaemp`, `numd
 
 CREATE TABLE `factura` (
   `idfact` bigint(20) NOT NULL COMMENT 'id de factura',
+  `idpedido` bigint(20) NOT NULL,
   `fecha` date DEFAULT NULL COMMENT 'fecha de la factura',
   `idbar` bigint(10) DEFAULT NULL COMMENT 'id del bar',
   `total` decimal(10,2) DEFAULT NULL COMMENT 'total de compra',
   `idusu` bigint(10) DEFAULT NULL COMMENT 'id de usuario '
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `factura`
---
-
-INSERT INTO `factura` (`idfact`, `fecha`, `idbar`, `total`, `idusu`) VALUES
-(1, '2024-08-22', 2, 200.00, 2);
-
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ganancias`
+-- Estructura de tabla para la tabla `metpago`
 --
 
-CREATE TABLE `ganancias` (
-  `idganancia` bigint(20) NOT NULL COMMENT 'id de ganancias ',
-  `idemp` bigint(10) DEFAULT NULL COMMENT 'id del empleado',
-  `idbar` bigint(10) DEFAULT NULL COMMENT 'id del bar',
-  `idfact` bigint(20) NOT NULL COMMENT 'id de factura',
-  `monto` bigint(10) NOT NULL COMMENT 'monto de la ganancia',
-  `fecha` date DEFAULT NULL COMMENT 'fecha de la ganancia'
+CREATE TABLE `metpago` (
+  `idmetpago` tinyint(2) NOT NULL,
+  `nommetpago` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `ganancias`
+-- Volcado de datos para la tabla `metpago`
 --
 
-INSERT INTO `ganancias` (`idganancia`, `idemp`, `idbar`, `idfact`, `monto`, `fecha`) VALUES
-(1, 2, NULL, 1, 1200, '2024-08-22'),
-(4, NULL, 2, 1, 3000, '2024-08-22');
+INSERT INTO `metpago` (`idmetpago`, `nommetpago`) VALUES
+(1, 'TARJETA DEBITO'),
+(2, 'PSE'),
+(3, 'CONTRA ENTREGA');
 
 -- --------------------------------------------------------
 
@@ -192,6 +205,7 @@ CREATE TABLE `pagina` (
   `rutpag` varchar(255) DEFAULT NULL COMMENT 'ruta de la pagina',
   `mospag` tinyint(1) DEFAULT NULL COMMENT 'mostrar la pagina',
   `ordpag` int(5) DEFAULT NULL COMMENT 'orden de la pagina',
+  `titupag` varchar(50) DEFAULT NULL,
   `icopag` varchar(50) DEFAULT NULL COMMENT 'icono de la pagina',
   `despag` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -200,24 +214,51 @@ CREATE TABLE `pagina` (
 -- Volcado de datos para la tabla `pagina`
 --
 
-INSERT INTO `pagina` (`idpag`, `nompag`, `rutpag`, `mospag`, `ordpag`, `icopag`, `despag`) VALUES
-(1002, 'Bares', 'views/vusbares.php', 1, 1, NULL, 'Vista bares'),
-(1004, 'Cócteles', 'views/vuscoct.php', 1, 2, NULL, 'Vista Cocteles'),
-(1005, 'Vinos', 'views/vusvino.php', 1, 3, NULL, 'Vista Vinos'),
-(1006, 'Licores', 'views/vuslicor.php', 1, 4, NULL, 'Vista Licores'),
-(1007, '', 'views/vuscarcomp.php', 1, 7, 'fa-solid fa-cart-shopping', 'Carrito de compras'),
-(1008, '', 'views/vushipe.php', 1, 5, 'fa-solid fa-clipboard-list', 'Historial de pedidos'),
-(1009, NULL, 'views/vpusu.php', 1, NULL, 'fa-regular fa-user', 'Perfil usuario'),
-(2001, 'Pedidos', 'views/vexbpedproc.php', 1, 1, NULL, 'Pedidos en proceso'),
-(2002, 'Ganancias', 'views/vemgan.php', 1, 2, NULL, 'Ganancias '),
-(2003, '', 'views/vemhipe.php', 1, 3, 'fa-solid fa-clipboard-list', 'Historial de pedidos'),
-(2004, '', 'views/vpemp.php', 1, 4, 'fa-regular fa-user', 'Perfil empleado'),
-(3001, 'Pedidos', 'views/vexbpedproc.php', 1, 1, NULL, 'Pedidos en proceso'),
-(3002, 'Ganancias', 'views/vemgan.php', 1, 2, '', 'Ganancias por pedidos'),
-(3003, 'Crear Productos', 'views/vbarxprod.php', 1, 3, NULL, 'CRUD Producto'),
-(3004, 'Crear Empleados', 'views/vbarxem.php', 1, 4, NULL, 'CRUD Empleado'),
-(3005, '', 'views/vbarhipe.php', 1, 5, 'fa-solid fa-clipboard-list', 'Historial de pedidos'),
-(3006, '', 'views/vpbar.php', 1, 6, 'fa-regular fa-user', 'Perfil bar');
+INSERT INTO `pagina` (`idpag`, `nompag`, `rutpag`, `mospag`, `ordpag`, `titupag`, `icopag`, `despag`) VALUES
+(1002, 'Bares', 'views/vusbares.php', 1, 1, 'Bares', '', 'Vista de bares'),
+(1004, 'Cócteles', 'views/vuscoct.php', 1, 2, 'Cócteles', NULL, 'Vista de bares'),
+(1005, 'Vinos', 'views/vusvino.php', 1, 3, 'Vinos', NULL, 'Vista Vinos'),
+(1006, 'Licores', 'views/vuslicor.php', 1, 4, 'Licores', NULL, 'Vista Licores'),
+(1007, '', 'views/vuscarcom.php', 1, 5, 'Carrito', 'fa-solid fa-cart-shopping', 'Carrito de compras'),
+(1008, '', 'views/vushipe.php', 1, 6, 'Historial', 'fa-solid fa-clipboard-list', 'Historial de pedidos'),
+(1009, NULL, 'views/vpusu.php', 1, 7, 'Perfil', 'fa-regular fa-user', 'Perfil usuario'),
+(1010, 'Productos de bares', 'views/vusbarxprod.php', 2, NULL, NULL, NULL, ''),
+(1011, NULL, 'views/vusdatcom.php', 2, NULL, 'Formas de pago', NULL, 'Formas de pago y compra final'),
+(1012, NULL, 'views/vusubicom.php', 2, NULL, 'Ubicacion del pedido', NULL, 'Ubicacion del pedido y compra final'),
+(1013, NULL, 'views/vusconfcom.php', 2, NULL, 'Confirmacion de compras', NULL, 'Mensaje de confirmación de compra '),
+(2001, 'Pedidos', 'views/vexbpedproc.php', 1, 8, 'Pedidos', NULL, 'Pedidos en proceso'),
+(2002, 'Ganancias', 'views/vemgan.php', 1, 9, 'Ganancias', NULL, 'Ganancias '),
+(2003, '', 'views/vemhipe.php', 1, 10, 'Historial', 'fa-solid fa-clipboard-list', 'Historial de pedidos'),
+(2004, '', 'views/vpemp.php', 1, 11, 'Perfil', 'fa-regular fa-user', 'Perfil empleado'),
+(3001, 'Pedidos', 'views/vexbpedproc.php', 1, 12, 'Pedidos', NULL, 'Pedidos en proceso'),
+(3002, 'Ganancias', 'views/vemgan.php', 1, 13, 'Ganancias', '', 'Ganancias por pedidos'),
+(3003, 'Crear Productos', 'views/vbarxprod.php', 1, 14, 'Crear Productos', NULL, 'CRUD Producto'),
+(3004, 'Crear Empleados', 'views/vbarxem.php', 1, 15, 'Crear Empleados', NULL, 'CRUD Empleado'),
+(3005, '', 'views/vbarhipe.php', 1, 16, 'Historial', 'fa-solid fa-clipboard-list', 'Historial de pedidos'),
+(3006, '', 'views/vpbar.php', 1, 17, 'Perfil', 'fa-regular fa-user', 'Perfil bar'),
+(4010, '', 'admin/views/vdomval.php', 1, 18, 'Dominio y valor', 'fa-solid fa-gears', 'Dominio y valor '),
+(4020, '', 'admin/views/vpag.php', 1, 2, 'Paginas', 'fa-regular fa-file-powerpoint', 'Pagina'),
+(4021, '', 'admin/views/vperf.php', 1, 3, 'Perfiles', 'fa-solid fa-people-arrows', 'Perfiles'),
+(4030, '', 'admin/views/vusu.php', 1, 4, 'Usuarios', 'fa-solid fa-users', 'CRUD de Usuario'),
+(4040, '', 'admin/views/vemp.php', 1, 5, 'Empleados', 'fa-solid fa-briefcase', 'CRUD de Empleado'),
+(4050, '', 'admin/views/vbar.php', 1, 6, 'Bares', 'fa-solid fa-shop', 'CRUD de Bares'),
+(4060, '', 'admin/views/vprod.php', 1, 7, 'Productos', 'fa-solid fa-wine-glass', 'Productos de bares'),
+(4070, '', 'admin/views/vgan.php', 1, 0, 'Ganacias', 'fa-solid fa-hand-holding-dollar', 'Ganancias y gastos de los bares y empleados'),
+(4080, '', 'admin/views/vcarmav.php', 1, NULL, 'Carga Masiva', 'fa-solid fa-download', 'Carga masiva para bares y empleados '),
+(4090, NULL, 'admin/views/vpedido.php', 1, NULL, 'Pedidos', 'fa-solid fa-cart-flatbed', 'Pedidos en proceso'),
+(4100, NULL, 'admin/views/vpagos.php', 1, NULL, 'Pagos', 'fa-solid fa-money-bill-transfer', 'Pagos por los usuarios'),
+(4110, NULL, 'admin/views/vubi.php', 1, NULL, 'Ubicaciones', 'fa-solid fa-map-location-dot', 'Ubicaciones para actores'),
+(4111, 'a', 'a', 2, 1, NULL, '', ''),
+(4112, 'a', 'a', 2, 1, NULL, '', ''),
+(4113, 'prueba', 'pruebas', 2, 1, NULL, '', ''),
+(4114, 'prueba', 'pruebas', 2, 1, NULL, '', ''),
+(4115, 'prueba', 'pruebas', 2, 1, NULL, '', ''),
+(4116, 'prueba', 'pruebas', 2, 1, NULL, '', ''),
+(4117, 'prueba', 'pruebas', 2, 1, NULL, '', ''),
+(4118, 'prueba', 'pruebas', 2, 1, NULL, '', ''),
+(4119, 'prueba', 'pruebas', 2, 1, NULL, 'fa-solid fa-hand-holding-dollar', ''),
+(4120, 'prueba', 'pruebas', 2, 1, NULL, 'fa-solid fa-hand-holding-dollar', ''),
+(4121, 'prueba', 'pruebas', 2, 1, NULL, 'fa-solid fa-hand-holding-dollar', '');
 
 -- --------------------------------------------------------
 
@@ -242,6 +283,10 @@ INSERT INTO `pagper` (`idpag`, `idper`) VALUES
 (1007, 10),
 (1008, 10),
 (1009, 10),
+(1010, 10),
+(1011, 10),
+(1012, 10),
+(1013, 10),
 (2001, 20),
 (2002, 20),
 (2003, 20),
@@ -251,7 +296,34 @@ INSERT INTO `pagper` (`idpag`, `idper`) VALUES
 (3003, 30),
 (3004, 30),
 (3005, 30),
-(3006, 30);
+(3006, 30),
+(4010, 40),
+(4020, 40),
+(4021, 40),
+(4030, 40),
+(4040, 40),
+(4050, 40),
+(4060, 40),
+(4070, 40),
+(4080, 40),
+(4090, 40),
+(4100, 40),
+(4110, 40);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pedido`
+--
+
+CREATE TABLE `pedido` (
+  `idpedido` bigint(20) NOT NULL,
+  `idcarrito` bigint(20) NOT NULL,
+  `idmetpago` tinyint(2) NOT NULL,
+  `fecha_pedido` date DEFAULT NULL,
+  `estado` varchar(50) DEFAULT 'Pendiente',
+  `total` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -272,7 +344,8 @@ CREATE TABLE `perfiles` (
 INSERT INTO `perfiles` (`idper`, `nomper`, `pagini`) VALUES
 (10, 'usuarios', 1002),
 (20, 'empleados', 2001),
-(30, 'bares', 3001);
+(30, 'bares', 3001),
+(40, 'ADMIN', 4010);
 
 -- --------------------------------------------------------
 
@@ -290,19 +363,29 @@ CREATE TABLE `producto` (
   `idbar` bigint(10) DEFAULT NULL COMMENT 'id del bar',
   `cantprod` int(8) DEFAULT NULL COMMENT 'cantidad del producto',
   `idserv` tinyint(2) DEFAULT NULL COMMENT 'id del servicio',
-  `idusu` bigint(10) DEFAULT NULL COMMENT 'id de usuario'
+  `idusu` bigint(10) DEFAULT NULL COMMENT 'id de usuario',
+  `tipoprod` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `producto`
 --
 
-INSERT INTO `producto` (`idprod`, `nomprod`, `desprod`, `vlrprod`, `fotprod`, `idval`, `idbar`, `cantprod`, `idserv`, `idusu`) VALUES
-(2, 'Ron', 'Ron caldas', 40.00, '', 104, 2, 222, 1, 1),
-(3, 'Coctel Fresco', 'Coctel fresco de frutas y soda', 12000.00, NULL, NULL, NULL, 30, NULL, NULL),
-(4, 'Coctel Fresco', 'Coctel fresco de frutas y soda', 12000.00, NULL, NULL, NULL, 30, NULL, NULL),
-(5, 'Coctel Bueno', 'Bueno', 20000.00, NULL, NULL, NULL, 30, NULL, NULL),
-(6, 'Coctel Muy Fresco', 'fresco', 18000.00, NULL, NULL, NULL, 20, NULL, NULL);
+INSERT INTO `producto` (`idprod`, `nomprod`, `desprod`, `vlrprod`, `fotprod`, `idval`, `idbar`, `cantprod`, `idserv`, `idusu`, `tipoprod`) VALUES
+(21, 'Cerveza Corona X6 330ml', 'Cerveza Corona NRB X6', 24600.00, '4000499c42c271523e5bc4b9b119ef0f.png', NULL, 2002, 50, NULL, NULL, 'licor'),
+(22, 'Ron Cacique Añejo 750ml', 'Ron Cacique', 66900.00, 'fe879151d70cf0f62b08d8a72a7536ae.png', NULL, 2002, 50, NULL, NULL, 'licor'),
+(23, 'Ron La Hechicera', 'Ron', 229900.00, '5e4cd055149e2b70270ef67fbaf30cb6.png', NULL, 2002, 50, NULL, NULL, 'licor'),
+(24, 'Whisky Johnnie Walker Black Label Blended', 'Walker', 147000.00, 'a715abda12e9bbee0e2213ee63a0487c.png', NULL, 2002, 50, NULL, NULL, 'licor'),
+(25, 'Crema de Whisky Baileys', 'Crema', 72000.00, '1ba8d2e9a1244bef62a26d38bfed7834.png', NULL, 2003, 50, NULL, NULL, 'licor'),
+(26, 'Whisky Buchanans Special Reserve 18 Años Escocés 7', 'Whisky', 390000.00, '8ec420678643604d5113889587120fa9.png', NULL, 2003, 50, NULL, NULL, 'licor'),
+(27, 'Vino Blanco Mar de Frades Albariño', 'Vino', 130200.00, '5cffd4545dabfaa781ada1e64cec3f91.png', NULL, 2003, 50, NULL, NULL, 'vino'),
+(30, 'Vino Rosado Espumoso Piccini Regno Lambrusco 750ml', 'vino', 45900.00, 'a29267fbbb10d04826afbc7f679c9856.png', NULL, 2002, 50, NULL, NULL, 'vino'),
+(31, 'Aperitivo Frizzantino Rosado Brut 750ml', 'vino', 25200.00, '6f592e718d717e41796741a3fc3cd642.png', NULL, 2002, 50, NULL, NULL, 'vino'),
+(32, 'Vino Rosado Santa Carolina Reservado Cabernet Sauv', 'vino', 43900.00, 'd948e059d6a935d572438d6b739dd3c0.png', NULL, 2002, 50, NULL, NULL, 'vino'),
+(33, 'Angel 200ml', 'coctel', 20000.00, '33a8ab3758424f4ac0f3d55b8ceec7af.png', NULL, 2002, 50, NULL, NULL, 'coctel'),
+(34, 'Arrival (Espiritu Isleño)', 'coctel', 25000.00, 'd5b0bceec7137b2030b7081247ef8798.png', NULL, 2003, 50, NULL, NULL, 'coctel'),
+(35, 'Black Russian 250ml', 'Coctel', 28.00, '07276a65314afcbaac014573c8b9d4f4.png', NULL, 2002, 50, NULL, NULL, 'coctel'),
+(36, 'Bramble 200ml', 'coctel', 18.00, '15a38352e93759bc0ceaf1105f412cb9.png', NULL, 2003, 50, NULL, NULL, 'coctel');
 
 -- --------------------------------------------------------
 
@@ -320,7 +403,8 @@ CREATE TABLE `servicio` (
 --
 
 INSERT INTO `servicio` (`idserv`, `nomserv`) VALUES
-(1, 'domicilio');
+(1, 'Domiciliario'),
+(2, 'Bartender');
 
 -- --------------------------------------------------------
 
@@ -339,7 +423,11 @@ CREATE TABLE `ubicacion` (
 --
 
 INSERT INTO `ubicacion` (`codubi`, `nomubi`, `depubi`) VALUES
-(1, 'bogota', 'bogota');
+(1, 'Bogotá', 'Bogotá'),
+(2, 'Medellín', 'Antioquia'),
+(3, 'Cartagena', 'Bolívar'),
+(4, 'Cali', 'Valle del cauca'),
+(5, 'Barranquilla', 'Atlántico');
 
 -- --------------------------------------------------------
 
@@ -358,19 +446,101 @@ CREATE TABLE `usuario` (
   `pssusu` varchar(100) NOT NULL COMMENT 'contraseña del usuario',
   `codubi` int(6) DEFAULT NULL COMMENT 'codigo de ubicacion',
   `idper` bigint(10) NOT NULL COMMENT 'id del perfil',
-  `idval` bigint(10) NOT NULL COMMENT 'id valor'
+  `idval` bigint(10) NOT NULL COMMENT 'id valor',
+  `idserv` tinyint(2) DEFAULT NULL,
+  `idbar` bigint(10) DEFAULT NULL,
+  `nompropi` varchar(50) DEFAULT NULL,
+  `dircbar` varchar(100) DEFAULT NULL,
+  `horbar` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`idusu`, `nomusu`, `emausu`, `celusu`, `fotiden`, `numdocu`, `fecnausu`, `pssusu`, `codubi`, `idper`, `idval`) VALUES
-(1, 'Dilan Lopez', 'dilan@gmail.com', NULL, NULL, 1053, '2004-09-11', 'e5c9b13cea0a3a0e4b38f906906390d85463388a', NULL, 10, 101),
-(2, 'Felipe Arias', 'felipe@gmail.com', NULL, NULL, 1010, NULL, 'b5d1ce5349055ec47461f33bffd2fe17ba85a658', NULL, 20, 101),
-(3, 'Daniel Felipe', 'daniel@gmail.com', NULL, NULL, 2020, NULL, 'e11843ffa9c0dee79882cca1d8213b774a701835', NULL, 30, 101),
-(4, 'Sebastian Martinez', 'sebas@gmail.com', NULL, NULL, 3030, NULL, '52109b25d2fba7f005f3052cad7c92a1861a48e1', NULL, 10, 101),
-(5, 'Victor Cortez', 'victor@gmail.com', NULL, NULL, 4040, NULL, 'e9c2dd7a3ade9110738d897badebb8eb458920dc', NULL, 10, 101);
+INSERT INTO `usuario` (`idusu`, `nomusu`, `emausu`, `celusu`, `fotiden`, `numdocu`, `fecnausu`, `pssusu`, `codubi`, `idper`, `idval`, `idserv`, `idbar`, `nompropi`, `dircbar`, `horbar`) VALUES
+(1, 'Dilan Lopez', 'dilan@gmail.com', NULL, NULL, 1053, '2004-09-11', 'e5c9b13cea0a3a0e4b38f906906390d85463388a', NULL, 10, 101, NULL, NULL, NULL, NULL, NULL),
+(4, 'Sebastian Martinez', 'sebas@gmail.com', NULL, NULL, 3030, NULL, '52109b25d2fba7f005f3052cad7c92a1861a48e1', NULL, 40, 101, NULL, NULL, NULL, NULL, NULL),
+(5, 'Victor Cortez', 'victor@gmail.com', NULL, NULL, 4040, NULL, 'e9c2dd7a3ade9110738d897badebb8eb458920dc', NULL, 40, 101, NULL, NULL, NULL, NULL, NULL),
+(2000, 'Martin Casas', 'martin@gmail.com', 3001782, NULL, 109020, '2000-11-20', '78adbe311449919b44220c57d7089ee5b8f306ad', 1, 20, 101, 1, NULL, NULL, NULL, NULL),
+(2001, 'Jose', 'jose@gmail.com', 3001782, NULL, 102891, '2000-11-09', '15bb060fd110a4f67c6b5b287072524f345ec1b7', 2, 20, 101, 2, NULL, NULL, NULL, NULL),
+(2002, 'Cabañas', 'caba@gmail.com', 300940912, NULL, 8029812, NULL, 'e0851d399bb2954f554d93328662c70f79273f5a', 1, 30, 102, NULL, NULL, 'Juan Martinez', 'Calle 20 #40-60 Norte', NULL),
+(2003, 'Bazar', 'baz@gmail.com', 300828821, NULL, 8039923, NULL, 'a7c9f5b4f15002ac1275c418d5c77f316ae749db', 2, 30, 102, NULL, NULL, 'Jose Perez', 'Transversal 7 #30-50 ', NULL);
+
+--
+-- Disparadores `usuario`
+--
+DELIMITER $$
+CREATE TRIGGER `after_delete_usuario` AFTER DELETE ON `usuario` FOR EACH ROW BEGIN
+    -- Eliminar de la tabla empleado
+    DELETE FROM empleado
+    WHERE idemp = OLD.idusu;
+
+    -- Eliminar de la tabla bar
+    DELETE FROM bar
+    WHERE idbar = OLD.idusu;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `after_insert_usuario` AFTER INSERT ON `usuario` FOR EACH ROW BEGIN
+    -- Verificar el valor de idper
+    IF NEW.idper = 20 THEN
+        -- Insertar en la tabla empleado
+        INSERT INTO empleado (
+            idemp, nomemp, emaemp, celemp, fecnaemp, numdocu, fotiden, pssemp, idserv, idbar, codubi, idper, idval
+        ) VALUES (
+            NEW.idusu, NEW.nomusu, NEW.emausu, NEW.celusu, NEW.fecnausu, NEW.numdocu, NEW.fotiden, NEW.pssusu, NEW.idserv, NEW.idbar, NEW.codubi, NEW.idper, NEW.idval
+        );
+    ELSEIF NEW.idper = 30 THEN
+        -- Insertar en la tabla bar
+        INSERT INTO bar (
+            idbar, nombar, nompropi, nit, emabar, telbar, pssbar, dircbar, horbar, fotbar, codubi, idper, idval
+        ) VALUES (
+            NEW.idusu, NEW.nomusu, NEW.nompropi, NEW.numdocu, NEW.emausu, NEW.celusu, NEW.pssusu, NEW.dircbar, NEW.horbar, NEW.fotiden, NEW.codubi, NEW.idper, NEW.idval
+        );
+    END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `after_update_usuario` AFTER UPDATE ON `usuario` FOR EACH ROW BEGIN
+    -- Actualizar en la tabla empleado
+    UPDATE empleado
+    SET 
+        nomemp = NEW.nomusu,
+        emaemp = NEW.emausu,
+        celemp = NEW.celusu,
+        fecnaemp = NEW.fecnausu,
+        numdocu = NEW.numdocu,
+        fotiden = NEW.fotiden,
+        pssemp = NEW.pssusu,
+        idserv = NEW.idserv,
+        idbar = NEW.idbar,
+        codubi = NEW.codubi,
+        idper = NEW.idper,
+        idval = NEW.idval
+    WHERE idemp = OLD.idusu;
+
+    -- Actualizar en la tabla bar
+    UPDATE bar
+    SET 
+        nombar = NEW.nomusu,
+        nompropi = NEW.nompropi,
+        nit = NEW.numdocu,
+        emabar = NEW.emausu,
+        telbar = NEW.celusu,
+        pssbar = NEW.pssusu,
+        dircbar = NEW.dircbar,
+        horbar = NEW.horbar,
+        fotbar = NEW.fotiden,
+        codubi = NEW.codubi,
+        idper = NEW.idper,
+        idval = NEW.idval
+    WHERE idbar = OLD.idusu;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -391,8 +561,7 @@ CREATE TABLE `valor` (
 INSERT INTO `valor` (`idval`, `iddom`, `nomval`) VALUES
 (101, 10, 'CC'),
 (102, 10, 'NIT'),
-(103, 10, 'CE'),
-(104, 20, 'Licores');
+(103, 10, 'CE');
 
 --
 -- Índices para tablas volcadas
@@ -409,6 +578,13 @@ ALTER TABLE `bar`
   ADD KEY `idval` (`idval`);
 
 --
+-- Indices de la tabla `carrito`
+--
+ALTER TABLE `carrito`
+  ADD PRIMARY KEY (`idcarrito`),
+  ADD KEY `idusu` (`idusu`);
+
+--
 -- Indices de la tabla `configuracion`
 --
 ALTER TABLE `configuracion`
@@ -423,6 +599,14 @@ ALTER TABLE `detfact`
   ADD KEY `idprod` (`idprod`),
   ADD KEY `idemp` (`idemp`),
   ADD KEY `idbar` (`idbar`);
+
+--
+-- Indices de la tabla `detpedido`
+--
+ALTER TABLE `detpedido`
+  ADD PRIMARY KEY (`iddetpedido`),
+  ADD KEY `idpedido` (`idpedido`),
+  ADD KEY `idprod` (`idprod`);
 
 --
 -- Indices de la tabla `dominio`
@@ -448,16 +632,15 @@ ALTER TABLE `empleado`
 ALTER TABLE `factura`
   ADD PRIMARY KEY (`idfact`),
   ADD KEY `idbar` (`idbar`),
-  ADD KEY `factura_ibfk_2` (`idusu`);
+  ADD KEY `factura_ibfk_2` (`idusu`),
+  ADD KEY `idpedido` (`idpedido`),
+  ADD KEY `idpedido_2` (`idpedido`);
 
 --
--- Indices de la tabla `ganancias`
+-- Indices de la tabla `metpago`
 --
-ALTER TABLE `ganancias`
-  ADD PRIMARY KEY (`idganancia`),
-  ADD KEY `idfact` (`idfact`),
-  ADD KEY `idbar` (`idbar`),
-  ADD KEY `idemp` (`idemp`);
+ALTER TABLE `metpago`
+  ADD PRIMARY KEY (`idmetpago`);
 
 --
 -- Indices de la tabla `pagina`
@@ -471,6 +654,14 @@ ALTER TABLE `pagina`
 ALTER TABLE `pagper`
   ADD PRIMARY KEY (`idpag`),
   ADD KEY `idper` (`idper`);
+
+--
+-- Indices de la tabla `pedido`
+--
+ALTER TABLE `pedido`
+  ADD PRIMARY KEY (`idpedido`),
+  ADD KEY `idcarrito` (`idcarrito`),
+  ADD KEY `idmetpago` (`idmetpago`);
 
 --
 -- Indices de la tabla `perfiles`
@@ -508,7 +699,10 @@ ALTER TABLE `usuario`
   ADD UNIQUE KEY `numdocu` (`numdocu`),
   ADD KEY `codubi` (`codubi`),
   ADD KEY `idper` (`idper`),
-  ADD KEY `idval` (`idval`);
+  ADD KEY `idval` (`idval`),
+  ADD KEY `idserv` (`idserv`),
+  ADD KEY `idserv_2` (`idserv`),
+  ADD KEY `idbar` (`idbar`);
 
 --
 -- Indices de la tabla `valor`
@@ -525,13 +719,25 @@ ALTER TABLE `valor`
 -- AUTO_INCREMENT de la tabla `bar`
 --
 ALTER TABLE `bar`
-  MODIFY `idbar` bigint(10) NOT NULL AUTO_INCREMENT COMMENT 'id de bar', AUTO_INCREMENT=4;
+  MODIFY `idbar` bigint(10) NOT NULL AUTO_INCREMENT COMMENT 'id de bar', AUTO_INCREMENT=4008;
+
+--
+-- AUTO_INCREMENT de la tabla `carrito`
+--
+ALTER TABLE `carrito`
+  MODIFY `idcarrito` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `detfact`
 --
 ALTER TABLE `detfact`
   MODIFY `iddetfact` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id de detalle de factura', AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `detpedido`
+--
+ALTER TABLE `detpedido`
+  MODIFY `iddetpedido` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `dominio`
@@ -543,7 +749,7 @@ ALTER TABLE `dominio`
 -- AUTO_INCREMENT de la tabla `empleado`
 --
 ALTER TABLE `empleado`
-  MODIFY `idemp` bigint(10) NOT NULL AUTO_INCREMENT COMMENT 'id del empleado', AUTO_INCREMENT=3;
+  MODIFY `idemp` bigint(10) NOT NULL AUTO_INCREMENT COMMENT 'id del empleado', AUTO_INCREMENT=2005;
 
 --
 -- AUTO_INCREMENT de la tabla `factura`
@@ -552,40 +758,46 @@ ALTER TABLE `factura`
   MODIFY `idfact` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id de factura', AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de la tabla `ganancias`
+-- AUTO_INCREMENT de la tabla `metpago`
 --
-ALTER TABLE `ganancias`
-  MODIFY `idganancia` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id de ganancias ', AUTO_INCREMENT=5;
+ALTER TABLE `metpago`
+  MODIFY `idmetpago` tinyint(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `pagina`
 --
 ALTER TABLE `pagina`
-  MODIFY `idpag` int(5) NOT NULL AUTO_INCREMENT COMMENT 'id de pagina', AUTO_INCREMENT=3007;
+  MODIFY `idpag` int(5) NOT NULL AUTO_INCREMENT COMMENT 'id de pagina', AUTO_INCREMENT=4122;
+
+--
+-- AUTO_INCREMENT de la tabla `pedido`
+--
+ALTER TABLE `pedido`
+  MODIFY `idpedido` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `idprod` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id de producto', AUTO_INCREMENT=7;
+  MODIFY `idprod` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id de producto', AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT de la tabla `servicio`
 --
 ALTER TABLE `servicio`
-  MODIFY `idserv` tinyint(2) NOT NULL AUTO_INCREMENT COMMENT 'id de servicio', AUTO_INCREMENT=2;
+  MODIFY `idserv` tinyint(2) NOT NULL AUTO_INCREMENT COMMENT 'id de servicio', AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `ubicacion`
 --
 ALTER TABLE `ubicacion`
-  MODIFY `codubi` int(6) NOT NULL AUTO_INCREMENT COMMENT 'codigo de ubicacion', AUTO_INCREMENT=2;
+  MODIFY `codubi` int(6) NOT NULL AUTO_INCREMENT COMMENT 'codigo de ubicacion', AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idusu` bigint(10) NOT NULL AUTO_INCREMENT COMMENT 'id de usuario', AUTO_INCREMENT=6;
+  MODIFY `idusu` bigint(10) NOT NULL AUTO_INCREMENT COMMENT 'id de usuario', AUTO_INCREMENT=2004;
 
 --
 -- AUTO_INCREMENT de la tabla `valor`
@@ -606,6 +818,12 @@ ALTER TABLE `bar`
   ADD CONSTRAINT `bar_ibfk_3` FOREIGN KEY (`idval`) REFERENCES `valor` (`idval`);
 
 --
+-- Filtros para la tabla `carrito`
+--
+ALTER TABLE `carrito`
+  ADD CONSTRAINT `carrito_ibfk_1` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `detfact`
 --
 ALTER TABLE `detfact`
@@ -613,6 +831,13 @@ ALTER TABLE `detfact`
   ADD CONSTRAINT `detfact_ibfk_2` FOREIGN KEY (`idprod`) REFERENCES `producto` (`idprod`),
   ADD CONSTRAINT `detfact_ibfk_3` FOREIGN KEY (`idemp`) REFERENCES `empleado` (`idemp`),
   ADD CONSTRAINT `detfact_ibfk_4` FOREIGN KEY (`idbar`) REFERENCES `bar` (`idbar`);
+
+--
+-- Filtros para la tabla `detpedido`
+--
+ALTER TABLE `detpedido`
+  ADD CONSTRAINT `detpedido_ibfk_1` FOREIGN KEY (`idprod`) REFERENCES `producto` (`idprod`),
+  ADD CONSTRAINT `detpedido_ibfk_2` FOREIGN KEY (`idpedido`) REFERENCES `pedido` (`idpedido`);
 
 --
 -- Filtros para la tabla `empleado`
@@ -632,19 +857,19 @@ ALTER TABLE `factura`
   ADD CONSTRAINT `factura_ibfk_2` FOREIGN KEY (`idusu`) REFERENCES `usuario` (`idusu`);
 
 --
--- Filtros para la tabla `ganancias`
---
-ALTER TABLE `ganancias`
-  ADD CONSTRAINT `ganancias_ibfk_1` FOREIGN KEY (`idemp`) REFERENCES `empleado` (`idemp`),
-  ADD CONSTRAINT `ganancias_ibfk_2` FOREIGN KEY (`idfact`) REFERENCES `factura` (`idfact`),
-  ADD CONSTRAINT `ganancias_ibfk_3` FOREIGN KEY (`idbar`) REFERENCES `bar` (`idbar`);
-
---
 -- Filtros para la tabla `pagper`
 --
 ALTER TABLE `pagper`
   ADD CONSTRAINT `pagper_ibfk_1` FOREIGN KEY (`idpag`) REFERENCES `pagina` (`idpag`),
   ADD CONSTRAINT `pagper_ibfk_2` FOREIGN KEY (`idper`) REFERENCES `perfiles` (`idper`);
+
+--
+-- Filtros para la tabla `pedido`
+--
+ALTER TABLE `pedido`
+  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`idcarrito`) REFERENCES `carrito` (`idcarrito`),
+  ADD CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`idmetpago`) REFERENCES `metpago` (`idmetpago`),
+  ADD CONSTRAINT `pedido_ibfk_3` FOREIGN KEY (`idpedido`) REFERENCES `factura` (`idpedido`);
 
 --
 -- Filtros para la tabla `producto`
@@ -661,7 +886,9 @@ ALTER TABLE `producto`
 ALTER TABLE `usuario`
   ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`codubi`) REFERENCES `ubicacion` (`codubi`),
   ADD CONSTRAINT `usuario_ibfk_2` FOREIGN KEY (`idper`) REFERENCES `perfiles` (`idper`),
-  ADD CONSTRAINT `usuario_ibfk_3` FOREIGN KEY (`idval`) REFERENCES `valor` (`idval`);
+  ADD CONSTRAINT `usuario_ibfk_3` FOREIGN KEY (`idval`) REFERENCES `valor` (`idval`),
+  ADD CONSTRAINT `usuario_ibfk_4` FOREIGN KEY (`idserv`) REFERENCES `servicio` (`idserv`),
+  ADD CONSTRAINT `usuario_ibfk_5` FOREIGN KEY (`idbar`) REFERENCES `bar` (`idbar`);
 
 --
 -- Filtros para la tabla `valor`
