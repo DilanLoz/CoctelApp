@@ -1,82 +1,81 @@
-<?php require_once ('admin/controllers/cpag.php'); ?>
+<?php require_once ('admin/controllers/cperf.php'); ?>
 
 <div class="conte mt-5" style="text-align: left;"> 
     <div class="inser">
-        <form action="home.php?pg=<?=$pg;?>" method="POST" class="mb-5" >
-            <div class="row">
-                <h1>Perfil y Pagina</h1>
-                <div class="form-group col-md-5">
-                        <label for="nompag">Perfil</label>
-                        <input type="text" name="nompag" id="nompag" maxlength="70" class="form-control" value="<?php if($datOne) echo $datOne[0]['nompag']; ?>" required>
+        <form id="frmins" action="home.php?pg=<?= $pg; ?>" method="POST">
+            <div class="row" style="margin-bottom: 50px">
+                <div class="form-group col-md-6">
+                    <label for="nomper">Nombre de perfil</label>
+                    <input type="text" name="nomper" id="nomper" class="form-control" required value="<?php if ($datOne) echo $datOne[0]['nomper']; ?> ">
                 </div>
-                <div class="form-group col-md-5">
-                        <label for="rutpag">Pagina</label>
-                        <input type="text" name="rutpag" id="rutpag" class="form-control" required value="<?php if($datOne) echo $datOne[0]['rutpag']; ?>">
+                <div class="form-group col-md-6">
+                    <label for="idpag">Pagina Inicial</label>
+                    <select name="idpag" id="idpag" class="form-control form-select">
+                        <?php
+                        if ($datpag) {
+                            foreach ($datpag  as $dt) { ?>
+                                <option value="<?= $dt['idpag']; ?>" <?php
+                                    if ($datOne && $datOne[0]['idpag'] == $dt['idpag']) echo " selected "; ?>><?= $dt['titupag']; ?></option>
+                        <?php }
+                        } ?>
+                    </select>
                 </div>
-                <div class="form-group col-md-2" style="margin:auto; padding-top: 22px;">
-                    <input class="btn btn-primary" type="submit" value="Enviar">
+                <div class="form-group col-md-6">
+                    <br>
+                    <input type="submit" class="btn btn-primary" value="Registrar">
                     <input type="hidden" name="opera" value="save">
-                    <input type="hidden" name="idpag" id="idpag" value="<?php if($datOne) echo $datOne[0]['idpag'];?>">
+                    <input type="hidden" name="idper" value="<?php if ($datOne) echo $datOne[0]['idper']; ?>">
                 </div>
             </div>
         </form>
     </div>
 </div>
 
-<table id="example" class="table table-striped" style="width:100%; text-align: left;">
-    <thead>
-        <tr>  
-            <th>Icono</th>
-            <th>Página</th>
-            <th>Mostrar</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php if ($datAll) { foreach ($datAll AS $dta) { ?>       
+<table id="example" class="table table-striped" style="width:100%">
+        <thead>
             <tr>
-                <td style="text-align: center; vertical-align: middle;"><i class="<?=$dta['icopag'];?>" style="font-size: 25px;"></i></td>
-                <td>
-                    <strong><?=$dta['idpag'];?> - <?=$dta['nompag'];?></strong><br>
-                    <small>
-                        <strong>Ruta: </strong><?=$dta['rutpag'];?><br><strong>Nombre del icono: </strong>
-                        <?=$dta['icopag'];?>&nbsp;<br>
-                        <?php if ($dta['despag']){?>
-                            <br><strong>Descripción: </strong>
-                            <?=$dta['despag'];?>
-                        <?php }?>
-                    </small>
-                </td>
-                <td>
-                <?php if($dta['mospag']==1){ ?>
-                        <a href="home.php?pg=<?=$pg;?>&idpag=<?=$dta['idpag'];?>&opera=acti&mospag=2">
-                            <i class="fa fa-solid fa-circle-check fa-2x"></i>
-                        </a>
-                    <?php }else{ ?>
-                        <a href="home.php?pg=<?=$pg;?>&idpag=<?=$dta['idpag'];?>&opera=acti&mospag=1">
-                        <i class="fa fa-solid fa-circle-xmark fa-2x" style="color: #ff0000;"></i>
-                        </a>
-                    <?php } ?>
-                </td>
-                
-                <td style="text-align:right;">
-                <a href="home.php?pg=<?=$pg;?>&idpag=<?=$dta['idpag'];?>&opera=edi" title="Editar">
-                        <i class="fa-solid fa-pen-to-square fa-2x"></i>
-                </a>
-                <a href="home.php?pg=<?=$pg;?>&idpag=<?=$dta['idpag'];?>&opera=eli" title="Eliminar" onclick="return eliminar();">
-                        <i class="fa-solid fa-trash-can fa-2x"></i>
-                </a>
-                </td>
+                <th>Perfil</th>     
+                <th></th>           
+                <!-- botones pdf -->
             </tr>
-        <?php }} ?>      
-    </tbody>
-    <tfoot>
-        <tr>
-            <th>Icono</th>
-            <th>Página</th>
-            <th>Mostrar</th>
-            
-            <th></th>
-        </tr>
-    </tfoot>
-</table>
+        </thead>
+        <tbody>
+            <?php
+            if ($dat) {
+                foreach ($dat as $d) {
+            ?>
+                    <tr>
+                        <td>
+                            <strong><?= $d['idper'] . " - " . $d['nomper']; ?></strong>
+                            <br>
+                            <small>
+                                <strong>Página: </strong><?= $d['titupag']; ?>
+                            </small>
+
+                        </td>
+                        <td style="text-align:right;">
+                            <a href="#"  title="Ver Páginas" data-bs-toggle="modal" data-bs-target="#myModal<?= $d['idper']; ?>">
+                                <i class="fa-solid fa-clipboard-check fa-2x"></i>
+                            </a>
+                            
+                            <?php                             
+                            $dps = $mper->getPxP();                           
+                            modal($d['idper'], $d['nomper'], $dtm, $pg, $smd); ?>
+                            <a href="home.php?pg=<?= $pg; ?>&idper=<?= $d['idper']; ?>&opera=edi" title="edit">
+                                <i class="fa-solid fa-pen-to-square fa-2x"></i>
+                            </a>
+                        </td>
+                    </tr>
+            <?php
+                }
+            }
+            ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Perfil</th>        
+                <th></th>        
+            </tr>
+        </tfoot>
+    </table>
+    

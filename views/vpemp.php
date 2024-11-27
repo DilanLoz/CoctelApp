@@ -1,5 +1,5 @@
-<?php require_once('Controllers/cpemp.php');
-
+<?php require_once('controllers/cpusu.php');
+require_once('admin/controllers/cubi.php');
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -38,26 +38,25 @@ if (session_status() == PHP_SESSION_NONE) {
                     <input type="text" name="nombar" id="nombar" class="form-control" value="<?php echo isset($_SESSION['nombar']) ? $_SESSION['nombar'] : ''; ?>" readonly>
                 </div>
                 <div class="form-group col-md-12">
-                    <label for="codubi"><strong>Ubicacion</strong></label>
-                    <select name="codubi" id="codubi" class="form-select" required>
-                        <option value="" disabled selected>Seleccionar</option> <!-- Opción inicial -->
-                        <?php
-                        $ubi = $mbar->getAllCiu(); // Método que obtiene todas las ciudades
-                        foreach ($ubi as $ci) {
-                            // Determinar si la ciudad actual debe ser seleccionada
-                            $selected = (isset($datOne[0]['codubi']) && $datOne[0]['codubi'] == $ci['codubi']) ? 'selected' : '';
-                        ?>
-                            <option value="<?= $ci['codubi']; ?>" <?= $selected; ?>><?= $ci['nomubi']; ?></option>
-                        <?php } ?>
+                    <label for="codubi">Ubicacion</label>
+                    <select name="codubi" id="codubi" class="form-control form-select" required>
+                        <option value="" disabled selected>Seleccione una ciudad</option>
+                        <?php if ($dataAll) { 
+                            foreach ($dataAll as $dta) { ?>
+                                <option value="<?=$dta['codubi'];?>" <?php if($datOne && $datOne[0]['codubi'] == $dta['codubi']) echo 'selected'; ?>>
+                                    <?=$dta['nomubi'];?>
+                                </option>
+                            <?php }
+                        } ?>
                     </select>
                 </div>
                 <div class="form-group col-md-12">
                     <label for="fecnausu"><strong>Fecha de nacimiento</strong></label>
-                    <input type="text" name="fecnausu" id="fecnausu" class="form-control" value="<?php echo isset($_SESSION['fecnausu']) ? $_SESSION['fecnausu'] : ''; ?>" readonly>
+                    <input type="text" name="fecnausu" id="fecnausu" class="form-control" value="<?php echo isset($_SESSION['fecnausu']) ? $_SESSION['fecnausu'] : ''; ?>">
                 </div>
                 <div class="form-group col-md-12">
                     <label for="pssusu"><strong>Contraseña</strong></label>
-                    <input type="password" name="pssusu" id="pssusu" class="form-control" value="<?php echo isset($_SESSION['pssusu']) ? $_SESSION['pssusu'] : ''; ?>" readonly>
+                    <input type="password" name="pssusu" id="pssusu" class="form-control" value="<?php echo isset($_SESSION['pssusu']) ? $_SESSION['pssusu'] : ''; ?>">
                 </div>
             </div>
         </div>
@@ -66,7 +65,7 @@ if (session_status() == PHP_SESSION_NONE) {
         <div class="form-group col-md-6 mt-3">
             <input class="btn btn-primary" type="submit" value="Enviar">
             <input type="hidden" name="ope" value="save">
-            <input type="hidden" name="idprod" id="idprod" value="<?php echo isset($datOne[0]['idprod']) ? $datOne[0]['idprod'] : ''; ?>">
+            <input type="hidden" name="idusu" id="idusu" value="<?php echo isset($datOne[0]['idusu']) ? $datOne[0]['idusu'] : ''; ?>">
         </div>
     </form>
 </div>

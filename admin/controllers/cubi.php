@@ -18,5 +18,5 @@ if($opera=="save"){
 if($opera=="eli" && $codubi) $mubi->del();
 if($opera=="edi" && $codubi) $datOne = $mubi->getOne($codubi);
 
-$datAll = $mubi->getAll();
+$dataAll = $mubi->getAll();
 ?>

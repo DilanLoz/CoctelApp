@@ -39,7 +39,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php if ($datAll) { foreach ($datAll AS $dta) { ?>       
+        <?php if ($dataAll) { foreach ($dataAll AS $dta) { ?>       
             <tr>
                 <td><?=$dta['codubi'];?></td>
                 <td><?=$dta['nomubi'];?></td>
