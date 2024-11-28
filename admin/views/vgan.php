@@ -30,9 +30,6 @@
             <td><?=$gan['subtotal'];?></td>
             <td><?=$gan['idbar'];?></td>
             <td style="text-align:center;"> <!-- Columna para las acciones -->
-                <a href="home.php?pg=<?=$pg;?>&iddetfact=<?=$gan['iddetfact'];?>&ope=edit" title="Editar">
-                    <i class="fa-solid fa-pen-to-square fa"></i>
-                </a>
                 <a href="home.php?pg=<?=$pg;?>&iddetfact=<?=$gan['iddetfact'];?>&ope=delete" title="Eliminar" onclick="return eliminar();">
                     <i class="fa-solid fa-trash-can fa"></i>
                 </a>
@@ -52,6 +49,24 @@
             <th></th> <!-- Columna extra para las acciones -->
         </tr>
     </tfoot>
+    <style>
+        .charts-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+        canvas {
+            max-width: 40%;
+            max-height: 90%;
+        }
+        #pieChart {
+            max-width: 40%; /* La gráfica de pastel será más pequeña */
+            max-height: 100%;
+        }
+    </style>
 </table>
 
 <h1 style="text-align: center;">Subtotales por Bar</h1>
@@ -64,11 +79,11 @@
 // Agrupar los datos por idbar para los subtotales
 $data = [];
 foreach ($gans as $gan) {
-    $idbar = $gan['idbar'];
-    if (!isset($data[$idbar])) {
-        $data[$idbar] = 0;
+    $nombar = $gan['nombar'];
+    if (!isset($data[$nombar])) {
+        $data[$nombar] = 0;
     }
-    $data[$idbar] += $gan['subtotal'];
+    $data[$nombar] += $gan['subtotal'];
 }
 
 // Preparar datos para las gráficas
@@ -129,7 +144,7 @@ $percentages = array_map(function($value) use ($total) {
                 x: {
                     title: {
                         display: true,
-                        text: 'Bar ID'
+                        text: 'Nombre del Bar'
                     }
                 }
             }
@@ -141,7 +156,7 @@ $percentages = array_map(function($value) use ($total) {
     new Chart(pieCtx, {
         type: 'pie',
         data: {
-            labels: barIDs.map((id, index) => `Bar ${id} (${percentages[index]}%)`), // Etiquetas con porcentaje
+            labels: barIDs.map((id, index) => Bar ${id} (${percentages[index]}%)), // Etiquetas con porcentaje
             datasets: [{
                 label: 'Porcentaje de Subtotal por Bar',
                 data: subtotals, // Datos de subtotales
@@ -163,7 +178,7 @@ $percentages = array_map(function($value) use ($total) {
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            return `${context.label}: $${context.raw}`; // Mostrar subtotales en el tooltip
+                            return ${context.label}: $${context.raw}; // Mostrar subtotales en el tooltip
                         }
                     }
                 }
@@ -171,3 +186,5 @@ $percentages = array_map(function($value) use ($total) {
         }
     });
 </script>
+<?php require_once 'admin/controllers/cgan.php'; ?>
+<br><br><br>

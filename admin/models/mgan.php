@@ -78,7 +78,7 @@ class Mgan {
     // Métodos
     public function getAll() {
         try {
-            $sql = "SELECT iddetfact, idfact, idprod, cantidad, precio_unitario, subtotal, idemp, idbar FROM detfact";
+            $sql = "SELECT d.iddetfact, d.idfact, b.nombar, d.idprod, d.cantidad, d.precio_unitario, d.subtotal, d.idemp, d.idbar FROM detfact AS d INNER JOIN bar AS b ON d.idbar=b.idbar";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);

@@ -14,14 +14,14 @@ require_once 'admin/controllers/cubi.php';
             <!-- Aquí utilizamos un solo registro para editar o crear un bar -->
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="idbar"><strong>ID del bar</strong></label>
-                    <input type="text" name="idbar" id="idbar" class="form-control" 
-                        value="<?= isset($datOne[0]['idbar']) ? $datOne[0]['idbar'] : ''; ?>" required>
+                    <label for="idusu"><strong>ID del bar</strong></label>
+                    <input type="text" name="idusu" id="idusu" class="form-control" 
+                        value="<?= isset($datOne[0]['idusu']) ? $datOne[0]['idusu'] : ''; ?>" required>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="nombar"><strong>Nombre del bar</strong></label>
-                    <input type="text" name="nombar" id="nombar" class="form-control" 
-                        value="<?= isset($datOne[0]['nombar']) ? $datOne[0]['nombar'] : ''; ?>" required>
+                    <label for="nomusu"><strong>Nombre del bar</strong></label>
+                    <input type="text" name="nomusu" id="nomusu" class="form-control" 
+                        value="<?= isset($datOne[0]['nomusu']) ? $datOne[0]['nomusu'] : ''; ?>" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="nompropi"><strong>Nombre del propietario</strong></label>
@@ -34,19 +34,19 @@ require_once 'admin/controllers/cubi.php';
                         value="<?= isset($datOne[0]['nit']) ? $datOne[0]['nit'] : ''; ?>" required>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="emabar"><strong>Email Del bar</strong></label>
-                    <input type="text" name="emabar" id="emabar" class="form-control" 
-                        value="<?= isset($datOne[0]['emabar']) ? $datOne[0]['emabar'] : ''; ?>" required>
+                    <label for="emausu"><strong>Email Del bar</strong></label>
+                    <input type="text" name="emausu" id="emausu" class="form-control" 
+                        value="<?= isset($datOne[0]['emausu']) ? $datOne[0]['emausu'] : ''; ?>" required>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="telbar"><strong>Teléfono</strong></label>
-                    <input type="text" name="telbar" id="telbar" class="form-control" 
-                        value="<?= isset($datOne[0]['telbar']) ? $datOne[0]['telbar'] : ''; ?>" required>
+                    <label for="celusu"><strong>Teléfono</strong></label>
+                    <input type="text" name="celusu" id="celusu" class="form-control" 
+                        value="<?= isset($datOne[0]['celusu']) ? $datOne[0]['celusu'] : ''; ?>" required>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="pssbar"><strong>Contraseña del bar</strong></label>
-                    <input type="text" name="pssbar" id="telbar" class="form-control" 
-                        value="<?= isset($datOne[0]['pssbar']) ? $datOne[0]['pssbar'] : ''; ?>" required>
+                    <label for="pssusu"><strong>Contraseña del bar</strong></label>
+                    <input type="text" name="pssusu" id="pssusu" class="form-control" 
+                        value="<?= isset($datOne[0]['pssusu']) ? $datOne[0]['pssusu'] : ''; ?>" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="dircbar"><strong>Dirección</strong></label>
@@ -83,10 +83,10 @@ require_once 'admin/controllers/cubi.php';
                 </select>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="fotbar"><strong>Imagen Bar</strong></label>
-                    <input type="file" class="form-control" name="fots" accept="image/*" id="fotbar">
-                    <input type="hidden" name="fotbar" 
-                        value="<?= isset($datOne[0]['fotbar']) ? $datOne[0]['fotbar'] : ''; ?>">
+                    <label for="fotiden"><strong>Imagen Bar</strong></label>
+                    <input type="file" class="form-control" name="fots" accept="image/*" id="fotiden">
+                    <input type="hidden" name="fotiden" 
+                        value="<?= isset($datOne[0]['fotiden']) ? $datOne[0]['fotiden'] : ''; ?>">
                 </div>
                 <br>
                 <br>
@@ -96,7 +96,7 @@ require_once 'admin/controllers/cubi.php';
                 <br>
                 <input class="btn btn-primary" type="submit" value="Enviar">
                 <input type="hidden" name="opera" value="save">
-                <input type="hidden" name="idbar" id="idbar" value="<?php echo isset($datOne[0]['idbar']) ? $datOne[0]['idbar'] : ''; ?>">
+                <input type="hidden" name="idusu" id="idusu" value="<?php echo isset($datOne[0]['idusu']) ? $datOne[0]['idusu'] : ''; ?>">
             </div>
         </form>
     </div>
@@ -119,14 +119,18 @@ require_once 'admin/controllers/cubi.php';
         <tr>
             <!-- Foto del bar -->
             <td>
-                <?php if (!empty($bar["fotbar"]) && file_exists("img/" . $bar["fotbar"])) { ?>
-                    <img src="img/<?=$bar["fotbar"];?>" width="120px">
+                <?php if (!empty($bar["fotiden"]) && file_exists("img/" . $bar["fotiden"])) { ?>
+                    <img src="img/<?=$bar["fotiden"];?>" width="120px">
                 <?php } else { ?>
                     <img src="img/coctelapp/bar1.jpg" width="120px">
                 <?php } ?>
             </td>
             <!-- NIT -->
-            <td><b>NIT: </b><?= $bar['nit']; ?><br>
+            <td>
+                <b>ID del bar: </b><?= $bar['idbar']; ?><br>
+                <b>NIT: </b><?= $bar['nit']; ?><br>
+                <b>Numero de valor: </b><?= $bar['nomval']; ?><br>
+                <b>Ubicacion: </b><?= $bar['nomubi']; ?><br>
                 <b>Telefono: </b><?= $bar['telbar']; ?><br>
                 <b>Nombre Propietario: </b><?= $bar['nompropi']; ?><br>
                 <b>Horario: </b><?= $bar['horbar']; ?><br>
@@ -150,4 +154,3 @@ require_once 'admin/controllers/cubi.php';
         <?php }} ?>
     </tbody>
 </table>
-
