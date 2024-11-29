@@ -1,11 +1,10 @@
 <?php
-require_once(__DIR__ . '/../models/conexion.php');
-require_once(__DIR__ . '/../models/mbarxprod.php');
+require_once(__DIR__ . '/../controllers/cprod.php');
 
-$mbarxprod = new Mbarxprod();
+$mprod = new Mprod();
 
 // Obtén todos los productos
-$datAll = $mbarxprod->getAll(); // Asegúrate de que getAll() retorne datos válidos
+$datAll = $mprod->getAll(); // Asegúrate de que getAll() retorne datos válidos
 
 // Variables que necesitas definir
 // Simulación de datos del cóctel
@@ -20,7 +19,7 @@ $datAll = $mbarxprod->getAll(); // Asegúrate de que getAll() retorne datos vál
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-<?php if (isset($datAll) && !empty($datAll)) {foreach ($datAll as $dta) { ?>
+<?php if ($datOne) {foreach ($datOne as $dta) { ?>
     <div class="container mb-5">
        
         <div class="row mt-5">

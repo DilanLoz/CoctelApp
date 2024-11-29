@@ -3,49 +3,80 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="css/style.css">
 
-
+<?php
+    require_once('controllers/cbargan.php');
+    // Establecer el idioma a español para mostrar el mes en español
+    setlocale(LC_TIME, 'es_ES.UTF-8', 'spanish');
+?>
 
 <div class="container mt-5 mb-5" id="ganancias">
-    <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="row">
+        <!-- Ganancias del Día -->
         <div class="col">
             <div class="rounded p-3 border" id="ganan">
-                <h2 class="text-warning fw-bold text-center mb-4">Ganancias del dia</h2>
+                <h2 class="text-warning fw-bold text-center mb-4">Ganancias del Día</h2>
                 <div class="container d-md-flex justify-content-between align-items-center text-light">
                     <div class="mb-4 mb-md-0">
-                        <h3 class="text-danger">Dinero del día</h3>
-                        <h5>$ 247.400</h5>
-                        <h5>$ 466.000</h5>
-                        <h5>$ 351.000</h5>
+                        <h3 class="text-danger">Dinero del Día</h3>
+                        <?php
+                            if ($datAll) foreach ($datAll as $dt){
+                                  echo '<h5>' . '$ ' . number_format($dt['total'], 0, ',', '.') . '</h5>';
+                            }
+                        ?>
                     </div>
                     <div>
-                        <h3 class="text-danger">Fecha del día</h3>
-                        <h5>28/03/2024</h5>
-                        <h5>27/03/2024</h5>
-                        <h5>26/03/2024</h5>
+                        <h3 class="text-danger">Fecha del Día</h3>
+                        <?php
+                            if (!empty($datAll)) {
+                                foreach ($datAll as $factura) {
+                                    $fecha = date('d/m/Y', strtotime($factura['fecha']));
+                                    echo '<h5>' . $fecha . '</h5>';
+                                    
+                                }
+                            } else {
+                                echo '<h5>No hay datos disponibles</h5>';
+                            }
+                        ?>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Ganancias del Mes -->
         <div class="col">
             <div class="rounded p-3 border" id="ganan">
-                <h2 class="text-warning fw-bold text-center mb-4">Ganancias del mes</h2>
+                <h2 class="text-warning fw-bold text-center mb-4">Ganancias del Mes</h2>
                 <div class="container d-md-flex justify-content-between align-items-center text-light">
                     <div class="mb-4 mb-md-0">
-                        <h3 class="text-danger">Dinero Mensual</h3>
-                        <h5>$ 2.800.000</h5>
-                        <h5>$ 3.400.500</h5>
-                        <h5>$ 2.967.000</h5>
+                        <h3 class="text-danger">Dinero del Mes</h3>
+                        <?php
+                            // Filtrar las facturas por mes (esto se puede hacer en la consulta del modelo o aquí)
+                            // Ejemplo de cálculo para un mes (aquí asumes que ya tienes las facturas del mes)
+                            $datMes = $mbargan->getAll(); // Filtrado por mes en el modelo
+                            $totalMes = 0;
+                            foreach ($datMes as $factura) {
+                                $totalMes += $factura['total'];
+                            }
+                            echo '<h5>' . '$ ' . number_format($totalMes, 0, ',', '.') . '</h5>';
+                        ?>
                     </div>
                     <div>
-                        <h3 class="text-danger">Mes</h3>
-                        <h5>Marzo</h5>
-                        <h5>Febrero</h5>
-                        <h5>Enero</h5>
-                    </div> 
+                        <h3 class="text-danger">Mes del Año</h3>
+                        <?php
+                            if (!empty($datMes)) {
+                                // Extraer solo el mes en español
+                                foreach ($datMes as $factura) {
+                                    // Formatear la fecha para obtener el nombre del mes en español
+                                    $mes = strftime('%B', strtotime($factura['fecha']));  // Nombre del mes en español
+                                    echo '<h5>' . ucfirst($mes) . '</h5>';  // La función ucfirst pone la primera letra en mayúscula
+                                }
+                            } else {
+                                echo '<h5>No hay fechas disponibles</h5>';
+                            }
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
