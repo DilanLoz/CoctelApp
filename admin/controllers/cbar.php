@@ -1,43 +1,43 @@
 <?php
-// Importar los archivos necesarios
-require_once('admin/models/mbar.php');
-require_once 'models/conexion.php';
-
-
-// Inicializar el modelo de Bar
+include("admin/models/mbar.php");
+include("controllers/optimg.php");
 $mbar = new Mbar();
-// Recoger datos enviados a través de POST o GET
-$idbar = isset($_REQUEST['idbar']) ? $_REQUEST['idbar'] : NULL;
-//ubi
-$codubi = isset($_REQUEST['codubi']) ? $_REQUEST['codubi'] : NULL;
-//val
-$idval = isset($_REQUEST['idval']) ? $_REQUEST['idval'] : NULL;
 
-$nombar = isset($_POST['nombar']) ? $_POST['nombar'] : NULL;
-$nompropi = isset($_POST['nompropi']) ? $_POST['nompropi'] : NULL;
-$nit = isset($_POST['nit']) ? $_POST['nit'] : NULL;
-$emabar = isset($_POST['emabar']) ? $_POST['emabar'] : NULL;
-$telbar = isset($_POST['telbar']) ? $_POST['telbar'] : NULL;
-$pssbar = isset($_POST['pssbar']) ? $_POST['pssbar'] : NULL;
-$dircbar = isset($_POST['dircbar']) ? $_POST['dircbar'] : NULL;
-$idper = isset($_POST['idper']) ? $_POST['idper'] : NULL;
-$fotbar = isset($_POST['fotbar']) ? $_POST['fotbar'] : NULL;
+$idusu = isset($_REQUEST['idusu']) ? ($_REQUEST['idusu']): NULL;
+$nomusu = isset($_POST['nomusu']) ? ($_POST['nomusu']): NULL;
+$nompropi = isset($_POST['nompropi']) ? ($_POST['nompropi']): NULL;
+$celusu = isset($_POST['celusu']) ? ($_POST['celusu']): NULL;
+$fotiden = isset($_POST['fotiden']) ? ($_POST['fotiden']): NULL;
+$dircbar = isset($_POST['dircbar']) ? ($_POST['dircbar']): NULL;
+$pssusu = isset($_POST['pssusu']) ? ($_POST['pssusu']): NULL;
+$codubi = isset($_POST['codubi']) ? ($_POST['codubi']): NULL;
+$emausu = isset($_POST['emausu']) ? ($_POST['emausu']): NULL;
+$idper = isset($_POST['idper']) ? ($_POST['idper']): NULL;
+$idbar = isset($_POST['idbar']) ? ($_POST['idbar']): NULL;
+$dircbar = isset($_POST['dircbar']) ? ($_POST['dircbar']): NULL;
+$horbar = isset($_POST['horbar']) ? ($_POST['horbar']): NULL;
 
-//ubi
-$nomubi = isset($_POST['nomubi']) ? $_POST['nomubi'] : NULL;
-$depubi = isset($_POST['depubi']) ? $_POST['depubi'] : NULL;
-//val
-$iddom = isset($_POST['iddom']) ? $_POST['iddom'] : NULL;
-$nomval = isset($_POST['nomval']) ? $_POST['nomval'] : NULL;
+$ope = isset($_REQUEST['ope']) ? ($_REQUEST['ope']): NULL;
 
+$mbar->setIdusu($idusu);
 
-$ope = isset($_REQUEST['ope']) ? $_REQUEST['ope'] : NULL;
-$opera = isset($_REQUEST['opera']) ? $_REQUEST['opera'] : NULL;
+//CONTROL DE REGISTRO DE USUARIOS ADMIN
+if ($ope == "save") {
+    $mbar->setNomusu($nomusu);
+    $mbar->setNompropi($nompropi);
+    $mbar->setCelusu($celusu);
+    $mbar->setFotiden($fotiden);
+    $mbar->setDircbar($dircbar);
+    $mbar->setPssusu($pssusu);
+    $mbar->setCodubi($codubi);
+    $mbar->setIdper($idper);
+    $mbar->setIdbar($idbar);
+    $mbar->setDircbar($dircbar);
+    $mbar->setHorbar($horbar);
+    $mbar->setEmausu($emausu);
+    
 
-
-// Guardar datos del bar
-if ($opera == "save") {
-    // Manejo del archivo de imagen
+    $dtOne = $mbar->getOne();
     if (isset($_FILES['fots']) && $_FILES['fots']['error'] == UPLOAD_ERR_OK) {
         $fileTmpPath = $_FILES['fots']['tmp_name'];
         $fileName = $_FILES['fots']['name'];
@@ -53,38 +53,27 @@ if ($opera == "save") {
 
         // Mueve el archivo a la carpeta deseada
         if (move_uploaded_file($fileTmpPath, $dest_path)) {
-            $fotbar = $newFileName; // Guarda el nuevo nombre en la variable
+            $fotiden = $newFileName; // Guarda el nuevo nombre en la variable
         } else {
-            $fotbar = NULL; // Si hubo un error, asigna NULL
+            $fotiden = NULL; // Si hubo un error, asigna NULL
         }
     } else {
-        $fotbar = NULL; // Si no se subió un archivo, asigna NULL
+        $fotiden = NULL; // Si no se subió un archivo, asigna NULL
     }
-        $mbar->setNombar($nombar);
-        $mbar->setNompropi($nompropi);
-        $mbar->setNit($nit);
-        $mbar->setEmabar($emabar);
-        $mbar->setTelbar($telbar);
-        $mbar->setPssbar($pssbar);
-        $mbar->setDircbar($dircbar);
-        $mbar->setCodubi($codubi);
-        $mbar->setIdper($idper);
-        $mbar->setIdval($idval);
-        $mbar->setFotbar($fotbar);
-        $mbar->setNomubi($nomubi);
-        $mbar->save();  // Método que guarda en la base de datos
-        }
-// Si la operación es editar, obtener los datos del bar
-if ($ope == "edi" && $idbar) {
-    $datOne = $mbar->getOne($idbar);
-}
-// Obtener todos los bares
-try {
-    $ubi = $mbar->getAllCiu(); // Cargar todas las ciudades
-} catch (Exception $e) {
-    echo "Error al obtener las ciudades: " . $e->getMessage();
 }
 
-$bars=$mbar->getAll();
-$vals=$mbar->getAllVal();
+//CONTROL DE ELIMINACION DE USUARIOS
+
+if ($ope == "del" && $idusu) {
+    $mbar->del();
+}
+//CONTROL DE EDICION DE USUARIOS
+if ($ope == "edi" && $idusu) {
+    $dtOne = $mbar->getOne();
+} else {
+    $dtOne = NULL;
+}
+
+//LLAMADA DE FUNCIONES
+$dat = $mbar->getAll();
 ?>
