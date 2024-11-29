@@ -26,7 +26,7 @@ $datAll = $mbarxprod->getAll();
                     $formattedPrice = number_format($dta['vlrprod'], 0, ',', '.'); // Sin decimales, separador de miles con punto
                     ?>
                     <div class="product-box">
-                        <a href="index.php?pg=02">
+                        <a href="home.php?pg=1014">
                             <img src="img/<?=$dta["fotprod"];?>" alt="" class="product-img"></a>
                             <strong style="font-size: 15px; display: inline-block; min-height: 40px;"><?=$dta['nomprod'];?></strong>
 
