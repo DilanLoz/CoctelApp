@@ -1,5 +1,21 @@
 <?php require_once 'admin/controllers/cgan.php'; ?>
 <br><br><br>
+<style>
+    @media (max-width: 768px) {
+    .charts-container canvas {
+        width: 300px;
+        height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .charts-container canvas {
+        width: 250px;
+        height: 200px;
+    }
+}
+
+</style>
 
 <!-- Tabla de ganes registrados -->
 <table id="example" class="table table-striped" style="width:100%;">
@@ -17,9 +33,10 @@
     </thead>
     <tbody>
         <?php
-        // Obtenemos los datos utilizando el método getAll()
-        $gans = $mgan->getAll(); 
-        foreach ($gans as $gan) {
+        // Obtener los datos usando el método getAll() y asegurarse de que no sea null
+        $gans = isset($mgan) ? $mgan->getAll() : []; 
+        if (!empty($gans)) {
+            foreach ($gans as $gan) {
         ?>
         <tr>
             <td><?=$gan['iddetfact'];?></td>
@@ -35,7 +52,12 @@
                 </a>
             </td>
         </tr>
-        <?php } ?>
+        <?php
+            }
+        } else {
+            echo "<tr><td colspan='8' style='text-align: center;'>No se encontraron registros</td></tr>";
+        }
+        ?>
     </tbody>
     <tfoot>
         <tr>
@@ -49,41 +71,28 @@
             <th></th> <!-- Columna extra para las acciones -->
         </tr>
     </tfoot>
-    <style>
-        .charts-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 20px;
-        }
-        canvas {
-            max-width: 40%;
-            max-height: 90%;
-        }
-        #pieChart {
-            max-width: 40%; /* La gráfica de pastel será más pequeña */
-            max-height: 100%;
-        }
-    </style>
 </table>
 
 <h1 style="text-align: center;">Subtotales por Bar</h1>
-<div class="charts-container">
-    <canvas id="barChart"></canvas>
-    <canvas id="pieChart"></canvas>
+<div class="charts-container" style="display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; justify-content: center;">
+    <!-- Ajustando el tamaño de las gráficas -->
+    <canvas id="barChart" style="width: 40px !important; height: 30px !important;
+    "></canvas>
+    <canvas id="pieChart" style="width: 40px !important; height: 30px !important;"></canvas>
 </div>
+
 
 <?php
 // Agrupar los datos por idbar para los subtotales
 $data = [];
-foreach ($gans as $gan) {
-    $nombar = $gan['nombar'];
-    if (!isset($data[$nombar])) {
-        $data[$nombar] = 0;
+if (!empty($gans)) {
+    foreach ($gans as $gan) {
+        $nombar = $gan['nombar'];
+        if (!isset($data[$nombar])) {
+            $data[$nombar] = 0;
+        }
+        $data[$nombar] += $gan['subtotal'];
     }
-    $data[$nombar] += $gan['subtotal'];
 }
 
 // Preparar datos para las gráficas
@@ -93,7 +102,7 @@ $subtotals = array_values($data);
 // Calcular porcentajes para la gráfica de pastel
 $total = array_sum($subtotals);
 $percentages = array_map(function($value) use ($total) {
-    return round(($value / $total) * 100, 2);
+    return $total > 0 ? round(($value / $total) * 100, 2) : 0;
 }, $subtotals);
 ?>
 
@@ -156,7 +165,7 @@ $percentages = array_map(function($value) use ($total) {
     new Chart(pieCtx, {
         type: 'pie',
         data: {
-            labels: barIDs.map((id, index) => Bar ${id} (${percentages[index]}%)), // Etiquetas con porcentaje
+            labels: barIDs.map((id, index) => `${id} (${percentages[index]}%)`), // Etiquetas con porcentaje
             datasets: [{
                 label: 'Porcentaje de Subtotal por Bar',
                 data: subtotals, // Datos de subtotales
@@ -178,7 +187,7 @@ $percentages = array_map(function($value) use ($total) {
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            return ${context.label}: $${context.raw}; // Mostrar subtotales en el tooltip
+                            return `${context.label}: $${context.raw}`; // Mostrar subtotales en el tooltip
                         }
                     }
                 }
@@ -186,5 +195,5 @@ $percentages = array_map(function($value) use ($total) {
         }
     });
 </script>
-<?php require_once 'admin/controllers/cgan.php'; ?>
+
 <br><br><br>

@@ -35,7 +35,8 @@
         <thead>
             <tr>
                 <th>Perfil</th>     
-                <th></th>           
+                <th>Paginas</th>
+                <th></th>          
                 <!-- botones pdf -->
             </tr>
         </thead>
@@ -61,7 +62,7 @@
                             <?php                             
                             $dps = $mper->getPxP();                           
                             modal($d['idper'], $d['nomper'], $dtm, $pg, $smd); ?>
-                            <a href="home.php?pg=<?= $pg; ?>&idper=<?= $d['idper']; ?>&opera=edi" title="edit">
+                            <a href="home.php?pg=<?=$pg;?>&idper=<?=$d['idper'];?>&opera=edi" title="Editar">
                                 <i class="fa-solid fa-pen-to-square fa-2x"></i>
                             </a>
                         </td>

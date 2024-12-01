@@ -3,45 +3,75 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="css/style.css">
 
+<?php
+require_once('controllers/cbargan.php');
+// Establecer el idioma a español para mostrar el mes en español
+setlocale(LC_TIME, 'es_ES.UTF-8', 'spanish');
+
+// Filtrar datos por usuario autenticado (ya filtrado en el controlador)
+$datFiltered = $datAll;
+?>
+
 <div class="container mt-5 mb-5" id="ganancias">
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-        <div class="col">
-            <div class="rounded p-3 border" id="ganan">
-                <h2 class="text-warning fw-bold text-center mb-4">Ganancias del dia</h2>
-                <div class="container d-md-flex justify-content-between align-items-center text-light">
+    <div class="row">
+        <!-- Ganancias del Día -->
+        <div class="col mb-5 mt-5">
+            <div class="rounded p-3 border border-warning" id="ganan">
+                <h2 class="text-warning fw-bold text-center mb-4 fs-3">Ganancias del Día</h2>
+                <div class="container d-md-flex justify-content-between align-items-center">
                     <div class="mb-4 mb-md-0">
-                        <h3 class="text-danger">Dinero del día</h3>
-                        <h5>$ 47.400</h5>
-                        <h5>$ 66.000</h5>
-                        <h5>$ 51.000</h5>
+                        <h3 class="text-danger fw-bold">Dinero de hot</h3>
+                        <div class="border border-danger border-3 rounded mb-3"></div>
+                        <?php
+                        // Calcular ganancias del día
+                        $gananciasDia = 0;
+                        $fechaActual = date('Y-m-d');
+                        foreach ($datFiltered as $factura) {
+                            if (date('Y-m-d', strtotime($factura['fecha'])) == $fechaActual) {
+                                $gananciasDia += $factura['total'];
+                            }
+                        }
+                        echo '<h5>' . '$ ' . number_format($gananciasDia, 0, ',', '.') . '</h5>';
+                        ?>
                     </div>
                     <div>
-                        <h3 class="text-danger">Fecha del día</h3>
-                        <h5>28/03/2024</h5>
-                        <h5>27/03/2024</h5>
-                        <h5>26/03/2024</h5>
+                        <h3 class="text-danger fw-bold">Fecha de hoy</h3>
+                        <div class="border border-danger border-3 rounded mb-3"></div>
+                        <h5><?php echo strftime('%d/%m/%Y', strtotime($fechaActual)); ?></h5>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="rounded p-3 border" id="ganan">
-                <h2 class="text-warning fw-bold text-center mb-4">Ganancias del mes</h2>
-                <div class="container d-md-flex justify-content-between align-items-center text-light">
+
+        <!-- Ganancias del Mes -->
+        <div class="col mb-5 mt-5">
+            <div class="rounded p-3 border border-warning" id="ganan">
+                <h2 class="text-warning fw-bold text-center mb-4 fs-3">Ganancias del Mes</h2>
+                <div class="container d-md-flex justify-content-between align-items-center">
                     <div class="mb-4 mb-md-0">
-                        <h3 class="text-danger">Dinero Mensual</h3>
-                        <h5>$ 1.800.000</h5>
-                        <h5>$ 1.400.500</h5>
-                        <h5>$ 1.967.000</h5>
+                        <h3 class="text-danger fw-bold">Dinero del Mes</h3>
+                        <div class="border border-danger border-3 rounded mb-3"></div>
+                        <?php
+                        // Calcular ganancias del mes
+                        $gananciasMes = 0;
+                        $mesActual = date('m');
+                        $anioActual = date('Y');
+                        foreach ($datFiltered as $factura) {
+                            $fechaFactura = strtotime($factura['fecha']);
+                            if (date('m', $fechaFactura) == $mesActual && date('Y', $fechaFactura) == $anioActual) {
+                                $gananciasMes += $factura['total'];
+                            }
+                        }
+                        echo '<h5>' . '$ ' . number_format($gananciasMes, 0, ',', '.') . '</h5>';
+                        ?>
                     </div>
                     <div>
-                        <h3 class="text-danger">Mes</h3>
-                        <h5>Marzo</h5>
-                        <h5>Febrero</h5>
-                        <h5>Enero</h5>
-                    </div> 
+                        <h3 class="text-danger fw-bold">Mes Actual</h3>
+                        <div class="border border-danger border-3 rounded mb-3"></div>
+                        <h5><?php echo ucfirst(strftime('%B', strtotime(date('Y-m-d')))); ?></h5>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div> 
+</div>

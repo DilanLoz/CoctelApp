@@ -68,7 +68,7 @@ if ($ope == "del" && $idusu) {
     $mbar->del();
 }
 //CONTROL DE EDICION DE USUARIOS
-if ($ope == "edi" && $idusu) {
+if ($ope == "edit" && $idusu) {
     $dtOne = $mbar->getOne();
 } else {
     $dtOne = NULL;

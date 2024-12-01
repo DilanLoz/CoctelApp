@@ -78,7 +78,7 @@ class Mgan {
     // Métodos
     public function getAll() {
         try {
-            $sql = "SELECT d.iddetfact, d.idfact, b.nombar, d.idprod, d.cantidad, d.precio_unitario, d.subtotal, d.idemp, d.idbar FROM detfact AS d INNER JOIN bar AS b ON d.idbar=b.idbar";
+            $sql = "SELECT d.iddetfact, d.idfact, d.idprod, b.nombar, d.cantidad, d.precio_unitario, d.subtotal, d.idemp, d.idbar FROM detfact AS d INNER JOIN bar AS b ON d.idbar=b.idbar";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
@@ -88,94 +88,6 @@ class Mgan {
             echo "Error: " . $e->getMessage();
         }
     }
-
-    public function getOne() {
-        try {
-            $sql = "SELECT * FROM detfact WHERE iddetfact = :iddetfact";
-            $modelo = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $result = $conexion->prepare($sql);
-            $iddetfact = $this->getIddetfact();
-            $result->bindParam(":iddetfact", $iddetfact);
-            $result->execute();
-            return $result->fetch(PDO::FETCH_ASSOC);
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    }
-
-    public function save() {
-        try {
-            $sql = "INSERT INTO detfact (idfact, idprod, cantidad, precio_unitario, subtotal, idemp, idbar) 
-                    VALUES (:idfact, :idprod, :cantidad, :precio_unitario, :subtotal, :idemp, :idbar)";
-            $modelo = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $result = $conexion->prepare($sql);
-
-            $idfact = $this->getIdfact();
-            $result->bindParam(":idfact", $idfact);
-            $idprod = $this->getIdprod();
-            $result->bindParam(":idprod", $idprod);
-            $cantidad = $this->getCantidad();
-            $result->bindParam(":cantidad", $cantidad);
-            $precio_unitario = $this->getPrecio_unitario();
-            $result->bindParam(":precio_unitario", $precio_unitario);
-            $subtotal = $this->getSubtotal();
-            $result->bindParam(":subtotal", $subtotal);
-            $idemp = $this->getIdemp();
-            $result->bindParam(":idemp", $idemp);
-            $idbar = $this->getIdbar();
-            $result->bindParam(":idbar", $idbar);
-
-            $result->execute();
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    }
-
-    public function edit() {
-        try {
-            $sql = "UPDATE detfact SET idfact = :idfact, idprod = :idprod, cantidad = :cantidad, precio_unitario = :precio_unitario, subtotal = :subtotal, idemp = :idemp, idbar = :idbar 
-                    WHERE iddetfact = :iddetfact";
-            $modelo = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $result = $conexion->prepare($sql);
-
-            $iddetfact = $this->getIddetfact();
-            $result->bindParam(":iddetfact", $iddetfact);
-            $idfact = $this->getIdfact();
-            $result->bindParam(":idfact", $idfact);
-            $idprod = $this->getIdprod();
-            $result->bindParam(":idprod", $idprod);
-            $cantidad = $this->getCantidad();
-            $result->bindParam(":cantidad", $cantidad);
-            $precio_unitario = $this->getPrecio_unitario();
-            $result->bindParam(":precio_unitario", $precio_unitario);
-            $subtotal = $this->getSubtotal();
-            $result->bindParam(":subtotal", $subtotal);
-            $idemp = $this->getIdemp();
-            $result->bindParam(":idemp", $idemp);
-            $idbar = $this->getIdbar();
-            $result->bindParam(":idbar", $idbar);
-
-            $result->execute();
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    }
-
-    public function del() {
-        try {
-            $sql = "DELETE FROM detfact WHERE iddetfact = :iddetfact";
-            $modelo = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $result = $conexion->prepare($sql);
-            $iddetfact = $this->getIddetfact();
-            $result->bindParam(":iddetfact", $iddetfact);
-            $result->execute();
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    }
 }
+
 ?>

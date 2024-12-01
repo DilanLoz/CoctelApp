@@ -10,6 +10,11 @@
         <div class="row">
             <!-- Nombre del bar -->
             <div class="form-group col-md-4">
+                <label for="idusu">ID del bar</label>
+                <input type="text" class="form-control" name="idusu" id="idusu" 
+                    value="<?php if($dtOne && $dtOne[0]['idusu']) echo $dtOne[0]['idusu']; ?>" required>
+            </div>
+            <div class="form-group col-md-4">
                 <label for="nomusu">Nombre del bar</label>
                 <input type="text" class="form-control" name="nomusu" id="nomusu" 
                     value="<?php if($dtOne && $dtOne[0]['nomusu']) echo $dtOne[0]['nomusu']; ?>" required>
@@ -68,13 +73,13 @@
 <table id="example" class="table table-striped" style="width:100%">
     <thead>
         <tr>
+            <th>Foto</th>
             <th>Id</th>
             <th>Nombres</th>
-            <th>Apellidos</th>
             <th>Correo</th>
-            <th>Estado</th>
-            <th>Perfil</th>
-            <th>Foto</th>
+            <th>Celular</th>
+            <th>Num. Documento</th>
+            <th>Contraseña</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -82,24 +87,24 @@
         <?php if ($dat) {
             foreach ($dat as $dt) { ?>
                 <tr>
+                    <td>
+                        <?php if (!empty($dt["fotiden"]) && file_exists("img/fotbar/" . $dt["fotiden"])) { ?>
+                            <img src="img/fotbar/<?= $dt["fotiden"]; ?>" width="120px" style="margin-right: 10px;">
+                        <?php } else { ?>
+                            <img src="img/coctelapp/bar1.jpg" width="120px" style="margin-right: 10px;">
+                        <?php } ?>
+                    </td>
                     <td><?= $dt["idusu"]; ?></td>
                     <td><?= $dt["nomusu"]; ?></td>
                     <td><?= $dt["emausu"]; ?></td>
                     <td><?= $dt["celusu"]; ?></td>
                     <td><?= $dt["numdocu"]; ?></td>
                     <td><?= $dt["pssusu"]; ?></td>
-                    <td class="text-center">
-                        <?php if (!empty($dt["fotiden"]) && file_exists("img/fotbar/" . $dt["fotiden"])) { ?>
-                            <img src="img/fotbar/<?= $dt["fotiden"]; ?>" width="120px" style="margin-right: 10px;">
-                        <?php } else { ?>
-                            <img src="img/coctelapp/logo.png" width="120px" style="margin-right: 10px;">
-                        <?php } ?>
-                    </td>
                     <td>
-                        <a href="home.php?pg=4050&ope=edi&idusu=<?= $dt["idusu"]; ?>" title="Editar">
+                        <a href="home.php?pg=4050&ope=edit&idusu=<?= $dt["idusu"]; ?>" title="Editar">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
-                        <a href="home.php?pg=4050&ope=del&idusu=<?= $dt["idusu"]; ?>" onclick="return eli();" title="Eliminar">
+                        <a href="home.php?pg=4050&ope=del&idusu=<?= $dt["idusu"]; ?>" title="Eliminar">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </td>
@@ -108,13 +113,13 @@
     </tbody>
     <tfoot>
         <tr>
+            <th>Foto</th>
             <th>Id</th>
             <th>Nombres</th>
-            <th>Apellidos</th>
             <th>Correo</th>
-            <th>Estado</th>
-            <th>Perfil</th>
-            <th>Foto</th>
+            <th>Celular</th>
+            <th>Num. Documento</th>
+            <th>Contraseña</th>
             <th>Acciones</th>
         </tr>
     </tfoot>

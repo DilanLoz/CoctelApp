@@ -94,7 +94,6 @@ class Mbargan {
         $result->bindParam(":total", $total);
         $idusu = $this->getIdusu();
         $result->bindParam(":idusu", $idusu);
-        $dircbar = $this->getDircbar();
         $result->execute();
     }
 
@@ -130,5 +129,20 @@ class Mbargan {
         $result->bindParam(":idfact", $idfact);
         $result->execute();
     }
+     // Obtener facturas según el idusu de la sesión
+     public function getBySessionId($idusu) {
+        $res = NULL;
+        $sql = "SELECT idfact, idpedido, fecha, idbar, total, idusu 
+                FROM factura 
+                WHERE idbar = :idusu OR idusu = :idusu"; // Corrige aquí
+        $modelo = new Conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+        $result->bindParam(":idusu", $idusu);
+        $result->execute();
+        $res = $result->fetchAll(PDO::FETCH_ASSOC);
+        return $res;
+    }
+    
 }
 ?>
