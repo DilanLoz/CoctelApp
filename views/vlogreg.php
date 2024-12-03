@@ -15,39 +15,46 @@
     <div class="box">
         <div class="inner-box">
             <div class="forms-wrap"> 
-                <form action="./models/control.php" method="POST" autocomplete="off" class="sign-in-form">
-                    <div class="logo">
-                        <img src="img/coctelapp/coctelapp.png" alt="Logo"/>
+            <form action="./models/control.php" method="POST" autocomplete="off" class="sign-in-form">
+                <div class="logo">
+                    <img src="img/coctelapp/coctelapp.png" alt="Logo" />
+                </div>
+
+                <div class="heading">
+                    <h6 class="fw-bold">¿Aún no posee una cuenta?</h6>
+                    <a href="#" class="toggle fw-bold">Presione aquí para registrarse.</a>
+                </div>
+
+                <div class="actual-form">
+                    <div class="input-wrap">
+                        <input type="text" minlength="4" id="email" name="usu" class="input-field" autocomplete="off" required />
+                        <label><i class="fa-solid fa-envelope" style="color: #ffffff;"></i> Correo Electrónico</label>
                     </div>
 
-                    <div class="heading">
-                        <h6 class="fw-bold">¿Aún no posee una cuenta?</h6>
-                        <a href="#" class="toggle fw-bold">Presione aquí para registrarse.</a>
+                    <div class="input-wrap">
+                        <input type="password" minlength="4" id="password" name="pss" class="input-field" autocomplete="off" required />
+                        <label><i class="fa-solid fa-lock" style="color: #ffffff;"></i> Contraseña</label>
                     </div>
 
-                    <div class="actual-form">
-                        <div class="input-wrap">
-                            <input type="text" minlength="4" id="email" name="usu" class="input-field" autocomplete="off" required />
-                            <label><i class="fa-solid fa-envelope" style="color: #ffffff;"></i> Correo Electronico</label>
+                    <?php
+                    // Mostrar mensaje de error si se reciben parámetros incorrectos
+                    $error = isset($_GET['err']) ? $_GET['err'] : NULL;
+                    if ($error === 'invalid'): ?>
+                        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <strong>Error:</strong> Datos incorrectos, por favor inténtelo de nuevo.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+                    <?php endif; ?>
 
-                        <div class="input-wrap">
-                            <input type="password" minlength="4" id="password" name="pss" class="input-field" autocomplete="off" required />
-                            <label><i class="fa-solid fa-lock" style="color: #ffffff;"></i> Contraseña</label>
-                        </div>
-                        <?php
-				$err = isset($_GET['err']) ? $_GET['err']:NULL;
-				if($err=='oK') echo "<span class='dtinv'>Datos invalidos</span>"
-			?>
+                    <input type="submit" value="Iniciar Sesión" class="sign-btn" />
 
-                        <input type="submit" value="Iniciar Sesión" class="sign-btn" />
-
-                        <p class="text fw-bold">
+                    <p class="text fw-bold">
                         ¿Ha olvidado su contraseña?
-                            <a href="#" class="toggle fw-bold">Presione aquí para recuperarla.</a>
-                        </p>
-                    </div>
-                </form>
+                        <a href="#" class="toggle fw-bold">Presione aquí para recuperarla.</a>
+                    </p>
+                </div>
+            </form>
 
 
                 <form action="home.html" autocomplete="off" class="sign-up-form">
