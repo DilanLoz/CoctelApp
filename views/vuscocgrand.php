@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . '/../controllers/cprod.php');
+require_once('controllers/cprod.php');
 
 $mprod = new Mprod();
 

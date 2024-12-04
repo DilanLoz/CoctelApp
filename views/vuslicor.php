@@ -1,7 +1,7 @@
 <?php
 // licores.php
 require_once 'models/conexion.php';
-require_once 'models/mbarxprod.php';
+require_once 'controllers/cbarxprod.php';
 
 $mbarxprod = new Mbarxprod();
 $datAll = $mbarxprod->getAll();
@@ -26,7 +26,7 @@ $datAll = $mbarxprod->getAll();
                     $formattedPrice = number_format($dta['vlrprod'], 0, ',', '.'); // Sin decimales, separador de miles con punto
                     ?>
                     <div class="product-box">
-                        <a href="home.php?pg=1014">
+                        <a href="home.php?pg=1014&idprod=<?=$dta['idprod'];?>">
                             <img src="img/<?=$dta["fotprod"];?>" alt="" class="product-img"></a>
                             <strong style="font-size: 15px; display: inline-block; min-height: 40px;"><?=$dta['nomprod'];?></strong>
 

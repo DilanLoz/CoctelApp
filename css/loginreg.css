@@ -20,7 +20,7 @@ main {
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  background-image: url(../img/coctelapp/logreg1.jpg);
+  background-image: url(../img/coctelapp/loginregistro.jpg);
   background-size: cover; /* Ajusta la imagen para cubrir el contenedor */
   background-position: center; /* Centra la imagen */
   padding: 2rem;
@@ -444,4 +444,51 @@ footer h4 {
       border-radius: 15px; /* Mantiene el borde redondeado en pantallas pequeñas */
   }
 }
+
+
+/*---------------Planes bares--------*/
+.plan-card {
+  border: 2px solid #ffc107;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.plan-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+.plan-title {
+  color: #ffc107;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.plan-price {
+  color: black;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 0 0 2px #090909; /* Glow layers */
+}
+.plan-features {
+  color: rgb(255, 255, 255);
+  font-size: 0.9rem;
+  margin-top: 15px;
+  text-align: left;
+}
+.plan-commission {
+  color: #ffc107;
+  margin-top: 10px;
+  font-weight: bold;
+}
+.plan-card {
+  border: 2px solid #ffc107;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s, backdrop-filter 0.3s;
+  backdrop-filter: blur(200px);
+}
+
+
+
 
