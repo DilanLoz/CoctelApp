@@ -1,0 +1,247 @@
+
+      /* Navbar Styles */
+      /* Estilos para la barra de búsqueda */
+.barra-busqueda {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  position: relative; /* Para posicionar el botón dentro del input */
+  margin-left: 1rem; /* Espacio entre el logo y la barra de búsqueda */
+  flex-grow: 1; /* Ocupa el espacio disponible */
+  max-width: 400px; /* Ancho máximo */
+}
+
+.barra-busqueda input {
+  width: 100%;
+  padding: 0.5rem 2.5rem 0.5rem 1rem; /* Espacio para el botón */
+  border: 2px solid #000; /* Borde negro */
+  border-radius: 25px; /* Bordes redondeados */
+  background-color: #ffc107; /* Color de fondo warning de Bootstrap */
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.barra-busqueda input:focus {
+  border-color: #000; /* Mantener el borde negro al enfocar */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Sombra suave al enfocar */
+}
+
+/* Estilos para el botón de búsqueda */
+.barra-busqueda button {
+  position: absolute; /* Posicionar dentro del input */
+  right: 0.5rem; /* Distancia desde el borde derecho */
+  top: 50%; /* Centrar verticalmente */
+  transform: translateY(-50%); /* Centrar verticalmente */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.barra-busqueda button i {
+  color: #000; /* Color del ícono */
+  font-size: 1rem;
+}
+
+.barra-busqueda button:hover i {
+  color: #555; /* Cambiar color al pasar el mouse */
+}
+  #barra-navegacion {
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+    z-index: 1000;
+  }
+
+  #contenedor-barra {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  #logo-navegacion {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+  }
+
+  #logo-navegacion img {
+    height: 32px;
+    margin-right: 0.5rem;
+  }
+  #logococtelapp{
+    height: 45px !important;
+    width: 35px !important;
+  }
+
+  /* Menu Toggle Button (Mobile) */
+  #boton-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    width: 32px;
+    height: 24px;
+    margin-right: 1rem;
+  }
+
+  #boton-toggle .linea {
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background-color: #333;
+    transition: all 0.3s ease;
+  }
+
+  #boton-toggle .linea:nth-child(1) {
+    top: 0;
+  }
+
+  #boton-toggle .linea:nth-child(2) {
+    top: 10px;
+  }
+
+  #boton-toggle .linea:nth-child(3) {
+    top: 20px;
+  }
+
+  #boton-toggle.abierto .linea:nth-child(1) {
+    top: 10px;
+    transform: rotate(45deg);
+  }
+
+  #boton-toggle.abierto .linea:nth-child(2) {
+    opacity: 0;
+  }
+
+  #boton-toggle.abierto .linea:nth-child(3) {
+    top: 10px;
+    transform: rotate(-45deg);
+  }
+
+  #menu-principal {
+    display: flex;
+  }
+
+  #lista-menu {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .enlace-menu {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    color: #333;
+    position: relative;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .enlace-menu:hover {
+    color: #007bff;
+  }
+
+  .enlace-menu::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #007bff;
+    transition: width 0.3s ease;
+  }
+
+  .enlace-menu:hover::after,
+  .enlace-menu.activo::after {
+    width: 100%;
+  }
+
+  .enlace-menu.activo {
+    color: #007bff;
+  }
+/* Animación de entrada */
+@keyframes fadeIn {
+    from {
+    opacity: 0;
+    transform: translateY(-5px);
+    }
+    to {
+    opacity: 0.5;
+    transform: translateY(0);
+    }
+}
+
+/* Animación de salida */
+@keyframes fadeOut {
+    from {
+    opacity: 0.5;
+    transform: translateY(0);
+    }
+    to {
+    opacity: 0;
+    transform: translateY(-5px);
+    }
+}
+
+/* Clases para activar las animaciones */
+.enlace-menu.entrada {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.enlace-menu.salida {
+    animation: fadeOut 0.3s ease forwards;
+}
+    /* Responsive Styles */
+    @media screen and (max-width: 768px) {
+        #menu-principal {
+        display: none;
+        flex-direction: column;
+        align-items: flex-end;
+        background-color: white;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 70%;
+        border-left: 1px solid #ddd;
+        padding: 2rem 1rem;
+        box-shadow: -4px 0 8px rgba(0, 0, 0, 0.1);
+        animation: slideIn 0.3s ease forwards;
+        }
+
+        @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+        }
+
+        #menu-principal.mostrar {
+        display: flex;
+        }
+
+        #lista-menu {
+        flex-direction: column;
+        gap: 2rem;
+        width: 100%;
+        }
+
+        .enlace-menu {
+        text-align: right;
+        padding: 1rem;
+        width: 100%;
+        }
+
+        #boton-toggle {
+        display: block;
+        }
+    }

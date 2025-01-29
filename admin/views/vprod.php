@@ -3,6 +3,8 @@
 require_once 'admin/controllers/ccbarxprod.php';
 
 ?>
+
+
 <br>
 <br>
 <div class="conte">
@@ -42,6 +44,14 @@ require_once 'admin/controllers/ccbarxprod.php';
             </div>
         </form>
     </div>
+    <figure class="highcharts-figure">
+    <div id="container"></div>
+    <p class="highcharts-description">
+        Chart showing stacked columns for comparing quantities. Stacked charts
+        are often used to visualize data that accumulates to a sum. This chart
+        is showing data labels for each individual section of the stack.
+    </p>
+</figure>
 </div>
 <section class="shop container">
     <table id="example" class="table table-striped" width="100%" style="text-align: left;">
@@ -96,8 +106,4 @@ require_once 'admin/controllers/ccbarxprod.php';
         </tbody>
     </table>
 </section>
-
-
-
-
-
+ 

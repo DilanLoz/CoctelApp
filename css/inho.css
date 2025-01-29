@@ -1,361 +1,62 @@
-
-body{
-    font-family: 'Montserrat',sans-serif;
-    overflow-x: hidden;
-}
-
-/* Estilos para el contenedor de navegación */
+/* Ajustes generales */
 .navs {
-    background-color: #fff; /* Cambia el color de fondo según tu diseño */
-    position: fixed; /* Fijar el contenedor en la parte superior */
-    top: 0; /* Posición en la parte superior */
-    left: 0; /* Posición a la izquierda */
-    width: 100%; /* Ancho completo */
-    height: 80px; /* Altura del navbar */
-    z-index: 1000; /* Asegura que esté encima de otros elementos */
-    box-shadow: 0 2px 4px rgba(78, 78, 78, 0.043); /* Sombra sutil para dar profundidad */
-    display: flex; /* Usar flexbox para alinear elementos */
-    align-items: center; /* Centrar verticalmente los elementos */
-    padding: 10px 20px; /* Espaciado interno */
-}
-
-/* Logo dentro del contenedor */
-#logo {
-    margin-right: 20px; /* Espacio a la derecha del logo */
-    margin-left: 10px; /* Espacio a la izquierda del logo */
-}
-
-/* Estilos para la barra de búsqueda */
-.barra-busqueda {
-    display: flex; /* Usar flexbox para alinear el input */
-    align-items: center; /* Centrar verticalmente los elementos */
-    flex-grow: 1; /* Ocupa el espacio disponible */
-    margin-right: 20px; /* Espacio a la derecha del input */
-}
-
-.barra-busqueda input {
-    border: 1px solid #000000; /* Borde del input */
-    padding: 8px; /* Espaciado interno del input */
-    border-radius: 5px; /* Bordes redondeados */
-    background-color: #ffc107; /* Color de fondo del input */
-}
-
-.barra-busqueda ::placeholder {
-    color: #000000 !important; /* Color del placeholder */
-}
-
-/* Menú colapsable */
-.collapse {
-    display: none; /* Ocultar por defecto */
-}
-
-.collapse.active {
-    display: block; /* Mostrar cuando está activo */
-}
-section{
-    padding-top: 80px;
-}
-
-/* Estilos para los enlaces del menú */
-#menu .navbar-nav .nav-link {
-    color: #000000!important; 
-    position: relative;
-    padding: 10px;
-    text-decoration: none;
-}
-
-#menu .navbar-nav .nav-link:after {
-    content: "";
-    position: absolute;
-    height: 2px;
-    width: 100%;
-    background-color: #ffc107; /* Color de la línea */
-    bottom: 0;
-    left: 0;
-    transform: scaleX(0);
-    transition: transform 0.5s ease;
-}
-
-#menu .navbar-nav .nav-link.active:after {
-    transform: scaleX(1);
-}
-
-#menu .navbar-nav .nav-link:hover:after {
-    transform: scaleX(1);
-}
-
-#logo {
-    margin-right: 20px;
-    margin-left: 10px;
-}
-.barra-busqueda {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-}
-.barra-busqueda input {
-    border: 1px solid #000000;
-    padding: 8px;
-    border-radius: 5px;
-    background-size: 20px;
-    background-color: #ffc107;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.barra-busqueda ::placeholder {
-    color: #000000 !important;
-    
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
 }
 
-.navbar-toggler-custom {
-    background-color: #ffffff; /* Color de fondo personalizado */
-    border-color: #ffc107; /* Opcional: cambiar el color del borde */
-}
-/*logos de nav tamaño*/
-#navbar-cart .navbar-nav .nav-link img {
-    max-height: 30px;
-    max-width: 30px;
-}
-/* Estilos CSS para el menú activo */
-#menu .navbar-nav .nav-link.active {
-    color: #ffc107 !important; /* Color del texto activo */
-    font-weight: bold;
-    transition: transform 0.5s ease;
-}
-/* Estilos de menú solo para móviles */
-@media (max-width: 768px) {
-    .navbar-collapse {
-        position: fixed;
-        top: 0;
-        right: 0; 
-        width: 75%; 
-        height: 100%;
-        background-color: #fff;
-        z-index: 1050;
-        display: flex;
-        flex-direction: column;
-        padding-top: 20px;
-        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); 
-        transform: translateX(100%); /* Fuera de la pantalla */
-        transition: transform 0.3s ease-in-out;
-    }
-
-    .navbar-collapse.show {
-        transform: translateX(0); /* Cuando se muestra, está en la pantalla */
-    }
-
-    .nav-link {
-        font-size: 1.2rem;
-        padding: 15px;
-        color: #000000 !important;
-        text-align: left;
-        width: 100%;
-    }
-
-    /* Estilo del botón de cierre */
-    .navbar-toggler {
-        position: absolute;
-        top: 50%; /* Centra verticalmente */
-        left: 50%; /* Centra horizontalmente */
-        transform: translate(-50%, -50%); /* Ajusta para que el centro del botón esté exactamente en el centro */
-        font-size: 1.5rem;
-        background: none;
-        border: none;
-        z-index: 1100;
-    }
-    .navbar-toggler, i{
-        margin-right: 55px;
-    }
-    
-
-    .navbar-toggler .close-icon {
-        display: none;
-    }
-
-    /* Cambia el icono de hamburguesa a "X" al abrir */
-    .navbar-collapse.show + .navbar-toggler .hamburger-icon {
-        display: none;
-    }
-
-    .navbar-collapse.show + .navbar-toggler .close-icon {
-        display: inline;
-    }
+.hamburger .line {
+    width: 25px;
+    height: 3px;
+    background-color: #000;
 }
 
-#info a {
-    font-size: 16px;
-    text-transform: capitalize;
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 300;
-    color: #bbbbbb;
-    display: block;
-    transition: all 0.3s ease;
-    transform-origin: left; /* Establece el origen de la transformación en el lado izquierdo */
-}
-
-#info a:hover {
-    color: #ffffff;
-    transform: translateX(5px); /* Desplaza el texto 5px hacia la derecha al pasar el cursor */
-}
-
-footer h4{
-    color: #fff;
-    font-weight: bold;
-}
-
-
-/*------------------------FOOTER Y MENU ----------------------- */
-/* ---------------------------BARES-----------------------*/
-
-.imguno {
-    width: 100%; 
-    height: 200px; 
-    overflow: hidden; 
-}
-.imguno img {
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-}
-
-/*------------------------BARES----------------------- */
-/*------------------------COCTEL GRANDE----------------------- */
-
-.boton-estilo {
-    border: 3px solid #ffc107; /* Amarillo */
-    border-radius: 5px;
-    margin-top: 4px;
-}
-#btnSi{
-    width: 200px;
-}
-#btnNo{
-    width: 200px;
-}
-
-#imagenReferencia {
-    width: 400px;
-}
-#imagenCoctel{
-    height: 500px;
-}
-#selecmili{
-    width: 200px;
-}
-#contenedordeventa{
-    font-size: 15px;
-    width: 225px;
-    margin: auto;
-}
-
-/*------------------------COCTEL GRANDE----------------------- */
-/*------------------------HISTORIAL PEDIDOS----------------------- */
-
-.number {
-    width: 100%;
-    height: 100%;
+#menuu {
     display: flex;
-    justify-content: center;
-    align-items: center;
-
-}
-#usnumped{
-    margin-left: 10%;
-}
-/*css de compra final*/
-#imgcompra {
-    max-width: 200px; /* Define el ancho máximo */
-    max-height: 200px; /* Define la altura máxima */
-    display: block; /* Hace que la imagen sea un bloque para poder centrarla */
-    margin: 0 auto; /* Centra horizontalmente */
-}
-#logococ{
-    width: 100px; 
-    height: auto;
+    gap: 20px;
 }
 
-.btn-order {
-margin-left: 4px;
+#menuu.hidden {
+    display: none;
 }
 
-.product-description {
-margin-top: 50px;
-}
-#detpedpq{
-    color: #ffffff !important;
-}
-
-/*------------------------HISTORIAL PEDIDOS----------------------- */
-/*------------------------COMPRA FINAL----------------------- */
-.btn-seleccionado {
-    background-color: #ffc107; /* Color del botón seleccionado */
+#menuu a {
+    text-decoration: none;
     color: #000;
-    border-color: #ffc107;
-}
-/*------------------------COMPRA FINAL----------------------- */
-/*------------------------Editar y Eliminar------------------------ */
-/* General */
-a {
-    text-decoration: none;
+    padding: 10px;
 }
 
-a[title="Editar"] i {
-    color: green; /* Ícono de edición en verde */
-    padding-right: 10px;
-    transition: transform 0.3s ease, color 0.3s ease; /* Transición suave */
-}
-
-a[title="Editar"] i:hover {
-    transform: scale(1.2); /* Aumenta el tamaño del ícono al pasar el mouse */
-    color: #11ff00; /* Cambia el color a azul al pasar el mouse */
-}
-
-a[title="Eliminar"] i {
-    color: red; /* Ícono de eliminación en rojo */
-    transition: transform 0.3s ease, color 0.3s ease; /* Transición suave */
-}
-
-a[title="Eliminar"] i:hover {
-    transform: rotate(20deg); /* Rotación al pasar el mouse */
-    color: #870000; /* Cambia el color a naranja al pasar el mouse */
-}
-
-/*------------------------Editar y Eliminar------------------------ */
-/*------------------------MEDIAS PARA MOVIL ----------------------- */
-
-@media screen and (max-width: 780px) {
-    .barra-busqueda input[type="text"] {
-        width: 200px; /* ajusta el tamaño según sea necesario */
-    }
-    #vlrprod{
-        width: 190px;
-    }
-    #intro {
-        width: 90% !important;
-    }
-    .marg {
-        margin-bottom: 20px; /* Agrega espacio entre los elementos en dispositivos móviles */
+/* Móviles */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
     }
 
-    .marg ul {
-        padding-left: 0; /* Quita el padding izquierdo de las listas en dispositivos móviles */
+    #menuu {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        background-color: #fff;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
     }
 
-    .marg ul li {
-        margin-left: 0; /* Quita el margen izquierdo de los elementos de lista en dispositivos móviles */
+    #menuu a {
+        color: #000;
+        padding: 10px;
     }
 }
-@media screen and (max-width: 480px) {
-    #borrarprd {
-        margin-left: 10px; /* Cambia el margen izquierdo */
-    }
-
-    #opcprd {
-        margin-top: 20px; /* Cambia la margen superior */
-        width: 30px; /* Cambia el ancho del select */
-    }
-}
-
-/*------------------------MEDIAS PARA MOVIL ----------------------- */
-
-
-
