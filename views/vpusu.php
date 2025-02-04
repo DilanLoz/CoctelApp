@@ -36,7 +36,7 @@ if (isset($_SESSION['idusu'])) {
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="identificacion" class="form-label" style="text-align: left; display: block;">No. de Identificacion:</label>
-                    <input type="text" class="form-control" name="numdocu" id="numdocu" value="<?= $dat && isset($dat[0]['numdocu']) ? $dat[0]['numdocu'] : ''; ?>" required readonly>
+                    <input type="text" class="form-control" name="numdocu" id="numdocu" value="<?= isset($_SESSION['numdocu']) ? $_SESSION['numdocu'] : ''; ?>" required readonly>
                     <span class="text-muted">No se puede modificar</span>
                 </div>
                 <div class="mb-3">

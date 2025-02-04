@@ -1,4 +1,4 @@
-<?php require_once('models/seg.php')?>
+<?php require_once('models/seg.php') ?>
 <!doctype html>
 <html lang="en">
 
@@ -8,60 +8,42 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <!-- Fontawesome -->
-
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <!-- DataTables -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
     <link href="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-2.1.8/af-2.7.0/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/cr-2.0.4/date-1.5.4/fc-5.0.4/fh-4.0.1/kt-2.12.1/r-3.0.3/rg-1.5.1/rr-1.5.0/sc-2.4.3/sb-1.8.1/sp-2.3.3/sl-2.1.0/sr-1.4.1/datatables.min.css" rel="stylesheet">
- 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-
-<link rel="stylesheet" href="admin/graficos/graficos.css">
+    <!-- Highcharts -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <!-- Custom CSS -->
-    <link rel="stylesheet" href=".css">
-
-    <link rel="stylesheet" href="css/inho.css">
+    <link rel="stylesheet" href="admin/graficos/graficos.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/footer.css">
     <link rel="icon" href="img/coctelapp/favicon.png">
     <title>CoctelApp</title>
 </head>
 
 <body>
-    <?php include ("models/conexion.php");
-	date_default_timezone_set('America/Bogota');
-	$pg= isset($_REQUEST["pg"]) ? $_REQUEST["pg"]:NULL;
-    if(!$pg AND $_SESSION['pagini']) $pg=$_SESSION['pagini'];
+    <?php include("models/conexion.php");
+    date_default_timezone_set('America/Bogota');
+    $pg = isset($_REQUEST["pg"]) ? $_REQUEST["pg"] : NULL;
+    if (!$pg && $_SESSION['pagini']) $pg = $_SESSION['pagini'];
     ?>
-<div class="navs">
-    <a href="#" target="_blank">
-        <img src="img/coctelapp/logo.png" id="logo" alt="logodos" height="50px">
-    </a>
-    <div class="barra-busqueda">
-        <input type="text" placeholder="Buscar..." onkeydown="if(event.keyCode==13) event.preventDefault();">
-    </div>
-<nav class="navbar navbar-expand-md">
-    <div class="collapse navbar-collapse" id="menu">
-            <?php require_once("views/menuh.php"); ?>
-    </div>
-    <button class="navbar-toggler" type="button" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fa-solid fa-bars hamburger-icon"></i>
-        <i class="fa-solid fa-xmark close-icon"></i>
-    </button>
-</nav>
 
+    <!-- Navbar -->
+    <nav id="barra-navegacion">
+        <?php require_once("views/menuh.php"); ?>
+    </nav>
 
-</div>
-
-    
-    
+    <!-- Contenido principal -->
     <section style="text-align: center; padding: 50px; color: #333; font-family: Arial, sans-serif;">
-    <?php
+        <?php
         $rut = validar($pg);
-        if($rut) {
-            include ($rut[0]['rutpag']);
+        if ($rut) {
+            include($rut[0]['rutpag']);
         } else {
             echo "
             <br><br><br>
@@ -76,15 +58,15 @@
                 </p>
             </div>";
         }
-    ?>
-</section>
+        ?>
+    </section>
 
-    
-
+    <!-- Footer -->
     <footer class="bg-black">
         <?php require_once("views/vfooter.php"); ?>
     </footer>
-    
+
+    <!-- Scripts -->
     <script src="js/carcomp.js"></script>
     <script src="js/index.js"></script>
     <script src="js/menu.js"></script>
@@ -94,19 +76,17 @@
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-2.1.8/af-2.7.0/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/cr-2.0.4/date-1.5.4/fc-5.0.4/fh-4.0.1/kt-2.12.1/r-3.0.3/rg-1.5.1/rr-1.5.0/sc-2.4.3/sb-1.8.1/sp-2.3.3/sl-2.1.0/sr-1.4.1/datatables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jq-3.7.0/jszip-3.10.1/dt-2.1.8/af-2.7.0/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/cr-2.0.4/date-1.5.4/fc-5.0.4/fh-4.0.1/kt-2.12.1/r-3.0.3/rg-1.5.1/rr-1.5.0/sc-2.4.3/sb-1.8.1/sp-2.3.3/sl-2.1.0/sr-1.4.1/datatables.min.js"></script>
     <script>
-        new DataTable('#example', );
+        new DataTable('#example');
         var table = new DataTable('#table', {
-    language: {
-        url: '//cdn.datatables.net/plug-ins/2.1.8/i18n/es-ES.json',
-    },
-});
+            language: {
+                url: '//cdn.datatables.net/plug-ins/2.1.8/i18n/es-ES.json',
+            },
+        });
     </script>
-
-<script src="admin/graficos/graficos.js"></script>
-
-
+    <script src="admin/graficos/graficos.js"></script>
 </body>
+
 </html>

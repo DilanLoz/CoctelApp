@@ -1,0 +1,30 @@
+
+/*------------------------Editar y Eliminar------------------------ */
+/* General */
+a {
+    text-decoration: none;
+}
+
+a[title="Editar"] i {
+    color: green; /* Ícono de edición en verde */
+    padding-right: 10px;
+    transition: transform 0.3s ease, color 0.3s ease; /* Transición suave */
+}
+
+a[title="Editar"] i:hover {
+    transform: scale(1.2); /* Aumenta el tamaño del ícono al pasar el mouse */
+    color: #11ff00; /* Cambia el color a azul al pasar el mouse */
+}
+
+a[title="Eliminar"] i {
+    color: red; /* Ícono de eliminación en rojo */
+    transition: transform 0.3s ease, color 0.3s ease; /* Transición suave */
+}
+
+a[title="Eliminar"] i:hover {
+    transform: rotate(20deg); /* Rotación al pasar el mouse */
+    color: #870000; /* Cambia el color a naranja al pasar el mouse */
+}
+
+/*------------------------Editar y Eliminar------------------------ */
+

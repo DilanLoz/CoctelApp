@@ -124,5 +124,29 @@ class Mval{
             echo "Error: " . $e->getMessage(); // Muestra el error si ocurre una excepción
         }
     }
+    public function getValor() {
+        try {
+            $sql = "SELECT iddom, idval, nomval FROM valor";
+            $modelo = new conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            throw new Exception("Error al obtener registros: " . $e->getMessage());
+        }
+    }
+    public function getDocumentos() {
+        try {
+            $sql = "SELECT idval, nomval FROM valor WHERE idval IN (101, 102, 103, 104)";
+            $modelo = new conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            throw new Exception("Error al obtener registros: " . $e->getMessage());
+        }
+    }
 }
 ?>

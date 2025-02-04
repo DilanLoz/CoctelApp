@@ -1,7 +1,6 @@
 <?php
 require_once('models/memhipe.php');
 
-
 $idusu = isset($_SESSION['idusu']) ? $_SESSION['idusu'] : null;
 
 // Instanciar el modelo

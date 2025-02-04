@@ -144,4 +144,48 @@ function returnToLogin(event) {
 }
 
 // Agregar evento de clic al enlace "Iniciar Sesión"
-returnToLoginLink.addEventListener('click', returnToLogin);
+returnToLoginLink.addEventListener('click', returnToLogin)
+
+//------FUNCION PARA FORMULARIO DE REGISTRO----
+        $(document).ready(function() {
+            $("#registroForm").submit(function(event) {
+                event.preventDefault(); // Evitar el envío tradicional del formulario
+
+                var formData = $(this).serialize(); // Captura los datos del formulario
+
+                $.ajax({
+                    type: "POST",
+                    url: "registro.php", // Archivo PHP donde se envían los datos
+                    data: formData,
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.status === "success") {
+                            Swal.fire({
+                                icon: "success",
+                                title: "¡Éxito!",
+                                text: response.message,
+                                confirmButtonText: "Aceptar"
+                            }).then(() => {
+                                window.location.href = "home.html"; // Redireccionar después del éxito
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "¡Error!",
+                                text: response.message,
+                                confirmButtonText: "Intentar de nuevo"
+                            });
+                        }
+                    },
+                    error: function() {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Hubo un problema con el registro, intenta de nuevo.",
+                            confirmButtonText: "Aceptar"
+                        });
+                    }
+                });
+            });
+        });
+       

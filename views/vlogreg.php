@@ -6,107 +6,141 @@
 <link rel="stylesheet" href="css/loginreg.css">
 <style>
     .carousel-inner {
-    width: 100%;
-    height: 900px; 
-}
+        width: 100%;
+        height: 900px;
+    }
 </style>
+
+<?php
+include_once('controllers/cregistro.php');
+include_once('admin/controllers/cubi.php');
+include_once('admin/controllers/cval.php');
+?>
 
 <main>
     <div class="box">
         <div class="inner-box">
-            <div class="forms-wrap"> 
-            <form action="./models/control.php" method="POST" autocomplete="off" class="sign-in-form">
-                <div class="logo">
-                    <img src="img/coctelapp/coctelapp.png" alt="Logo" />
-                </div>
-
-                <div class="heading">
-                    <h6 class="fw-bold">¿Aún no posee una cuenta?</h6>
-                    <a href="#" class="toggle fw-bold">Presione aquí para registrarse.</a>
-                </div>
-
-                <div class="actual-form">
-                    <div class="input-wrap">
-                        <input type="text" minlength="4" id="email" name="usu" class="input-field" autocomplete="off" required />
-                        <label><i class="fa-solid fa-envelope" style="color: #ffffff;"></i> Correo Electrónico</label>
+            <div class="forms-wrap">
+                <form action="./models/control.php" method="POST" autocomplete="off" class="sign-in-form">
+                    <div class="logo">
+                        <img src="img/coctelapp/coctelapp.png" alt="Logo" />
                     </div>
 
-                    <div class="input-wrap">
-                        <input type="password" minlength="4" id="password" name="pss" class="input-field" autocomplete="off" required />
-                        <label><i class="fa-solid fa-lock" style="color: #ffffff;"></i> Contraseña</label>
-                    </div>
-
-                    <?php
-                    // Mostrar mensaje de error si se reciben parámetros incorrectos
-                    $error = isset($_GET['err']) ? $_GET['err'] : NULL;
-                    if ($error === 'invalid'): ?>
-                        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                    <?php if (isset($_GET['err'])): ?>
+                        <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
                             <i class="fa-solid fa-circle-exclamation"></i>
-                            <strong>Error:</strong> Datos incorrectos, por favor inténtelo de nuevo.
+                            <?php
+                            switch ($_GET['err']) {
+                                case 'recaptcha':
+                                    echo "<strong>Advertencia:</strong> Por favor, complete el reCAPTCHA antes de continuar.";
+                                    break;
+                                case 'invalid':
+                                    echo "<strong>Error:</strong> Datos incorrectos, por favor inténtelo de nuevo.";
+                                    break;
+                                case 'faltan_datos':
+                                    echo "<strong>Error:</strong> Faltan datos en el formulario.";
+                                    break;
+                                default:
+                                    echo "<strong>Error:</strong> Ocurrió un problema, intente nuevamente.";
+                            }
+                            ?>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     <?php endif; ?>
 
-                    <input type="submit" value="Iniciar Sesión" class="sign-btn" />
+                    <div class="heading">
+                        <h6 class="fw-bold">¿Aún no posee una cuenta?</h6>
+                        <a href="#" class="toggle fw-bold">Presione aquí para registrarse.</a>
+                    </div>
 
-                    <p class="text fw-bold">
-                        ¿Ha olvidado su contraseña?
-                        <a href="#" class="toggle fw-bold">Presione aquí para recuperarla.</a>
-                    </p>
-                </div>
-            </form>
+                    <div class="actual-form">
+                        <div class="input-wrap">
+                            <input type="text" minlength="4" id="email" name="usu" class="input-field" autocomplete="off" required />
+                            <label><i class="fa-solid fa-envelope" style="color: #ffffff;"></i> Correo Electrónico</label>
+                        </div>
 
+                        <div class="input-wrap">
+                            <input type="password" minlength="4" id="password" name="pss" class="input-field" autocomplete="off" required />
+                            <label><i class="fa-solid fa-lock" style="color: #ffffff;"></i> Contraseña</label>
+                        </div>
 
-                <form action="home.html" autocomplete="off" class="sign-up-form">
+                        <div class="recaptcha-container mb-3">
+                            <div class="g-recaptcha" data-sitekey="6Lcz88sqAAAAAHoXXpy3WpvPQtpfSKGTD9_YfbPm"></div>
+                        </div>
+
+                        <input type="submit" value="Iniciar Sesión" class="sign-btn" />
+                        <p class="text fw-bold">
+                            ¿Ha olvidado su contraseña?
+                            <a href="#" class="toggle fw-bold">Presione aquí para recuperarla.</a>
+                        </p>
+                    </div>
+                </form>
+
+                <form action="" method="POST" autocomplete="off" class="sign-up-form">
                     <div class="heading">
                         <h2>Registro</h2>
                         <h6 class="fw-bold">¿Ya tienes una cuenta?</h6>
                         <a href="#" class="toggle fw-bold">Iniciar Sesion</a>
                     </div>
-                    <p class="text"><i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i> Para BARES seleccione el tipo de documento NIT y NOMBRE del Bar</p>
+                    <p class="text"><i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i> El registro es para solo los USUARIOS. Bares y Empleados no</p>
                     <div class="actual-form">
                         <div class="input-wrap">
-                            <select class="input-field" minlength="10" id="tipo_documento" required>
+                            <select class="input-field" id="idval" name="idval" required>
                                 <option value="" disabled selected>Tipo de documento</option>
-                                <option value="CC">CC</option>
-                                <option value="NIT">NIT</option>
-                                <option value="CE">CE</option>
+                                <?php
+                                $valoresValidos = $mval->getDocumentos();
+                                if ($valoresValidos) {
+                                    foreach ($valoresValidos as $valor) {
+                                        echo '<option value="' . $valor['idval'] . '">' . $valor['nomval'] . '</option>';
+                                    }
+                                }
+                                ?>
                             </select>
                         </div>
 
                         <div class="input-wrap">
-                            <input type="number" minlength="4" class="input-field" autocomplete="off" required />
-                            <label><i class="fa-regular fa-address-card" style="color: #ffffff;"></i>  Numero Identificacion o NIT</label>
+                            <input name="numdocu" id="numdocu" type="number" minlength="4" class="input-field" autocomplete="off" value="<?php echo isset($datOne[0]['numdocu']) ? $datOne[0]['numdocu'] : ''; ?>" required />
+                            <label for="numdocu"><i class="fa-regular fa-address-card" style="color: #ffffff;"></i> Número Identificación</label>
                         </div>
 
                         <div class="input-wrap">
-                            <input type="text" minlength="4" class="input-field" autocomplete="off" required />
-                            <label><i class="fa-solid fa-file-signature" style="color: #ffffff;"></i>  Nombre</label>
+                            <input name="nomusu" id="nomusu" type="text" minlength="4" class="input-field" autocomplete="off" value="<?php echo isset($datOne[0]['nomusu']) ? $datOne[0]['nomusu'] : ''; ?>" required />
+                            <label><i class="fa-solid fa-file-signature" style="color: #ffffff;"></i> Nombre</label>
                         </div>
 
                         <div class="input-wrap">
-                            <select class="input-field" id="ubicacion" required>
-                                <option value="" disabled selected> Ubicacion Actual</option>
-                                <option value="BOG">BOGOTA</option>
-                                <option value="MED">MEDELLIN</option>
-                                <option value="CART">CARTAGENA</option>
+                            <input type="date" class="input-field" autocomplete="off" name="fecnausu" id="fecnausu" value="<?php echo isset($datOne[0]['fecnausu']) ? $datOne[0]['fecnausu'] : ''; ?>" required />
+                            <label><i class="fa-solid fa-calendar-days" style="color: #ffffff;"></i> Fecha de Nacimiento</label>
+                        </div>
+
+                        <div class="input-wrap">
+                            <select class="input-field" id="codubi" name="codubi" required>
+                                <option value="" disabled selected>Seleccione una ciudad</option>
+                                <?php
+                                $dataUbicaciones = $mubi->getCodubiNomubi();
+                                if ($dataUbicaciones) {
+                                    foreach ($dataUbicaciones as $ubicacion) {
+                                        echo '<option value="' . $ubicacion['codubi'] . '">' . $ubicacion['nomubi'] . '</option>';
+                                    }
+                                }
+                                ?>
                             </select>
                         </div>
 
                         <div class="input-wrap">
-                            <input type="email" class="input-field" autocomplete="off" required/>
-                            <label><i class="fa-regular fa-envelope" style="color: #ffffff;"></i>  Correo Electronico</label>
+                            <input type="email" class="input-field" autocomplete="off" name="emausu" id="emausu" value="<?php echo isset($datOne[0]['emausu']) ? $datOne[0]['emausu'] : ''; ?>" required />
+                            <label><i class="fa-regular fa-envelope" style="color: #ffffff;"></i> Correo Electrónico</label>
                         </div>
 
                         <div class="input-wrap">
-                            <input type="password" minlength="4" class="input-field" autocomplete="off" required />
-                            <label><i class="fa-solid fa-lock" style="color: #ffffff;"></i>  Contraseña</label>
+                            <input type="password" minlength="4" class="input-field" autocomplete="off" name="pssusu" id="pssusu" value="<?php echo isset($datOne[0]['pssusu']) ? $datOne[0]['pssusu'] : ''; ?>" required />
+                            <label><i class="fa-solid fa-lock" style="color: #ffffff;"></i> Contraseña</label>
                         </div>
 
                         <input type="submit" value="Registrar" class="registro-btn" />
                     </div>
                 </form>
-                <form action="home.html" autocomplete="off" class="recovery-form" style="display: none;">
+            <form action="home.html" autocomplete="off" class="recovery-form" style="display: none;">
                     <div class="heading">
                         <h2>Cambiar Contraseña</h2>
                     </div>
@@ -141,13 +175,13 @@
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active" data-bs-interval="5000">
-                            <img src="img/coctelapp/pub1.jpg" >
+                            <img src="img/coctelapp/pub1.jpg">
                         </div>
                         <div class="carousel-item" data-bs-interval="5000">
-                            <img src="img/coctelapp/pub2.jpg" >
+                            <img src="img/coctelapp/pub2.jpg">
                         </div>
                         <div class="carousel-item" data-bs-interval="5000">
-                            <img src="img/coctelapp/pub3.jpg" >
+                            <img src="img/coctelapp/pub3.jpg">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -160,9 +194,9 @@
                     </button>
                 </div>
             </div>
-
-        </div>   
+        </div>
     </div>
 </main>
 
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script src="js/loginreg.js"></script>

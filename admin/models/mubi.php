@@ -115,6 +115,18 @@ class Mubi {
         $result->bindParam(":codubi", $codubi);
         $result->execute();
     }
+    public function getCodubiNomubi() {
+        try {
+            $sql = "SELECT codubi, nomubi FROM ubicacion";
+            $modelo = new conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            throw new Exception("Error al obtener registros: " . $e->getMessage());
+        }
+    }
     
 }
 ?>

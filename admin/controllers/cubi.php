@@ -5,7 +5,7 @@ $mubi = new Mubi();
 $codubi = isset($_REQUEST['codubi']) ? $_REQUEST['codubi']:NULL;
 $nomubi = isset($_POST['nomubi']) ? $_POST['nomubi']:NULL;
 $depubi = isset($_POST['depubi']) ? $_POST['depubi']:NULL;
-
+$codubi = isset($_POST['ubicacion']) ? $_POST['ubicacion'] : NULL;
 $opera = isset($_REQUEST['opera']) ? $_REQUEST['opera']:NULL;
 $datOne = NULL;
 $mubi->setcodubi($codubi);

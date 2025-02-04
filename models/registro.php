@@ -1,5 +1,4 @@
 <?php
-require_once 'models/conexion.php';
 class Mpusu {
     private $idusu;
     private $nomusu;
@@ -135,7 +134,7 @@ class Mpusu {
                 INNER JOIN bar AS b ON u.idbar = b.idbar
                 INNER JOIN valor AS v ON u.idval = v.idval
                 INNER JOIN perfiles AS p ON u.idper = p.idper";
-        $modelo = new conexion();
+        $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
         $result = $conexion->prepare($sql);
         $result->execute();
@@ -175,124 +174,61 @@ class Mpusu {
         return $res;
     }
 
+    public function save() {
+        $sql = "INSERT INTO usuario 
+                    (nomusu, emausu, celusu, fotiden, numdocu, fecnausu, pssusu, codubi, idper, idval, idserv, idbar) 
+                VALUES 
+                    (:nomusu, :emausu, :celusu, :fotiden, :numdocu, :fecnausu, :pssusu, :codubi, :idper, :idval, :idserv, :idbar)";
+        $modelo = new Conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+        $result->bindParam(":nomusu", $this->nomusu);
+        $result->bindParam(":emausu", $this->emausu);
+        $result->bindParam(":celusu", $this->celusu);
+        $result->bindParam(":fotiden", $this->fotiden);
+        $result->bindParam(":numdocu", $this->numdocu);
+        $result->bindParam(":fecnausu", $this->fecnausu);
+        $result->bindParam(":pssusu", $this->pssusu);
+        $result->bindParam(":codubi", $this->codubi);
+        $result->bindParam(":idper", $this->idper);
+        $result->bindParam(":idval", $this->idval);
+        $result->bindParam(":idserv", $this->idserv);
+        $result->bindParam(":idbar", $this->idbar);
+        $result->execute();
+    }
 
     public function edit() {
-        try {
-            $sql = "UPDATE usuario SET 
-                        nomusu=:nomusu, emausu=:emausu, celusu=:celusu, fotiden=:fotiden, 
-                        numdocu=:numdocu, fecnausu=:fecnausu, pssusu=:pssusu, codubi=:codubi, 
-                        idper=:idper, idval=:idval, idserv=:idserv, idbar=:idbar 
-                    WHERE idusu=:idusu";
-            $modelo = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $result = $conexion->prepare($sql);
-    
-            // Obtener los valores con los métodos get
-            $idusu = $this->getIdusu();
-            $nomusu = $this->getNomusu();
-            $emausu = $this->getEmausu();
-            $celusu = $this->getCelusu();
-            $fotiden = $this->getFotiden();
-            $numdocu = $this->getNumdocu();
-            $fecnausu = $this->getFecnausu();
-            $pssusu = $this->getPssusu();
-            $codubi = $this->getCodubi();
-            $idper = $this->getIdper();
-            $idval = $this->getIdval();
-            $idserv = $this->getIdserv();
-            $idbar = $this->getIdbar();
-    
-            // Pasar los valores a la consulta con bindParam
-            $result->bindParam(":idusu", $idusu);
-            $result->bindParam(":nomusu", $nomusu);
-            $result->bindParam(":emausu", $emausu);
-            $result->bindParam(":celusu", $celusu);
-            $result->bindParam(":fotiden", $fotiden);
-            $result->bindParam(":numdocu", $numdocu);
-            $result->bindParam(":fecnausu", $fecnausu);
-            $result->bindParam(":pssusu", $pssusu);
-            $result->bindParam(":codubi", $codubi);
-            $result->bindParam(":idper", $idper);
-            $result->bindParam(":idval", $idval);
-            $result->bindParam(":idserv", $idserv);
-            $result->bindParam(":idbar", $idbar);
-    
-            $result->execute();
-            return true;
-        } catch (PDOException $e) {
-            return "Error al actualizar usuario: " . $e->getMessage();
-        }
+        $sql = "UPDATE usuario SET 
+                    nomusu=:nomusu, emausu=:emausu, celusu=:celusu, fotiden=:fotiden, 
+                    numdocu=:numdocu, fecnausu=:fecnausu, pssusu=:pssusu, codubi=:codubi, 
+                    idper=:idper, idval=:idval, idserv=:idserv, idbar=:idbar 
+                WHERE idusu=:idusu";
+        $modelo = new Conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+        $result->bindParam(":idusu", $this->idusu);
+        $result->bindParam(":nomusu", $this->nomusu);
+        $result->bindParam(":emausu", $this->emausu);
+        $result->bindParam(":celusu", $this->celusu);
+        $result->bindParam(":fotiden", $this->fotiden);
+        $result->bindParam(":numdocu", $this->numdocu);
+        $result->bindParam(":fecnausu", $this->fecnausu);
+        $result->bindParam(":pssusu", $this->pssusu);
+        $result->bindParam(":codubi", $this->codubi);
+        $result->bindParam(":idper", $this->idper);
+        $result->bindParam(":idval", $this->idval);
+        $result->bindParam(":idserv", $this->idserv);
+        $result->bindParam(":idbar", $this->idbar);
+        $result->execute();
     }
-    public function buscarPerfil($numdocu, $emausu) {
-        try {
-            $sql = "SELECT COUNT(*) as count FROM usuario WHERE numdocu = :numdocu OR emausu = :emausu";
-            $modelo = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $result = $conexion->prepare($sql);
-            
-            $result->bindParam(":numdocu", $numdocu);
-            $result->bindParam(":emausu", $emausu);
-            
-            $result->execute();
-            $data = $result->fetch(PDO::FETCH_ASSOC);
-            
-            return $data['count'] > 0; // Retorna true si el usuario ya existe, false si no
-        } catch (PDOException $e) {
-            return "Error al verificar usuario: " . $e->getMessage();
-        }
+
+    public function delete() {
+        $sql = "DELETE FROM usuario WHERE idusu=:idusu";
+        $modelo = new Conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+        $result->bindParam(":idusu", $this->idusu);
+        $result->execute();
     }
-    
-    public function save() {
-        try {
-            $sql = "INSERT INTO usuario 
-                        (nomusu, emausu, numdocu, fecnausu, pssusu, codubi, idper, idval) 
-                    VALUES 
-                        (:nomusu, :emausu, :numdocu, :fecnausu, :pssusu, :codubi, :idper, :idval)";
-            $modelo = new Conexion();
-            $conexion = $modelo->get_conexion();
-    
-            if (!$conexion) {
-                return "Error: No se pudo conectar a la base de datos.";
-            }
-    
-            $result = $conexion->prepare($sql);
-    
-            // Obtener valores
-            $nomusu = $this->getNomusu();
-            $emausu = $this->getEmausu();
-            $numdocu = $this->getNumdocu();
-            $fecnausu = $this->getFecnausu();
-            $pssusu = $this->getPssusu();
-            $codubi = $this->getCodubi();
-            $idper = $this->getIdper();
-            $idval = $this->getIdval();
-    
-            // Asegurar que idval no sea NULL
-            if ($idval === null) {
-                return "Error: idval no puede ser NULL.";
-            }
-    
-            // Pasar valores a la consulta
-            $result->bindParam(":nomusu", $nomusu);
-            $result->bindParam(":emausu", $emausu);
-            $result->bindParam(":numdocu", $numdocu);
-            $result->bindParam(":fecnausu", $fecnausu);
-            $result->bindParam(":pssusu", $pssusu);
-            $result->bindParam(":codubi", $codubi);
-            $result->bindParam(":idper", $idper);
-            $result->bindParam(":idval", $idval);
-    
-            if ($result->execute()) {
-                return true;
-            } else {
-                $errorInfo = $result->errorInfo();
-                return "Error al ejecutar la consulta: " . $errorInfo[2];
-            }
-        } catch (PDOException $e) {
-            return "Error en la conexión o consulta: " . $e->getMessage();
-        }
-    }
-    
-    
 }
 ?>

@@ -13,14 +13,14 @@ input {
   font-family: "Poppins", sans-serif;
 }
 .actual-form input{
-  color:#ffffff;
+  color:#000;
 }
 
 main {
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  background-image: url(../img/coctelapp/loginregistro.jpg);
+  background-image: url(../img/coctelapp/fondo5.jpg);
   background-size: cover; /* Ajusta la imagen para cubrir el contenedor */
   background-position: center; /* Centra la imagen */
   padding: 2rem;
@@ -38,11 +38,11 @@ main {
     position: relative;
     width: 100%;
     max-width: 1020px;
-    height: 640px;
-    background-color: rgba(0, 0, 0, 0.334); /* Color negro con opacidad del 50% */
+    height: 705px;
+    background-color: rgba(199, 199, 199, 0.79); /* Color negro con opacidad del 50% */
     border-radius: 3.3rem;
-    backdrop-filter: blur(20px); /* Efecto de desenfoque */
-    box-shadow: 0 60px 40px -30px rgba(0, 0, 0, 0.863);
+    backdrop-filter: blur(6px); /* Efecto de desenfoque */
+    box-shadow: 0 60px 40px -30px rgb(240, 240, 240);
 }
   
 
@@ -102,24 +102,24 @@ form.sign-up-form {
   color: #151111;
 }
 .inner-box select{
-  color: #fff;
+  color: #000000;
 }
 
 .heading h2 {
   font-size: 2.1rem;
   font-weight: 600;
-  color: #F0C403;
+  color: #fff;
 }
 
 .heading h6 {
-  color: #ffffff;
+  color: #000000;
   font-weight: 400;
   font-size: 0.75rem;
   display: inline;
 }
 
 .toggle {
-  color: #ffffff;
+  color: #000000;
   text-decoration: none;
   font-size: 0.75rem;
   font-weight: 500;
@@ -127,10 +127,10 @@ form.sign-up-form {
 }
 
 .toggle:hover {
-  color: #F0C403;
+  color: #fff;
 }
 .titul{
-  color: #F0C403;
+  color: #fff;
 }
 
 .input-wrap {
@@ -177,8 +177,8 @@ label {
   display: inline-block;
   width: 100%;
   height: 43px;
-  background-color: #151111;
-  color: #fff;
+  background-color: #ffffff;
+  color: #000;
   border: none;
   cursor: pointer;
   border-radius: 0.8rem;
@@ -195,8 +195,8 @@ label {
   display: inline-block;
   width: 100%;
   height: 43px;
-  background-color: #151111;
-  color: #fff;
+  background-color: #fff;
+  color: #000;
   border: none;
   cursor: pointer;
   border-radius: 0.8rem;
@@ -213,8 +213,8 @@ label {
   display: inline-block;
   width: 100%;
   height: 43px;
-  background-color: #151111;
-  color: #fff;
+  background-color: #fff;
+  color: #000;
   border: none;
   cursor: pointer;
   border-radius: 0.8rem;
@@ -232,17 +232,17 @@ label {
 }
 
 .text {
-  color: #ffffff;
+  color: #000;
   font-size: 0.7rem;
 }
 
 .text a {
-  color: #ffffff;
+  color: #000;
   transition: 0.3s;
 }
 
 .text a:hover {
-  color: #F0C403;
+  color: #fff;
 }
 
 main.sign-up-mode form.sign-in-form {
@@ -294,7 +294,7 @@ main.sign-up-mode .carousel {
 }
 
 .text-group h2 {
-  color: #fff;
+  color: #000;
   line-height: 2.2rem;
   font-weight: 600;
   font-size: 1.6rem;
@@ -489,6 +489,12 @@ footer h4 {
   backdrop-filter: blur(200px);
 }
 
-
+/*---------------Captcha---------------*/
+.recaptcha-container {
+ 
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
 
 

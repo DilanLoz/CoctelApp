@@ -1,57 +1,13 @@
-
-      /* Navbar Styles */
-      /* Estilos para la barra de búsqueda */
-.barra-busqueda {
-  display: flex;
-  align-items: left;
-  justify-content: left;
-  position: relative; /* Para posicionar el botón dentro del input */
-  margin-left: 1rem; /* Espacio entre el logo y la barra de búsqueda */
-  flex-grow: 1; /* Ocupa el espacio disponible */
-  max-width: 400px; /* Ancho máximo */
-}
-
-.barra-busqueda input {
-  width: 100%;
-  padding: 0.5rem 2.5rem 0.5rem 1rem; /* Espacio para el botón */
-  border: 2px solid #000; /* Borde negro */
-  border-radius: 25px; /* Bordes redondeados */
-  background-color: #ffc107; /* Color de fondo warning de Bootstrap */
-  font-size: 1rem;
-  outline: none;
-  transition: all 0.3s ease;
-}
-
-.barra-busqueda input:focus {
-  border-color: #000; /* Mantener el borde negro al enfocar */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Sombra suave al enfocar */
-}
-
-/* Estilos para el botón de búsqueda */
-.barra-busqueda button {
-  position: absolute; /* Posicionar dentro del input */
-  right: 0.5rem; /* Distancia desde el borde derecho */
-  top: 50%; /* Centrar verticalmente */
-  transform: translateY(-50%); /* Centrar verticalmente */
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-}
-
-.barra-busqueda button i {
-  color: #000; /* Color del ícono */
-  font-size: 1rem;
-}
-
-.barra-busqueda button:hover i {
-  color: #555; /* Cambiar color al pasar el mouse */
-}
+  section{
+    padding-top: 70px;
+  }
   #barra-navegacion {
     background-color: white;
-    border-bottom: 1px solid #ddd;
-    position: relative;
+    position: fixed;
     z-index: 1000;
+    height: auto;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(61, 61, 61, 0.248);
   }
 
   #contenedor-barra {
@@ -76,7 +32,53 @@
   }
   #logococtelapp{
     height: 45px !important;
-    width: 35px !important;
+    width: 33px !important;
+  }
+  .barra-busqueda {
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    position: relative; /* Para posicionar el botón dentro del input */
+    margin-left: 1rem; /* Espacio entre el logo y la barra de búsqueda */
+    flex-grow: 1; /* Ocupa el espacio disponible */
+    max-width: 400px; /* Ancho máximo */
+  }
+  
+  .barra-busqueda input {
+    width: 100%;
+    padding: 0.5rem 2.5rem 0.5rem 1rem; /* Espacio para el botón */
+    border: 2px solid #000; /* Borde negro */
+    border-radius: 25px; /* Bordes redondeados */
+    background-color: #ffc107; /* Color de fondo warning de Bootstrap */
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  
+  .barra-busqueda input:focus {
+    border-color: #000; /* Mantener el borde negro al enfocar */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Sombra suave al enfocar */
+  }
+  
+  /* Estilos para el botón de búsqueda */
+  .barra-busqueda button {
+    position: absolute; /* Posicionar dentro del input */
+    right: 0.5rem; /* Distancia desde el borde derecho */
+    top: 50%; /* Centrar verticalmente */
+    transform: translateY(-50%); /* Centrar verticalmente */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  
+  .barra-busqueda button i {
+    color: #000; /* Color del ícono */
+    font-size: 1rem;
+  }
+  
+  .barra-busqueda button:hover i {
+    color: #555; /* Cambiar color al pasar el mouse */
   }
 
   /* Menu Toggle Button (Mobile) */
@@ -89,6 +91,8 @@
     width: 32px;
     height: 24px;
     margin-right: 1rem;
+    justify-content: right !important;
+    align-items: right !important;
   }
 
   #boton-toggle .linea {
@@ -133,6 +137,7 @@
     list-style: none;
     display: flex;
     gap: 1.5rem;
+    padding-right: 10px !important;
   }
 
   .enlace-menu {
@@ -145,7 +150,8 @@
   }
 
   .enlace-menu:hover {
-    color: #007bff;
+    color: #ffc107;
+    font-weight: bold;
   }
 
   .enlace-menu::after {
@@ -155,7 +161,7 @@
     left: 0;
     width: 0;
     height: 2px;
-    background-color: #007bff;
+    background-color: #ffc107;
     transition: width 0.3s ease;
   }
 
@@ -165,7 +171,8 @@
   }
 
   .enlace-menu.activo {
-    color: #007bff;
+    color: #ffc107;
+    font-weight: bold;
   }
 /* Animación de entrada */
 @keyframes fadeIn {
@@ -199,49 +206,115 @@
 .enlace-menu.salida {
     animation: fadeOut 0.3s ease forwards;
 }
-    /* Responsive Styles */
-    @media screen and (max-width: 768px) {
-        #menu-principal {
-        display: none;
-        flex-direction: column;
-        align-items: flex-end;
-        background-color: white;
-        position: absolute;
-        top: 100%;
-        right: 0;
-        width: 70%;
-        border-left: 1px solid #ddd;
-        padding: 2rem 1rem;
-        box-shadow: -4px 0 8px rgba(0, 0, 0, 0.1);
-        animation: slideIn 0.3s ease forwards;
-        }
+.contenedor-salir-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 
-        @keyframes slideIn {
-        from {
-            transform: translateX(100%);
-        }
-        to {
-            transform: translateX(0);
-        }
-        }
+/* Estilos para el botón "Salir" */
+.enlace-salir {
+  text-decoration: none;
+  color: red;
+  font-size: 1.2rem;
+  display: none;
+}
+   /* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .barra-busqueda {
+    max-width: 200px;
+    margin-left: 0.5rem;
+}
 
-        #menu-principal.mostrar {
-        display: flex;
-        }
+.barra-busqueda input {
+    padding: 0.5rem 2rem 0.5rem 1rem;
+}
 
-        #lista-menu {
-        flex-direction: column;
-        gap: 2rem;
-        width: 100%;
-        }
+.barra-busqueda button {
+    right: 0.3rem;
+}
+/* Estilos para el botón de búsqueda */
+#boton-buscar {
+  position: absolute;
+  right: 1%; /* Mover más a la derecha */
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-        .enlace-menu {
-        text-align: right;
-        padding: 1rem;
-        width: 100%;
-        }
+#boton-buscar i {
+  color: #000;
+  font-size: 1rem;
+}
 
-        #boton-toggle {
-        display: block;
-        }
-    }
+#boton-buscar:hover i {
+  color: #555;
+}
+  #menu-principal {
+      display: none; /* Oculta el menú por defecto en móviles */
+      flex-direction: column; /* Coloca los elementos en columna */
+      align-items: flex-end; /* Alinea el menú a la derecha */
+      background-color: white; /* Fondo blanco */
+      position: absolute; /* Posicionamiento absoluto */
+      top: 100%; /* Se coloca debajo del botón de toggle */
+      right: 0; /* Alineado a la derecha */
+      width: 40%; /* Ancho del menú (70% del ancho de la pantalla) */
+      border-left: 1px solid #ddd; /* Borde izquierdo */
+      padding: 1rem; /* Espaciado interno */
+      box-shadow: -4px 0 8px rgba(0, 0, 0, 0.1); /* Sombra */
+      animation: slideIn 0.3s ease forwards; /* Animación de entrada */
+  }
+
+  @keyframes slideIn {
+      from {
+          transform: translateX(100%); /* Inicia fuera de la pantalla (derecha) */
+      }
+      to {
+          transform: translateX(0); /* Se desliza hacia la izquierda */
+      }
+  }
+
+  #menu-principal.mostrar {
+      display: flex; /* Muestra el menú cuando tiene la clase "mostrar" */
+  }
+
+  #lista-menu {
+      flex-direction: column; /* Coloca los elementos en columna */
+      gap: 1rem; /* Espacio entre elementos */
+      width: 100%; /* Ocupa todo el ancho disponible */
+  }
+
+  .enlace-menu {
+      text-align: right; /* Alinea el texto a la derecha */
+      padding: 0.5rem 1rem; /* Espaciado interno */
+      width: 100%; /* Ocupa todo el ancho disponible */
+      display: flex;
+      align-items: center; /* Centra verticalmente el ícono y el texto */
+      justify-content: flex-end; /* Alinea el contenido a la derecha */
+  }
+
+  /* Ajustes para elementos con solo íconos */
+  .enlace-menu i {
+      margin-left: 0.5rem; /* Espacio entre el texto y el ícono */
+  }
+
+  .enlace-menu:has(i:only-child) {
+      justify-content: flex-end; /* Alinea solo el ícono a la derecha */
+      padding-right: 0; /* Elimina el padding derecho */
+  }
+
+  .enlace-menu:has(i:only-child) i {
+      margin-left: 0; /* Elimina el margen izquierdo si solo hay un ícono */
+  }
+
+  #boton-toggle {
+      display: block; /* Muestra el botón de toggle en móviles */
+  }
+}
+
