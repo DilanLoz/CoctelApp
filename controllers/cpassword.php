@@ -20,14 +20,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $resultado = $mpusu->actualizarContrasena($numdocu, $emausu, $nueva_contrasena_hashed);
 
             if ($resultado === true) {
-                $message = "Contraseña actualizada exitosamente.";
+                $message = ' <i class="fa-solid fa-circle-check"></i> Contraseña actualizada exitosamente.' ;
                 $message_type = "alert-success";
             } else {
-                $message = "Error al actualizar la contraseña.";
+                $message = '<i class="fa-solid fa-circle-exclamation"></i> Error al actualizar la contraseña.';
                 $message_type = "alert-danger";
             }
         } else {
-            $message = "No se encontró un usuario con esos datos.";
+            $message = '<i class="fa-solid fa-circle-exclamation"></i> No se encontró un usuario con esos datos.';
             $message_type = "alert-danger";
         }
     }

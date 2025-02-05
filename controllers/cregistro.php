@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($perfilExistente) {
         // Si el perfil ya existe, mostrar mensaje
-        $message = "Perfil ya creado anteriormente.";
+        $message = '<i class="fa-solid fa-person-circle-exclamation"></i> Perfil ya creado anteriormente.';
     } else {
         // Realizar el hash de la contraseña antes de guardarla
         $pssusuHashed = sha1(md5($pssusu . 'Jd#')); // El mismo hash que en control.php
@@ -40,12 +40,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Guardar el perfil
             $resultado = $mpusu->save();
             if ($resultado === true) {
-                $message = "Perfil creado exitosamente.";
+                $message = '<i class="fa-solid fa-circle-check"></i> Perfil creado exitosamente.';
             } else {
-                $message = "Error al crear el perfil: " . $resultado;
+                $message = '<i class="fa-solid fa-circle-exclamation"></i> Error al crear el perfil ';
             }
         } catch (Exception $e) {
-            $message = "Error al crear el perfil: " . $e->getMessage();
+            $message = 'Error al crear el perfil' . $e->getMessage();
         }
     }
 }
