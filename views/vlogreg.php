@@ -15,6 +15,7 @@
 include_once('controllers/cregistro.php');
 include_once('admin/controllers/cubi.php');
 include_once('admin/controllers/cval.php');
+include_once('controllers/cpassword.php');
 ?>
 
 <main>
@@ -25,6 +26,14 @@ include_once('admin/controllers/cval.php');
                     <div class="logo">
                         <img src="img/coctelapp/coctelapp.png" alt="Logo" />
                     </div>
+                    <!-- Mostrar mensaje de retroalimentación -->
+                    <?php if (!empty($message)): ?>
+                        <div class="alert <?php echo (strpos($message, 'exitosamente') !== false) ? 'alert-success' : 'alert-danger'; ?>">
+                            <?php echo $message; ?>
+                        </div>
+                    <?php endif; ?>
+
+
 
                     <?php if (isset($_GET['err'])): ?>
                         <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
@@ -67,7 +76,16 @@ include_once('admin/controllers/cval.php');
                         <div class="recaptcha-container mb-3">
                             <div class="g-recaptcha" data-sitekey="6Lcz88sqAAAAAHoXXpy3WpvPQtpfSKGTD9_YfbPm"></div>
                         </div>
-
+                        <?php
+                        // Mostrar mensaje de error si se reciben parámetros incorrectos
+                        $error = isset($_GET['err']) ? $_GET['err'] : NULL;
+                        if ($error === 'invalid'): ?>
+                            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                <strong>Error:</strong> Datos incorrectos, por favor inténtelo de nuevo.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        <?php endif; ?>
                         <input type="submit" value="Iniciar Sesión" class="sign-btn" />
                         <p class="text fw-bold">
                             ¿Ha olvidado su contraseña?
@@ -140,24 +158,28 @@ include_once('admin/controllers/cval.php');
                         <input type="submit" value="Registrar" class="registro-btn" />
                     </div>
                 </form>
-            <form action="home.html" autocomplete="off" class="recovery-form" style="display: none;">
+                <form action="" method="POST" autocomplete="off" class="recovery-form" style="display: none;">
                     <div class="heading">
                         <h2>Cambiar Contraseña</h2>
                     </div>
-                    <p class="text"><i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i> Al momento de cambiar la contraseña confirma en el correo electronico la nueva contraseña.</p>
+                    <p class="text"><i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i> Al momento de cambiar la contraseña, confirma en el correo electrónico la nueva contraseña.</p>
                     <div class="actual-form">
                         <div class="input-wrap">
-                            <input type="text" minlength="4" id="email" name="tipo_usuario" class="input-field" autocomplete="off" required />
-                            <label><i class="fa-regular fa-envelope" style="color: #ffffff;"></i>  Correo Electronico</label>
+                            <input name="numdocu" id="numdocu" type="number" minlength="4" class="input-field" autocomplete="off" value="<?php echo isset($datOne[0]['numdocu']) ? $datOne[0]['numdocu'] : ''; ?>" required />
+                            <label for="numdocu"><i class="fa-regular fa-address-card" style="color: #ffffff;"></i> Número Identificación</label>
                         </div>
+
                         <div class="input-wrap">
-                            <input type="number" minlength="4" id="password" name="password" class="input-field" autocomplete="off" required />
-                            <label><i class="fa-regular fa-address-card" style="color: #ffffff;"></i>  Numero de Identificacion o NIT</label>
+                            <input type="email" class="input-field" autocomplete="off" name="emausu" id="emausu" value="<?php echo isset($datOne[0]['emausu']) ? $datOne[0]['emausu'] : ''; ?>" required />
+                            <label><i class="fa-regular fa-envelope" style="color: #ffffff;"></i> Correo Electrónico</label>
                         </div>
+
                         <div class="input-wrap">
-                            <input type="password" minlength="4" id="password" name="password" class="input-field" autocomplete="off" required />
-                            <label><i class="fa-solid fa-lock" style="color: #ffffff;"></i>  Nueva Contraseña</label>
+                            <input type="password" minlength="4" class="input-field" autocomplete="off" name="pssusu" id="pssusu" value="<?php echo isset($datOne[0]['pssusu']) ? $datOne[0]['pssusu'] : ''; ?>" required />
+                            <label><i class="fa-solid fa-lock" style="color: #ffffff;"></i>Nueva Contraseña</label>
                         </div>
+
+                        <!-- Botón de envío -->
                         <input type="submit" value="Cambiar Contraseña" class="recupcontra-btn" />
                     </div>
                     <p class="text fw-bold">

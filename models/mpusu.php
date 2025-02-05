@@ -292,7 +292,46 @@ class Mpusu {
             return "Error en la conexión o consulta: " . $e->getMessage();
         }
     }
+    public function validarUsuario($numdocu, $emausu) {
+        try {
+            $sql = "SELECT COUNT(*) as count FROM usuario WHERE numdocu = :numdocu AND emausu = :emausu";
+            $modelo = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            
+            $result->bindParam(":numdocu", $numdocu, PDO::PARAM_STR);
+            $result->bindParam(":emausu", $emausu, PDO::PARAM_STR);
+            
+            $result->execute();
+            $data = $result->fetch(PDO::FETCH_ASSOC);
+            
+            return $data['count'] > 0; // Retorna true si el usuario existe, false si no
+        } catch (PDOException $e) {
+            return "Error al verificar usuario: " . $e->getMessage();
+        }
+    }
+    public function actualizarContrasena($numdocu, $emausu, $nueva_contrasena) {
+        try {
+            $sql = "UPDATE usuario SET pssusu = :pssusu WHERE numdocu = :numdocu AND emausu = :emausu";
+            $modelo = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
     
+            $result->bindParam(":pssusu", $nueva_contrasena, PDO::PARAM_STR);
+            $result->bindParam(":numdocu", $numdocu, PDO::PARAM_STR);
+            $result->bindParam(":emausu", $emausu, PDO::PARAM_STR);
+    
+            if ($result->execute()) {
+                return true;
+            } else {
+                return "Error al actualizar la contraseña.";
+            }
+        } catch (PDOException $e) {
+            return "Error en la conexión o consulta: " . $e->getMessage();
+        }
+    }
+        
+
     
 }
 ?>
