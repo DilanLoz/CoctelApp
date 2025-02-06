@@ -383,3 +383,22 @@ margin-top: 50px;
 .border-warning {
     border-color: #ffc107 !important;
 }
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    .counter {
+        flex-direction: column; /* Cambia el diseño a vertical */
+    }
+
+    .counter button {
+        width: 35px; /* Botones más pequeños */
+        height: 35px;
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    .counter input {
+        width: 40px;
+        font-size: 12px;
+        text-align: center;
+    }
+}
