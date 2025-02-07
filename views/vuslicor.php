@@ -28,10 +28,10 @@ $datAll = $mbarxprod->getAll();
                     <div class="product-box">
                         <a href="home.php?pg=1014&idprod=<?=$dta['idprod'];?>">
                             <img src="img/<?=$dta["fotprod"];?>" alt="" class="product-img"></a>
-                            <strong style="font-size: 15px; display: inline-block; min-height: 40px;"><?=$dta['nomprod'];?></strong>
+                            <strong class="product-name"><?=$dta['nomprod'];?></strong>
 
                         <br>
-                        <strong style="font-size: 20px; color: green;">$<?=$formattedPrice;?></strong> <!-- Color amarillo -->
+                        <strong class="product-price" style="font-size: 20px; color: green;">$<?=$formattedPrice;?></strong> <!-- Color amarillo -->
                         <br>
                         <strong style="border-radius: 10px; border: 1px solid black; font-size: 16px; padding-left: 5px; padding-right: 5px;"><?=$dta['nombar'];?></strong>
                         <i class='bx bxs-cart add-cart' id="add-cart"></i>

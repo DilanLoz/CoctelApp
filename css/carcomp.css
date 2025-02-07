@@ -55,6 +55,26 @@ header {
     color: var(--text-color);
     font-weight: 400;
 }
+.product-name {
+    padding-top: 20px;
+    font-size: 15px;
+    display: block;
+    min-height: 38px; /* Altura exacta para dos líneas */
+    line-height: 19px; /* Espaciado para dos líneas */
+    overflow: hidden; /* Esconde el texto sobrante */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limita a dos líneas */
+    -webkit-box-orient: vertical;
+    margin-bottom: -20px;
+}
+
+.product-name::after {
+    content: "\00a0"; /* Espacio en blanco para forzar segunda línea */
+    visibility: hidden;
+    display: block;
+}
+
+
 
 #cart-icon {
     font-size: 1.8rem;
@@ -190,10 +210,11 @@ header {
 }
 
 .product-box {
+    margin-right: 20px;
     position: relative;
     padding-top: 20px;
     text-align: left;
-    padding-left: 10px;
+    margin-bottom: 50px;
 }
 
 .product-box:hover {

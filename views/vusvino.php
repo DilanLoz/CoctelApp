@@ -28,8 +28,7 @@ $datAll = $mbarxprod->getAll();
                     <div class="product-box">
                         <a href="home.php?pg=1014&idprod=<?=$dta['idprod'];?>">
                             <img src="img/<?=$dta["fotprod"];?>" alt="" class="product-img"></a>
-                            <strong style="font-size: 15px; display: inline-block; min-height: 40px;"><?=$dta['nomprod'];?></strong>
-
+                            <strong class="product-name"><?=$dta['nomprod'];?></strong>
                         <br>
                         <strong style="font-size: 20px; color: green;">$<?=$formattedPrice;?></strong> <!-- Color amarillo -->
                         <br>
