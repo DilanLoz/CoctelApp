@@ -138,7 +138,7 @@ class Mval{
     }
     public function getDocumentos() {
         try {
-            $sql = "SELECT idval, nomval FROM valor WHERE idval IN (101, 102, 103, 104)";
+            $sql = "SELECT idval, nomval FROM valor WHERE idval IN (101, 102, 103)";
             $modelo = new conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);

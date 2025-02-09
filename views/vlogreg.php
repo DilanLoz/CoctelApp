@@ -27,11 +27,16 @@ include_once('controllers/cpassword.php');
                         <img src="img/coctelapp/coctelapp.png" alt="Logo" />
                     </div>
                     <!-- Mostrar mensaje de retroalimentación -->
-                    <?php if (!empty($message)): ?>
-                        <div class="alert <?php echo (strpos($message, 'exitosamente') !== false) ? 'alert-success' : 'alert-danger'; ?>">
-                            <?php echo $message; ?>
+                    <?php if (!empty($messageRegistro)): ?>
+                        <div class="alert <?php echo (strpos($messageRegistro, 'exitosamente') !== false) ? 'alert-success' : 'alert-danger'; ?>">
+                            <?php echo $messageRegistro; ?>
+                        </div>
+                    <?php elseif (!empty($messagePassword)): ?>
+                        <div class="alert <?php echo (strpos($messagePassword, 'exitosamente') !== false) ? 'alert-success' : 'alert-danger'; ?>">
+                            <?php echo $messagePassword; ?>
                         </div>
                     <?php endif; ?>
+
                     <!-- Mostrar mensaje cuenta inactiva -->
                     <?php if (!empty($_GET['msg'])): ?>
                         <div class="alert <?php echo (strpos($_GET['msg'], 'Error') !== false) ? 'alert-danger' : 'alert-success'; ?>">
