@@ -1,37 +1,68 @@
+<?php
+require_once 'admin/models/mpagos.php'; // Asegúrate de que la ruta es correcta
+
+$model = new Mdetfact();
+$pagos = $model->getAll(); // Obtiene todos los registros
+?>
 <br>
 <br>
 <div class="conte">
     <h1>Pagos</h1>
-<table id="example" class="table table-striped" style="width:100%;">
-    <thead>
-        <tr>
-            <th>ID Factura</th>
-            <th>Estado</th>
-            <th>Fecha</th>
-            <th>Cantidad de Productos</th>
-            <th>Subtotal</th>
-            <th>Empleado</th>
-            <th>Cliente</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1001</td>
-            <td>Entregado</td>
-            <td>2024-02-04</td>
-            <td>5</td>
-            <td>$150,000</td>
-            <td>Juan Pérez</td>
-            <td>María Gómez</td>
-        </tr>
-        <tr>
-            <td>1002</td>
-            <td>Pendiente</td>
-            <td>2024-02-03</td>
-            <td>2</td>
-            <td>$50,000</td>
-            <td>Pedro López</td>
-            <td>Carlos Ramírez</td>
-        </tr>
-    </tbody>
-</table>
+    <table id="example" class="table table-striped" width="100%" style="text-align: left;">
+        <thead>
+            <tr>
+                <th>ID Factura</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>ID Pedido</th>
+                <th>Total</th>
+                <th>Bar</th>
+                <th>Cliente</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (!empty($pagos)) : ?>
+                <?php foreach ($pagos as $pago) : ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($pago['idfact']); ?></td>
+                        <td>
+                            <?php
+                            $estado = $pago['estado'];
+                            ?>
+                            <span class="estado-circulo estado-<?php echo strtolower($estado); ?>"></span>
+                            <?php echo htmlspecialchars($estado); ?>
+                        </td>
+
+
+                        <td><?php echo htmlspecialchars($pago['fecha']); ?></td>
+                        <td><?php echo htmlspecialchars($pago['idpedido']); ?></td>
+                        <td><?php echo number_format($pago['total'], 2, ',', '.'); ?></td>
+                        <td><?php echo htmlspecialchars($pago['idbar'] . ' - ' . $pago['nombar']); ?></td>
+                        <td><?php echo htmlspecialchars($pago['idusu'] . ' - ' . $pago['nomusu']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else : ?>
+                <tr>
+                    <td colspan="7">No hay pagos registrados.</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+<style>
+    .estado-circulo {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+
+    .estado-activa {
+        background-color: #28a745 !important;
+    }
+
+    .estado-anulada {
+        background-color: #dc3545 !important;
+    }
+</style>

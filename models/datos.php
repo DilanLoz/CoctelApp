@@ -1,6 +1,6 @@
 <?php 
 	$host="localhost";
-	$db="coctelapp";
+	$db="coctelappnew";
 	$user="root";
 	$pass="";
 ?>
