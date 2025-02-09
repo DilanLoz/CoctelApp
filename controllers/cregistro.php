@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         try {
             // Guardar el perfil
-            $resultado = $mpusu->save();
+            $resultado = $mpusu->saveRegistro();
             if ($resultado === true) {
                 $message = '<i class="fa-solid fa-circle-check"></i> Perfil creado exitosamente.';
             } else {

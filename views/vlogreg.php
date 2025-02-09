@@ -32,7 +32,12 @@ include_once('controllers/cpassword.php');
                             <?php echo $message; ?>
                         </div>
                     <?php endif; ?>
-
+                    <!-- Mostrar mensaje cuenta inactiva -->
+                    <?php if (!empty($_GET['msg'])): ?>
+                        <div class="alert <?php echo (strpos($_GET['msg'], 'Error') !== false) ? 'alert-danger' : 'alert-success'; ?>">
+                            <?php echo htmlspecialchars($_GET['msg']); ?>
+                        </div>
+                    <?php endif; ?>
 
 
                     <?php if (isset($_GET['err'])): ?>
