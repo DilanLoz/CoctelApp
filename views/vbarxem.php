@@ -86,6 +86,7 @@
             <th>Id</th>
             <th>Nombre</th>
             <th>No. Documento</th>
+            <th>Bar Asignado</th>
             <th>Email</th>
             <th>Telefono</th>
             <th></th>
@@ -101,7 +102,15 @@
                 </td>
                 <td><?=$dt["idemp"];?> </td>
                 <td><?=$dt["nomemp"];?></td>
-                <td><?=$dt["numdocu"];?></td>
+                <td>
+                    <div>
+                        <small>
+                            <strong>Tipo: </strong><?=$dt["nomval"];?><br> <!--Hay que llamar a nomval, para mostrar si es CC o NIT -->
+                            <strong>Numero: </strong><?=$dt["numdocu"];?><br>
+                        </small>
+                    </div>
+                </td>
+                <td><?=$dt["nombar"];?></td>
                 <td><?=$dt["emaemp"];?></td>
                 <td><?=$dt["celemp"];?></td>
                 <td>
@@ -118,6 +127,7 @@
             <th>Id</th>
             <th>Nombre</th>
             <th>No. Documento</th>
+            <th>Bar Asignado</th>
             <th>Email</th>
             <th>Telefono</th>
             <th></th>

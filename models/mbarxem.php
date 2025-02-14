@@ -106,16 +106,25 @@ class Mbarxem{
 	}
 
     //Funciones
-    public function getAll(){
+    public function getAll() {
 		$res = NULL;
-		$sql = "SELECT * FROM empleado";
+		$sql = "SELECT 
+					e.idemp, e.nomemp, e.emaemp, e.celemp, e.fecnaemp, e.numdocu, 
+					e.fotiden, e.pssemp, e.idserv, e.idbar, e.codubi, e.idper, e.idval,
+					v.nomval, b.nombar
+				FROM empleado e
+				LEFT JOIN valor v ON e.idval = v.idval
+				LEFT JOIN bar b ON e.idbar = b.idbar";
+		
 		$modelo = new Conexion();
 		$conexion = $modelo->get_conexion();
 		$result = $conexion->prepare($sql);
 		$result->execute();
-		$res= $result->fetchall(PDO::FETCH_ASSOC);
+		$res = $result->fetchAll(PDO::FETCH_ASSOC);
+		
 		return $res;
 	}
+	
 
     public function save(){
 		$sql = "INSERT INTO empleado (idemp, nomemp, emaemp, celemp, fecnaemp, numdocu, fotiden, pssemp, idserv, idbar, codubi, idper, idval) VALUES (:idemp, :nomemp, :emaemp, :celemp, :fecnaemp, :numdocu, :fotiden, :pssemp, :idserv, :idbar, :codubi, :idper, :idval)";

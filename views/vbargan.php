@@ -74,4 +74,13 @@ $datFiltered = $datAll;
             </div>
         </div>
     </div>
+    <div class="flex" style="display: flex; justify-content: flex-end; align-items: center;">
+    <div>
+        <a href="home.php?pg=3007" target="_blank" class="btn btn-outline-danger mt-2" style="display: flex; align-items: center; justify-content: flex-end;">
+            <i class="fa-regular fa-file-pdf" style="margin-right: 5px;"></i> Generar Reporte
+        </a>
+    </div>
+</div>
+
+
 </div>
