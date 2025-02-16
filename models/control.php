@@ -50,12 +50,25 @@ function valida($usu, $pas) {
         // Actualizar la fecha de último inicio de sesión
         actualizarUltimoAcceso($res[0]['idusu']);
 
-        // Guardar datos en la sesión
+        // Guardar todos los datos en la sesión
         $_SESSION['idusu'] = $res[0]['idusu'];
         $_SESSION['nomusu'] = $res[0]['nomusu'];
         $_SESSION['emausu'] = $res[0]['emausu'];
         $_SESSION['celusu'] = $res[0]['celusu'];
+        $_SESSION['fotiden'] = $res[0]['fotiden'];
+        $_SESSION['numdocu'] = $res[0]['numdocu'];
+        $_SESSION['fecnausu'] = $res[0]['fecnausu'];
+        $_SESSION['pssusu'] = $res[0]['pssusu'];
+        $_SESSION['codubi'] = $res[0]['codubi'];
         $_SESSION['idper'] = $res[0]['idper'];
+        $_SESSION['idval'] = $res[0]['idval'];
+        $_SESSION['idserv'] = $res[0]['idserv'];
+        $_SESSION['idbar'] = $res[0]['idbar'];
+        $_SESSION['nompropi'] = $res[0]['nompropi'];
+        $_SESSION['dircbar'] = $res[0]['dircbar'];
+        $_SESSION['horbar'] = $res[0]['horbar'];
+        $_SESSION['estado'] = $res[0]['estado'];
+        $_SESSION['nomubi'] = $res[0]['nomubi'];
         $_SESSION['nomper'] = $res[0]['nomper'];
         $_SESSION['pagini'] = $res[0]['pagini'];
         $_SESSION['aut'] = '1011322322#2006';
@@ -83,8 +96,8 @@ function valida($usu, $pas) {
 function ingr($usu, $pas) {
     $pas = sha1(md5($pas . 'Jd#')); // Encriptación de la contraseña
     $sql = "SELECT 
-                u.idusu, u.nomusu, u.emausu, u.celusu, 
-                u.idper, f.nomper, f.pagini, u.estado
+                u.idusu, u.nomusu, u.emausu, u.celusu, u.fotiden, u.numdocu, u.fecnausu, u.pssusu, u.codubi, 
+                u.idper, f.nomper, f.pagini, u.estado, u.idval, u.idserv, u.idbar, u.nompropi, u.dircbar, u.horbar
             FROM usuario AS u
             INNER JOIN perfiles AS f ON u.idper = f.idper
             WHERE u.emausu = :emausu AND u.pssusu = :pssusu";

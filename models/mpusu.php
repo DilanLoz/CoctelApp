@@ -130,11 +130,11 @@ class Mpusu {
                     p.nomper, 
                     ub.nomubi 
                 FROM usuario AS u
-                INNER JOIN ubicacion AS ub ON u.codubi = ub.codubi
-                INNER JOIN servicio AS s ON u.idserv = s.idserv
-                INNER JOIN bar AS b ON u.idbar = b.idbar
-                INNER JOIN valor AS v ON u.idval = v.idval
-                INNER JOIN perfiles AS p ON u.idper = p.idper";
+                LEFT JOIN ubicacion AS ub ON u.codubi = ub.codubi
+                LEFT JOIN servicio AS s ON u.idserv = s.idserv
+                LEFT JOIN bar AS b ON u.idbar = b.idbar
+                LEFT JOIN valor AS v ON u.idval = v.idval
+                LEFT JOIN perfiles AS p ON u.idper = p.idper";
         $modelo = new conexion();
         $conexion = $modelo->get_conexion();
         $result = $conexion->prepare($sql);
@@ -142,6 +142,32 @@ class Mpusu {
         $res = $result->fetchAll(PDO::FETCH_ASSOC);
         return $res;
     }
+    // Método modificado para obtener datos específicos del usuario autenticado en sesión
+public function getAllBar() {
+    $res = NULL;
+    $sql = "SELECT 
+    u.idusu, u.nomusu, u.emausu, u.celusu, u.numdocu, u.fotiden, 
+    u.pssusu, u.codubi, ub.nomubi,  -- Aquí extraemos 'nomubi' de la tabla 'ubicacion'
+    u.idper, u.idval,
+    u.nompropi, u.dircbar, u.horbar
+FROM usuario AS u
+LEFT JOIN ubicacion AS ub ON u.codubi = ub.codubi  -- Unimos con la tabla 'ubicacion' usando 'codubi'
+WHERE u.idusu = :idusu;";
+    try {
+        $modelo = new conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+        $result->bindParam(":idusu", $_SESSION['idusu'], PDO::PARAM_INT); // Usamos el idusu de la sesión
+        $result->execute();
+        $res = $result->fetch(PDO::FETCH_ASSOC);
+        return $res ? $res : "Error: Usuario o bar no encontrado.";
+    } catch (PDOException $e) {
+        return "Error en la consulta: " . $e->getMessage();
+    }
+}
+
+
+
     //-----------------------USUARIOS-------------------------------------
     public function getOneUsuario() {
         try {

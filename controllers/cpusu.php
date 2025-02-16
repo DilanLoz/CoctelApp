@@ -28,6 +28,23 @@ $ope = isset($_POST['ope']) ? $_POST['ope'] : NULL;
 
 // Instancia del modelo
 $mpusu = new Mpusu();
+$datosUsuario = $mpusu->getAllBar();  // Asegúrate de que este método devuelva los datos correctos
+
+if (is_array($datosUsuario)) {
+    // Asignar los datos obtenidos a la sesión
+    $_SESSION['nomusu'] = $datosUsuario['nomusu'];
+    $_SESSION['numdocu'] = $datosUsuario['numdocu'];
+    $_SESSION['nompropi'] = $datosUsuario['nompropi'];
+    $_SESSION['pssusu'] = $datosUsuario['pssusu'];
+    $_SESSION['emausu'] = $datosUsuario['emausu'];
+    $_SESSION['fotiden'] = $datosUsuario['fotiden'];
+    $_SESSION['celusu'] = $datosUsuario['celusu'];
+    $_SESSION['dircbar'] = $datosUsuario['dircbar'];
+    $_SESSION['nomubi'] = $datosUsuario['nomubi'];
+    $_SESSION['horbar'] = $datosUsuario['horbar']; 
+} else {
+    echo "Error al obtener los datos del usuario.";
+}
 
 if ($ope == "save") {
     // Configuración de datos para guardar o actualizar
