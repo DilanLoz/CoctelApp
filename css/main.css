@@ -28,3 +28,15 @@ a[title="Eliminar"] i:hover {
 
 /*------------------------Editar y Eliminar------------------------ */
 
+.btn-dark {
+    background-color: black;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-dark:hover {
+    background-color: rgb(168, 216, 90);
+    color: black;
+}
