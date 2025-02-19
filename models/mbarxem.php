@@ -111,10 +111,12 @@ class Mbarxem{
 		$sql = "SELECT 
 					e.idemp, e.nomemp, e.emaemp, e.celemp, e.fecnaemp, e.numdocu, 
 					e.fotiden, e.pssemp, e.idserv, e.idbar, e.codubi, e.idper, e.idval,
-					v.nomval, b.nombar
+					v.nomval, b.nombar, s.nomserv, u.nomubi
 				FROM empleado e
-				LEFT JOIN valor v ON e.idval = v.idval
-				LEFT JOIN bar b ON e.idbar = b.idbar";
+				LEFT JOIN valor AS v ON e.idval = v.idval
+				LEFT JOIN bar AS b ON e.idbar = b.idbar
+				LEFT JOIN servicio AS s ON e.idserv = s.idserv
+				LEFT JOIN ubicacion AS u ON e.codubi = u.codubi";
 		
 		$modelo = new Conexion();
 		$conexion = $modelo->get_conexion();

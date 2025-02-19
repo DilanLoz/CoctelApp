@@ -1,4 +1,6 @@
-<?php include("controllers/cbarxem.php");?>
+<?php include("controllers/cbarxem.php");
+include_once('admin/controllers/cubi.php');
+include_once('admin/controllers/cval.php');?>
 <div class="container mt-5 mb-5" style="text-align: left; display: block;">
     <h1 class="mb-4">Crear Empleado</h1>
     <form action="#" method="post">
@@ -17,11 +19,17 @@
                     <input type="text" id="identification" name="identification" class="form-control" name="idemp" id="idemp" value="<?php if($dtOne && $dtOne[0]['idemp']) echo $dtOne[0]['idemp']; ?>" required>
                 </div>
                 <div class="form-group">
-                    <label for="employee-type">Valor:</label>
-                    <select id="employee-type" name="employee-type" class="form-control custom-select" >
-                        <option value="Cedula">CC</option>
-                        <option value="NIT">NIT</option>
-                        <option value="C. Extranjeria">CE</option>
+                    <label for="idval">Valor:</label>
+                    <select id="idval" name="idval" class="form-control custom-select" >
+                    <option value="" disabled selected>Tipo de documento</option>
+                                <?php
+                                $valoresValidos = $mval->getDocumentos();
+                                if ($valoresValidos) {
+                                    foreach ($valoresValidos as $valor) {
+                                        echo '<option value="' . $valor['idval'] . '">' . $valor['nomval'] . '</option>';
+                                    }
+                                }
+                                ?>
                     </select>
                 </div>
                 <div class="form-group">
@@ -41,13 +49,17 @@
                     <input type="file" id="photo" name="photo" accept="image/*" class="form-control" >
             </div>
                 <div class="form-group">
-                    <label for="ubicacion" class="form-label">Ubicación Actual:</label>
-                    <select id="employee-type" name="employee-type" class="form-control" >
-                        <option value="bogota">Bogota DC</option>
-                        <option value="medellin">Medellin</option>
-                        <option value="cartagena">Cartagena</option>
-                        <option value="bucaramanga">Bucaramanga</option>
-                        <option value="nariño">Nariño</option>
+                    <label for="codubi" class="form-label">Ubicación Actual:</label>
+                    <select id="codubi" name="codubi" class="form-control" >
+                    <option value="" disabled selected>Seleccione una ciudad</option>
+                                <?php
+                                $dataUbicaciones = $mubi->getCodubiNomubi();
+                                if ($dataUbicaciones) {
+                                    foreach ($dataUbicaciones as $ubicacion) {
+                                        echo '<option value="' . $ubicacion['codubi'] . '">' . $ubicacion['nomubi'] . '</option>';
+                                    }
+                                }
+                                ?>
                     </select>
                 </div>
                 <div class="form-group">
@@ -86,7 +98,10 @@
             <th>Id</th>
             <th>Nombre</th>
             <th>No. Documento</th>
+            <th>Fecha de Nacimiento</th>
             <th>Bar Asignado</th>
+            <th>Tipo Servicio</th>
+            <th>Ubicacion</th>
             <th>Email</th>
             <th>Telefono</th>
             <th></th>
@@ -110,13 +125,16 @@
                         </small>
                     </div>
                 </td>
+                <td>-<?=$dt["fecnaemp"];?></td>
                 <td><?=$dt["nombar"];?></td>
+                <td><?=$dt["nomserv"];?></td>
+                <td><?=$dt["nomubi"];?></td>
                 <td><?=$dt["emaemp"];?></td>
                 <td><?=$dt["celemp"];?></td>
-                <td>
-                    <a href="home.php?pg=3004&ope=del&idemp=<?=$dt["idemp"];?>" onclick="return eli();" title="Eliminar"><i class="fa-solid fa-trash"></i></a>
+                <td class="row">
                     <a href="home.php?pg=3004&ope=edi&idemp=<?=$dt["idemp"];?>" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
-                </td> 
+                    <a href="home.php?pg=3004&ope=del&idemp=<?=$dt["idemp"];?>" onclick="return eli();" title="Eliminar"><i class="fa-solid fa-trash"></i></a>
+                </td>
             </tr>
         <?php }} ?>
     </tbody>
@@ -127,7 +145,10 @@
             <th>Id</th>
             <th>Nombre</th>
             <th>No. Documento</th>
+            <th>Fecha de Nacimiento</th>
             <th>Bar Asignado</th>
+            <th>Tipo Servicio</th>
+            <th>Ubicacion</th>
             <th>Email</th>
             <th>Telefono</th>
             <th></th>
@@ -138,5 +159,3 @@
     </div>
     <script src="js/alertas.js"></script>
 </div>
-vbarxem.php
-Mostrando vbarxem.php.
