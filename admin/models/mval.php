@@ -148,5 +148,17 @@ class Mval{
             throw new Exception("Error al obtener registros: " . $e->getMessage());
         }
     }
+    public function getBar() {
+        try {
+            $sql = "SELECT idval, nomval FROM valor WHERE idval IN (104)";
+            $modelo = new conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            throw new Exception("Error al obtener registros: " . $e->getMessage());
+        }
+    }
 }
 ?>

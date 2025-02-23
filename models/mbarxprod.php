@@ -13,6 +13,8 @@ class Mbarxprod {
     private $idserv;
     private $idusu;
     private $tipoprod;
+    private $mililitros;
+
 
     public function getIdprod() {
         return $this->idprod;
@@ -57,6 +59,10 @@ class Mbarxprod {
     public function getTipoprod() {
         return $this->tipoprod;
     }
+    public function getMililitros() {
+        return $this->mililitros;
+    }
+
 
     public function setIdprod($idprod) {
         $this->idprod = $idprod;
@@ -101,11 +107,14 @@ class Mbarxprod {
     public function setTipoprod($tipoprod) {
         $this->tipoprod = $tipoprod;
     }
+    public function setMililitros($mililitros) {
+        $this->idprod = $mililitros;
+    }
 
     // Methods (getAll, getOne, save, edit, del) should be closed with }
     public function getAll() {
         try {
-            $sql = "SELECT p.idprod, p.nomprod, p.desprod, p.vlrprod, p.fotprod, p.idval, p.idbar, p.cantprod, p.idserv, p.idusu, b.nombar, p.tipoprod FROM producto AS p INNER JOIN bar AS b ON p.idbar=b.idbar";
+            $sql = "SELECT p.idprod, p.nomprod, p.desprod, p.vlrprod, p.fotprod, p.idval, p.idbar, p.cantprod, p.idserv, p.idusu, b.nombar, p.tipoprod, p.mililitros FROM producto AS p INNER JOIN bar AS b ON p.idbar=b.idbar";
             $modelo = new conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
@@ -116,14 +125,15 @@ class Mbarxprod {
             echo "Error: " . $e;
         }
     }
-    public function getOne() {
+
+     public function getOneBar() {
         try {
-            $sql = "SELECT idprod, nomprod, desprod, vlrprod, fotprod, idval, idbar, cantprod, idserv, idusu, tipoprod FROM producto WHERE idprod=:idprod";
+            $sql = "SELECT idprod, nomprod, desprod, vlrprod, fotprod, idval, idbar, cantprod, idserv, idusu, tipoprod, mililitros FROM producto WHERE idbar=:idbar";
             $modelo = new conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
-            $idprod = $this->getIdprod();
-            $result->bindParam(":idprod", $idprod);
+            $idbar = $this->getIdbar();
+            $result->bindParam(":idbar", $idbar);
             $result->execute();
             $res = $result->fetchAll(PDO::FETCH_ASSOC);
             return $res;
@@ -132,71 +142,6 @@ class Mbarxprod {
         }
     }
 
-    public function save() {
-        try {
-            $sql = "INSERT INTO producto (nomprod, desprod, vlrprod, fotprod, idval, idbar, cantprod, idserv, idusu, tipoprod) VALUES (:nomprod, :desprod, :vlrprod, :fotprod, :idval, :idbar, :cantprod, :idserv, :idusu, :tipoprod)";
-            $modelo = new conexion();
-            $conexion = $modelo->get_conexion();
-            $result = $conexion->prepare($sql);
-            $nomprod = $this->getNomprod();
-            $result->bindParam(":nomprod", $nomprod);
-            $desprod = $this->getDesprod();
-            $result->bindParam(":desprod", $desprod);
-            $vlrprod = $this->getVlrprod();
-            $result->bindParam(":vlrprod", $vlrprod);
-            $fotprod = $this->getFotprod();
-            $result->bindParam(":fotprod", $fotprod);
-            $idval = $this->getIdval();
-            $result->bindParam(":idval", $idval);
-            $idbar = $this->getIdbar();
-            $result->bindParam(":idbar", $idbar);
-            $cantprod = $this->getCantprod();
-            $result->bindParam(":cantprod", $cantprod);
-            $idserv = $this->getIdserv();
-            $result->bindParam(":idserv", $idserv);
-            $idusu = $this->getIdusu();
-            $result->bindParam(":idusu", $idusu);
-            $tipoprod = $this->getTipoprod();
-            $result->bindParam(":tipoprod", $tipoprod);
-            $result->execute();
-        } catch (Exception $e) {
-            echo "Error: " . $e;
-        }
-    }
-
-    public function edit() {
-        try {
-            $sql = "UPDATE producto SET nomprod=:nomprod, desprod=:desprod, vlrprod=:vlrprod, fotprod=:fotprod, idval=:idval, idbar=:idbar, cantprod=:cantprod, idserv=:idserv, idusu=:idusu, tipoprod=:tipoprod WHERE idprod=:idprod";
-            $modelo = new conexion();
-            $conexion = $modelo->get_conexion();
-            $result = $conexion->prepare($sql);
-            $idprod = $this->getIdprod();
-            $result->bindParam(":idprod", $idprod);
-            $nomprod = $this->getNomprod();
-            $result->bindParam(":nomprod", $nomprod);
-            $desprod = $this->getDesprod();
-            $result->bindParam(":desprod", $desprod);
-            $vlrprod = $this->getVlrprod();
-            $result->bindParam(":vlrprod", $vlrprod);
-            $fotprod = $this->getFotprod();
-            $result->bindParam(":fotprod", $fotprod);
-            $idval = $this->getIdval();
-            $result->bindParam(":idval", $idval);
-            $idbar = $this->getIdbar();
-            $result->bindParam(":idbar", $idbar);
-            $cantprod = $this->getCantprod();
-            $result->bindParam(":cantprod", $cantprod);
-            $idserv = $this->getIdserv();
-            $result->bindParam(":idserv", $idserv);
-            $idusu = $this->getIdusu();
-            $result->bindParam(":idusu", $idusu);
-            $tipoprod = $this->getTipoprod();
-            $result->bindParam(":tipoprod", $tipoprod);
-            $result->execute();
-        } catch (Exception $e) {
-            echo "Error: " . $e;
-        }
-    }
 
     public function del() {
         try {
@@ -211,7 +156,80 @@ class Mbarxprod {
             echo "Error: " . $e;
         }
     }
+    public function getOne($idprod)
+{
+    $res = NULL;
+    $sql = "SELECT idprod, nomprod, desprod, vlrprod, fotprod, idval, idbar, cantprod, idserv, idusu, tipoprod, mililitros FROM producto WHERE idprod=:idprod";
+    $modelo = new Conexion();
+    $conexion = $modelo->get_conexion();
+    $result = $conexion->prepare($sql);
+    $result->bindParam(":idprod", $idprod);
+    $result->execute();
+    $res = $result->fetchAll(PDO::FETCH_ASSOC);
 
-} // This closes the class
+    return $res;
+}
+
+    public function saveprod() {
+        $sql = "INSERT INTO producto (nomprod, desprod, vlrprod, fotprod, idval, idbar, cantprod, idserv, idusu, tipoprod, mililitros) VALUES (:nomprod, :desprod, :vlrprod, :fotprod, :idval, :idbar, :cantprod, :idserv, :idusu, :tipoprod, :mililitros)";
+        
+        $modelo = new Conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+    
+        $result->bindParam(":nomprod", $this->nomprod);
+        $result->bindParam(":desprod", $this->desprod);
+        $result->bindParam(":vlrprod", $this->vlrprod);
+        $result->bindParam(":fotprod", $this->fotprod);
+        $result->bindParam(":idval", $this->idval);
+        $result->bindParam(":idbar", $this->idbar);
+        $result->bindParam(":cantprod", $this->cantprod);
+        $result->bindParam(":idserv", $this->idserv);
+        $result->bindParam(":idusu", $this->idusu);
+        $result->bindParam(":tipoprod", $this->tipoprod);
+        $result->bindParam(":mililitros", $this->mililitros);
+    
+        return $result->execute();
+    }
+    
+
+    public function editprod()
+{
+    $sql = "UPDATE producto SET 
+                nomprod=:nomprod, 
+                desprod=:desprod, 
+                vlrprod=:vlrprod, 
+                fotprod=:fotprod, 
+                idval=:idval, 
+                idbar=:idbar, 
+                cantprod=:cantprod, 
+                idserv=:idserv, 
+                idusu=:idusu, 
+                tipoprod=:tipoprod,  -- Aquí la coma
+                mililitros=:mililitros  -- Aquí también la coma
+            WHERE idprod=:idprod";
+
+    $modelo = new Conexion();
+    $conexion = $modelo->get_conexion();
+    $result = $conexion->prepare($sql);
+
+    $result->bindParam(":nomprod", $this->nomprod);
+    $result->bindParam(":desprod", $this->desprod);
+    $result->bindParam(":vlrprod", $this->vlrprod);
+    $result->bindParam(":fotprod", $this->fotprod);
+    $result->bindParam(":idval", $this->idval);
+    $result->bindParam(":idbar", $this->idbar);
+    $result->bindParam(":cantprod", $this->cantprod);
+    $result->bindParam(":idserv", $this->idserv);
+    $result->bindParam(":idusu", $this->idusu);
+    $result->bindParam(":tipoprod", $this->tipoprod);
+    $result->bindParam(":mililitros", $this->mililitros);
+    $result->bindParam(":idprod", $this->idprod); // No te olvides de vincular el idprod también.
+
+    return $result->execute();
+}
+
+
+} 
 
 ?>

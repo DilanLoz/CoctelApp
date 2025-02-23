@@ -28,23 +28,6 @@ $ope = isset($_POST['ope']) ? $_POST['ope'] : NULL;
 
 // Instancia del modelo
 $mpusu = new Mpusu();
-$datosUsuario = $mpusu->getAllBar();  // Asegúrate de que este método devuelva los datos correctos
-
-if (is_array($datosUsuario)) {
-    // Asignar los datos obtenidos a la sesión
-    $_SESSION['nomusu'] = $datosUsuario['nomusu'];
-    $_SESSION['numdocu'] = $datosUsuario['numdocu'];
-    $_SESSION['nompropi'] = $datosUsuario['nompropi'];
-    $_SESSION['pssusu'] = $datosUsuario['pssusu'];
-    $_SESSION['emausu'] = $datosUsuario['emausu'];
-    $_SESSION['fotiden'] = $datosUsuario['fotiden'];
-    $_SESSION['celusu'] = $datosUsuario['celusu'];
-    $_SESSION['dircbar'] = $datosUsuario['dircbar'];
-    $_SESSION['nomubi'] = $datosUsuario['nomubi'];
-    $_SESSION['horbar'] = $datosUsuario['horbar']; 
-} else {
-    echo "Error al obtener los datos del usuario.";
-}
 
 if ($ope == "save") {
     // Configuración de datos para guardar o actualizar
@@ -67,34 +50,16 @@ if ($ope == "save") {
 
     // Guardar o actualizar según el valor de idusu
     if ($idusu) {
-        try {
-            $mpusu->edit();
-            $message = "Usuario actualizado correctamente.";
-        } catch (Exception $e) {
-            $message = "Error al actualizar usuario: " . $e->getMessage();
-        }
+        $mpusu->editUsuario();
     } else {
-        try {
-            $mpusu->save();
-            $message = "Usuario creado correctamente.";
-        } catch (Exception $e) {
-            $message = "Error al crear usuario: " . $e->getMessage();
-        }
+        $mpusu->saveUsuario();
     }
 }
 
-// Modo de operación y obtención de datos de usuario
-$m = 2; // Indica modo de consulta general
-$dtOne = NULL;
-
 if (isset($_GET['ope']) && $_GET['ope'] == "edi" && $idusu) {
-    try {
-        $mpusu->setIdusu($idusu);
-        $dtOne = $mpusu->getOne(); // Obtiene los datos del usuario específico
-        $m = 1; // Modo de edición
-    } catch (Exception $e) {
-        $message = "Error al obtener datos del usuario: " . $e->getMessage();
-    }
+    $dtOne = $mpusu->getOneUsuario(); // Obtiene los datos del usuario 
+} else {
+    $dtOne = NULL;
 }
 
 // Obtiene todos los usuarios

@@ -18,15 +18,18 @@ $desprod = isset($_POST['desprod']) ? $_POST['desprod'] : NULL;
 $vlrprod = isset($_POST['vlrprod']) ? $_POST['vlrprod'] : NULL;
 $fotprod = isset($_POST['fotprod']) ? $_POST['fotprod'] : NULL;
 $idval = isset($_POST['idval']) ? $_POST['idval'] : NULL;
-$idbar = isset($_POST['idbar']) ? $_POST['idbar'] : NULL;
+$idbar = isset($_SESSION['idbar']) ? $_SESSION['idbar'] : NULL;
 $cantprod = isset($_POST['cantprod']) ? $_POST['cantprod'] : NULL;
 $idserv = isset($_POST['idserv']) ? $_POST['idserv'] : NULL;
 $idusu = isset($_POST['idusu']) ? $_POST['idusu'] : NULL;
 $tipoprod = isset($_POST['tipoprod']) ? $_POST['tipoprod'] : NULL;
+$mililitros = isset($_POST['mililitros']) ? $_POST['mililitros'] : NULL;
+
 
 $ope = isset($_REQUEST['ope']) ? $_REQUEST['ope'] : NULL;
 $datOne = NULL;
 
+$mbarxprod->setIdbar($idbar);
 $mbarxprod->setIdprod($idprod);
 
 if ($ope == "save") {
@@ -64,24 +67,15 @@ if ($ope == "save") {
     $mbarxprod->setCantprod($cantprod);
     $mbarxprod->setIdserv($idserv);
     $mbarxprod->setIdusu($idusu);
-    $mbarxprod->setTipoprod($tipoprod); // Aquí se guarda el tipo de producto
-    $mbarxprod->save();
-
-    // Redirigir según el tipo de producto
-    if ($tipoprod == "licor") {
-        header("Location: home.php?pg=3003");
-        exit; // Termina la ejecución del script después de redirigir
-    } elseif ($tipoprod == "vino") {
-        header("Location: home.php?pg=3003");
-        exit; // Termina la ejecución del script después de redirigir
-    } elseif ($tipoprod == "coctel") {
-        header("Location: home.php?pg=3003");
-        exit; // Termina la ejecución del script después de redirigir
+    $mbarxprod->setTipoprod($tipoprod);
+    $mbarxprod->setMililitros($mililitros); // Aquí se guarda el tipo de producto
+    if ($idprod) {
+        $mbarxprod->editprod();
     } else {
-        // Si no es ninguno de esos tipos, redirige a una página general
-        header("Location: home.php?pg=productos");
-        exit; // Termina la ejecución del script después de redirigir
+        $mbarxprod->saveprod();
     }
+
+    
 }
 
 // Si la operación es 'eli' y hay un id de producto, eliminar el producto
@@ -96,6 +90,7 @@ if ($ope == "edi" && $idprod) {
 
 // Obtener todos los productos
 $datAll = $mbarxprod->getAll();
+$datOneBar = $mbarxprod->getOneBar();
 $bars=$mbar->getAll();
 ob_end_flush();  // Envía el contenido al navegador después de la redirección
 ?>

@@ -11,20 +11,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Verificar si hay una sesión activa y si contiene el ID del usuario
-if (isset($_SESSION['idusu'])) {
-    // Mostrar la ID de sesión y los datos almacenados en la sesión
-    echo "<h3>Datos del Usuario en Sesión:</h3>";
-    echo "ID de Usuario: " . $_SESSION['idusu'] . "<br>";
-    echo "Nombre de Usuario: " . $_SESSION['nomusu'] . "<br>";
-    echo "Email de Usuario: " . $_SESSION['emausu'] . "<br>";
-    echo "Celular: " . $_SESSION['celusu'] . "<br>";
-    echo "Número de Documento: " . $_SESSION['numdocu'] . "<br>";
-    // Agrega más datos de la sesión si es necesario
-} else {
-    // Mensaje si no hay datos de sesión válidos
-    echo "<h3>Datos inválidos: No se encontró una sesión activa.</h3>";
-}
+
 ?>
 <div class="container" style="text-align: left;">
     <br><br><br>
@@ -52,6 +39,11 @@ if (isset($_SESSION['idusu'])) {
             </div>
 
             <div class="form-group col-md-6">
+                <label for="mililitros"><strong>mililitros</strong></label>
+                <input type="number" name="mililitros" id="mililitros" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne[0]['mililitros']) ? $datOne[0]['mililitros'] : ''; ?>" required>
+            </div>
+
+            <div class="form-group col-md-6">
                 <label for="tipoprod"><strong>Tipo de Producto</strong></label>
                 <select name="tipoprod" id="tipoprod" class="form-control" required>
                     <option value="licor" <?php echo (isset($datOne[0]['tipoprod']) && $datOne[0]['tipoprod'] == 'licor') ? 'selected' : ''; ?>>Licor</option>
@@ -59,23 +51,9 @@ if (isset($_SESSION['idusu'])) {
                     <option value="coctel" <?php echo (isset($datOne[0]['tipoprod']) && $datOne[0]['tipoprod'] == 'coctel') ? 'selected' : ''; ?>>Coctel</option>
                 </select>
             </div>
-            <div class="form-group col-md-6">
-    <label for="idbar"><strong>Selecciona el ID de tu bar</strong></label>
-    <select name="idbar" id="idbar" class="form-select" required>
-        <option value="" disabled selected>Seleccionar</option> <!-- Opción inicial -->
-        <?php
-        $bars = $mbar->getAll(); // Método que obtiene todas las ciudades
-        foreach ($bars as $idb) {
-            // Determinar si la ciudad actual debe ser seleccionada
-            $selected = (isset($datOne[0]['idbar']) && $datOne[0]['idbar'] == $idb['idbar']) ? 'selected' : '';
-        ?>
-            <option value="<?= $idb['idbar']; ?>" <?= $selected; ?>><?= $idb['idbar']; ?></option>
-        <?php } ?>
-    </select>
-</div>
 
             <div class="form-group col-md-4">
-                <label for="fotprod">Imagen</label>
+                <label for="fotprod"><strong>Foto Producto:</strong></label>
                 <input type="file" class="form-control form-control" name="fots" accept="image/*" id="fotprod">
                 <input type="hidden" name="fotprod" value="<?php echo isset($datOne[0]['fotprod']) && !empty($datOne[0]['fotprod']) ? $datOne[0]['fotprod'] : ''; ?>">
             </div>
@@ -88,7 +66,6 @@ if (isset($_SESSION['idusu'])) {
         </form>
 
         <br>
-
         <table id="example" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
@@ -97,7 +74,7 @@ if (isset($_SESSION['idusu'])) {
                 </tr>
             </thead>    
             <tbody>
-                <?php if (isset($datAll) && !empty($datAll)) { foreach ($datAll as $dta) { ?>
+                <?php if (isset($datOneBar) && !empty($datOneBar)) { foreach ($datOneBar as $dta) { ?>
                 <tr>
                     <td>
                         <div style="display: flex; align-items: center;">
@@ -112,7 +89,7 @@ if (isset($_SESSION['idusu'])) {
                                     <strong>Descripción: </strong><?=$dta['desprod'];?><br>
                                     <strong>Valor producto: </strong><?=$dta['vlrprod'];?><br>
                                     <strong>Cantidad Producto: </strong><?=$dta['cantprod'];?><br>
-                                    <strong>ID del bar: </strong><?=$dta['idbar'];?><br>
+                                    <strong>Mililitros: </strong><?=$dta['mililitros'];?><br>
                                     <strong>Tipo de producto: </strong><?=$dta['tipoprod'];?><br>
                                 </small>
                             </div>
@@ -138,3 +115,8 @@ if (isset($_SESSION['idusu'])) {
         </thead>
     </table>
 </div>
+<script>
+    function eliminar() {
+        return confirm("¿Estás seguro de que deseas eliminar este producto?");
+    }
+</script>
