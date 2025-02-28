@@ -1,10 +1,12 @@
 <?php
 require_once 'controllers/cempedgrand.php';
+require_once 'controllers/cempedproc.php';
 
 $idpedido = isset($_GET['idpedido']) ? $_GET['idpedido'] : null;
 $detalleController = new Cdetpedido();
 $productos = $detalleController->listarDetallesPedido($idpedido);
 $totalGeneral = 0;
+$direccionPedido = isset($productos[0]['direccion']) ? $productos[0]['direccion'] : 'No disponible';
 ?>
 
 <div class="container mt-5 mb-5">
@@ -34,6 +36,11 @@ $totalGeneral = 0;
             </div>
             <?php $totalGeneral += $producto['total']; ?>
           <?php endforeach; ?>
+        </div>
+        
+        <div class="mt-4 p-3 bg-light rounded text-dark text-center">
+          <h5 class="fw-bold">Dirección de Entrega:</h5>
+          <p class="mb-0"> <?php echo htmlspecialchars($direccionPedido); ?> </p>
         </div>
         <div class="mt-4 p-3 bg-dark rounded text-white text-center">
           <h4 class="fw-bold">Total General: $<?php echo number_format($totalGeneral, 2); ?></h4>
