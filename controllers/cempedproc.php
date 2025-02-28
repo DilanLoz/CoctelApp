@@ -1,11 +1,10 @@
 <?php
-require_once 'models/Mempedproc.php'; // Importa el modelo
+require_once 'models/mempedproc.php';
 
 class PedidoController {
     public function listarPedidos() {
         $pedidoModel = new Mempedproc();
-        $pedidos = $pedidoModel->getAll(); // Obtiene los pedidos en proceso
-        return $pedidos;
+        return $pedidoModel->getAll();
     }
 }
 ?>

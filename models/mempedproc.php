@@ -102,8 +102,7 @@ class Mempedproc {
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
             $result->execute();
-            $res = $result->fetchAll(PDO::FETCH_ASSOC);
-            return $res;
+            return $result->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
         }
