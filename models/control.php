@@ -62,7 +62,6 @@ function valida($usu, $pas) {
         $_SESSION['codubi'] = $res[0]['codubi'];
         $_SESSION['idper'] = $res[0]['idper'];
         $_SESSION['idval'] = $res[0]['idval'];
-        $_SESSION['idserv'] = $res[0]['idserv'];
         $_SESSION['idbar'] = $res[0]['idbar'];
         $_SESSION['nompropi'] = $res[0]['nompropi'];
         $_SESSION['dircbar'] = $res[0]['dircbar'];
@@ -97,7 +96,7 @@ function ingr($usu, $pas) {
     $pas = sha1(md5($pas . 'Jd#')); // Encriptación de la contraseña
     $sql = "SELECT 
                 u.idusu, u.nomusu, u.emausu, u.celusu, u.fotiden, u.numdocu, u.fecnausu, u.pssusu, u.codubi, 
-                u.idper, f.nomper, f.pagini, u.estado, u.idval, u.idserv, u.idbar, u.nompropi, u.dircbar, u.horbar
+                u.idper, f.nomper, f.pagini, u.estado, u.idval, u.idbar, u.nompropi, u.dircbar, u.horbar
             FROM usuario AS u
             INNER JOIN perfiles AS f ON u.idper = f.idper
             WHERE u.emausu = :emausu AND u.pssusu = :pssusu";

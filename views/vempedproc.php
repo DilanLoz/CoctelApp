@@ -19,7 +19,6 @@ $pedidos = $pedidoController->listarPedidos();
                         <h6 class="fw-bold">No. Pedido <?php echo $pedido['idpedido']; ?></h6>
                         <h6>Dirección: <?php echo $pedido['direccion']; ?></h6>
                         <h6>Cant Productos: <?php echo $pedido['cantidad']; ?></h6>
-                        <h6>Tel Cliente: <?php echo $pedido['idusu']; ?></h6>
                         <div class="d-flex justify-content-center mb-2 mt-3">
                             <div class="col-8 border-top border-warning border-3"></div>
                         </div>

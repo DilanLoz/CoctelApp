@@ -28,7 +28,7 @@ $direccionPedido = isset($productos[0]['direccion']) ? $productos[0]['direccion'
                 <div class="card-body">
                   <h5 class="card-title text-dark fw-bold"> <?php echo $producto['nombre_producto']; ?> </h5>
                   <h6 class="text-muted">Bar: <?php echo $producto['nombar']; ?></h6>
-                  <p class="mb-1">Cantidad: <span class="fw-bold"> <?php echo $producto['cantidad']; ?></span></p>
+                  <p class="mb-1">Cantidad: <span class="fw-bold"> <?php echo $producto['cantidad']; ?></span> - ml <span class="fw-bold"> <?php echo $producto['mililitros']; ?></span></p>
                   <p class="mb-1">Precio Unidad: <span class="fw-bold">$<?php echo number_format($producto['precio'], 2); ?></span></p>
                   <p class="mb-0">Total: <span class="fw-bold text-success">$<?php echo number_format($producto['total'], 2); ?></span></p>
                 </div>
@@ -74,12 +74,74 @@ $direccionPedido = isset($productos[0]['direccion']) ? $productos[0]['direccion'
     </div>
   </div>
 </div>
+<!-- Modal de Éxito -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title fw-bold" id="successModalLabel">Pedido Aceptado</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="fw-bold text-dark">El pedido ha sido aceptado correctamente.</p>
+        <div class="spinner-border text-success" role="status">
+          <span class="visually-hidden">Redirigiendo...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Error -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title fw-bold" id="errorModalLabel">Error</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="fw-bold text-dark">Hubo un problema al aceptar el pedido. Intenta de nuevo.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script>
 function aceptarPedido() {
-    alert("Pedido aceptado correctamente.");
-    var modal = document.getElementById("confirmModal");
-    var modalInstance = bootstrap.Modal.getInstance(modal);
-    modalInstance.hide();
+    var idpedido = "<?php echo $idpedido; ?>"; // ID del pedido actual
+    var idemp = "<?php echo $_SESSION['idusu']; ?>"; // ID del usuario en sesión (empleado)
+
+    fetch('controllers/cempedproc.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `idpedido=${idpedido}&idemp=${idemp}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Mostrar el modal de éxito
+            var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            successModal.show();
+
+            // Redirigir después de 2 segundos
+            setTimeout(() => {
+                window.location.href = "home.php?pg=2005";
+            }, 2000);
+        } else {
+            // Mostrar modal de error si falla
+            var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+            errorModal.show();
+        }
+    })
+    .catch(error => {
+        console.error("Error en la solicitud:", error);
+        var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+        errorModal.show();
+    });
 }
+
+
+
 </script>
