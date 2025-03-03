@@ -52,7 +52,7 @@ $facturas = $facturaModel->getHistorialPedidos($idusu);
                         <td>{$factura['estado']}</td>
                       <td>
                         <a href='views/vfacturapdf.php?idfact={$factura["idfact"]}' 
-                        class='btn btn-danger' 
+                        class='btn btn-outline-danger' 
                         target='_blank' 
                         rel='noopener noreferrer'>
                             <i class='fas fa-file-pdf'></i>
