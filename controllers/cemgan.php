@@ -30,7 +30,7 @@ foreach ($datAll as $factura) {
     $mesFactura = date('m', $fechaFactura);
     $diaFactura = date('Y-m-d', $fechaFactura); // Formato para agrupar días correctamente
     $nombreDia = ucfirst(strftime('%A %d/%m', $fechaFactura)); // Ejemplo: "Domingo 03/03"
-    $totalFactura = $factura['total']; // Total sin aplicar descuento
+    $totalFactura = $factura['total'] * 0.02; // Aplicar el 2% directamente
 
     // Solo considerar facturas del año vigente
     if ($anioFactura == $anioActual) {

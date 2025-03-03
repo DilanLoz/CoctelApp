@@ -109,7 +109,7 @@ class Mempedproc {
     public function getAll() {
         try {
             $sql = "SELECT p.idpedido, p.idcarrito, p.cantidad, p.fecha_pedido, p.estado, p.total, 
-               p.idusu, p.direccion, p.idfactura, p.estado_pago, p.metodo_pago 
+               p.idusu, p.direccion, p.estado_pago, p.metodo_pago 
         FROM pedido AS p 
         WHERE p.estado_pedido = 1";
             
