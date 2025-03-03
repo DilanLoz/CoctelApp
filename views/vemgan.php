@@ -23,7 +23,7 @@ $datFiltered = $datAll;
                 <h2 class="text-warning fw-bold text-center mb-4 fs-3">Ganancias del Día</h2>
                 <div class="container d-md-flex justify-content-between align-items-center">
                     <div class="mb-4 mb-md-0">
-                        <h3 class="text-danger fw-bold">Comisión de hoy (2%)</h3>
+                        <h3 class="text-danger fw-bold">Comisión de hoy </h3>
                         <h5><?php echo '$ ' . number_format($gananciasDia, 0, ',', '.'); ?></h5>
                     </div>
                     <div>
@@ -40,7 +40,7 @@ $datFiltered = $datAll;
                 <h2 class="text-warning fw-bold text-center mb-4 fs-3">Ganancias del Mes</h2>
                 <div class="container d-md-flex justify-content-between align-items-center">
                     <div class="mb-4 mb-md-0">
-                        <h3 class="text-danger fw-bold">Comisión del Mes (2%)</h3>
+                        <h3 class="text-danger fw-bold">Comisión del Mes</h3>
                         <h5><?php echo '$ ' . number_format($gananciasMes, 0, ',', '.'); ?></h5>
                     </div>
                     <div>
@@ -61,7 +61,7 @@ $datFiltered = $datAll;
                     <thead class="table-warning">
                         <tr>
                             <th class="text-center">Día</th>
-                            <th class="text-center">Total Comisión (2%)</th>
+                            <th class="text-center">Total Comisión</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -91,7 +91,7 @@ $datFiltered = $datAll;
                 <thead>
                     <tr class="table-danger">
                         <th>Mes</th>
-                        <th>Ganancia (2%)</th>
+                        <th>Ganancia</th>
                     </tr>
                 </thead>
                 <tbody>
