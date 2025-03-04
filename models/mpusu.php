@@ -201,8 +201,34 @@ WHERE u.idusu = :idusu;";
         }
     }
 
+//-----------------------EMPLEADOS-------------------------------------
+    public function getOneEmpleado()
+    {
+            $res = NULL;
+            $sql = "SELECT u.idusu, u.nomusu, u.numdocu, u.emausu, u.pssusu, u.celusu, u.fotiden, u.fecnausu, u.codubi, u.idval, u.idbar, b.nombar, u.nompropi, u.dircbar, u.horbar
+            FROM usuario u
+            LEFT JOIN bar AS b ON u.idbar = b.idbar
+            WHERE u.idusu = :idusu";
+            $modelo = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+            $result = $conexion->prepare($sql);
+            $result->bindParam(":idusu", $idusu, PDO::PARAM_INT);
+            $result->execute();
 
+            $res = $result->fetch(PDO::FETCH_ASSOC);
+
+            // Depuración
+            if ($res) {
+                error_log("Datos del usuario recuperados: " . json_encode($res));
+            } else {
+                error_log("No se encontraron datos para el usuario con ID: " . $idusu);
+            }
+
+        return $res;
+    }
+    //-----------------------EMPLEADOS-------------------------------------
     //-----------------------USUARIOS-------------------------------------
     public function getOneUsuario()
     {
