@@ -21,49 +21,79 @@ $facturas = $facturaModel->getHistorialPedidos($idusu);
 <div class="container mt-5 mb-5">
     <h2 class="text-center text-warning fw-bold mb-4">Historial de Pedidos</h2>
 
-    <table id="example" class="table table-striped table-bordered text-cente" style="width:100%">
-        <thead class="table-warning">
-            <tr>
-                <th>ID Factura</th>
-                <th>ID Pedido</th>
-                <th>Fecha</th>
-                <th>Cantidad</th>
-                <th>Total</th>
-                <th>Dirección</th>
-                <th>Estado de Pago</th>
-                <th>Método de Pago</th>
-                <th>Estado</th>
-                <th>PDF</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            if (!empty($facturas)) {
-                foreach ($facturas as $factura) {
-                    echo "<tr>
-                        <td>{$factura['idfact']}</td>
-                        <td>{$factura['idpedido']}</td>
-                        <td>{$factura['fecha']}</td>
-                        <td>{$factura['cantidad']}</td>
-                        <td>$ " . number_format($factura['total'], 0, ',', '.') . "</td>
-                        <td>{$factura['direccion']}</td>
-                        <td>{$factura['estado_pago']}</td>
-                        <td>{$factura['metodo_pago']}</td>
-                        <td>{$factura['estado']}</td>
-                      <td>
-                        <a href='views/vfacturapdf.php?idfact={$factura["idfact"]}' 
-                        class='btn btn-outline-danger' 
-                        target='_blank' 
-                        rel='noopener noreferrer'>
-                            <i class='fas fa-file-pdf'></i>
-                        </a>
-                    </td>
-                    </tr>";
+    <div class="table-responsive">
+        <table id="example" class="table table-striped table-bordered text-center">
+            <thead class="table-warning">
+                <tr>
+                    <th>Marcar</th>
+                    <th>ID Factura</th>
+                    <th>ID Pedido</th>
+                    <th>Fecha</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                    <th>Dirección</th>
+                    <th>Estado de Pago</th>
+                    <th>Método de Pago</th>
+                    <th>Estado</th>
+                    <th>PDF</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if (!empty($facturas)) {
+                    foreach ($facturas as $factura) {
+                        echo "<tr>
+                            <td>
+                                <button class='btn btn-outline-dark  select-row'>
+                                    <i class='fas fa-check'></i>
+                                </button>
+                            </td>
+                            <td>{$factura['idfact']}</td>
+                            <td>{$factura['idpedido']}</td>
+                            <td>{$factura['fecha']}</td>
+                            <td>{$factura['cantidad']}</td>
+                            <td>$ " . number_format($factura['total'], 0, ',', '.') . "</td>
+                            <td>{$factura['direccion']}</td>
+                            <td>{$factura['estado_pago']}</td>
+                            <td>{$factura['metodo_pago']}</td>
+                            <td>{$factura['estado']}</td>
+                            <td>
+                                <a href='PDF/Bar/HisFacturaBar.php?idfact={$factura["idfact"]}' 
+                                class='btn btn-outline-danger btn-sm' 
+                                target='_blank' 
+                                rel='noopener noreferrer'>
+                                    <i class='fas fa-file-pdf'></i>
+                                </a>
+                            </td>
+                        </tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='11' class='text-center'>No hay pedidos en el historial.</td></tr>";
                 }
-            } else {
-                echo "<tr><td colspan='10' class='text-center'>No hay pedidos en el historial.</td></tr>";
-            }
-            ?>
-        </tbody>
-    </table>
+                ?>
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<!-- Agregar el script de selección de fila -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".select-row").forEach(button => {
+        button.addEventListener("click", function() {
+            let row = this.closest("tr");
+
+            // Alternar la clase "selected"
+            row.classList.toggle("selected");
+        });
+    });
+});
+</script>
+
+<!-- Estilos CSS para destacar la fila seleccionada -->
+<style>
+.selected {
+    background-color: rgba(255, 193, 7, 0.5) !important; /* Amarillo con opacidad */
+}   
+</style>
+

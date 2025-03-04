@@ -58,7 +58,7 @@ class Factura {
     // Obtener Factura y su Detalle
     public function getFacturaDetalle($idfact) {
         $sql = "SELECT 
-                    f.idfact, f.fecha, f.total, f.metodo_pago,
+                    f.idfact, f.fecha, f.total, f.metodo_pago, f.estado_pago,
                     u.nomusu AS usuario, e.nomemp AS empleado, b.nombar AS bar,
                     d.iddetfact, d.idfact, p.nomprod, d.cantidad, d.precio_unitario, d.total AS total_detalle
                 FROM factura f

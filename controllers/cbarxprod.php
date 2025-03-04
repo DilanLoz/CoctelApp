@@ -17,10 +17,8 @@ $nomprod = isset($_POST['nomprod']) ? $_POST['nomprod'] : NULL;
 $desprod = isset($_POST['desprod']) ? $_POST['desprod'] : NULL;
 $vlrprod = isset($_POST['vlrprod']) ? $_POST['vlrprod'] : NULL;
 $fotprod = isset($_POST['fotprod']) ? $_POST['fotprod'] : NULL;
-$idval = isset($_POST['idval']) ? $_POST['idval'] : NULL;
 $idbar = isset($_SESSION['idbar']) ? $_SESSION['idbar'] : NULL;
 $cantprod = isset($_POST['cantprod']) ? $_POST['cantprod'] : NULL;
-$idserv = isset($_POST['idserv']) ? $_POST['idserv'] : NULL;
 $idusu = isset($_POST['idusu']) ? $_POST['idusu'] : NULL;
 $tipoprod = isset($_POST['tipoprod']) ? $_POST['tipoprod'] : NULL;
 $mililitros = isset($_POST['mililitros']) ? $_POST['mililitros'] : NULL;
@@ -62,10 +60,8 @@ if ($ope == "save") {
     $mbarxprod->setDesprod($desprod);
     $mbarxprod->setVlrprod($vlrprod);
     $mbarxprod->setFotprod($fotprod); // Usa la variable que contiene el nombre de la imagen
-    $mbarxprod->setIdval($idval);
     $mbarxprod->setIdbar($idbar);
     $mbarxprod->setCantprod($cantprod);
-    $mbarxprod->setIdserv($idserv);
     $mbarxprod->setIdusu($idusu);
     $mbarxprod->setTipoprod($tipoprod);
     $mbarxprod->setMililitros($mililitros); // Aquí se guarda el tipo de producto

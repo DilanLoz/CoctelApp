@@ -7,10 +7,8 @@ class Mbarxprod {
     private $desprod;
     private $vlrprod;
     private $fotprod;
-    private $idval;
     private $idbar;
     private $cantprod;
-    private $idserv;
     private $idusu;
     private $tipoprod;
     private $mililitros;
@@ -36,9 +34,6 @@ class Mbarxprod {
         return $this->fotprod;
     }
 
-    public function getIdval() {
-        return $this->idval;
-    }
 
     public function getIdbar() {
         return $this->idbar;
@@ -46,10 +41,6 @@ class Mbarxprod {
 
     public function getCantprod() {
         return $this->cantprod;
-    }
-
-    public function getIdserv() {
-        return $this->idserv;
     }
 
     public function getIdusu() {
@@ -84,9 +75,6 @@ class Mbarxprod {
         $this->fotprod = $fotprod;
     }
     
-    public function setIdval($idval) {
-        $this->idval = $idval;
-    }
     
     public function setIdbar($idbar) {
         $this->idbar = $idbar;
@@ -95,10 +83,7 @@ class Mbarxprod {
     public function setCantprod($cantprod) {
         $this->cantprod = $cantprod;
     }
-    
-    public function setIdserv($idserv) {
-        $this->idserv = $idserv;
-    }
+
     
     public function setIdusu($idusu) {
         $this->idusu = $idusu;
@@ -114,7 +99,7 @@ class Mbarxprod {
     // Methods (getAll, getOne, save, edit, del) should be closed with }
     public function getAll() {
         try {
-            $sql = "SELECT p.idprod, p.nomprod, p.desprod, p.vlrprod, p.fotprod, p.idval, p.idbar, p.cantprod, p.idserv, p.idusu, b.nombar, p.tipoprod, p.mililitros FROM producto AS p INNER JOIN bar AS b ON p.idbar=b.idbar";
+            $sql = "SELECT p.idprod, p.nomprod, p.desprod, p.vlrprod, p.fotprod, p.idbar, p.cantprod, b.nombar, p.tipoprod, p.mililitros FROM producto AS p INNER JOIN bar AS b ON p.idbar=b.idbar";
             $modelo = new conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
@@ -128,7 +113,7 @@ class Mbarxprod {
 
      public function getOneBar() {
         try {
-            $sql = "SELECT idprod, nomprod, desprod, vlrprod, fotprod, idval, idbar, cantprod, idserv, idusu, tipoprod, mililitros FROM producto WHERE idbar=:idbar";
+            $sql = "SELECT idprod, nomprod, desprod, vlrprod, fotprod, idbar, cantprod, tipoprod, mililitros FROM producto WHERE idbar=:idbar";
             $modelo = new conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
@@ -159,7 +144,7 @@ class Mbarxprod {
     public function getOne($idprod)
 {
     $res = NULL;
-    $sql = "SELECT idprod, nomprod, desprod, vlrprod, fotprod, idval, idbar, cantprod, idserv, idusu, tipoprod, mililitros FROM producto WHERE idprod=:idprod";
+    $sql = "SELECT idprod, nomprod, desprod, vlrprod, fotprod, idbar, cantprod, tipoprod, mililitros FROM producto WHERE idprod=:idprod";
     $modelo = new Conexion();
     $conexion = $modelo->get_conexion();
     $result = $conexion->prepare($sql);
@@ -171,7 +156,7 @@ class Mbarxprod {
 }
 
     public function saveprod() {
-        $sql = "INSERT INTO producto (nomprod, desprod, vlrprod, fotprod, idval, idbar, cantprod, idserv, idusu, tipoprod, mililitros) VALUES (:nomprod, :desprod, :vlrprod, :fotprod, :idval, :idbar, :cantprod, :idserv, :idusu, :tipoprod, :mililitros)";
+        $sql = "INSERT INTO producto (nomprod, desprod, vlrprod, fotprod, idval, idbar, cantprod, idserv, tipoprod, mililitros) VALUES (:nomprod, :desprod, :vlrprod, :fotprod, :idbar, :cantprod,:idusu, :tipoprod, :mililitros)";
         
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
@@ -181,11 +166,8 @@ class Mbarxprod {
         $result->bindParam(":desprod", $this->desprod);
         $result->bindParam(":vlrprod", $this->vlrprod);
         $result->bindParam(":fotprod", $this->fotprod);
-        $result->bindParam(":idval", $this->idval);
         $result->bindParam(":idbar", $this->idbar);
         $result->bindParam(":cantprod", $this->cantprod);
-        $result->bindParam(":idserv", $this->idserv);
-        $result->bindParam(":idusu", $this->idusu);
         $result->bindParam(":tipoprod", $this->tipoprod);
         $result->bindParam(":mililitros", $this->mililitros);
     
@@ -200,11 +182,8 @@ class Mbarxprod {
                 desprod=:desprod, 
                 vlrprod=:vlrprod, 
                 fotprod=:fotprod, 
-                idval=:idval, 
                 idbar=:idbar, 
                 cantprod=:cantprod, 
-                idserv=:idserv, 
-                idusu=:idusu, 
                 tipoprod=:tipoprod,  -- Aquí la coma
                 mililitros=:mililitros  -- Aquí también la coma
             WHERE idprod=:idprod";
@@ -217,11 +196,8 @@ class Mbarxprod {
     $result->bindParam(":desprod", $this->desprod);
     $result->bindParam(":vlrprod", $this->vlrprod);
     $result->bindParam(":fotprod", $this->fotprod);
-    $result->bindParam(":idval", $this->idval);
     $result->bindParam(":idbar", $this->idbar);
     $result->bindParam(":cantprod", $this->cantprod);
-    $result->bindParam(":idserv", $this->idserv);
-    $result->bindParam(":idusu", $this->idusu);
     $result->bindParam(":tipoprod", $this->tipoprod);
     $result->bindParam(":mililitros", $this->mililitros);
     $result->bindParam(":idprod", $this->idprod); // No te olvides de vincular el idprod también.
