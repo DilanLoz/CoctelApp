@@ -18,30 +18,33 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<div class="container mt-5">
-    <h2 class="text-center text-warning fw-bold mb-4">Historial de Pedidos</h2>
+<div class="container mt-4">
+    <h4 class="text-center text-primary">Historial de Pedidos</h4>
 
     <div class="table-responsive">
         <table id="example" class="table table-striped table-bordered text-center">
             <thead class="table-dark">
                 <tr>
+                    <th>Marcar</th>
                     <th>ID Pedido</th>
+                    <th>Cantidad</th>
                     <th>Fecha Pedido</th>
                     <th>Estado</th>
                     <th>Total</th>
                     <th>Empleado</th>
-                    <th>Detalles</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($pedidos as $pedido): ?>
                     <tr id="pedido-<?= $pedido['idpedido'] ?>">
                         <td>
-                            <button class="btn btn-outline-dark select-row btn-sm me-2">
-                                <i class="fas fa-check" style="font-size: 16px;"></i>
+                            <button class="btn btn-outline-dark select-row">
+                                <i class="fas fa-check"></i>
                             </button>
-                            <?= $pedido['idpedido'] ?>
                         </td>
+                        <td><?= $pedido['idpedido'] ?></td>
+                        <td><?= $pedido['cantidad'] ?></td>
                         <td><?= $pedido['fecha_pedido'] ?></td>
                         <td class="fw-bold <?= ($pedido['estado_pedido'] == 'Entregado') ? 'text-success' : 'text-warning' ?>">
                             <?= $pedido['estado'] ?>
@@ -49,8 +52,8 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
                         <td>$<?= number_format($pedido['total'], 2) ?></td>
                         <td><?= $pedido['nomemp'] ?: 'Pendiente' ?></td>
                         <td>
-                            <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#pedidoModal<?= $pedido['idpedido'] ?>">
-                                <i class="fa-solid fa-eye"></i>
+                            <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#pedidoModal<?= $pedido['idpedido'] ?>">
+                                Ver Detalles
                             </button>
                         </td>
                     </tr>
@@ -73,25 +76,25 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
 
                                     <h5 class="text-center">Productos</h5>
                                     <?php
-                                    $detalles = $detalleModel->getDetallesPorPedido($pedido['idpedido']);
-                                    if (!empty($detalles)):
-                                        $contador = 1; // Inicializa el contador
-                                    ?>
-                                        <?php foreach ($detalles as $detalle): ?>
-                                            <p>
-                                                <strong><?= $contador; ?>.</strong> <?= $detalle['nomprod']; ?> - Cant <?= $detalle['cantidad']; ?> - $<?= number_format($detalle['precio'], 2); ?> - Bar: <?= $detalle['nombar']; ?>
-                                            </p>
-                                            <?php
-                                            $contador++; // Incrementa el contador en cada iteración
-                                            ?>
-                                        <?php endforeach; ?>
-                                    <?php else: ?>
-                                        <p class="text-danger">No hay productos disponibles.</p>
-                                    <?php endif; ?>
+                                        $detalles = $detalleModel->getDetallesPorPedido($pedido['idpedido']);
+                                        if (!empty($detalles)): 
+                                            $contador = 1; // Inicializa el contador
+                                        ?>
+                                            <?php foreach ($detalles as $detalle): ?>
+                                                <p>
+                                                    <strong><?= $contador; ?>.</strong> <?= $detalle['nomprod']; ?> - Cant <?= $detalle['cantidad']; ?> - $<?= number_format($detalle['precio'], 2); ?> - Bar: <?= $detalle['nombar']; ?>
+                                                </p>
+                                                <?php 
+                                                $contador++; // Incrementa el contador en cada iteración
+                                                ?>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <p class="text-danger">No hay productos disponibles.</p>
+                                        <?php endif; ?>
                                 </div>
-                                <!-- MODAL DETALLE DE PEDIDO -->
+                               <!-- MODAL DETALLE DE PEDIDO -->
                                 <div class="modal-footer">
-                                    <?php
+                                    <?php 
                                     // Obtener la factura asociada al pedido actual
                                     $facturaPedido = null;
                                     foreach ($facturas as $factura) {
@@ -102,10 +105,10 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
                                     }
 
                                     if ($facturaPedido): ?>
-                                        <a href='PDF/Usuario/HisFacturaUsu.php?idfact=<?= $facturaPedido["idfact"] ?>'
-                                            class='btn btn-outline-danger btn-sm'
-                                            target='_blank'
-                                            rel='noopener noreferrer'>
+                                        <a href='PDF/Usuario/HisFacturaUsu.php?idfact=<?= $facturaPedido["idfact"] ?>' 
+                                        class='btn btn-outline-danger btn-sm' 
+                                        target='_blank' 
+                                        rel='noopener noreferrer'>
                                             Factura <i class='fas fa-file-pdf'></i>
                                         </a>
                                     <?php endif; ?>
@@ -125,26 +128,24 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
 <!-- Estilos CSS para destacar la fila seleccionada -->
 <style>
     .modal-backdrop {
-        background-color: rgba(0, 0, 0, 0.4) !important;
-        /* Más claro */
-    }
+    background-color: rgba(0, 0, 0, 0.4) !important; /* Más claro */
+}
 
-    .selected {
-        background-color: rgba(255, 193, 7, 0.5) !important;
-        /* Amarillo con opacidad */
-    }
+.selected {
+    background-color: rgba(255, 193, 7, 0.5) !important; /* Amarillo con opacidad */
+}
 </style>
 
 <!-- Script para marcar la fila -->
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll(".select-row").forEach(button => {
-            button.addEventListener("click", function() {
-                let row = this.closest("tr");
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".select-row").forEach(button => {
+        button.addEventListener("click", function() {
+            let row = this.closest("tr");
 
-                // Alternar la clase "selected"
-                row.classList.toggle("selected");
-            });
+            // Alternar la clase "selected"
+            row.classList.toggle("selected");
         });
     });
+});
 </script>
