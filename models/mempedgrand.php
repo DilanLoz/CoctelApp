@@ -82,14 +82,15 @@ class Mdetpedido
     {
         try {
             $sql = "SELECT dp.iddetpedido, dp.idpedido, dp.idprod, dp.cantidad, dp.precio, 
-                (dp.cantidad * dp.precio) AS total, dp.idusu, dp.idbar, 
-                p.nomprod AS nombre_producto, p.mililitros, 
-                b.nombar, ped.direccion 
-            FROM detpedido AS dp
-            INNER JOIN producto AS p ON dp.idprod = p.idprod
-            INNER JOIN bar AS b ON dp.idbar = b.idbar
-            INNER JOIN pedido AS ped ON dp.idpedido = ped.idpedido
-            WHERE dp.idpedido = :idpedido";
+            (dp.cantidad * dp.precio) AS total, dp.idusu, dp.idbar, 
+            p.fotprod, p.nomprod AS nombre_producto, p.mililitros, 
+            b.nombar, ped.direccion 
+        FROM detpedido AS dp
+        INNER JOIN producto AS p ON dp.idprod = p.idprod
+        INNER JOIN bar AS b ON dp.idbar = b.idbar
+        INNER JOIN pedido AS ped ON dp.idpedido = ped.idpedido
+        WHERE dp.idpedido = :idpedido";
+
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);

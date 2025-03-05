@@ -1,68 +1,83 @@
-<style>
-        .progress {
-            height: 30px; /* Aumenta la altura de la barra */
-            border-radius: 5px;
-            overflow: hidden; /* Evita que el fondo blanco se vea */
-        }
-        .progress-bar {
-            font-size: 16px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .btn-confirmar {
-            width: 100%;
-        }
-    </style>
+<?php
+require_once 'controllers/cempedacep.php';
+$pedidoController = new PedidoController();
+$idemp = $_SESSION['idusu'];
+$pedidos = $pedidoController->listarPedidosPorEmpleado($idemp);
+?>
+<link rel="stylesheet" href="css/bares.css">
 
 <div class="container mt-5 mb-5">
     <div class="row d-flex justify-content-center">
-        <!-- Tarjeta 1 -->
-        <div class="col-md-5 mb-5 me-2 ms-2 p-3 border rounded shadow">
-            <div>
-                <h4 class="fw-bold">No. Pedido 020239</h4>
-                <h6>Dirección: Calle Primavera, #123 (Bogotá)</h6>
-                <h6>Cant. Productos: 4</h6>
-                <h6>Tel Cliente: +57 123 4567843</h6>
-                <!-- Barra de estado -->
-                <div class="progress mb-3">
-                    <div class="progress-bar bg-info estado-barra" style="width: 60%;">En preparación</div>
+        <?php if (!empty($pedidos)): ?>
+            <?php foreach ($pedidos as $pedido): ?>
+                <div class="col-md-5 mb-5 me-2 ms-2 p-3 dtped border rounded shadow">
+                    <div class="rounded bg-black">
+                        <a href="home.php?pg=2006&idpedido=<?php echo $pedido['idpedido']; ?>"
+                            class="dtpedproc text-center text-white mb-3">
+                            <i class="fa-solid fa-eye"></i> Ver Detalles
+                        </a>
+                    </div>
+                    <h6 class="fw-bold">No. Pedido <?php echo $pedido['idpedido']; ?></h6>
+                    <h6>Dirección: <?php echo $pedido['direccion']; ?></h6>
+                    <h6>Cant Productos: <?php echo $pedido['cantidad']; ?></h6>
+
+                    <div class="progress mb-3">
+
+                        <?php
+                        $estadoPedido = $pedido['estado_pedido']; // El estado viene como texto
+
+                        if ($estadoPedido == "En preparación") {
+                            $porcentaje = '50%';
+                            $claseEstado = 'bg-info';
+                            $textoEstado = 'En preparación';
+                        } elseif ($estadoPedido == "En camino") {
+                            $porcentaje = '90%';
+                            $claseEstado = 'bg-primary';
+                            $textoEstado = 'En camino';
+                        } else {
+                            $porcentaje = '100%';
+                            $claseEstado = 'bg-success';
+                            $textoEstado = 'Entregado';
+                        }
+                        ?>
+                        <div class="progress-bar <?php echo $claseEstado; ?> estado-barra" style="width: <?php echo $porcentaje; ?>;">
+                            <?php echo $textoEstado; ?>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-dark btn-sm btn-confirmar"
+                        data-idpedido="<?php echo $pedido['idpedido']; ?>"
+                        data-estado="<?php echo $pedido['estado_pedido']; ?>">
+                        <i class="fas fa-arrow-right"></i> Confirmar
+                    </button>
+
+                    <div class="modal fade" id="modalClave<?php echo $pedido['idpedido']; ?>" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Confirmar Entrega</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Ingrese la clave secreta para confirmar la entrega.</p>
+                                    <input type="password" id="clave<?php echo $pedido['idpedido']; ?>" class="form-control" placeholder="Clave Secreta">
+                                    <p id="msgClave<?php echo $pedido['idpedido']; ?>" class="text-danger mt-2" style="display: none;"></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-primary btn-validar"
+                                        data-idpedido="<?php echo $pedido['idpedido']; ?>">Validar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- Botón de continuar -->
-                <button class="btn btn-dark btn-confirmar">
-                    <i class="fas fa-arrow-right"></i> Confirmar
-                </button>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <div class="text-center">
+                <img src="img/no_pedidos.png" alt="No hay pedidos" class="img-fluid" style="max-width: 300px;">
+                <p class="mt-3">No hay pedidos en proceso.</p>
             </div>
-        </div>
+        <?php endif; ?>
     </div>
 </div>
-
-<script>
-    document.querySelectorAll(".btn-confirmar").forEach((boton, index) => {
-        let estado = 1; // Estado inicial
-        const barra = document.querySelectorAll(".estado-barra")[index];
-
-        boton.addEventListener("click", () => {
-            if (estado === 1) {
-                barra.style.width = "90%";
-                barra.textContent = "En camino";
-                barra.classList.remove("bg-info");
-                barra.classList.add("bg-primary");
-                estado++;
-            } else if (estado === 2) {
-                barra.style.width = "100%";
-                barra.textContent = "Entregado";
-                barra.classList.remove("bg-primary");
-                barra.classList.add("bg-success");
-                estado++;
-
-                // Deshabilitar botón
-                boton.classList.remove("btn-dark");
-                boton.classList.add("btn-secondary");
-                boton.innerHTML = '<i class="fas fa-lock"></i> Pedido ya entregado';
-                boton.disabled = true;
-            }
-        });
-    });
-</script>

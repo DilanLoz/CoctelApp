@@ -25,10 +25,14 @@ $direccionPedido = isset($productos[0]['direccion']) ? $productos[0]['direccion'
           <?php foreach ($productos as $producto): ?>
             <div class="col-md-6">
               <div class="card shadow-sm border-warning">
+                <img src="img/<?php echo htmlspecialchars($producto['fotprod'] ?: 'default.jpg'); ?>"
+                  class="card-img-top mx-auto d-block mt-2"
+                  style="width: 90px; height: auto;"
+                  alt="Imagen del producto">
                 <div class="card-body">
-                  <h5 class="card-title text-dark fw-bold"> <?php echo $producto['nombre_producto']; ?> </h5>
+                  <h5 class="card-title text-dark fw-bold"><?php echo $producto['nombre_producto']; ?></h5>
                   <h6 class="text-muted">Bar: <?php echo $producto['nombar']; ?></h6>
-                  <p class="mb-1">Cantidad: <span class="fw-bold"> <?php echo $producto['cantidad']; ?></span> - ml <span class="fw-bold"> <?php echo $producto['mililitros']; ?></span></p>
+                  <p class="mb-1">Cantidad: <span class="fw-bold"><?php echo $producto['cantidad']; ?></span> - ml <span class="fw-bold"><?php echo $producto['mililitros']; ?></span></p>
                   <p class="mb-1">Precio Unidad: <span class="fw-bold">$<?php echo number_format($producto['precio'], 2); ?></span></p>
                   <p class="mb-0">Total: <span class="fw-bold text-success">$<?php echo number_format($producto['total'], 2); ?></span></p>
                 </div>
@@ -37,7 +41,7 @@ $direccionPedido = isset($productos[0]['direccion']) ? $productos[0]['direccion'
             <?php $totalGeneral += $producto['total']; ?>
           <?php endforeach; ?>
         </div>
-        
+
         <div class="mt-4 p-3 bg-light rounded text-dark text-center">
           <h5 class="fw-bold">Dirección de Entrega:</h5>
           <p class="mb-0"> <?php echo htmlspecialchars($direccionPedido); ?> </p>
@@ -109,39 +113,38 @@ $direccionPedido = isset($productos[0]['direccion']) ? $productos[0]['direccion'
 
 
 <script>
-function aceptarPedido() {
+  function aceptarPedido() {
     var idpedido = "<?php echo $idpedido; ?>"; // ID del pedido actual
     var idemp = "<?php echo $_SESSION['idusu']; ?>"; // ID del usuario en sesión (empleado)
 
     fetch('controllers/cempedproc.php', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
         body: `idpedido=${idpedido}&idemp=${idemp}`
-    })
-    .then(response => response.json())
-    .then(data => {
+      })
+      .then(response => response.json())
+      .then(data => {
         if (data.success) {
-            // Mostrar el modal de éxito
-            var successModal = new bootstrap.Modal(document.getElementById('successModal'));
-            successModal.show();
+          // Mostrar el modal de éxito
+          var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+          successModal.show();
 
-            // Redirigir después de 2 segundos
-            setTimeout(() => {
-                window.location.href = "home.php?pg=2005";
-            }, 2000);
+          // Redirigir después de 2 segundos
+          setTimeout(() => {
+            window.location.href = "home.php?pg=2005";
+          }, 2000);
         } else {
-            // Mostrar modal de error si falla
-            var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
-            errorModal.show();
+          // Mostrar modal de error si falla
+          var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+          errorModal.show();
         }
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.error("Error en la solicitud:", error);
         var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
         errorModal.show();
-    });
-}
-
-
-
+      });
+  }
 </script>
