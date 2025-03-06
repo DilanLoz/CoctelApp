@@ -1,37 +1,61 @@
 <?php
 require_once 'models/mempedproc.php';
 
-class PedidoController {
+class PedidoEstadoController {
     private $pedidoModel;
 
     public function __construct() {
-        $this->pedidoModel = new Mempedproc();
+        $this->pedidoModel = new PedidoModel();
     }
 
-    public function listarPedidosPorEmpleado($idemp) {
-        return $this->pedidoModel->getPedidosPorEmpleado($idemp);
+    public function actualizarEstado($idpedido, $passecret = null) {
+        try {
+            // Obtener estado actual y clave secreta del pedido
+            $pedido = $this->pedidoModel->obtenerPedidoPorId($idpedido);
+
+            if (!$pedido) {
+                return ["success" => false, "message" => "Pedido no encontrado"];
+            }
+
+            $estadoActual = $pedido['estado'];
+            $claveReal = $pedido['passecret'];
+
+            // Determinar el nuevo estado
+            if ($estadoActual === "En preparación") {
+                $nuevoEstado = "En camino";
+            } elseif ($estadoActual === "En camino") {
+                if ($passecret === null) {
+                    return ["success" => false, "require_password" => true];
+                }
+                if ($passecret !== $claveReal) {
+                    return ["success" => false, "message" => "Clave incorrecta"];
+                }
+                $nuevoEstado = "Entregado";
+            } else {
+                return ["success" => false, "message" => "El pedido ya está entregado"];
+            }
+
+            // Actualizar el estado del pedido en la base de datos
+            $this->pedidoModel->actualizarEstadoPedido($idpedido, $nuevoEstado);
+
+            return ["success" => true, "estado" => $nuevoEstado];
+        } catch (Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
     }
+}
 
-    public function actualizarEstadoPedido($idpedido, $nuevoEstado) {
-        return $this->pedidoModel->actualizarEstadoPedido($idpedido, $nuevoEstado);
-    }
+// Manejo de la solicitud AJAX
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $idpedido = isset($_POST['idpedido']) ? $_POST['idpedido'] : null;
+    $passecret = isset($_POST['passecret']) ? $_POST['passecret'] : null;
 
-    public function confirmarEntrega($idpedido, $claveIngresada) {
-        $claveReal = $this->pedidoModel->obtenerClaveSecreta($idpedido);
-
-        if ($claveReal === null) {
-            return ["error" => "No se encontró la clave secreta para este pedido."];
-        }
-
-        if ($claveReal !== $claveIngresada) {
-            return ["error" => "Clave secreta incorrecta."];
-        }
-
-        if ($this->pedidoModel->actualizarEstadoPedido($idpedido, 3)) {
-            return ["success" => "Pedido entregado exitosamente."];
-        } else {
-            return ["error" => "Error al actualizar el estado del pedido."];
-        }
+    if ($idpedido) {
+        $pedidoController = new PedidoController();
+        $response = $pedidoController->actualizarEstado($idpedido, $passecret);
+        echo json_encode($response);
+    } else {
+        echo json_encode(["success" => false, "message" => "ID de pedido no válido"]);
     }
 }
 ?>

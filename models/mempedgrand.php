@@ -84,7 +84,7 @@ class Mdetpedido
             $sql = "SELECT dp.iddetpedido, dp.idpedido, dp.idprod, dp.cantidad, dp.precio, 
             (dp.cantidad * dp.precio) AS total, dp.idusu, dp.idbar, 
             p.fotprod, p.nomprod AS nombre_producto, p.mililitros, 
-            b.nombar, ped.direccion 
+            b.nombar, ped.direccion, ped.mensaje, ped.metodo_pago, ped.estado
         FROM detpedido AS dp
         INNER JOIN producto AS p ON dp.idprod = p.idprod
         INNER JOIN bar AS b ON dp.idbar = b.idbar

@@ -9,6 +9,7 @@ class Mempedproc {
     private $estado;
     private $total;
     private $idusu;
+    private $telefono;
     private $direccion;
     private $mensaje;
     private $idfactura;
@@ -40,6 +41,9 @@ class Mempedproc {
     }
     public function getIdusu() {
         return $this->idusu;
+    }
+    public function getTelefono() {
+        return $this->telefono;
     }
     public function getDireccion() {
         return $this->direccion;
@@ -88,6 +92,9 @@ class Mempedproc {
     public function setIdusu($idusu) {
         $this->idusu = $idusu;
     }
+    public function setTelefono($telefono) {
+        $this->telefono = $telefono;
+    }
     public function setDireccion($direccion) {
         $this->direccion = $direccion;
     }
@@ -116,7 +123,7 @@ class Mempedproc {
     public function getAll() {
         try {
             $sql = "SELECT p.idpedido, p.idcarrito, p.cantidad, p.fecha_pedido, p.estado, p.total, 
-               p.idusu, p.direccion, p.estado_pago, p.metodo_pago 
+               p.idusu, p.direccion, p.estado_pago, p.metodo_pago, p.estado_pedido, p.telefono
         FROM pedido AS p 
         WHERE p.estado_pedido = 1";
             
@@ -129,6 +136,24 @@ class Mempedproc {
             echo "Error: " . $e->getMessage();
         }
     }
+    public function getAllPedidos() {
+        try {
+            $sql = "SELECT p.idpedido, p.idcarrito, p.cantidad, p.fecha_pedido, p.estado, p.total, 
+                           p.idusu, p.direccion, p.estado_pago, p.metodo_pago, p.estado_pedido, p.telefono
+                    FROM pedido AS p 
+                    WHERE p.estado_pedido = 2
+                    ORDER BY p.idpedido DESC"; // ✅ Comentario eliminado
+    
+            $modelo = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }    
+    
     public function aceptarPedido($idpedido, $idemp) {
         try {
             $sql = "UPDATE pedido SET idemp = :idemp, estado_pedido = 2 WHERE idpedido = :idpedido AND estado_pedido = 1";
@@ -143,57 +168,22 @@ class Mempedproc {
             return false;
         }
     }
-    public function getPedidosPorEmpleado($idemp) {
-        try {
-            $sql = "SELECT idpedido, idcarrito, cantidad, fecha_pedido, estado_pedido, total, 
-                           idusu, direccion, estado_pago, metodo_pago 
-                    FROM pedido 
-                    WHERE estado_pedido = 2 AND idemp = :idemp";
 
-            $modelo = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $stmt = $conexion->prepare($sql);
-            $stmt->bindParam(':idemp', $idemp, PDO::PARAM_INT);
-            $stmt->execute();
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (Exception $e) {
-            return [];
-        }
+    // Obtener estado y clave secreta de un pedido
+    public function obtenerPedidoPorId($idpedido) {
+        $sql = "SELECT estado, passecret FROM pedido WHERE idpedido = ?";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute([$idpedido]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    // Actualizar el estado del pedido
     public function actualizarEstadoPedido($idpedido, $nuevoEstado) {
-        try {
-            $sql = "UPDATE pedido SET estado_pedido = :nuevoEstado WHERE idpedido = :idpedido";
-
-            $modelo = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $stmt = $conexion->prepare($sql);
-            $stmt->bindParam(':nuevoEstado', $nuevoEstado, PDO::PARAM_INT);
-            $stmt->bindParam(':idpedido', $idpedido, PDO::PARAM_INT);
-
-            return $stmt->execute();
-        } catch (Exception $e) {
-            return false;
-        }
+        $sql = "UPDATE pedido SET estado = ? WHERE idpedido = ?";
+        $stmt = $this->conexion->prepare($sql);
+        return $stmt->execute([$nuevoEstado, $idpedido]);
     }
-
-    public function obtenerClaveSecreta($idpedido) {
-        try {
-            $sql = "SELECT passecret FROM pedido WHERE idpedido = :idpedido";
-
-            $modelo = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $stmt = $conexion->prepare($sql);
-            $stmt->bindParam(':idpedido', $idpedido, PDO::PARAM_INT);
-            $stmt->execute();
-
-            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $resultado ? $resultado['passecret'] : null;
-        } catch (Exception $e) {
-            return null;
-        }
-    }
+    
     
 }
 ?>

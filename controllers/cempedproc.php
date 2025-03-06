@@ -26,4 +26,10 @@ class PedidoController {
         return $pedidoModel->getAll();
     }
 }
+class PedidoAceptadoController {
+    public function listarPedidosAcep() {
+        $pedidoModel = new Mempedproc();
+        return $pedidoModel->getAllPedidos();
+    }
+}
 ?>
