@@ -168,22 +168,23 @@ class Mempedproc {
             return false;
         }
     }
-
-    // Obtener estado y clave secreta de un pedido
-    public function obtenerPedidoPorId($idpedido) {
-        $sql = "SELECT estado, passecret FROM pedido WHERE idpedido = ?";
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->execute([$idpedido]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    // Actualizar el estado del pedido
-    public function actualizarEstadoPedido($idpedido, $nuevoEstado) {
-        $sql = "UPDATE pedido SET estado = ? WHERE idpedido = ?";
-        $stmt = $this->conexion->prepare($sql);
-        return $stmt->execute([$nuevoEstado, $idpedido]);
-    }
+    public function entregarPedido($idpedido) {
+        try {
+            $sql = "UPDATE pedido 
+                    SET estado = 'Entregado', 
+                        estado_pago = CASE WHEN estado = 'Entregado' THEN 'Pagado' ELSE estado_pago END 
+                    WHERE idpedido = :idpedido";
     
+            $modelo = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $stmt = $conexion->prepare($sql);
+            $stmt->bindParam(':idpedido', $idpedido, PDO::PARAM_INT);
+    
+            return $stmt->execute();
+        } catch (Exception $e) {
+            return false;
+        }
+    }
     
 }
 ?>
