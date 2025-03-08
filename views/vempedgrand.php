@@ -50,7 +50,10 @@ $direccionPedido = isset($productos[0]['direccion']) ? $productos[0]['direccion'
           <h4 class="fw-bold">Total General: $<?php echo number_format($totalGeneral, 2); ?></h4>
         </div>
       <?php else: ?>
-        <p class="text-danger">No hay detalles para este pedido.</p>
+        <div class="text-center">
+          <h3 class="mt-3 fw-bold fs-4 fs-md-3 fs-lg-2">No hay detalles de pedido.</h3>
+          <img src="./img/coctelapp/svg/personal _goals _checklist-pana.png" alt="Sin pedidos" class="img-fluid w-50 w-md-50 w-lg-25">
+        </div>
       <?php endif; ?>
     </div>
 

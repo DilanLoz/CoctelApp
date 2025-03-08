@@ -168,23 +168,28 @@ class Mempedproc {
             return false;
         }
     }
-    public function entregarPedido($idpedido) {
+    public function actualizarEstadoPago($idpedido) {
         try {
-            $sql = "UPDATE pedido 
-                    SET estado = 'Entregado', 
-                        estado_pago = CASE WHEN estado = 'Entregado' THEN 'Pagado' ELSE estado_pago END 
-                    WHERE idpedido = :idpedido";
-    
+            $sql = "UPDATE pedido SET estado_pago = 'Pagado' WHERE idpedido = :idpedido";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $stmt = $conexion->prepare($sql);
             $stmt->bindParam(':idpedido', $idpedido, PDO::PARAM_INT);
     
-            return $stmt->execute();
+            if (!$stmt->execute()) {
+                $errorInfo = $stmt->errorInfo(); // Obtener detalles del error
+                file_put_contents('debug.log', "Error en SQL: " . implode(" | ", $errorInfo) . "\n", FILE_APPEND);
+                return false;
+            }
+    
+            file_put_contents('debug.log', "Consulta ejecutada correctamente para pedido $idpedido\n", FILE_APPEND);
+            return true;
         } catch (Exception $e) {
+            file_put_contents('debug.log', "Excepción SQL: " . $e->getMessage() . "\n", FILE_APPEND);
             return false;
         }
     }
+    
     
 }
 ?>

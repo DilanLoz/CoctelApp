@@ -1,6 +1,5 @@
 <?php
 require_once 'controllers/cempedgrand.php';
-require_once 'controllers/cempedproc.php';
 require_once 'controllers/cempedacep.php';
 
 $idpedido = isset($_GET['idpedido']) ? $_GET['idpedido'] : null;
@@ -15,6 +14,14 @@ $estadoPedido = (!empty($productos) && isset($productos[0]['estado'])) ? $produc
 foreach ($productos as $producto) {
   $totalGeneral += $producto['total'];
 }
+$estadoClase = "";
+if ($estadoPedido === "En pendiente") {
+  $estadoClase = "estado-pendiente";
+} elseif ($estadoPedido === "En camino") {
+  $estadoClase = "estado-camino";
+} elseif ($estadoPedido === "Entregado") {
+  $estadoClase = "estado-entregado";
+}
 ?>
 
 <div class="container mt-5 mb-5">
@@ -26,24 +33,27 @@ foreach ($productos as $producto) {
   </div>
   <div class="row mt-4 justify-content-center">
     <div class="col-md-8 mx-auto text-center">
-      <!-- Barra de estado -->
+      <!-- Mostrar el estado -->
       <div class="mt-3">
-        <div class="progress mb-3">
-          <div class="progress-bar bg-info estado-barra" style="width: 60%;">
-            <?php echo htmlspecialchars($estadoPedido); ?>
-          </div>
+        <div class="estado-pedido <?php echo $estadoClase; ?> text-center p-2 rounded fw-bold">
+          <?php echo htmlspecialchars($estadoPedido); ?>
         </div>
-        <button class="btn btn-warning btn-confirmar" data-bs-toggle="modal" data-bs-target="#confirmModal">
-          <i class="fas fa-arrow-right"></i> Continuar
+        <button class="btn btn-warning btn-confirmar mt-3"
+          data-bs-toggle="modal"
+          data-bs-target="#confirmModal"
+          style="width: 80%;"
+          <?php echo ($estadoPedido === "Entregado") ? 'disabled' : ''; ?>>
+          <i class="<?php echo ($estadoPedido === "Entregado") ? 'fa-solid fa-lock' : 'fas fa-arrow-right'; ?>"></i>
+          <?php echo ($estadoPedido === "Entregado") ? ' Pedido ya entregado' : ' Confirmar Pedido'; ?>
         </button>
-      </div>
 
+      </div>
       <!-- Mostrar el total general antes de la lista -->
       <div class="mt-4 mb-4 p-3 bg-dark rounded text-white text-center">
         <h4 class="fw-bold">Total General: $<?php echo number_format($totalGeneral, 2); ?></h4>
       </div>
 
-      <div class="mt-4 p-3 bg-light rounded text-dark text-center">
+      <div class="mt-4 p-3 bg-light rounded text-dark text-center w-100">
         <h5 class="fw-bold">Dirección de Entrega:</h5>
         <p class="mb-0"><?php echo htmlspecialchars($direccionPedido); ?></p>
       </div>
@@ -76,7 +86,10 @@ foreach ($productos as $producto) {
           <?php endforeach; ?>
         </div>
       <?php else: ?>
-        <p class="text-danger">No hay detalles para este pedido.</p>
+        <div class="text-center">
+          <h3 class="mt-3 fw-bold fs-4 fs-md-3 fs-lg-2">No hay detalles de pedido.</h3>
+          <img src="./img/coctelapp/svg/personal _goals _checklist-pana.png" alt="Sin pedidos" class="img-fluid w-50 w-md-50 w-lg-25">
+        </div>
       <?php endif; ?>
     </div>
   </div>
@@ -132,57 +145,62 @@ foreach ($productos as $producto) {
     </div>
   </div>
 </div>
-
 <style>
-  .progress {
-    height: 30px;
-    /* Aumenta la altura de la barra */
-    border-radius: 5px;
-    overflow: hidden;
-    /* Evita que el fondo blanco se vea */
+  .estado-pedido {
+    font-size: 18px;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 10px auto;
   }
 
-  .progress-bar {
-    font-size: 16px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  /* Estado: En pendiente */
+  .estado-pendiente {
+    background-color: #f8d7da;
+    color: #dc3545;
   }
 
-  .btn-confirmar {
-    width: 100%;
+  /* Estado: En camino */
+  .estado-camino {
+    background-color: #cce5ff;
+    color: #007bff;
+  }
+
+  /* Estado: Entregado */
+  .estado-entregado {
+    background-color: #d4edda;
+    color: #28a745;
   }
 </style>
-<script>
-function entregarPedido() {
-    var idpedido = "<?php echo $idpedido; ?>"; // ID del pedido actual
 
-    fetch('controllers/cempedproc.php', {
+<script>
+  function entregarPedido() {
+    var idpedido = "<?php echo htmlspecialchars($idpedido); ?>";
+
+    fetch('controllers/cempedacep.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: `idpedido=${idpedido}`
+        body: `idpedido=${encodeURIComponent(idpedido)}&accion=actualizarEstadoPago`
       })
       .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          var successModal = new bootstrap.Modal(document.getElementById('successModal'));
-          successModal.show();
-
+      .then(jsonData => {
+        console.log("Respuesta del servidor:", jsonData); // Ver qué responde PHP
+        if (jsonData.success) {
+          new bootstrap.Modal(document.getElementById('successModal')).show();
           setTimeout(() => {
-            window.location.href = "home.php?pg=2005";
+            window.location.href = `home.php?pg=2008&idpedido=${idpedido}`;
           }, 2000);
         } else {
-          var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
-          errorModal.show();
+          console.error("Error del servidor:", jsonData.error);
+          alert("Error en la actualización: " + jsonData.error); // Mostrar error exacto
+          new bootstrap.Modal(document.getElementById('errorModal')).show();
         }
       })
       .catch(error => {
         console.error("Error en la solicitud:", error);
-        var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
-        errorModal.show();
+        alert("Error en la solicitud: " + error.message); // Mostrar error en alerta
+        new bootstrap.Modal(document.getElementById('errorModal')).show();
       });
-}
+  }
 </script>

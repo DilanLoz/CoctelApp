@@ -35,7 +35,10 @@ $pedidos = $pedidoAcepController->listarPedidosAcep();
         </div>
         <?php endforeach; ?>
     <?php else: ?>
-        <p class="text-center">No hay pedidos en proceso.</p>
+        <div class="text-center">
+                <h3 class="mt-3 fw-bold fs-4 fs-md-3 fs-lg-2">No hay pedidos aceptados.</h3>
+                <img src="./img/coctelapp/svg/team_checklist.gif" alt="Sin pedidos" class="img-fluid w-50 w-md-50 w-lg-25">
+            </div>
     <?php endif; ?>
     </div>
 </div>
