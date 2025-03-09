@@ -1,8 +1,10 @@
+<?php include_once(__DIR__ . "/../controllers/ccarr.php"); ?>
 <div class="container mt-5 col-12 col-md-8" id="detpedpq" style="text-align: left">
     <div class="mt-4">
         <h1 class="text-warning fw-bold" style="font-size: 30px">
             <i class="fa-solid fa-cart-shopping"></i> Carrito
         </h1>
+        <?php foreach ($dtCarrito as $producto) { ?>
         <div class="row">
             <div class="rounded-3 me-4 mb-5 text-black" style="background-color: #fff;">
                 <!-- Producto 1 -->
@@ -10,15 +12,16 @@
                     <div class="row product-item pt-3 ps-3 pe-3 mt-3 bg-body-tertiary rounded-3 m-4">
                         <!-- Imagen del producto -->
                         <div class="col-3 col-sm-2 d-flex justify-content-center">
-                            <img src="img/coctelapp/logo.png" alt="" class="prodcar" draggable="false" style="width: 50px; height: 70px;">
+                        <img src="<?php echo 'img/' . htmlspecialchars($producto['fotprod']); ?>" class="prodcar" draggable="false" style="width: 50px; height: 70px;">
                         </div>
+                        
 
                         <!-- Información del producto -->
                         <div class="col-6 col-sm-6">
                             <ul style="list-style-type: none; padding-left: 0;">
-                                <li><b>Licor Sake Yaegaki</b></li>
-                                <li><b style="font-size: 13px;">Bar Rocas</b></li>
-                                <li><b class="text-warning">190.000</b></li>
+                                <li><b><?php echo htmlspecialchars($producto['nomprod']); ?></b></li>
+                                <li><b style="font-size: 13px;"><?php echo htmlspecialchars($producto['nombar']); ?></b></li>
+                                <li><b class="text-warning"><?php echo "$" . number_format($producto['vlrprod'], 2); ?></b></li>
                             </ul>
                         </div>
 
@@ -30,7 +33,7 @@
                                     <i class="fa-solid fa-plus"></i>
                                 </button>
 
-                                <input type="text" class="text-center mx-1 form-control quantity" value="1" readonly>
+                                <input type="text" class="text-center mx-1 form-control quantity" value="<?= $producto['cantidad'] ?>" readonly>
 
                                 <button class="btn btn-outline-danger btn-sm decrement">
                                     <i class="fa-solid fa-minus"></i>
@@ -43,58 +46,50 @@
                             </button>
                         </div>
                     </div>
-                    <div class="row product-item pt-3 ps-3 pe-3 mt-3 bg-body-tertiary rounded-3 m-4">
-                        <!-- Imagen del producto -->
-                        <div class="col-3 col-sm-2 d-flex justify-content-center">
-                            <img src="img/coctelapp/logo.png" alt="" class="prodcar" draggable="false" style="width: 50px; height: 70px;">
-                        </div>
 
-                        <!-- Información del producto -->
-                        <div class="col-6 col-sm-6">
-                            <ul style="list-style-type: none; padding-left: 0;">
-                                <li><b>Licor Sake Yaegaki</b></li>
-                                <li><b style="font-size: 13px;">Cabañas</b></li>
-                                <li><b class="text-warning">190.000</b></li>
-                            </ul>
-                        </div>
-
-                        <!-- Contenedor del contador y botón de eliminar -->
-                        <div class="col-3 d-flex justify-content-between align-items-center mb-3">
-                            <!-- Contador -->
-                            <div class="counter d-flex align-items-center">
-                                <button class="btn btn-outline-success btn-sm increment">
-                                    <i class="fa-solid fa-plus"></i>
-                                </button>
-
-                                <input type="text" class="text-center mx-1 form-control quantity" value="1" readonly>
-
-                                <button class="btn btn-outline-danger btn-sm decrement">
-                                    <i class="fa-solid fa-minus"></i>
-                                </button>
-                            </div>
-
-                            <!-- Botón de eliminar -->
-                            <button class="trash mb-2">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
                 </div>
-
+                <?php } ?>
                 <!-- Cálculos y pagos -->
-                <div class="mb-5 mt-3">
-                    <div class="row mt-2">
-                        <label class="col-6 col-md-6 col-form-label"><strong>Costo del envío</strong></label>
-                        <label class="costenvio col-6 col-md-6 text-end p-2"><strong>$ 4.200</strong></label>
+                <?php if (!empty($dtCarrito)) { ?>
+                    <div class="col bx-seg-dt bx-seg-env-minf_det-com bx-res-com-cr rounded-3 border border-secondary p-4">
+                        <div>
+                            <h4>Resumen de Compra</h4>
+                        </div>
+                        <div class="bx-seg-dt_fech">
+                            <?php
+                            $total = 0;
+                            foreach ($dtValoresCarrito as $dts) { ?>
+                                <div class="row">
+                                    <div class="col">
+                                        <p>Producto:</p>
+                                        <p>Envío:</p>
+                                    </div>
+                                    <div class="col">
+                                        <p>$<?= number_format($dts['valor_productos'], 2, ",", ".") ?></p>
+                                        <p class="vl-green">Gratis</p>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                            <div class="row">
+                                <?php if (!empty($dtTotCarrito) && is_array($dtTotCarrito)) { ?>
+                                    <div class="col">
+                                        <p>Total:</p>
+                                    </div>
+                                    <div class="col">
+                                        <p class="tot-carr">$<?= number_format($dtTotCarrito['total_productos'], 2, ",", ".") ?></p>
+                                    </div>
+                                <?php } ?>
+                            </div>
+
+                        </div>
+                        <div class="footer">
+                            <form id="formPago" action="controller/resPago.php" method="POST">
+                                <input type="hidden" name="productos" id="productos">
+                                <button type="submit" class="btn btn-warning col-12 col-md-2">Ir a Pagar</button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="row">
-                        <label class="col-6 col-md-6 col-form-label"><strong>Costo Total</strong></label>
-                        <label class="costenvio col-6 col-md-6 text-end p-2"><strong>$ 44.800</strong></label>
-                    </div>
-                    <div class="text-end mt-3">
-                        <a href="home.php?pg=1012" class="btn btn-warning col-12 col-md-2">Ir a pagar</a>
-                    </div>
-                </div>
+                <?php }?>
             </div>
         </div>
     </div>
@@ -179,3 +174,7 @@
         }
     }
 </style>
+
+    <script src="js/carrito.js"></script> 
+</body>
+</html>

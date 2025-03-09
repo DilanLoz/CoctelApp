@@ -16,211 +16,202 @@ class CarritoModel
         return $this->idusu;
     }
 
-    public function obtenerCarrito($idUsuario)
+    public function obtenerCarrito($idusu)
     {
-        try {
-            $res = "";
-            $sql = "SELECT 
-                    c.idcar, 
+        $res = "";
+        $sql = "SELECT 
+                    c.idcarrito, 
                     c.idusu, 
-                    dc.iddetcar, 
-                    dc.idcar, 
-                    dc.idpro, 
+                    dc.iddetcarrito, 
+                    dc.idcarrito, 
+                    dc.idprod, 
                     dc.cantidad, 
                     dc.precar, 
-                    p.nompro, 
-                    p.precio, 
-                    p.pordescu, 
-                    (p.precio - (p.precio * (p.pordescu / 100))) AS precio_final, 
-                    (p.precio * (p.pordescu / 100)) AS valor_descuento,
-                    i.imgpro, 
-                    i.nomimg 
+                    p.nomprod, 
+                    p.vlrprod,
+                    p.fotprod,
+                    b.nombar,
+                    c.estado
                 FROM carrito AS c
-                INNER JOIN detallecarrito AS dc ON dc.idcar = c.idcar
-                INNER JOIN producto AS p ON dc.idpro = p.idpro
-                LEFT JOIN (
-                    SELECT idpro, imgpro, nomimg 
-                    FROM imagen 
-                    WHERE (idpro, ordimg) IN (
-                        SELECT idpro, MIN(ordimg) 
-                        FROM imagen 
-                        GROUP BY idpro
-                    )
-                ) i ON p.idpro = i.idpro
-                WHERE c.idusu = :idusu";
-
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->bindParam(':idusu', $idUsuario, PDO::PARAM_INT);
-            $stmt->execute();
-
-            $res = $stmt->fetchAll(PDO::FETCH_ASSOC); // Retorna todos los productos en el carrito
-        } catch (Exception $e) {
-            error_log($e->getMessage(), 3, 'C:/xampp/htdocs/SHOOP/errors/error_log.log');
-            return []; // En caso de error, retorna un array vacío
-        }
+                INNER JOIN detcarrito AS dc ON dc.idcarrito = c.idcarrito
+                INNER JOIN producto AS p ON dc.idprod = p.idprod
+                INNER JOIN bar AS b ON b.idbar = p.idbar
+                WHERE c.idusu = :idusu 
+                AND c.idcarrito = (
+                    SELECT idcarrito FROM carrito 
+                    WHERE idusu = :idusu 
+                    AND estado != 'convertido' 
+                    ORDER BY idcarrito DESC 
+                    LIMIT 1
+                )";
+    
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':idusu', $idusu, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $res;
     }
+    
 
 
-    public function agregarProducto($idUsuario, $idpro, $cantidad, $precio)
-    {
-        try {
-            $this->conexion->beginTransaction(); // Iniciar transacción
 
-            // 1️⃣ Verificar si el usuario ya tiene un carrito
-            $sqlCarrito = "SELECT idcar FROM carrito WHERE idusu = :idusu";
+    public function agregarProducto($idusu, $idprod, $cantidad, $precar, $idcarrito = null)
+{
+    try {
+        $this->conexion->beginTransaction(); // Iniciar transacción
+
+        // Si no se pasa $idusu, tomarlo de la sesión
+        if (!$idusu) {
+            $idusu = $_SESSION['idusu'];
+        }
+
+        // 1️⃣ Verificar si el usuario ya tiene un carrito (si no se pasó como parámetro)
+        if (!$idcarrito) {
+            $sqlCarrito = "SELECT idcarrito FROM carrito WHERE idusu = :idusu";
             $stmtCarrito = $this->conexion->prepare($sqlCarrito);
-            $stmtCarrito->bindParam(':idusu', $idUsuario, PDO::PARAM_INT);
+            $stmtCarrito->bindParam(':idusu', $idusu, PDO::PARAM_INT);
             $stmtCarrito->execute();
             $carrito = $stmtCarrito->fetch(PDO::FETCH_ASSOC);
 
             if (!$carrito) {
                 // 2️⃣ Si no tiene carrito, crearlo
-                $sqlCrearCarrito = "INSERT INTO carrito (idusu) VALUES (:idusu)";
+                $sqlCrearCarrito = "INSERT INTO carrito (idusu, fecha_creacion, estado) 
+                    VALUES (:idusu, CURDATE(), 'activo')";
                 $stmtCrearCarrito = $this->conexion->prepare($sqlCrearCarrito);
-                $stmtCrearCarrito->bindParam(':idusu', $idUsuario, PDO::PARAM_INT);
+                $stmtCrearCarrito->bindParam(':idusu', $idusu, PDO::PARAM_INT);
                 $stmtCrearCarrito->execute();
 
-                // Obtener el idcar recién insertado
-                $idCarrito = $this->conexion->lastInsertId();
+                // Obtener el idcarrito recién insertado
+                $idcarrito = $this->conexion->lastInsertId();
             } else {
-                // Si ya existe el carrito, obtener su idcar
-                $idCarrito = $carrito['idcar'];
+                // Si ya existe el carrito, obtener su idcarrito
+                $idcarrito = $carrito['idcarrito'];
             }
-
-            // 3️⃣ Insertar el producto en detallecarrito o actualizar cantidad si ya existe
-            $sqlDetalle = "INSERT INTO detallecarrito (idcar, idpro, cantidad, precar) 
-                           VALUES (:idcar, :idpro, :cantidad, :precar) 
-                           ON DUPLICATE KEY UPDATE cantidad = cantidad + :cantidad";
-            $stmtDetalle = $this->conexion->prepare($sqlDetalle);
-            $stmtDetalle->bindParam(':idcar', $idCarrito, PDO::PARAM_INT);
-            $stmtDetalle->bindParam(':idpro', $idpro, PDO::PARAM_INT);
-            $stmtDetalle->bindParam(':cantidad', $cantidad, PDO::PARAM_INT);
-            $stmtDetalle->bindParam(':precar', $precio, PDO::PARAM_STR);
-            $stmtDetalle->execute();
-
-            $this->conexion->commit(); // Confirmar la transacción
-
-            return true;
-        } catch (Exception $e) {
-            $this->conexion->rollBack(); // Revertir si hay error
-            error_log($e->getMessage(), 3, 'C:/xampp/htdocs/SHOOP/errors/error_log.log');
-            return false;
         }
-    }
-    public function eliminarProducto($idUsuario, $idpro)
-    {
-        try {
-            $this->conexion->beginTransaction(); // Iniciar transacción
 
-            // 1️⃣ Obtener el ID del carrito del usuario
-            $sqlCarrito = "SELECT idcar FROM carrito WHERE idusu = :idusu";
-            $stmtCarrito = $this->conexion->prepare($sqlCarrito);
-            $stmtCarrito->bindParam(':idusu', $idUsuario, PDO::PARAM_INT);
-            $stmtCarrito->execute();
+        // 3️⃣ Insertar el producto en detcarrito o actualizar cantidad si ya existe
+        $sqlDetalle = "INSERT INTO detcarrito (idcarrito, idprod, cantidad, precar) 
+            VALUES (:idcarrito, :idprod, :cantidad, :precar) 
+            ON DUPLICATE KEY UPDATE cantidad = cantidad + :cantidad";
+
+        $stmtDetalle = $this->conexion->prepare($sqlDetalle);
+        $stmtDetalle->bindParam(':idcarrito', $idcarrito, PDO::PARAM_INT);
+        $stmtDetalle->bindParam(':idprod', $idprod, PDO::PARAM_INT);
+        $stmtDetalle->bindParam(':cantidad', $cantidad, PDO::PARAM_INT);
+        $stmtDetalle->bindParam(':precar', $precar, PDO::PARAM_STR);
+        $stmtDetalle->execute();
+
+        $this->conexion->commit(); // Confirmar la transacción
+
+        return true;
+    } catch (Exception $e) {
+        $this->conexion->rollBack(); // Revertir la transacción si hay error
+        return false;
+    }
+}
+
+
+    public function eliminarProducto($idusu, $idprod )
+    {
+        $this->conexion->beginTransaction(); // Iniciar transacción
+
+        // 1️⃣ Obtener el ID del carrito del usuario
+        $sqlCarrito = "SELECT idcarrito FROM carrito WHERE idusu = :idusu";
+        $stmtCarrito = $this->conexion->prepare($sqlCarrito);
+        $stmtCarrito->bindParam(':idusu', $idusu, PDO::PARAM_INT);
+        $stmtCarrito->execute();
             $carrito = $stmtCarrito->fetch(PDO::FETCH_ASSOC);
 
             if (!$carrito) {
                 throw new Exception("El usuario no tiene un carrito.");
             }
 
-            $idCarrito = $carrito['idcar'];
+            $idcarrito = $carrito['idcarrito'];
 
-            // 2️⃣ Eliminar el producto del detallecarrito
-            $sqlEliminar = "DELETE FROM detallecarrito WHERE idcar = :idcar AND idpro = :idpro";
+            // 2️⃣ Eliminar el producto del detcarrito
+            $sqlEliminar = "DELETE FROM detcarrito WHERE idcarrito = :idcarrito AND idprod  = :idprod ";
             $stmtEliminar = $this->conexion->prepare($sqlEliminar);
-            $stmtEliminar->bindParam(':idcar', $idCarrito, PDO::PARAM_INT);
-            $stmtEliminar->bindParam(':idpro', $idpro, PDO::PARAM_INT);
+            $stmtEliminar->bindParam(':idcarrito', $idcarrito, PDO::PARAM_INT);
+            $stmtEliminar->bindParam(':idprod', $idprod , PDO::PARAM_INT);
             $stmtEliminar->execute();
 
             $this->conexion->commit(); // Confirmar la transacción
 
             return true;
-        } catch (Exception $e) {
-            $this->conexion->rollBack(); // Revertir si hay error
-            error_log($e->getMessage(), 3, 'C:/xampp/htdocs/SHOOP/errors/error_log.log');
-            return false;
-        }
     }
-    public function limpiarCarrito($idUsuario)
+    public function limpiarCarrito($idusu)
     {
-        try {
             // Obtener el ID del carrito del usuario
-            $sqlCarrito = "SELECT idcar FROM carrito WHERE idusu = :idusu";
+            $sqlCarrito = "SELECT idcarrito FROM carrito WHERE idusu = :idusu";
             $stmtCarrito = $this->conexion->prepare($sqlCarrito);
-            $stmtCarrito->bindParam(':idusu', $idUsuario, PDO::PARAM_INT);
+            $stmtCarrito->bindParam(':idusu', $idusu, PDO::PARAM_INT);
             $stmtCarrito->execute();
             $carrito = $stmtCarrito->fetch(PDO::FETCH_ASSOC);
 
             if ($carrito) {
-                $idCarrito = $carrito['idcar'];
+                $idcarrito = $carrito['idcarrito'];
 
                 // Eliminar los productos del detalle del carrito
-                $sqlEliminar = "DELETE FROM detallecarrito WHERE idcar = :idcar";
+                $sqlEliminar = "DELETE FROM detcarrito WHERE idcarrito = :idcarrito";
                 $stmtEliminar = $this->conexion->prepare($sqlEliminar);
-                $stmtEliminar->bindParam(':idcar', $idCarrito, PDO::PARAM_INT);
+                $stmtEliminar->bindParam(':idcarrito', $idcarrito, PDO::PARAM_INT);
                 $stmtEliminar->execute();
             }
 
             return true;
-        } catch (Exception $e) {
-            error_log("Error al limpiar el carrito: " . $e->getMessage(), 3, 'C:/xampp/htdocs/SHOOP/errors/error_log.log');
-            return false;
-        }
     }
-
-
     public function obtenerDetalleProductosFactura($idusu)
     {
-        $res = "";
         $sql = "SELECT 
-                    dc.idpro, 
-                    p.nompro, 
+                    SUM(dc.cantidad * dc.precar) AS valor_productos,
+                    dc.idprod,
+                    dc.precar,
+                    p.nomprod, 
                     dc.cantidad, 
-                    p.precio, 
-                    p.pordescu,
-                    (p.precio * (p.pordescu / 100)) AS descuento_unitario,
-                    (dc.cantidad * (p.precio * (p.pordescu / 100))) AS descuento_total,
-                    (p.precio - (p.precio * (p.pordescu / 100))) AS precio_final_unitario,
-                    (dc.cantidad * (p.precio - (p.precio * (p.pordescu / 100)))) AS precio_final_total
-                FROM carrito AS c
-                INNER JOIN detallecarrito AS dc ON dc.idcar = c.idcar
-                INNER JOIN producto AS p ON dc.idpro = p.idpro
-                WHERE c.idusu = :idusu";
-
-        try {
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->bindParam(":idusu", $idusu);
-            $stmt->execute();
-            $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log($e->getMessage(), 3, 'C:/xampp/htdocs/SHOOP/errors/error_log.log');
-        }
+                    p.vlrprod
+                FROM detcarrito AS dc
+                INNER JOIN producto AS p ON dc.idprod = p.idprod
+                WHERE dc.idcarrito = (
+                    SELECT idcarrito FROM carrito 
+                    WHERE idusu = :idusu 
+                    AND estado = 'activo' 
+                    ORDER BY idcarrito DESC 
+                    LIMIT 1
+                )";
+    
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(":idusu", $idusu, PDO::PARAM_INT);
+        $stmt->execute();
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
         return $res;
     }
-
-    // 🔹 2️⃣ Obtener totales para la factura
     public function obtenerTotalesFactura($idusu)
     {
-        $res = "";
         $sql = "SELECT 
-                    SUM(dc.cantidad * p.precio) AS total_productos,  
-                    SUM(dc.cantidad * (p.precio * (p.pordescu / 100))) AS total_descuento,
-                    SUM(dc.cantidad * (p.precio - (p.precio * (p.pordescu / 100)))) AS total_pagar
-                FROM carrito AS c
-                INNER JOIN detallecarrito AS dc ON dc.idcar = c.idcar
-                INNER JOIN producto AS p ON dc.idpro = p.idpro
-                WHERE c.idusu = :idusu";
-
-        try {
-            $stmt = $this->conexion->prepare($sql);
-            $stmt->bindParam(":idusu", $idusu);
-            $stmt->execute();
-            $res = $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log($e->getMessage(), 3, 'C:/xampp/htdocs/SHOOP/errors/error_log.log');
+                    SUM(dc.cantidad * dc.precar) AS total_productos
+                FROM detcarrito AS dc
+                WHERE dc.idcarrito = (
+                    SELECT idcarrito FROM carrito 
+                    WHERE idusu = :idusu 
+                    AND estado = 'activo' 
+                    ORDER BY idcarrito DESC 
+                    LIMIT 1
+                )";
+    
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(":idusu", $idusu, PDO::PARAM_INT);
+        $stmt->execute();
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if (!$res || $res['total_productos'] === null) {
+            $res['total_productos'] = 0; // Evita errores en la vista
         }
+    
         return $res;
     }
+        
 
 }
+?>
