@@ -3,39 +3,25 @@ require_once('controllers/cprod.php');
 include_once(__DIR__ . "/../controllers/ccarr.php");
 
 $mprod = new Mprod();
-
-// Obtén todos los productos
-$datAll = $mprod->getAll(); // Asegúrate de que getAll() retorne datos válidos
-
-// Variables que necesitas definir
-// Simulación de datos del cóctel
 ?>
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Detalle del Cóctel</title>
-        <!-- Vincula el CSS de Bootstrap (asegúrate de tener acceso a este archivo) -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    </head>
-    <body>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 <?php if ($datOne) {foreach ($datOne as $dta) { ?>
     <div class="container mb-5">
-       
         <div class="row mt-5">
             <!-- Columna de imagen grande -->
             <div class="col-md-6 text-start">
-                <h1><strong><img src="img/<?=$dta["fotprod"];?>" alt="" class="product-img"></a></strong></h1>
+                <h1><strong><img src="img/<?=$dta["fotprod"];?>" alt="" class="product-img"></strong></h1>
             </div>
-           
+
             <!-- Columna de información del cóctel -->
             <div class="col-md-6">
                 <h1><strong><?=$dta['nomprod'];?></strong></h1>
                 <h2><strong>Precio: <?=$dta['vlrprod'];?></strong></h2>
                 <h2><strong><?=$dta['desprod'];?></strong></h2>
 
-               
                 <!-- Selector para servicio de bartender -->
                 <div class="mt-4">
                     <label for="servicioBartender" class="form-label">¿Deseas servicio de bartender?</label>
@@ -49,7 +35,12 @@ $datAll = $mprod->getAll(); // Asegúrate de que getAll() retorne datos válidos
 
                 <!-- Botones alineados al texto -->
                 <div class="mt-4 d-flex justify-content-start">
-                <button id="btn-add-carr" class="btn btn-outline-warning btn-md me-2" data-idprod="<?= $dta['idprod']; ?>" data-precio="<?= $dta['vlrprod']; ?>" data-cantidad="1" data-idusu="<?= $_SESSION['idusu'] ?>" title="Añadir al carrito">Agregar al carrito</button>
+                    <button class="btn btn-outline-warning btn-md me-2 add-to-cart"
+                        data-idprod="<?= $dta['idprod']; ?>"
+                        data-vlrprod="<?= $dta['vlrprod']; ?>"
+                        data-idusu="<?= $_SESSION['idusu'] ?>">
+                        <i class="fa-solid fa-cart-plus"></i> Agregar al carrito
+                    </button>
                     <button class="btn btn-warning btn-md" id="btnComprar">
                         Comprar
                     </button>
@@ -58,21 +49,20 @@ $datAll = $mprod->getAll(); // Asegúrate de que getAll() retorne datos válidos
         </div>
     </div>
 <?php }} ?>
+<style>
+    /* Animación de sacudida para el carrito */
+@keyframes shake {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    50% { transform: rotate(10deg); }
+    75% { transform: rotate(-10deg); }
+    100% { transform: rotate(0deg); }
+}
 
-    <!-- Agregar el script de Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+.cart-animate {
+    animation: shake 0.5s ease-in-out;
+}
 
-    <script>
-        document.getElementById('btnAgregarCarrito').addEventListener('click', function() {
-            // Redirigir a la página de carrito
-            window.location.href = 'home.php?pg=1007'; // Cambia esto por la URL de tu página de carrito
-        });
+</style>
 
-        document.getElementById('btnComprar').addEventListener('click', function() {
-            // Redirigir a la página de compra
-            window.location.href = 'pagina_compra.php'; // Cambia esto por la URL de tu página de compra
-        });
-    </script>
-    <script src="js/carrito.js"></script> 
-    </body>
-    </html>
+<script src="js/carrito.js"></script>

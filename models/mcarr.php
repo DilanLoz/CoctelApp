@@ -61,14 +61,13 @@ class CarritoModel
     try {
         $this->conexion->beginTransaction(); // Iniciar transacción
 
-        // Si no se pasa $idusu, tomarlo de la sesión
         if (!$idusu) {
             $idusu = $_SESSION['idusu'];
         }
 
-        // 1️⃣ Verificar si el usuario ya tiene un carrito (si no se pasó como parámetro)
+        // 1️⃣ Obtener el último carrito activo del usuario
         if (!$idcarrito) {
-            $sqlCarrito = "SELECT idcarrito FROM carrito WHERE idusu = :idusu";
+            $sqlCarrito = "SELECT idcarrito FROM carrito WHERE idusu = :idusu AND estado = 'activo' ORDER BY idcarrito DESC LIMIT 1";
             $stmtCarrito = $this->conexion->prepare($sqlCarrito);
             $stmtCarrito->bindParam(':idusu', $idusu, PDO::PARAM_INT);
             $stmtCarrito->execute();
@@ -76,70 +75,155 @@ class CarritoModel
 
             if (!$carrito) {
                 // 2️⃣ Si no tiene carrito, crearlo
-                $sqlCrearCarrito = "INSERT INTO carrito (idusu, fecha_creacion, estado) 
-                    VALUES (:idusu, CURDATE(), 'activo')";
+                $sqlCrearCarrito = "INSERT INTO carrito (idusu, fecha_creacion, estado) VALUES (:idusu, CURDATE(), 'activo')";
                 $stmtCrearCarrito = $this->conexion->prepare($sqlCrearCarrito);
                 $stmtCrearCarrito->bindParam(':idusu', $idusu, PDO::PARAM_INT);
                 $stmtCrearCarrito->execute();
-
-                // Obtener el idcarrito recién insertado
                 $idcarrito = $this->conexion->lastInsertId();
             } else {
-                // Si ya existe el carrito, obtener su idcarrito
                 $idcarrito = $carrito['idcarrito'];
             }
         }
 
-        // 3️⃣ Insertar el producto en detcarrito o actualizar cantidad si ya existe
-        $sqlDetalle = "INSERT INTO detcarrito (idcarrito, idprod, cantidad, precar) 
-            VALUES (:idcarrito, :idprod, :cantidad, :precar) 
-            ON DUPLICATE KEY UPDATE cantidad = cantidad + :cantidad";
+        // 3️⃣ Verificar si el producto ya está en el carrito
+        $sqlCheck = "SELECT cantidad FROM detcarrito WHERE idcarrito = :idcarrito AND idprod = :idprod";
+        $stmtCheck = $this->conexion->prepare($sqlCheck);
+        $stmtCheck->bindParam(':idcarrito', $idcarrito, PDO::PARAM_INT);
+        $stmtCheck->bindParam(':idprod', $idprod, PDO::PARAM_INT);
+        $stmtCheck->execute();
+        $productoExistente = $stmtCheck->fetch(PDO::FETCH_ASSOC);
 
-        $stmtDetalle = $this->conexion->prepare($sqlDetalle);
-        $stmtDetalle->bindParam(':idcarrito', $idcarrito, PDO::PARAM_INT);
-        $stmtDetalle->bindParam(':idprod', $idprod, PDO::PARAM_INT);
-        $stmtDetalle->bindParam(':cantidad', $cantidad, PDO::PARAM_INT);
-        $stmtDetalle->bindParam(':precar', $precar, PDO::PARAM_STR);
-        $stmtDetalle->execute();
+        if ($productoExistente) {
+            // 4️⃣ Si el producto ya está en el carrito, actualizar la cantidad
+            $sqlUpdate = "UPDATE detcarrito SET cantidad = cantidad + :cantidad WHERE idcarrito = :idcarrito AND idprod = :idprod";
+            $stmtUpdate = $this->conexion->prepare($sqlUpdate);
+            $stmtUpdate->bindParam(':cantidad', $cantidad, PDO::PARAM_INT);
+            $stmtUpdate->bindParam(':idcarrito', $idcarrito, PDO::PARAM_INT);
+            $stmtUpdate->bindParam(':idprod', $idprod, PDO::PARAM_INT);
+            $stmtUpdate->execute();
+        } else {
+            // 5️⃣ Si no está en el carrito, insertarlo
+            $sqlInsert = "INSERT INTO detcarrito (idcarrito, idprod, cantidad, precar) VALUES (:idcarrito, :idprod, :cantidad, :precar)";
+            $stmtInsert = $this->conexion->prepare($sqlInsert);
+            $stmtInsert->bindParam(':idcarrito', $idcarrito, PDO::PARAM_INT);
+            $stmtInsert->bindParam(':idprod', $idprod, PDO::PARAM_INT);
+            $stmtInsert->bindParam(':cantidad', $cantidad, PDO::PARAM_INT);
+            $stmtInsert->bindParam(':precar', $precar, PDO::PARAM_STR); // Asegurar que precar es string
+            $stmtInsert->execute();
+        }
 
-        $this->conexion->commit(); // Confirmar la transacción
-
+        $this->conexion->commit(); // Confirmar transacción
         return true;
     } catch (Exception $e) {
-        $this->conexion->rollBack(); // Revertir la transacción si hay error
+        $this->conexion->rollBack(); // Revertir en caso de error
         return false;
     }
 }
 
 
-    public function eliminarProducto($idusu, $idprod )
-    {
+        // 3️⃣ Insertar el producto en detcarrito o actualizar cantidad si ya
+        public function eliminarProducto($idusu, $idprod)
+{
+    try {
         $this->conexion->beginTransaction(); // Iniciar transacción
 
-        // 1️⃣ Obtener el ID del carrito del usuario
-        $sqlCarrito = "SELECT idcarrito FROM carrito WHERE idusu = :idusu";
+        // 1️⃣ Obtener el último carrito activo del usuario
+        $sqlCarrito = "SELECT idcarrito FROM carrito WHERE idusu = :idusu AND estado = 'activo' ORDER BY idcarrito DESC LIMIT 1";
         $stmtCarrito = $this->conexion->prepare($sqlCarrito);
         $stmtCarrito->bindParam(':idusu', $idusu, PDO::PARAM_INT);
         $stmtCarrito->execute();
-            $carrito = $stmtCarrito->fetch(PDO::FETCH_ASSOC);
+        $carrito = $stmtCarrito->fetch(PDO::FETCH_ASSOC);
 
-            if (!$carrito) {
-                throw new Exception("El usuario no tiene un carrito.");
-            }
+        if (!$carrito) {
+            throw new Exception("El usuario no tiene un carrito activo.");
+        }
 
-            $idcarrito = $carrito['idcarrito'];
+        $idcarrito = $carrito['idcarrito'];
 
-            // 2️⃣ Eliminar el producto del detcarrito
-            $sqlEliminar = "DELETE FROM detcarrito WHERE idcarrito = :idcarrito AND idprod  = :idprod ";
-            $stmtEliminar = $this->conexion->prepare($sqlEliminar);
-            $stmtEliminar->bindParam(':idcarrito', $idcarrito, PDO::PARAM_INT);
-            $stmtEliminar->bindParam(':idprod', $idprod , PDO::PARAM_INT);
-            $stmtEliminar->execute();
+        // 2️⃣ Eliminar el producto del carrito
+        $sqlEliminar = "DELETE FROM detcarrito WHERE idcarrito = :idcarrito AND idprod = :idprod";
+        $stmtEliminar = $this->conexion->prepare($sqlEliminar);
+        $stmtEliminar->bindParam(':idcarrito', $idcarrito, PDO::PARAM_INT);
+        $stmtEliminar->bindParam(':idprod', $idprod, PDO::PARAM_INT);
+        $stmtEliminar->execute();
 
-            $this->conexion->commit(); // Confirmar la transacción
+        // 3️⃣ Verificar si el carrito quedó vacío
+        $sqlCheckCarrito = "SELECT COUNT(*) as total FROM detcarrito WHERE idcarrito = :idcarrito";
+        $stmtCheckCarrito = $this->conexion->prepare($sqlCheckCarrito);
+        $stmtCheckCarrito->bindParam(':idcarrito', $idcarrito, PDO::PARAM_INT);
+        $stmtCheckCarrito->execute();
+        $resultado = $stmtCheckCarrito->fetch(PDO::FETCH_ASSOC);
 
-            return true;
+        if ($resultado['total'] == 0) {
+            // Si el carrito quedó vacío, eliminarlo
+            $sqlEliminarCarrito = "DELETE FROM carrito WHERE idcarrito = :idcarrito";
+            $stmtEliminarCarrito = $this->conexion->prepare($sqlEliminarCarrito);
+            $stmtEliminarCarrito->bindParam(':idcarrito', $idcarrito, PDO::PARAM_INT);
+            $stmtEliminarCarrito->execute();
+        }
+
+        $this->conexion->commit(); // Confirmar transacción
+        return true;
+    } catch (Exception $e) {
+        $this->conexion->rollBack(); // Revertir transacción si hay error
+        return false;
     }
+}
+public function actualizarCantidad($idusu, $idprod, $cantidad)
+{
+    try {
+        $this->conexion->beginTransaction();
+
+        // Obtener carrito activo
+        $sqlCarrito = "SELECT idcarrito FROM carrito WHERE idusu = :idusu AND estado = 'activo' ORDER BY idcarrito DESC LIMIT 1";
+        $stmtCarrito = $this->conexion->prepare($sqlCarrito);
+        $stmtCarrito->bindParam(':idusu', $idusu, PDO::PARAM_INT);
+        $stmtCarrito->execute();
+        $carrito = $stmtCarrito->fetch(PDO::FETCH_ASSOC);
+
+        if (!$carrito) {
+            throw new Exception("No se encontró un carrito activo.");
+        }
+
+        $idcarrito = $carrito['idcarrito'];
+
+        // Verificar cantidad actual
+        $sqlCantidad = "SELECT cantidad FROM detcarrito WHERE idcarrito = :idcarrito AND idprod = :idprod";
+        $stmtCantidad = $this->conexion->prepare($sqlCantidad);
+        $stmtCantidad->bindParam(':idcarrito', $idcarrito, PDO::PARAM_INT);
+        $stmtCantidad->bindParam(':idprod', $idprod, PDO::PARAM_INT);
+        $stmtCantidad->execute();
+        $producto = $stmtCantidad->fetch(PDO::FETCH_ASSOC);
+
+        if (!$producto) {
+            throw new Exception("Producto no encontrado en el carrito.");
+        }
+
+        $nuevaCantidad = $producto['cantidad'] + $cantidad;
+        if ($nuevaCantidad <= 0) {
+            return $this->eliminarProducto($idusu, $idprod);
+        }
+
+        // Actualizar cantidad
+        $sqlUpdate = "UPDATE detcarrito SET cantidad = :cantidad WHERE idcarrito = :idcarrito AND idprod = :idprod";
+        $stmtUpdate = $this->conexion->prepare($sqlUpdate);
+        $stmtUpdate->bindParam(':cantidad', $nuevaCantidad, PDO::PARAM_INT);
+        $stmtUpdate->bindParam(':idcarrito', $idcarrito, PDO::PARAM_INT);
+        $stmtUpdate->bindParam(':idprod', $idprod, PDO::PARAM_INT);
+        $stmtUpdate->execute();
+
+        $this->conexion->commit();
+        return true;
+    } catch (Exception $e) {
+        $this->conexion->rollBack();
+        return false;
+    }
+}
+
+
+
+
+
     public function limpiarCarrito($idusu)
     {
             // Obtener el ID del carrito del usuario

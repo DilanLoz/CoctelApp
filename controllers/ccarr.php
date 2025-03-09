@@ -7,24 +7,25 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 $conexion = (new Conexion())->get_conexion();
-$idusu = isset($_SESSION['idusu']) ? $_SESSION['idusu'] : null;
+$idusu = $_SESSION['idusu'] ?? null;
 $carritoModel = new CarritoModel($conexion);
 
-
+if (!$idusu) {
+    echo json_encode(['success' => false, 'message' => 'Usuario no autenticado.']);
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Content-Type: application/json');
     $input = json_decode(file_get_contents('php://input'), true);
 
-    // Obtener datos del JSON recibido
     $idprod = isset($input['idprod']) ? intval($input['idprod']) : null;
     $cantidad = isset($input['cantidad']) ? intval($input['cantidad']) : 1;
     $vlrprod = isset($input['vlrprod']) ? floatval($input['vlrprod']) : 0;
-    $accion = isset($input['acc']) ? trim($input['acc']) : null; // Asegurar que acc sea un string
+    $accion = isset($input['acc']) ? trim($input['acc']) : null;
 
-    // Validar datos recibidos
-    if (!$idusu || !$idprod) {
-        echo json_encode(['success' => false, 'message' => 'Datos incompletos.']);
+    if (!$idprod || $cantidad <= 0) {
+        echo json_encode(['success' => false, 'message' => 'Datos inválidos.']);
         exit();
     }
 
@@ -35,7 +36,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }
 
-        // Agregar el producto al carrito con la cantidad y precio correctos
+        if ($accion === "sum") {
+            $result = $carritoModel->actualizarCantidad($idusu, $idprod, 1); // Sumar 1
+            echo json_encode(['success' => $result, 'message' => 'Cantidad aumentada correctamente.']);
+            exit();
+        }
+
+        if ($accion === "res") {
+            $result = $carritoModel->actualizarCantidad($idusu, $idprod, -1); // Restar 1
+            echo json_encode(['success' => $result, 'message' => 'Cantidad reducida correctamente.']);
+            exit();
+        }
+
         $result = $carritoModel->agregarProducto($idusu, $idprod, $cantidad, $vlrprod);
 
         echo json_encode([
@@ -47,8 +59,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         exit();
     }
-} else{
+} else {
     $dtCarrito = $carritoModel->obtenerCarrito($idusu);
     $dtValoresCarrito = $carritoModel->obtenerDetalleProductosFactura($idusu);
     $dtTotCarrito = $carritoModel->obtenerTotalesFactura($idusu);
+
+    if (empty($dtCarrito)) {
+        echo json_encode(['success' => false, 'message' => 'El carrito está vacío.']);
+    }
 }
+?>
