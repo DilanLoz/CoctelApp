@@ -30,6 +30,7 @@ class CarritoModel
                     p.nomprod, 
                     p.vlrprod,
                     p.fotprod,
+                    p.mililitros,
                     b.nombar,
                     c.estado
                 FROM carrito AS c

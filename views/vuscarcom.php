@@ -17,7 +17,18 @@ include_once(__DIR__ . "/../controllers/ccar_sum_rest.php"); ?>
                     <!-- Información del producto -->
                     <div class="col-6 col-sm-6">
                         <ul style="list-style-type: none; padding-left: 0;">
-                            <li><b><?php echo htmlspecialchars($producto['nomprod']); ?></b></li>
+                            <li>
+                                <b>
+                                    <?php
+                                    $nombreCompleto = htmlspecialchars($producto['nomprod']);
+                                    $nombreCorto = strlen($producto['nomprod']) > 35
+                                        ? substr($producto['nomprod'], 0, 35) . "<span class='ver-mas' onclick='mostrarNombreCompleto(this)' data-nombre='" . $nombreCompleto . "'>...</span>"
+                                        : $nombreCompleto;
+                                    ?>
+                                    <span><?= $nombreCorto . " | " . htmlspecialchars($producto['mililitros']) . "ml" ?></span>
+                                </b>
+                            </li>
+
                             <li><b style="font-size: 13px;"><?php echo htmlspecialchars($producto['nombar']); ?></b></li>
                             <li><b class="text-warning"><?php echo "$" . number_format($producto['vlrprod'], 2); ?></b></li>
                         </ul>
@@ -118,11 +129,12 @@ include_once(__DIR__ . "/../controllers/ccar_sum_rest.php"); ?>
         .counter {
             flex-direction: column;
         }
+
         .subir-boton {
-        position: relative;
-        top: -5px;
-        /* Ajusta el valor según necesites */
-    }
+            position: relative;
+            top: -5px;
+            /* Ajusta el valor según necesites */
+        }
 
         .counter {
             flex-direction: column;
@@ -155,3 +167,8 @@ include_once(__DIR__ . "/../controllers/ccar_sum_rest.php"); ?>
 </style>
 <script src="js/carrito.js"></script>
 <script src="js/carrito_sum_rest.js"></script>
+<script>
+    function mostrarNombreCompleto(elemento) {
+        elemento.parentElement.innerHTML = elemento.dataset.nombre + " | " + elemento.parentElement.innerHTML.split("|")[1];
+    }
+</script>
