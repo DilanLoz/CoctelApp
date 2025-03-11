@@ -99,17 +99,21 @@ class Mbarxprod {
     // Methods (getAll, getOne, save, edit, del) should be closed with }
     public function getAll() {
         try {
-            $sql = "SELECT p.idprod, p.nomprod, p.desprod, p.vlrprod, p.fotprod, p.idbar, p.cantprod, b.nombar, p.tipoprod, p.mililitros FROM producto AS p INNER JOIN bar AS b ON p.idbar=b.idbar";
+            $sql = "SELECT p.idprod, p.nomprod, p.desprod, p.vlrprod, p.fotprod, p.idbar, p.cantprod, b.nombar, p.tipoprod, p.mililitros 
+                    FROM producto AS p 
+                    INNER JOIN bar AS b ON p.idbar = b.idbar 
+                    WHERE b.estado = 1";  // Filtra solo los bares con estado = 1
+    
             $modelo = new conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
             $result->execute();
-            $res = $result->fetchAll(PDO::FETCH_ASSOC);
-            return $res;
+            return $result->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
-            echo "Error: " . $e;
+            echo "Error: " . $e->getMessage();
         }
     }
+    
 
      public function getOneBar() {
         try {

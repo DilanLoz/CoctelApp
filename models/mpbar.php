@@ -49,7 +49,9 @@ class Mpbar {
     // Obtener todos los bares
     public function getAll() {
         try {
-            $sql = "SELECT idbar, nombar, nompropi, nit, emabar, telbar, pssbar, dircbar, horbar, fotbar, codubi, idper, idval FROM bar";
+            $sql = "SELECT idbar, nombar, nompropi, nit, emabar, telbar, pssbar, dircbar, horbar, fotbar, codubi, idper, idval 
+                    FROM bar 
+                    WHERE estado = 1"; // Filtra solo los bares con estado = 1
             $modelo = new conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
@@ -58,7 +60,7 @@ class Mpbar {
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
         }
-    }
+    }    
 
     // Obtener un solo bar por id
     public function getOne() {
