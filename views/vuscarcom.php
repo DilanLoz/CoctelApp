@@ -1,5 +1,5 @@
 <?php include_once(__DIR__ . "/../controllers/ccarr.php");
-include_once(__DIR__ . "/../controllers/ccar_sum_rest.php"); 
+include_once(__DIR__ . "/../controllers/ccar_sum_rest.php");
 include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
 <div class="container mt-5 col-12 col-md-8" id="detpedpq" style="text-align: left">
     <div class="mt-4">
@@ -78,8 +78,8 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
                             <?php } ?>
                         </div>
                         <div class="col-12 col-md-4 text-md-end order-md-last mt-3 mt-md-0 subir-boton">
-                                <input type="hidden" name="productos" id="productos">
-                                <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#finalizarModal">Ir a Pagar</button>
+                            <input type="hidden" name="productos" id="productos">
+                            <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#finalizarModal">Ir a Pagar</button>
                         </div>
                     </div>
                 </div>
@@ -99,27 +99,64 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
                 <form id="finalizarPedidoForm">
                     <div class="mb-3">
                         <label for="direccion" class="form-label">Dirección</label>
-                        <input class="form-control" type="text" name="direccion" value="<?= isset($usuario['direccion']) ? htmlspecialchars($usuario['direccion']) : '' ?>" required>
+                        <input class="form-control" type="text" name="direccion" value="<?php echo isset($datOne[0]['direccion']) ? $datOne[0]['direccion'] : ''; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="telefono" class="form-label">Teléfono</label>
-                        <input class="form-control" type="text" name="telefono" value="<?= isset($usuario['telefono']) ? htmlspecialchars($usuario['telefono']) : '' ?>" required>
+                        <input class="form-control" type="number" name="telefono" value="<?php echo isset($datOne[0]['telefono']) ? $datOne[0]['telefono'] : ''; ?>" required>
                     </div>
                     <div class="mb-3">
-                        <label for="referencia" class="form-label">Referencia</label>
-                        <input class="form-control" type="text" name="mensaje" value="<?= isset($usuario['mensaje']) ? htmlspecialchars($usuario['mensaje']) : '' ?>" required>
+                        <label for="referencia" class="form-label">Mensaje de recomendaciones</label>
+                        <input class="form-control" type="text" name="mensaje" value="<?php echo isset($datOne[0]['mensaje']) ? $datOne[0]['mensaje'] : ''; ?>" required>
                     </div>
-                    <button type="button" class="btn btn-primary" id="confirmarPedido" 
-                        data-idcarrito="<?php echo htmlspecialchars($carrito['idcarrito']); ?>" 
-                        data-idusuario="<?php echo htmlspecialchars($usuario['idusuario']); ?>">
+                    <div class="mb-3">
+                        <label for="metodo_pago" class="form-label">Método de Pago</label>
+                        <select class="form-select" name="metodo_pago" required>
+                            <?php
+                            // Conectar a la base de datos
+                            require_once __DIR__ . '/../models/conexion.php';
+                            $conexion = (new Conexion())->get_conexion();
+
+                            // Consulta para obtener los valores del ENUM
+                            $sql = "SHOW COLUMNS FROM carrito LIKE 'metodo_pago'";
+                            $stmt = $conexion->prepare($sql);
+                            $stmt->execute();
+                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                            if ($row) {
+                                // Extraer los valores del ENUM
+                                $enum_values = str_replace(["enum(", ")", "'"], "", $row['Type']);
+                                $opciones = explode(",", $enum_values);
+
+                                // Generar las opciones del select
+                                foreach ($opciones as $opcion) {
+                                    echo '<option value="' . htmlspecialchars($opcion) . '">' . htmlspecialchars($opcion) . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" id="confirmarPedido">
                         Confirmar Pedido
                     </button>
+
                 </form>
             </div>
         </div>
     </div>
 </div>
-
+<!-- Modal de Carga -->
+<div class="modal fade" id="pedidoConfirmadoModal" tabindex="-1" aria-labelledby="pedidoConfirmadoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center p-4">
+            <div class="modal-body">
+                <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;"></div>
+                <h5 class="mt-3">Pedido Confirmado</h5>
+            </div>
+        </div>
+    </div>
+</div>
 
 <style>
     .subir-boton {
@@ -197,6 +234,7 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
 <script src="js/carrito.js"></script>
 <script src="js/carrito_sum_rest.js"></script>
 <script src="js/carped.js"></script>
+
 <script>
     function mostrarNombreCompleto(elemento) {
         elemento.parentElement.innerHTML = elemento.dataset.nombre + " | " + elemento.parentElement.innerHTML.split("|")[1];

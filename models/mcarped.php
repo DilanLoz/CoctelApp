@@ -1,104 +1,85 @@
 <?php
-require_once 'models/conexion.php';
+require_once 'conexion.php';
 
-class MPedido
-{
-    private $idcarrito;
-    private $idusu;
-    private $iddetcarrito;
-    private $estado;
+class MPedido {
+    private $idUsu;
     private $direccion;
-    private $telefono;
     private $mensaje;
-    private $metodo_pago;
+    private $telefono;
+    private $metodoPago;
+    private $idCarrito;
+    public function setIdUsu($idUsu) { $this->idUsu = $idUsu; }
+    public function setDireccion($direccion) { $this->direccion = $direccion; }
+    public function setMensaje($mensaje) { $this->mensaje = $mensaje; }
+    public function setTelefono($telefono) { $this->telefono = $telefono; }
+    public function setMetodoPago($metodoPago) { $this->metodoPago = $metodoPago; }
+    public function getIdCarrito() { return $this->idCarrito; }
 
-    public function getIdcarrito()
-    {
-        return $this->idcarrito;
-    }
-
-    public function getIdusu()
-    {
-        return $this->idusu;
-    }
-    public function getIddetcarrito()
-    {
-        return $this->iddetcarrito;
-    }
-    public function getEstado()
-    {
-        return $this->estado;
-    }
-    public function getDireccion()
-    {
-        return $this->direccion;
-    }
-    public function getTelefono()
-    {
-        return $this->telefono;
-    }
-    public function getMensaje()
-    {
-        return $this->mensaje;
-    }
-    public function getMetodoPago()
-    {
-        return $this->metodo_pago;
-    }
-    //set
-    public function setIdcarrito($idcarrito) {
-        $this->idcarrito = $idcarrito;
-    }
-    public function setIdusu($idusu) {
-        $this->idusu = $idusu;
-    }
-    public function setIddetcarrito($iddetcarrito) {
-        $this->iddetcarrito = $iddetcarrito;
-    }
-    public function setEstado($estado) {
-        $this->estado = $estado;
-    }
-    public function setDireccion($direccion) {
-        $this->direccion = $direccion;
-    }
-    public function setTelefono($telefono) {
-        $this->telefono = $telefono;
-    }
-    public function setMensaje($mensaje) {
-        $this->mensaje = $mensaje;
-    }
-    public function setMetodoPago($metodo_pago) {
-        $this->metodo_pago = $metodo_pago;
-    }
-    //metodos
-    public function convertirCarrito($idCarrito)
-    {
+    public function saveCarrito() {
         try {
+            $pdo = (new Conexion())->get_conexion();
+            
+            // Buscar carrito activo
+            $idCarritoExistente = $this->obtenerCarritoActivo($this->idUsu);
+    
+            if ($idCarritoExistente) {
+                // Si ya hay un carrito, lo actualizamos
+                $sql = "UPDATE carrito SET direccion = :direccion, mensaje = :mensaje, telefono = :telefono, metodo_pago = :metodo_pago WHERE idcarrito = :idcarrito";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([
+                    ':direccion' => $this->direccion,
+                    ':mensaje' => $this->mensaje,
+                    ':telefono' => $this->telefono,
+                    ':metodo_pago' => $this->metodoPago,
+                    ':idcarrito' => $idCarritoExistente
+                ]);
+                $this->idCarrito = $idCarritoExistente;
+            } else {
+                // Si no hay carrito, creamos uno nuevo
+                $sql = "INSERT INTO carrito (idusu, direccion, mensaje, telefono, metodo_pago, estado) 
+                        VALUES (:idusu, :direccion, :mensaje, :telefono, :metodo_pago, 'pendiente')";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([
+                    ':idusu' => $this->idUsu,
+                    ':direccion' => $this->direccion,
+                    ':mensaje' => $this->mensaje,
+                    ':telefono' => $this->telefono,
+                    ':metodo_pago' => $this->metodoPago
+                ]);
+                $this->idCarrito = $pdo->lastInsertId();
+            }
+    
+            return true;
+        } catch (Exception $e) {
+            return "Error en BD: " . $e->getMessage();
+        }
+    }
+    
+
+    public function actualizarCarrito($idCarrito) {
+        try {
+            $pdo = (new Conexion())->get_conexion();
             $sql = "UPDATE carrito SET estado = 'convertido' WHERE idcarrito = :idcarrito";
-            $conexion = (new Conexion())->get_conexion();
-            $stmt = $conexion->prepare($sql);
-            $stmt->bindParam(':idcarrito', $idCarrito, PDO::PARAM_INT);
-            return $stmt->execute();
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([':idcarrito' => $idCarrito]);
+            return $stmt->rowCount() > 0;
         } catch (Exception $e) {
-            file_put_contents('debug.log', "Error al convertir carrito: " . $e->getMessage() . "\n", FILE_APPEND);
             return false;
         }
     }
-
-    public function insertarPedido($datos)
-    {
+    public function obtenerCarritoActivo($idUsu) {
         try {
-            $sql = "INSERT INTO pedido (idusu, direccion, telefono, mensaje, metodo_pago) 
-                    VALUES (:idusu, :direccion, :telefono, :mensaje, :metodo_pago)";
-
-            $conexion = (new Conexion())->get_conexion();
-            $stmt = $conexion->prepare($sql);
-            $stmt->execute($datos);
-
-            return $conexion->lastInsertId();
+            $pdo = (new Conexion())->get_conexion();
+            $sql = "SELECT idcarrito FROM carrito WHERE idusu = :idusu AND estado = 'activo' LIMIT 1";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([':idusu' => $idUsu]);
+            $carrito = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $carrito ? $carrito['idcarrito'] : null;
         } catch (Exception $e) {
-            file_put_contents('debug.log', "Error al insertar pedido: " . $e->getMessage() . "\n", FILE_APPEND);
-            return false;
+            return null;
         }
     }
+    
 }
+
+?>
