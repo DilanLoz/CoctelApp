@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-03-2025 a las 04:41:22
+-- Tiempo de generación: 12-03-2025 a las 03:50:29
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -40,19 +40,20 @@ CREATE TABLE `bar` (
   `fotbar` varchar(255) DEFAULT NULL,
   `codubi` int(6) DEFAULT NULL COMMENT 'código de ubicacion',
   `idper` bigint(10) NOT NULL COMMENT 'id del perfil',
-  `idval` bigint(10) NOT NULL COMMENT 'id del valor'
+  `idval` bigint(10) NOT NULL COMMENT 'id del valor',
+  `estado` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `bar`
 --
 
-INSERT INTO `bar` (`idbar`, `nombar`, `nompropi`, `nit`, `emabar`, `telbar`, `pssbar`, `dircbar`, `horbar`, `fotbar`, `codubi`, `idper`, `idval`) VALUES
-(2002, 'Cabañas Norte', 'Juan Martinez', 8029812, 'caba@gmail.com', 300940912, 'e0851d399bb2954f554d93328662c70f79273f5a', 'Calle 20 #40-60 Norte', '11:00 - 17:00', NULL, 1, 30, 104),
-(2003, 'Bazar', 'Jose Perez', 8039923, 'baz@gmail.com', 300828821, 'a7c9f5b4f15002ac1275c418d5c77f316ae749db', 'Transversal 7 #30-50 ', '11:00 - 17:00', NULL, 2, 30, 102),
-(2004, 'Llanos', 'Daniel', 8749283, 'llano@gmail.com', 98311212, '661bb5ab253795539bec27058477f29f1cd506f5', 'Calle 20 #90', '11:00 - 17:00', NULL, 5, 30, 102),
-(2005, 'Bar Rocas', 'Juanjo', 874923, 'roca@gmail.com', 8127371, '1bbf9d535f9136ee5d4465bf0885519c6e69d181', 'Transversal 9 #10-30', '14:00 22:00', NULL, 3, 30, 102),
-(4008, 'Caba2', 'Juan', 11212, 'caba@gamdo.ocm', 2341213, 'adsad', 'adauav', '11pm', NULL, 1, 30, 104);
+INSERT INTO `bar` (`idbar`, `nombar`, `nompropi`, `nit`, `emabar`, `telbar`, `pssbar`, `dircbar`, `horbar`, `fotbar`, `codubi`, `idper`, `idval`, `estado`) VALUES
+(2002, 'Cabañas Norte', 'Juan Martinez', 8029812, 'caba@gmail.com', 300940912, 'e0851d399bb2954f554d93328662c70f79273f5a', 'Calle 20 #40-60 Norte', '11:00 - 17:00', NULL, 1, 30, 104, 1),
+(2003, 'Bazar', 'Jose Perez', 8039923, 'baz@gmail.com', 300828821, 'a7c9f5b4f15002ac1275c418d5c77f316ae749db', 'Transversal 7 #30-50 ', '11:00 - 17:00', NULL, 2, 30, 102, 1),
+(2004, 'Llanos', 'Daniel', 8749283, 'llano@gmail.com', 98311212, '661bb5ab253795539bec27058477f29f1cd506f5', 'Calle 20 #90', '11:00 - 17:00', NULL, 5, 30, 102, 1),
+(2005, 'Bar Rocas', 'Juanjo', 874923, 'roca@gmail.com', 8127371, '1bbf9d535f9136ee5d4465bf0885519c6e69d181', 'Transversal 9 #10-30', '14:00 22:00', NULL, 3, 30, 102, 1),
+(4008, 'Caba2', 'Juan', 11212, 'caba@gamdo.ocm', 2341213, 'adsad', 'adauav', '11pm', NULL, 1, 30, 104, 2);
 
 -- --------------------------------------------------------
 
@@ -64,34 +65,35 @@ CREATE TABLE `carrito` (
   `idcarrito` bigint(20) NOT NULL,
   `idusu` bigint(10) NOT NULL,
   `fecha_creacion` date DEFAULT NULL,
-  `estado` enum('activo','convertido') DEFAULT 'activo'
+  `estado` enum('activo','convertido') DEFAULT 'activo',
+  `direccion` varchar(100) DEFAULT NULL,
+  `mensaje` varchar(100) DEFAULT NULL,
+  `telefono` bigint(10) DEFAULT NULL,
+  `metodo_pago` enum('Efectivo','Transferencia') DEFAULT 'Efectivo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `carrito`
 --
 
-INSERT INTO `carrito` (`idcarrito`, `idusu`, `fecha_creacion`, `estado`) VALUES
-(2, 1, '2025-02-08', 'activo'),
-(3, 1, '2025-02-08', 'activo'),
-(4, 1, '2025-02-08', 'activo'),
-(5, 1, '2025-02-08', 'activo'),
-(6, 1, '2025-02-08', 'activo'),
-(7, 1, '2025-02-08', 'activo'),
-(8, 1, '2025-02-08', 'activo'),
-(10, 1, '2025-02-08', 'activo'),
-(12, 1, '2025-02-25', 'convertido'),
-(13, 1, '2025-02-25', 'convertido'),
-(14, 1, '2025-02-26', 'activo'),
-(15, 1, NULL, 'activo'),
-(16, 1, '2025-02-26', 'activo'),
-(17, 1, '2025-02-27', 'activo'),
-(18, 1, '2025-02-27', 'activo'),
-(19, 1, '2025-02-27', 'activo'),
-(20, 4, '2025-03-02', 'convertido'),
-(21, 1, '2025-03-02', 'convertido'),
-(22, 5, '2025-03-02', 'convertido'),
-(23, 1, '2025-03-02', 'convertido');
+INSERT INTO `carrito` (`idcarrito`, `idusu`, `fecha_creacion`, `estado`, `direccion`, `mensaje`, `telefono`, `metodo_pago`) VALUES
+(10, 1, '2025-02-08', 'convertido', 'calle 20', 'holaa', 3123456789, 'Efectivo'),
+(12, 1, '2025-02-25', 'convertido', NULL, NULL, NULL, 'Efectivo'),
+(13, 1, '2025-02-25', 'convertido', NULL, NULL, NULL, 'Efectivo'),
+(14, 1, '2025-02-26', NULL, 'calle 20', 'adas', 32345, 'Efectivo'),
+(15, 1, NULL, NULL, NULL, NULL, NULL, 'Efectivo'),
+(16, 1, '2025-02-26', NULL, NULL, NULL, NULL, 'Efectivo'),
+(17, 1, '2025-02-27', NULL, NULL, NULL, NULL, 'Efectivo'),
+(18, 1, '2025-02-27', NULL, NULL, NULL, NULL, 'Efectivo'),
+(19, 1, '2025-02-27', NULL, NULL, NULL, NULL, 'Efectivo'),
+(20, 4, '2025-03-02', 'convertido', NULL, NULL, NULL, 'Efectivo'),
+(21, 1, '2025-03-02', 'convertido', NULL, NULL, NULL, 'Efectivo'),
+(22, 5, '2025-03-02', 'convertido', NULL, NULL, NULL, 'Efectivo'),
+(23, 1, '2025-03-02', 'convertido', NULL, NULL, NULL, 'Efectivo'),
+(24, 1, '2025-03-08', 'convertido', 'calle 20', 'holaa', 23123, 'Efectivo'),
+(27, 1, '2025-03-11', 'convertido', 'calle 20 #602', 'Dejar en porteria', 3123456789, 'Efectivo'),
+(28, 1, '2025-03-11', 'convertido', 'calle 20 #90-20', 'Dejar en porteria', 3123456789, 'Efectivo'),
+(29, 1, '2025-03-11', 'convertido', 'calle 20 #90-20', 'Dejar en porteria', 3123456789, 'Transferencia');
 
 --
 -- Disparadores `carrito`
@@ -99,7 +101,11 @@ INSERT INTO `carrito` (`idcarrito`, `idusu`, `fecha_creacion`, `estado`) VALUES
 DELIMITER $$
 CREATE TRIGGER `trg_crear_pedido_desde_carrito` AFTER UPDATE ON `carrito` FOR EACH ROW BEGIN
     IF NEW.estado = 'convertido' AND OLD.estado != 'convertido' THEN
-        INSERT INTO pedido (idcarrito, cantidad, fecha_pedido, estado, total, idusu, direccion, mensaje, estado_pedido)
+        INSERT INTO pedido (
+            idcarrito, cantidad, fecha_pedido, estado, total, 
+            idusu, telefono, direccion, mensaje, metodo_pago, 
+            estado_pedido
+        )
         SELECT 
             NEW.idcarrito, 
             SUM(dc.cantidad), 
@@ -107,9 +113,11 @@ CREATE TRIGGER `trg_crear_pedido_desde_carrito` AFTER UPDATE ON `carrito` FOR EA
             'En preparación', 
             SUM(dc.cantidad * dc.precar), 
             NEW.idusu, 
-            '', 
-            '', 
-            1  
+            NEW.telefono, 
+            NEW.direccion, 
+            NEW.mensaje,  
+            NEW.metodo_pago, 
+            1  -- Estado pedido por defecto
         FROM detcarrito dc
         WHERE dc.idcarrito = NEW.idcarrito;
     END IF;
@@ -150,24 +158,6 @@ CREATE TABLE `detcarrito` (
 --
 
 INSERT INTO `detcarrito` (`iddetcarrito`, `idcarrito`, `idprod`, `cantidad`, `precar`) VALUES
-(4, 2, 21, 2, 24600),
-(5, 2, 23, 1, 229900),
-(6, 2, 25, 3, 72000),
-(7, 3, 21, 2, 24600),
-(8, 3, 23, 1, 229900),
-(9, 3, 25, 3, 72000),
-(10, 4, 21, 2, 24600),
-(11, 4, 23, 1, 229900),
-(12, 4, 25, 3, 72000),
-(13, 5, 21, 2, 24600),
-(14, 5, 23, 1, 229900),
-(15, 5, 25, 3, 72000),
-(16, 6, 21, 2, 24600),
-(17, 6, 23, 1, 229900),
-(18, 6, 25, 3, 72000),
-(20, 8, 21, 2, 24600),
-(21, 8, 23, 1, 229900),
-(25, 2, 21, 2, 5000),
 (26, 10, 21, 2, 24600),
 (27, 10, 23, 1, 229900),
 (37, 14, 21, 1, 24600),
@@ -206,7 +196,17 @@ INSERT INTO `detcarrito` (`iddetcarrito`, `idcarrito`, `idprod`, `cantidad`, `pr
 (108, 22, 23, 3, 229900),
 (109, 23, 21, 1, 24600),
 (110, 23, 22, 2, 66900),
-(111, 23, 23, 3, 229900);
+(111, 23, 23, 3, 229900),
+(113, 24, 32, 2, 43900),
+(114, 24, 24, 3, 147000),
+(115, 24, 30, 2, 45900),
+(121, 24, 35, 3, 28000),
+(123, 27, 27, 2, 130200),
+(124, 27, 25, 1, 72000),
+(125, 28, 21, 2, 24600),
+(126, 28, 35, 1, 28000),
+(127, 28, 30, 2, 45900),
+(128, 29, 23, 3, 229900);
 
 --
 -- Disparadores `detcarrito`
@@ -261,7 +261,13 @@ INSERT INTO `detfact` (`iddetfact`, `idfact`, `idprod`, `cantidad`, `precio_unit
 (1001103, 1084, 23, 3, 229900, 689700, NULL, 2002),
 (1001104, 1085, 21, 1, 24600, 24600, NULL, 2002),
 (1001105, 1085, 22, 2, 66900, 133800, NULL, 2002),
-(1001106, 1085, 23, 3, 229900, 689700, NULL, 2002);
+(1001106, 1085, 23, 3, 229900, 689700, NULL, 2002),
+(1001107, 1086, 21, 1, 24600, 24600, NULL, 2002),
+(1001108, 1086, 22, 2, 66900, 133800, NULL, 2002),
+(1001109, 1086, 23, 3, 229900, 689700, NULL, 2002),
+(1001110, 1087, 23, 3, 229900, 689700, NULL, 2002),
+(1001111, 1088, 21, 2, 24600, 49200, NULL, 2002),
+(1001112, 1088, 23, 1, 229900, 229900, NULL, 2002);
 
 -- --------------------------------------------------------
 
@@ -312,7 +318,22 @@ INSERT INTO `detpedido` (`iddetpedido`, `idpedido`, `idprod`, `cantidad`, `preci
 (109349, 100151, 23, 3, 229900, 689700, 5, 2002),
 (109350, 100152, 21, 1, 24600, 24600, 1, 2002),
 (109351, 100152, 22, 2, 66900, 133800, 1, 2002),
-(109352, 100152, 23, 3, 229900, 689700, 1, 2002);
+(109352, 100152, 23, 3, 229900, 689700, 1, 2002),
+(109353, 100153, 21, 2, 24600, 49200, 1, 2002),
+(109354, 100153, 23, 1, 229900, 229900, 1, 2002),
+(109356, 100154, 21, 1, 24600, 24600, 1, 2002),
+(109357, 100154, 22, 2, 66900, 133800, 1, 2002),
+(109358, 100154, 23, 3, 229900, 689700, 1, 2002),
+(109359, 100155, 32, 2, 43900, 87800, 1, 2002),
+(109360, 100155, 24, 3, 147000, 441000, 1, 2002),
+(109361, 100155, 30, 2, 45900, 91800, 1, 2002),
+(109362, 100155, 35, 3, 28000, 84000, 1, 2002),
+(109366, 100156, 27, 2, 130200, 260400, 1, 2003),
+(109367, 100156, 25, 1, 72000, 72000, 1, 2003),
+(109369, 100157, 21, 2, 24600, 49200, 1, 2002),
+(109370, 100157, 35, 1, 28000, 28000, 1, 2002),
+(109371, 100157, 30, 2, 45900, 91800, 1, 2002),
+(109372, 100158, 23, 3, 229900, 689700, 1, 2002);
 
 --
 -- Disparadores `detpedido`
@@ -363,16 +384,17 @@ CREATE TABLE `empleado` (
   `idbar` bigint(10) DEFAULT NULL COMMENT 'id del bar',
   `codubi` int(6) DEFAULT NULL COMMENT 'codigo de ubicacion ',
   `idper` bigint(10) NOT NULL COMMENT 'id del perfil',
-  `idval` bigint(10) NOT NULL COMMENT 'id de valor'
+  `idval` bigint(10) NOT NULL COMMENT 'id de valor',
+  `estado` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `empleado`
 --
 
-INSERT INTO `empleado` (`idemp`, `nomemp`, `emaemp`, `celemp`, `fecnaemp`, `numdocu`, `fotiden`, `pssemp`, `idbar`, `codubi`, `idper`, `idval`) VALUES
-(2000, 'Martin Casas', 'martin@gmail.com', 3001782, '2000-11-20', 109020, NULL, '78adbe311449919b44220c57d7089ee5b8f306ad', 2002, 1, 20, 101),
-(2001, 'Jose', 'jose@gmail.com', 3001782, '2000-11-09', 102891, NULL, '15bb060fd110a4f67c6b5b287072524f345ec1b7', 2003, 2, 20, 102);
+INSERT INTO `empleado` (`idemp`, `nomemp`, `emaemp`, `celemp`, `fecnaemp`, `numdocu`, `fotiden`, `pssemp`, `idbar`, `codubi`, `idper`, `idval`, `estado`) VALUES
+(2000, 'Martin Casas', 'martin@gmail.com', 3001782, '2000-11-20', 109020, NULL, '78adbe311449919b44220c57d7089ee5b8f306ad', 2002, 1, 20, 101, 1),
+(2001, 'Jose', 'jose@gmail.com', 3001782, '2000-11-09', 102891, NULL, '15bb060fd110a4f67c6b5b287072524f345ec1b7', 2003, 2, 20, 102, 1);
 
 -- --------------------------------------------------------
 
@@ -407,7 +429,10 @@ INSERT INTO `factura` (`idfact`, `idpedido`, `fecha`, `cantidad`, `total`, `idus
 (1070, 100148, '2025-03-01 00:00:00', 6, 848100.00, 1, NULL, 'Pagado', 'Efectivo', 2001, 2002, 'activa'),
 (1083, 100149, '2025-03-02 00:00:00', 6, 848100.00, 4, '', 'Pagado', 'Efectivo', 2001, NULL, 'activa'),
 (1084, 100150, '2025-03-02 18:02:52', 6, 848100.00, 1, '', 'Pagado', 'Efectivo', 2001, 2002, 'activa'),
-(1085, 100151, '2025-03-02 18:06:22', 6, 848100.00, 5, '', 'Pagado', 'Efectivo', 2001, 2002, 'activa');
+(1085, 100151, '2025-03-02 18:06:22', 6, 848100.00, 5, '', 'Pagado', 'Efectivo', 2001, 2002, 'activa'),
+(1086, 100152, '2025-03-08 16:02:41', 6, 848100.00, 1, 'Calle 308 ', 'Pagado', 'Efectivo', 2001, 2002, 'activa'),
+(1087, 100158, '2025-03-11 00:10:41', 3, 689700.00, 1, 'calle 20 #90-20', 'Pagado', 'Transferencia', 2001, 2002, 'activa'),
+(1088, 100153, '2025-03-11 00:11:48', 3, 279100.00, 1, 'calle 20', 'Pagado', 'Efectivo', 2001, 2002, 'activa');
 
 --
 -- Disparadores `factura`
@@ -481,6 +506,7 @@ INSERT INTO `pagina` (`idpag`, `nompag`, `rutpag`, `mospag`, `ordpag`, `titupag`
 (2005, 'Pedidos Aceptados', 'views/vempedacep.php', 1, 9, 'Pedidos Aceptados', NULL, 'Pedidos aceptados por el empleado para realizar el domicilio'),
 (2006, 'Vista detpedido', 'views/vempedgrand.php', 2, NULL, NULL, NULL, ''),
 (2007, 'Reporte de ganancias', 'views/varplaem.php', 2, NULL, NULL, NULL, ''),
+(2008, 'Detalles de pedidos aceptados', 'views/vempedacepgrand.php', 2, NULL, NULL, NULL, ''),
 (3001, 'Pedidos', 'views/vbarped.php', 1, 13, 'Pedidos Bar', NULL, 'Pedidos en proceso'),
 (3002, 'Ganancias', 'views/vbargan.php', 1, 14, 'Ganancias Bar', '', 'Ganancias por pedidos'),
 (3003, 'Crear Productos', 'views/vbarxprod.php', 1, 15, 'Crear Productos Bar', NULL, 'CRUD Producto'),
@@ -537,6 +563,7 @@ INSERT INTO `pagper` (`idpag`, `idper`) VALUES
 (2005, 20),
 (2006, 20),
 (2007, 20),
+(2008, 20),
 (3001, 30),
 (3002, 30),
 (3003, 30),
@@ -573,30 +600,38 @@ CREATE TABLE `pedido` (
   `estado` enum('En preparacion','En camino','Entregado') DEFAULT 'En preparacion',
   `total` bigint(20) DEFAULT NULL,
   `idusu` bigint(10) DEFAULT NULL,
+  `telefono` bigint(10) DEFAULT NULL,
   `direccion` varchar(100) DEFAULT NULL,
   `mensaje` text DEFAULT NULL,
   `estado_pago` enum('Pendiente','Pagado') DEFAULT 'Pendiente',
   `metodo_pago` enum('Efectivo','Transferencia') DEFAULT 'Efectivo',
   `estado_pedido` tinyint(1) NOT NULL DEFAULT 1,
-  `idemp` bigint(10) DEFAULT NULL
+  `idemp` bigint(10) DEFAULT NULL,
+  `passecret` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `pedido`
 --
 
-INSERT INTO `pedido` (`idpedido`, `idcarrito`, `cantidad`, `fecha_pedido`, `estado`, `total`, `idusu`, `direccion`, `mensaje`, `estado_pago`, `metodo_pago`, `estado_pedido`, `idemp`) VALUES
-(100110, 10, 20, '2024-12-02 00:00:00', 'En preparacion', 200000, 2003, NULL, NULL, 'Pendiente', 'Efectivo', 2, NULL),
-(100125, 12, 6, '2025-02-25 00:00:00', 'En preparacion', 822800, 1, 'Calle Falsa 123', NULL, 'Pendiente', 'Efectivo', 2, NULL),
-(100136, 16, 1, '2025-02-26 00:00:00', 'En preparacion', 24600, 1, 'Por definir', NULL, 'Pagado', 'Efectivo', 3, NULL),
-(100142, 15, 6, '2025-02-27 00:00:00', 'En preparacion', 848100, 1, 'Por definir', NULL, 'Pagado', 'Efectivo', 3, NULL),
-(100144, 17, 7, '2025-02-28 00:00:00', 'En preparacion', 872700, 1, 'Por definir', NULL, 'Pendiente', 'Efectivo', 3, NULL),
-(100145, 18, 1, '2025-02-27 00:00:00', 'En preparacion', 24600, 1, 'Por definir', NULL, 'Pendiente', 'Efectivo', 3, NULL),
-(100148, 19, 6, '2025-02-28 00:00:00', 'En preparacion', 848100, 1, 'Por definir', NULL, 'Pagado', 'Efectivo', 3, NULL),
-(100149, 20, 6, '2025-03-02 00:00:00', 'En preparacion', 848100, 4, '', '', 'Pagado', 'Efectivo', 2, 2001),
-(100150, 21, 6, '2025-03-02 18:02:09', 'En preparacion', 848100, 1, '', '', 'Pagado', 'Efectivo', 2, 2001),
-(100151, 22, 6, '2025-03-02 18:06:00', 'En preparacion', 848100, 5, '', '', 'Pagado', 'Efectivo', 2, 2001),
-(100152, 23, 6, '2025-03-02 19:43:26', 'En preparacion', 848100, 1, '', '', 'Pendiente', 'Efectivo', 1, NULL);
+INSERT INTO `pedido` (`idpedido`, `idcarrito`, `cantidad`, `fecha_pedido`, `estado`, `total`, `idusu`, `telefono`, `direccion`, `mensaje`, `estado_pago`, `metodo_pago`, `estado_pedido`, `idemp`, `passecret`) VALUES
+(100110, 10, 20, '2024-12-02 00:00:00', 'En preparacion', 200000, 2003, NULL, NULL, NULL, 'Pendiente', 'Efectivo', 3, NULL, NULL),
+(100125, 12, 6, '2025-02-25 00:00:00', 'Entregado', 822800, 1, NULL, 'Calle Falsa 123', NULL, 'Pagado', 'Efectivo', 2, 2001, NULL),
+(100136, 16, 1, '2025-02-26 00:00:00', 'Entregado', 24600, 1, NULL, 'Por definir', NULL, 'Pagado', 'Efectivo', 3, NULL, NULL),
+(100142, 15, 6, '2025-02-27 00:00:00', 'Entregado', 848100, 1, NULL, 'Por definir', NULL, 'Pagado', 'Efectivo', 3, NULL, NULL),
+(100144, 17, 7, '2025-02-28 00:00:00', 'En preparacion', 872700, 1, NULL, 'Por definir', NULL, 'Pendiente', 'Efectivo', 3, NULL, NULL),
+(100145, 18, 1, '2025-02-27 00:00:00', 'En preparacion', 24600, 1, NULL, 'Por definir', NULL, 'Pendiente', 'Efectivo', 3, NULL, NULL),
+(100148, 19, 6, '2025-02-28 00:00:00', 'Entregado', 848100, 1, NULL, 'Por definir', NULL, 'Pagado', 'Efectivo', 3, NULL, NULL),
+(100149, 20, 6, '2025-03-02 00:00:00', 'Entregado', 848100, 4, NULL, '', '', 'Pagado', 'Efectivo', 2, 2001, NULL),
+(100150, 21, 6, '2025-03-02 18:02:09', 'Entregado', 848100, 1, NULL, '', '', 'Pagado', 'Efectivo', 2, 2001, NULL),
+(100151, 22, 6, '2025-03-02 18:06:00', 'Entregado', 848100, 5, 3123456789, 'Cale 124', 'Traer cambio', 'Pagado', 'Efectivo', 2, 2001, NULL),
+(100152, 23, 6, '2025-03-05 13:39:26', 'Entregado', 848100, 1, 3002089200, 'Calle 308 ', 'Dejar en porteria', 'Pagado', 'Efectivo', 2, 2001, 'AH12HS63'),
+(100153, 10, 3, '2025-03-10 23:56:12', 'Entregado', 279100, 1, 3123456789, 'calle 20', 'holaa', 'Pagado', 'Efectivo', 2, 2001, NULL),
+(100154, 14, 6, '2025-03-10 23:56:57', 'En preparacion', 848100, 1, 32345, 'calle 20', 'adas', 'Pendiente', 'Efectivo', 1, NULL, NULL),
+(100155, 24, 10, '2025-03-10 23:58:18', 'En preparacion', 704600, 1, 23123, 'calle 20', 'holaa', 'Pendiente', 'Efectivo', 1, NULL, NULL),
+(100156, 27, 3, '2025-03-11 00:03:35', 'En preparacion', 332400, 1, 3123456789, 'calle 20 #602', 'Dejar en porteria', 'Pendiente', 'Efectivo', 1, NULL, NULL),
+(100157, 28, 5, '2025-03-11 00:06:43', 'En preparacion', 169000, 1, 3123456789, 'calle 20 #90-20', 'Dejar en porteria', 'Pendiente', 'Efectivo', 1, NULL, NULL),
+(100158, 29, 3, '2025-03-11 00:07:31', 'Entregado', 689700, 1, 3123456789, 'calle 20 #90-20', 'Dejar en porteria', 'Pagado', 'Transferencia', 2, 2001, NULL);
 
 --
 -- Disparadores `pedido`
@@ -707,7 +742,7 @@ INSERT INTO `producto` (`idprod`, `nomprod`, `desprod`, `mililitros`, `vlrprod`,
 (27, 'Vino Blanco Mar de Frades Albariño', 'Vino', 0, 130200, '5cffd4545dabfaa781ada1e64cec3f91.png', 2003, 50, 'vino'),
 (30, 'Vino Rosado Espumoso Piccini Regno Lambrusco 750ml', 'vino', 0, 45900, 'a29267fbbb10d04826afbc7f679c9856.png', 2002, 50, 'vino'),
 (31, 'Aperitivo Frizzantino Rosado Brut 750ml', 'vino', 0, 25200, '6f592e718d717e41796741a3fc3cd642.png', 2002, 50, 'vino'),
-(32, 'Vino Rosado Santa Carolina Reservado Cabernet Sauv', 'vino', 0, 43900, 'd948e059d6a935d572438d6b739dd3c0.png', 2002, 50, 'vino'),
+(32, 'Vino Rosado Santa Carolina Reservado Cabernet Sauv', 'vino', 700, 43900, 'd948e059d6a935d572438d6b739dd3c0.png', 2002, 50, 'vino'),
 (33, 'Angel 200ml', 'coctel', 0, 20000, '33a8ab3758424f4ac0f3d55b8ceec7af.png', 2002, 50, 'coctel'),
 (34, 'Arrival (Espiritu Isleño)', 'coctel', 0, 25000, 'd5b0bceec7137b2030b7081247ef8798.png', 2003, 50, 'coctel'),
 (35, 'Black Russian 250ml', 'Coctel', 0, 28000, '07276a65314afcbaac014573c8b9d4f4.png', 2002, 50, 'coctel'),
@@ -738,7 +773,26 @@ INSERT INTO `temp_actualizar_pedido` (`idpedido`) VALUES
 (100149),
 (100150),
 (100151),
-(100152);
+(100152),
+(100153),
+(100154),
+(100155),
+(100156),
+(100157),
+(100158);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `token`
+--
+
+CREATE TABLE `token` (
+  `id` int(10) DEFAULT NULL,
+  `emausu` varchar(255) DEFAULT NULL,
+  `token` varchar(255) DEFAULT NULL,
+  `expiracion` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -830,8 +884,8 @@ DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `after_insert_usuario_empleado` AFTER INSERT ON `usuario` FOR EACH ROW BEGIN
     IF NEW.idper = 20 THEN
-        INSERT INTO empleado (idemp, nomemp, emaemp, celemp, numdocu, fotiden, pssemp, codubi, idval, idper, idbar)
-        VALUES (NEW.idusu, NEW.nomusu, NEW.emausu, NEW.celusu, NEW.numdocu, NEW.fotiden, NEW.pssusu, NEW.codubi, NEW.idval, NEW.idper, NEW.idbar);
+        INSERT INTO empleado (idemp, nomemp, emaemp, celemp, numdocu, fecnaemp, fotiden, pssemp, codubi, idval, idper, idbar)
+        VALUES (NEW.idusu, NEW.nomusu, NEW.emausu, NEW.celusu, NEW.numdocu, NEW.fecnausu, NEW.fotiden, NEW.pssusu, NEW.codubi, NEW.idval, NEW.idper, NEW.idbar);
     END IF;
 END
 $$
@@ -852,9 +906,18 @@ DELIMITER $$
 CREATE TRIGGER `after_update_usuario_empleado` AFTER UPDATE ON `usuario` FOR EACH ROW BEGIN
     IF NEW.idper = 20 THEN
         UPDATE empleado
-        SET nomemp = NEW.nomusu, emaemp = NEW.emausu, celemp = NEW.celusu, numdocu = NEW.numdocu, fotiden = NEW.fotiden, 
-            pssemp = NEW.pssusu, idbar = NEW.idbar, codubi = NEW.codubi, idper = NEW.idper, idval = NEW.idval, fecnaemp = NEW.fecnausu
-        WHERE idemp = OLD.idusu;
+        SET nomemp = NEW.nomusu, 
+            emaemp = NEW.emausu, 
+            celemp = NEW.celusu, 
+            numdocu = NEW.numdocu, 
+            fecnaemp = NEW.fecnausu, 
+            fotiden = NEW.fotiden, 
+            pssemp = NEW.pssusu, 
+            idbar = NEW.idbar, 
+            codubi = NEW.codubi, 
+            idper = NEW.idper, 
+            idval = NEW.idval
+        WHERE idemp = NEW.idusu; -- Usar NEW.idusu para identificar el usuario actualizado
     END IF;
 END
 $$
@@ -1051,25 +1114,25 @@ ALTER TABLE `bar`
 -- AUTO_INCREMENT de la tabla `carrito`
 --
 ALTER TABLE `carrito`
-  MODIFY `idcarrito` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idcarrito` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `detcarrito`
 --
 ALTER TABLE `detcarrito`
-  MODIFY `iddetcarrito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `iddetcarrito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT de la tabla `detfact`
 --
 ALTER TABLE `detfact`
-  MODIFY `iddetfact` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id de detalle de factura', AUTO_INCREMENT=1001107;
+  MODIFY `iddetfact` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id de detalle de factura', AUTO_INCREMENT=1001113;
 
 --
 -- AUTO_INCREMENT de la tabla `detpedido`
 --
 ALTER TABLE `detpedido`
-  MODIFY `iddetpedido` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109353;
+  MODIFY `iddetpedido` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109373;
 
 --
 -- AUTO_INCREMENT de la tabla `dominio`
@@ -1087,7 +1150,7 @@ ALTER TABLE `empleado`
 -- AUTO_INCREMENT de la tabla `factura`
 --
 ALTER TABLE `factura`
-  MODIFY `idfact` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id de factura', AUTO_INCREMENT=1086;
+  MODIFY `idfact` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id de factura', AUTO_INCREMENT=1089;
 
 --
 -- AUTO_INCREMENT de la tabla `pagina`
@@ -1099,7 +1162,7 @@ ALTER TABLE `pagina`
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `idpedido` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100153;
+  MODIFY `idpedido` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100159;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
@@ -1221,120 +1284,6 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `valor`
   ADD CONSTRAINT `valor_ibfk_1` FOREIGN KEY (`iddom`) REFERENCES `dominio` (`iddom`);
-
-DELIMITER $$
---
--- Eventos
---
-CREATE DEFINER=`root`@`localhost` EVENT `actualizar_estado_pedidos` ON SCHEDULE EVERY 1 HOUR STARTS '2025-03-01 13:37:47' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
-    UPDATE pedido 
-    SET estado_pedido = 3 
-    WHERE estado_pedido = 1  
-    AND TIMESTAMPDIFF(HOUR, fecha_pedido, NOW()) > 8
-    AND idpedido NOT IN (SELECT idpedido FROM pedido WHERE estado_pedido = 2);
-END$$
-
-CREATE DEFINER=`root`@`localhost` EVENT `actualizar_facturas_pendientes` ON SCHEDULE EVERY 1 SECOND STARTS '2025-02-27 15:23:02' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
-    UPDATE pedido p
-    JOIN facturas_pendientes fp ON p.idpedido = fp.idpedido
-    SET p.idfactura = fp.idfactura;
-
-    DELETE FROM facturas_pendientes WHERE idpedido IN (SELECT idpedido FROM pedido);
-END$$
-
-CREATE DEFINER=`root`@`localhost` EVENT `actualizar_pedido_cantidad` ON SCHEDULE EVERY 1 SECOND STARTS '2025-02-27 15:23:02' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
-    UPDATE pedido p
-    SET p.cantidad = (
-        SELECT COALESCE(SUM(dp.cantidad), 0) 
-        FROM detpedido dp 
-        WHERE dp.idpedido = p.idpedido
-    );
-END$$
-
-CREATE DEFINER=`root`@`localhost` EVENT `actualizar_totales_factura` ON SCHEDULE EVERY 1 MINUTE STARTS '2025-02-27 16:55:19' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
-    UPDATE factura f
-    INNER JOIN (
-        SELECT df.idfact, SUM(df.subtotal) AS total_factura
-        FROM detfact df
-        GROUP BY df.idfact
-    ) AS temp ON f.idfact = temp.idfact
-    SET f.total = temp.total_factura;
-END$$
-
-CREATE DEFINER=`root`@`localhost` EVENT `actualizar_totales_pedido` ON SCHEDULE EVERY 1 SECOND STARTS '2025-02-27 17:15:31' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
-    UPDATE pedido p
-    INNER JOIN (
-        SELECT dp.idpedido, SUM(dp.cantidad) AS cantidad_total, SUM(dp.total) AS total_pedido, MIN(dp.idusu) AS idusu_correcto
-        FROM detpedido dp
-        GROUP BY dp.idpedido
-    ) AS temp ON p.idpedido = temp.idpedido
-    SET 
-        p.cantidad = temp.cantidad_total,
-        p.total = temp.total_pedido,
-        p.idusu = temp.idusu_correcto
-    WHERE p.cantidad != temp.cantidad_total OR p.total != temp.total_pedido OR p.idusu != temp.idusu_correcto;
-END$$
-
-CREATE DEFINER=`root`@`localhost` EVENT `eliminar_pedidos_vacios` ON SCHEDULE EVERY 1 SECOND STARTS '2025-02-27 15:23:02' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
-    DELETE FROM pedido 
-    WHERE idpedido NOT IN (SELECT DISTINCT idpedido FROM detpedido);
-END$$
-
-CREATE DEFINER=`root`@`localhost` EVENT `ev_anular_factura` ON SCHEDULE EVERY 1 DAY STARTS '2025-03-02 12:13:06' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
-    UPDATE factura
-    SET estado = 'anulada'
-    WHERE estado = 'activa' AND fecha < NOW() - INTERVAL 3 DAY;
-END$$
-
-CREATE DEFINER=`root`@`localhost` EVENT `procesar_actualizar_pedido` ON SCHEDULE EVERY 1 SECOND STARTS '2025-02-27 17:15:24' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
-    UPDATE pedido p
-    INNER JOIN (
-        SELECT dp.idpedido, SUM(dp.cantidad) AS cantidad_total, SUM(dp.total) AS total_pedido, MIN(dp.idusu) AS idusu_correcto
-        FROM detpedido_pendiente dp
-        GROUP BY dp.idpedido
-    ) AS temp ON p.idpedido = temp.idpedido
-    SET 
-        p.cantidad = temp.cantidad_total,
-        p.total = temp.total_pedido,
-        p.idusu = temp.idusu_correcto
-    WHERE p.cantidad != temp.cantidad_total OR p.total != temp.total_pedido OR p.idusu != temp.idusu_correcto;
-END$$
-
-CREATE DEFINER=`root`@`localhost` EVENT `procesar_detpedido_pendiente` ON SCHEDULE EVERY 1 SECOND STARTS '2025-02-27 15:23:02' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
-    INSERT INTO detpedido (idpedido, idprod, cantidad, precio, total, idusu, idbar)
-    SELECT idpedido, idprod, cantidad, precio, total, idusu, idbar
-    FROM detpedido_pendiente;
-
-    DELETE FROM detpedido_pendiente;
-END$$
-
-CREATE DEFINER=`root`@`localhost` EVENT `procesar_facturas` ON SCHEDULE EVERY 1 MINUTE STARTS '2025-03-02 13:07:51' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
-    DECLARE done INT DEFAULT FALSE;
-    DECLARE v_idpedido BIGINT;
-
-    DECLARE cur CURSOR FOR SELECT idpedido FROM temp_factura;
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
-
-    OPEN cur;
-
-    leer_loop: LOOP
-        FETCH cur INTO v_idpedido;
-        IF done THEN 
-            LEAVE leer_loop;
-        END IF;
-
-        INSERT INTO factura (idpedido, fecha, idemp, cantidad, total, direccion, idusu, metodo_pago, estado_pago, estado)
-        SELECT idpedido, NOW(), idemp, cantidad, total, direccion, idusu, metodo_pago, 'Pagado', 'activa'
-        FROM pedido
-        WHERE idpedido = v_idpedido;
-
-        DELETE FROM temp_factura WHERE idpedido = v_idpedido;
-    END LOOP;
-
-    CLOSE cur;
-END$$
-
-DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
