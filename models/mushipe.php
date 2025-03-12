@@ -75,7 +75,8 @@ class Mushipe {
                     p.estado_pago
                 FROM pedido p
                 LEFT JOIN empleado e ON p.idemp = e.idemp
-                WHERE p.idusu = :idusu";
+                WHERE p.idusu = :idusu
+                ORDER BY p.idpedido DESC";  // Aquí agregamos el ORDER BY para ordenar por idpedido de mayor a menor
     
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
@@ -84,7 +85,7 @@ class Mushipe {
         $result->execute();
     
         return $result->fetchAll(PDO::FETCH_ASSOC);
-    }
+    }    
     
     public function getDetallesPorPedido($idpedido) {
         $sql = "SELECT 

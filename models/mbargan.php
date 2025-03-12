@@ -107,7 +107,8 @@ class Mbargan {
         $res = NULL;
         $sql = "SELECT idfact, idpedido, fecha, cantidad, total, idusu, direccion, estado_pago, metodo_pago, idemp, idbar, estado 
                 FROM factura 
-                WHERE idbar = :idusu OR idusu = :idusu OR idemp = :idusu";
+                WHERE idbar = :idusu OR idusu = :idusu OR idemp = :idusu
+                ORDER BY idfact DESC";
     
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
