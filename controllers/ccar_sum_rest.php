@@ -78,10 +78,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $dtCarrito = $carritoModel->obtenerCarrito($idusu);
 $dtValoresCarrito = $carritoModel->obtenerDetalleProductosFactura($idusu);
 $dtTotCarrito = $carritoModel->obtenerTotalesFactura($idusu);
-
-if (empty($dtCarrito)) {
-    echo json_encode(['success' => false, 'message' => 'El carrito está vacío.']);
-    exit();
-}
-
 ?>

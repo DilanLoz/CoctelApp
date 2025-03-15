@@ -10,6 +10,7 @@ class Mprod {
     private $idbar;
     private $cantprod;
     private $tipoprod;
+    private $mililitros;
 
     public function getIdprod() {
         return $this->idprod;
@@ -44,6 +45,9 @@ class Mprod {
     public function getTipoprod() {
         return $this->tipoprod;
     }
+    public function getMililitros() {
+        return $this->mililitros;
+    }
 
     public function setIdprod($idprod) {
         $this->idprod = $idprod;
@@ -76,11 +80,14 @@ class Mprod {
     public function setTipoprod($tipoprod) {
         $this->tipoprod = $tipoprod;
     }
+    public function setMililitros($mililitros) {
+        $this->mililitros = $mililitros;
+    }
 
     // Methods (getAll, getOne, save, edit, del) should be closed with }
     public function getAll() {
         try {
-            $sql = "SELECT p.idprod, p.nomprod, p.desprod, p.vlrprod, p.fotprod, p.idbar, p.cantprod, b.nombar, p.tipoprod FROM producto AS p INNER JOIN bar AS b ON p.idbar=b.idbar";
+            $sql = "SELECT p.idprod, p.nomprod, p.desprod, p.vlrprod, p.fotprod, p.idbar, p.cantprod, b.nombar, p.tipoprod, p.mililitros FROM producto AS p INNER JOIN bar AS b ON p.idbar=b.idbar";
             $modelo = new conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
@@ -93,7 +100,7 @@ class Mprod {
     }
     public function getOne() {
         try {
-            $sql = "SELECT idprod, nomprod, desprod, vlrprod, fotprod, idbar, cantprod,  tipoprod FROM producto WHERE idprod=:idprod";
+            $sql = "SELECT idprod, nomprod, desprod, vlrprod, fotprod, idbar, cantprod,  tipoprod, mililitros FROM producto WHERE idprod=:idprod";
             $modelo = new conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);

@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function agregarProducto(idusu, idprod, vlrprod, cantidad, button) {
-        console.log("Datos enviados:", { idprod, idusu, vlrprod, cantidad });
+        console.log("📤 Enviando datos:", { idprod, idusu, vlrprod, cantidad });
 
         fetch('controllers/ccarr.php', {
             method: 'POST',
@@ -25,36 +25,22 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log("Respuesta del servidor:", data);
+            console.log("✅ Respuesta del servidor:", data);
             
             if (data.success) {
-                if (button.classList.contains('add-to-cart')) {
-                    button.classList.add('btn-success', 'cart-animate');
-                    button.classList.remove('btn-outline-warning');
-                } else if (button.classList.contains('add-cart')) {
-                    button.style.backgroundColor = '#28a745';
-                    button.style.color = '#fff';
-                    button.classList.add('cart-animate');
-                }
-
-                setTimeout(() => {
-                    if (button.classList.contains('add-to-cart')) {
-                        button.classList.remove('btn-success', 'cart-animate');
-                        button.classList.add('btn-outline-warning');
-                    } else if (button.classList.contains('add-cart')) {
-                        button.style.backgroundColor = '';
-                        button.style.color = '';
-                        button.classList.remove('cart-animate');
-                    }
-                }, 3000);
+                animarBoton(button);
+                animarCarrito();
+                actualizarTotal();
             } else {
                 alert("❌ Error al agregar: " + data.message);
             }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => console.error('⛔ Error en la solicitud:', error));
     }
 
     function eliminarProducto(idusu, idprod, button) {
+        console.log("🗑 Eliminando producto:", { idprod, idusu });
+
         fetch('controllers/ccarr.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -62,6 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(response => response.json())
         .then(data => {
+            console.log("🗑 Respuesta de eliminación:", data);
+
             if (data.success) {
                 let productElement = button.closest('.product-item');
                 if (productElement) {
@@ -72,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert("❌ Error al eliminar: " + data.message);
             }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => console.error('⛔ Error al eliminar:', error));
     }
 
     function actualizarTotal() {
@@ -80,9 +68,29 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                document.querySelector('.tot-carr').textContent = `$${data.total_productos}`;
+                const totalElement = document.querySelector('.tot-carr');
+                if (totalElement) {
+                    totalElement.textContent = `$${data.total_productos}`;
+                }
             }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => console.error('⛔ Error al actualizar el total:', error));
+    }
+
+    // ✅ Animación del botón al agregar al carrito
+    function animarBoton(button) {
+        button.classList.add('cart-animate');
+        setTimeout(() => {
+            button.classList.remove('cart-animate');
+        }, 500);
+    }
+
+    // ✅ Animación del icono del carrito al agregar productos
+    function animarCarrito() {
+        const cartIcon = document.querySelector(".cart-icon");
+        if (cartIcon) {
+            cartIcon.classList.add("bounce");
+            setTimeout(() => cartIcon.classList.remove("bounce"), 500);
+        }
     }
 });

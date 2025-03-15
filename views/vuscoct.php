@@ -4,8 +4,7 @@ require_once 'models/conexion.php';
 require_once 'controllers/cbarxprod.php';
 
 $mbarxprod = new Mbarxprod();
-$datAll = $mbarxprod->getAll();
-
+$datAll = $mbarxprod->getAllProd();
 ?>
 
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>

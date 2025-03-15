@@ -4,7 +4,7 @@ require_once 'models/conexion.php';
 require_once 'controllers/cbarxprod.php';
 
 $mbarxprod = new Mbarxprod();
-$datAll = $mbarxprod->getAll();
+$datAll = $mbarxprod->getAllProd();
 
 ?>
 

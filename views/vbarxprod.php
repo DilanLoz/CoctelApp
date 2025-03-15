@@ -5,14 +5,6 @@ if (session_status() == PHP_SESSION_NONE) {
 
  require_once ('controllers/cbarxprod.php'); ?>
 
-<?php
-// Iniciar sesión si aún no está iniciada
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-
-?>
 <div class="container" style="text-align: left;">
     <br><br><br>
     <form id="frmins" action="home.php?pg=3003" enctype="multipart/form-data" method="POST">
@@ -30,16 +22,16 @@ if (session_status() === PHP_SESSION_NONE) {
 
             <div class="form-group col-md-6">
                 <label for="vlrprod"><strong>Valor de producto</strong></label>
-                <input type="text" name="vlrprod" id="vlrprod" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne[0]['vlrprod']) ? $datOne[0]['vlrprod'] : ''; ?>" required>
+                <input type="number" name="vlrprod" id="vlrprod" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne[0]['vlrprod']) ? $datOne[0]['vlrprod'] : ''; ?>" required>
             </div>
 
             <div class="form-group col-md-6">
                 <label for="cantprod"><strong>Cantidad de producto</strong></label>
-                <input type="text" name="cantprod" id="cantprod" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne[0]['cantprod']) ? $datOne[0]['cantprod'] : ''; ?>" required>
+                <input type="number" name="cantprod" id="cantprod" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne[0]['cantprod']) ? $datOne[0]['cantprod'] : ''; ?>" required>
             </div>
 
             <div class="form-group col-md-6">
-                <label for="mililitros"><strong>mililitros</strong></label>
+                <label for="mililitros"><strong>Mililitros</strong></label>
                 <input type="number" name="mililitros" id="mililitros" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne[0]['mililitros']) ? $datOne[0]['mililitros'] : ''; ?>" required>
             </div>
 
@@ -52,20 +44,20 @@ if (session_status() === PHP_SESSION_NONE) {
                 </select>
             </div>
 
-            <div class="form-group col-md-4">
-                <label for="fotprod"><strong>Foto Producto:</strong></label>
+            <div class="form-group col-md-6">
+                <label for="fotprod">Foto Producto:</label>
                 <input type="file" class="form-control form-control" name="fots" accept="image/*" id="fotprod">
-                <input type="hidden" name="fotprod" value="<?php echo isset($datOne[0]['fotprod']) && !empty($datOne[0]['fotprod']) ? $datOne[0]['fotprod'] : ''; ?>">
+                <input type="hidden" name="fotprod" value="<?php if($dtOne && $dtOne[0]['fotprod']) echo $dtOne[0]['fotprod']; ?>">
             </div>
             <div class="form-group col-md-6">
                 <br>
-                <input class="btn btn-primary" type="submit" value="Enviar">
+                <input class="btn btn-outline-warning shadow-sm" type="submit" value="Enviar">
                 <input type="hidden" name="ope" value="save">
                 <input type="hidden" name="idprod" id="idprod" value="<?php echo isset($datOne[0]['idprod']) ? $datOne[0]['idprod'] : ''; ?>">
             </div>
         </form>
 
-        <br>
+        <br><br><br>
         <table id="example" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
@@ -74,7 +66,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 </tr>
             </thead>    
             <tbody>
-                <?php if (isset($datOneBar) && !empty($datOneBar)) { foreach ($datOneBar as $dta) { ?>
+                <?php if (isset($dattab) && !empty($dattab)) { foreach ($dattab as $dta) { ?>
                 <tr>
                     <td>
                         <div style="display: flex; align-items: center;">
@@ -102,6 +94,8 @@ if (session_status() === PHP_SESSION_NONE) {
                         <a href="home.php?pg=<?=$pg;?>&idprod=<?=$dta['idprod'];?>&ope=eli" title="Eliminar" onclick="return eliminar();">
                             <i class="fa-solid fa-trash-can fa"></i>
                         </a>
+
+                        </a>
                     </td>
                 </tr>
                 <?php }} ?>
@@ -117,6 +111,8 @@ if (session_status() === PHP_SESSION_NONE) {
 </div>
 <script>
     function eliminar() {
+        console.log("Intentando eliminar: " + window.location.href);
         return confirm("¿Estás seguro de que deseas eliminar este producto?");
     }
 </script>
+

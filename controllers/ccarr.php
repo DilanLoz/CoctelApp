@@ -11,12 +11,12 @@ $idusu = $_SESSION['idusu'] ?? null;
 $carritoModel = new CarritoModel($conexion);
 
 if (!$idusu) {
-    echo json_encode(['success' => false, 'message' => 'Usuario no autenticado.']);
+    $_SESSION['error'] = "Usuario no autenticado.";
+    header("Location: views/vuscarcom.php"); // Redirige a la vista
     exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    header('Content-Type: application/json');
     $input = json_decode(file_get_contents('php://input'), true);
 
     $idprod = isset($input['idprod']) ? intval($input['idprod']) : null;
@@ -25,47 +25,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $accion = isset($input['acc']) ? trim($input['acc']) : null;
 
     if (!$idprod || $cantidad <= 0) {
-        echo json_encode(['success' => false, 'message' => 'Datos inválidos.']);
+        $_SESSION['error'] = "Datos inválidos.";
+        header("Location: views/vuscarcom.php");
         exit();
     }
 
     try {
         if ($accion === "eli") {
             $carritoModel->eliminarProducto($idusu, $idprod);
-            echo json_encode(['success' => true, 'message' => 'Producto eliminado correctamente.']);
+            $_SESSION['mensaje'] = "Producto eliminado correctamente.";
+            header("Location: views/vuscarcom.php");
             exit();
         }
 
         if ($accion === "sum") {
-            $result = $carritoModel->actualizarCantidad($idusu, $idprod, 1); // Sumar 1
-            echo json_encode(['success' => $result, 'message' => 'Cantidad aumentada correctamente.']);
+            $carritoModel->actualizarCantidad($idusu, $idprod, 1);
+            $_SESSION['mensaje'] = "Cantidad aumentada correctamente.";
+            header("Location: views/vuscarcom.php");
             exit();
         }
 
         if ($accion === "res") {
-            $result = $carritoModel->actualizarCantidad($idusu, $idprod, -1); // Restar 1
-            echo json_encode(['success' => $result, 'message' => 'Cantidad reducida correctamente.']);
+            $carritoModel->actualizarCantidad($idusu, $idprod, -1);
+            $_SESSION['mensaje'] = "Cantidad reducida correctamente.";
+            header("Location: views/vuscarcom.php");
             exit();
         }
 
         $result = $carritoModel->agregarProducto($idusu, $idprod, $cantidad, $vlrprod);
-
-        echo json_encode([
-            'success' => $result,
-            'message' => $result ? 'Producto añadido correctamente.' : 'Error al añadir el producto.'
-        ]);
+        $_SESSION['mensaje'] = $result ? "Producto añadido correctamente." : "Error al añadir el producto.";
+        header("Location: views/vuscarcom.php");
         exit();
     } catch (Exception $e) {
-        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+        $_SESSION['error'] = $e->getMessage();
+        header("Location: views/vuscarcom.php");
         exit();
     }
-} else {
-    $dtCarrito = $carritoModel->obtenerCarrito($idusu);
-    $dtValoresCarrito = $carritoModel->obtenerDetalleProductosFactura($idusu);
-    $dtTotCarrito = $carritoModel->obtenerTotalesFactura($idusu);
-
-    if (empty($dtCarrito)) {
-        echo json_encode(['success' => false, 'message' => 'El carrito está vacío.']);
-    }
 }
+
+// Cargar los datos para la vista
+$_SESSION['carrito'] = $carritoModel->obtenerCarrito($idusu);
+$_SESSION['valoresCarrito'] = $carritoModel->obtenerDetalleProductosFactura($idusu);
+$_SESSION['totCarrito'] = $carritoModel->obtenerTotalesFactura($idusu);
+
 ?>
