@@ -34,6 +34,10 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
                 </tr>
             </thead>
             <tbody>
+                <?php usort($pedidos, function ($a, $b) {
+                    return $b['idpedido'] <=> $a['idpedido']; // Orden descendente
+                });
+                ?>
                 <?php foreach ($pedidos as $pedido): ?>
                     <tr id="pedido-<?= $pedido['idpedido'] ?>">
                         <td>
@@ -137,14 +141,10 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
 
 <!-- Script para marcar la fila -->
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
         document.querySelectorAll(".select-row").forEach(button => {
-            button.addEventListener("click", function() {
+            button.addEventListener("click", function () {
                 let row = this.closest("tr");
-
-                // Alternar la clase "selected"
                 row.classList.toggle("selected");
             });
         });
-    });
 </script>

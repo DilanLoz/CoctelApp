@@ -7,13 +7,18 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
             <i class="fa-solid fa-cart-shopping"></i> Carrito
         </h1>
 
-        <div class="rounded-3 border border-secondary p-4" style="background-color: #fff;">
+        <div class="rounded-3 border border-secondary p-4">
             <?php if (!empty($dtCarrito)) { ?>
                 <?php foreach ($dtCarrito as $producto) { ?>
-                    <div class="row product-item pt-3 ps-3 pe-3 mt-3 bg-body-tertiary rounded-3 m-4">
+                    <div class="row product-item pt-3 ps-3 pe-3 mt-3  rounded-3 m-4">
                         <div class="col-3 col-sm-2 d-flex justify-content-center">
-                            <img src="<?php echo 'img/' . htmlspecialchars($producto['fotprod']); ?>" class="prodcar" draggable="false" style="width: 50px; height: 70px;">
+                            <a href="home.php?pg=1014&idprod=<?= $producto['idprod']; ?>">
+                                <img src="<?php echo 'img/' . htmlspecialchars($producto['fotprod']); ?>"
+                                    class="prodcar" draggable="false"
+                                    style="width: 50px; height: 70px;">
+                            </a>
                         </div>
+
                         <div class="col-6 col-sm-6">
                             <ul style="list-style-type: none; padding-left: 0;">
                                 <li>
@@ -161,6 +166,32 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
 </div>
 
 <style>
+    /* Fondo gris claro para toda la página */
+    body {
+        background-color: #f8f9fa;
+        /* Un gris claro */
+    }
+
+    /* Estilo para los productos */
+    .product-item {
+        background-color: white;
+        /* Fondo blanco para cada producto */
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        /* Sombra sutil */
+        border-radius: 8px;
+        /* Bordes redondeados */
+        padding: 15px;
+        /* Espaciado interno */
+        margin: 10px 0;
+        /* Espaciado entre productos */
+        transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out, border 0.4s ease-in-out;
+    }
+
+    .product-item:hover {
+        transform: scale(1.02);
+        box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
     .subir-boton {
         position: relative;
         top: -10px;

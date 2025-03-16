@@ -24,6 +24,12 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="icon" href="img/coctelapp/favicon.png">
+    <style>
+        body {
+            background-color: #f8f9fa !important;
+            /* Un gris claro */
+        }
+    </style>
     <title>CoctelApp</title>
 </head>
 
@@ -66,6 +72,7 @@
     <footer class="bg-black">
         <?php require_once("views/vfooter.php"); ?>
     </footer>
+
 
     <!-- Scripts -->
     <script src="js/carcomp.js"></script>
