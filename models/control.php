@@ -142,6 +142,67 @@ function desactivarUsuariosInactivos() {
     }
 }
 
+
+// 🔴 FUNCIÓN PARA PROCESAR LA RECUPERACIÓN DE CONTRASEÑA
+function restablecerContrasena($email) {
+    $pdo = (new Conexion())->get_conexion();
+    
+    // 🔹 Verificar si el usuario existe
+    $stmt = $pdo->prepare("SELECT idusu FROM usuario WHERE emausu = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch();
+
+    if (!$user) {
+        echo "<script>alert('Este correo no está registrado.'); window.location.href='../views/vpassword.php';</script>";
+        exit();
+    }
+
+    // 🔹 Generar token único
+    $token = bin2hex(random_bytes(32));
+    $expiracion = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+    // 🔹 Guardar token en la base de datos
+    $stmt = $pdo->prepare("INSERT INTO token (emausu, token, expiracion) VALUES (?, ?, ?)");
+    $stmt->execute([$email, $token, $expiracion]);
+
+    // 🔹 Enviar correo con el enlace de recuperación
+    $link = "http://localhost/CoctelApp-main/views/vpassword.php?token=$token";
+    $asunto = "Recuperación de contraseña";
+    $mensaje = "Haz clic en el siguiente enlace para restablecer tu contraseña: $link";
+    $cabeceras = "From: coctelapp.info@gmail.com\r\n";
+
+    mail($email, $asunto, $mensaje, $cabeceras);
+
+    echo "<script>alert('Se ha enviado un enlace a tu correo electrónico.'); window.location.href='../index.php';</script>";
+}
+
+// 🔴 FUNCIÓN PARA CAMBIAR LA CONTRASEÑA USANDO EL TOKEN
+function cambiarContrasena($token, $nueva_contraseña) {
+    $pdo = (new Conexion())->get_conexion();
+
+    // 🔹 Verificar si el token es válido y no ha expirado
+    $stmt = $pdo->prepare("SELECT emausu FROM token WHERE token = ? AND expiracion > NOW()");
+    $stmt->execute([$token]);
+    $user = $stmt->fetch();
+
+    if ($user) {
+        $emausu = $user['emausu'];
+        $hashed_password = sha1(md5($nueva_contraseña . 'Jd#'));
+
+        // 🔹 Actualizar la contraseña
+        $stmt = $pdo->prepare("UPDATE usuario SET passusu = ? WHERE emausu = ?");
+        $stmt->execute([$hashed_password, $emausu]);
+
+        // 🔹 Eliminar el token usado
+        $stmt = $pdo->prepare("DELETE FROM token WHERE token = ?");
+        $stmt->execute([$token]);
+
+        echo "<script>alert('Contraseña actualizada con éxito.'); window.location.href='../index.php';</script>";
+    } else {
+        echo "<script>alert('El token no es válido o ha expirado.'); window.location.href='../index.php';</script>";
+    }
+
+}
 // Ejecutar la función de desactivación al cargar este script
 desactivarUsuariosInactivos();
 ?>
