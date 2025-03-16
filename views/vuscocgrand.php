@@ -43,10 +43,6 @@ $mprod = new Mprod();
                             data-idusu="<?= $_SESSION['idusu'] ?>">
                             Agregar al carrito <i class="fa-solid fa-cart-plus ms-1"></i>
                         </button>
-
-                        <a href="pagina_destino.php" class="btn btn-warning btn-md d-flex align-items-center justify-content-center text-center" id="btnComprar">
-                            Comprar <i class="fa-solid fa-tags ms-2"></i>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -56,32 +52,36 @@ $mprod = new Mprod();
 <style>
     /* ✅ Establece la altura de la imagen y ajusta su tamaño */
     .img-container {
-    position: relative;
-    width: 100%;
-    max-width: 400px; /* Ajusta según sea necesario */
-    height: 400px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    background-color:rgb(255, 255, 255); /* Fondo para evitar bordes vacíos */
-}
+        position: relative;
+        width: 100%;
+        max-width: 400px;
+        /* Ajusta según sea necesario */
+        height: 400px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        background-color: rgb(255, 255, 255);
+        /* Fondo para evitar bordes vacíos */
+    }
 
-.product-img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* ✅ Ajusta la imagen sin recortar */
-    transition: transform 0.2s ease-in-out, transform-origin 0.2s ease-in-out;
-    cursor: zoom-in;
-}
+    .product-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        /* ✅ Ajusta la imagen sin recortar */
+        transition: transform 0.2s ease-in-out, transform-origin 0.2s ease-in-out;
+        cursor: zoom-in;
+    }
 
 
-/* ✅ Efecto de lupa */
-.img-container:hover .product-img {
-    transform: scale(1.5); /* Aumenta el tamaño de la imagen */
-    cursor: zoom-in;
-}
+    /* ✅ Efecto de lupa */
+    .img-container:hover .product-img {
+        transform: scale(1.5);
+        /* Aumenta el tamaño de la imagen */
+        cursor: zoom-in;
+    }
 
     .icono-circulo {
         font-size: 15px;
@@ -100,7 +100,7 @@ $mprod = new Mprod();
 
     /* Estilo del botón */
     .add-to-cart {
-        background-color: #f8f9fa;
+        background-color: #ffc107;
         /* Gris claro */
         color: #333;
         border: 1px solid #ddd;
@@ -162,25 +162,23 @@ $mprod = new Mprod();
             });
         });
     });
-    document.addEventListener("DOMContentLoaded", function () {
-    const imgContainer = document.querySelector(".img-container");
-    const img = document.querySelector("#zoom-image");
+    document.addEventListener("DOMContentLoaded", function() {
+        const imgContainer = document.querySelector(".img-container");
+        const img = document.querySelector("#zoom-image");
 
-    imgContainer.addEventListener("mousemove", function (e) {
-        let rect = imgContainer.getBoundingClientRect();
-        let x = ((e.clientX - rect.left) / rect.width) * 100;
-        let y = ((e.clientY - rect.top) / rect.height) * 100;
+        imgContainer.addEventListener("mousemove", function(e) {
+            let rect = imgContainer.getBoundingClientRect();
+            let x = ((e.clientX - rect.left) / rect.width) * 100;
+            let y = ((e.clientY - rect.top) / rect.height) * 100;
 
-        img.style.transformOrigin = `${x}% ${y}%`;
-        img.style.transform = "scale(2)"; // Ajusta el nivel de zoom aquí
+            img.style.transformOrigin = `${x}% ${y}%`;
+            img.style.transform = "scale(2)"; // Ajusta el nivel de zoom aquí
+        });
+
+        imgContainer.addEventListener("mouseleave", function() {
+            img.style.transform = "scale(1)";
+        });
     });
-
-    imgContainer.addEventListener("mouseleave", function () {
-        img.style.transform = "scale(1)";
-    });
-});
-
-
 </script>
 
 <script src="js/carrito.js"></script>
