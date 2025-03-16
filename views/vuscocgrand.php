@@ -29,7 +29,7 @@ $mprod = new Mprod();
                         </strong>
                     </h4>
                     <br>
-                    <!-- Selector para servicio de bartender -->
+                    <!-- Descripción -->
                     <div class="mt-4">
                         <h5 for="desprod" class="form-label">Descripcion:</h5>
                         <h5><?= $dta['desprod']; ?></h5>
