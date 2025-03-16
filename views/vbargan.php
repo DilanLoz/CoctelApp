@@ -30,8 +30,8 @@ $datFiltered = $datAll;
                 </div>
             </div>
         </div>
-     <!-- Ganancias del Mes -->
-     <div class="col-md-6 mb-5 mt-5">
+        <!-- Ganancias del Mes -->
+        <div class="col-md-6 mb-5 mt-5">
             <div class="rounded p-3 shadow-lg">
                 <h2 class="text-warning fw-bold text-center mb-4 fs-3">Ganancias del Mes</h2>
                 <div class="container d-md-flex justify-content-between align-items-center">
@@ -47,67 +47,67 @@ $datFiltered = $datAll;
             </div>
         </div>
     </div>
-        <!-- Tabla de Ganancias de la Semana -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="rounded p-3 shadow-lg">
-                    <h2 class="text-warning fw-bold text-center mb-4 fs-3">Ganancias de la Última Semana</h2>
-                    <table class="table table-bordered">
-                        <thead class="table-warning">
-                            <tr>
-                                <th class="text-center">Día</th>
-                                <th class="text-center">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            if (!empty($gananciasSemana)) {
-                                foreach ($gananciasSemana as $dia => $total) {
-                                    echo "<tr>
-                                            <td class='text-center'>$dia</td>
-                                            <td class='text-center'>$ " . number_format($total, 0, ',', '.') . "</td>
-                                          </tr>";
-                                }
-                            } else {
-                                echo "<tr><td colspan='2' class='text-center'>No hay ventas en los últimos 7 días</td></tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tabla de Ganancias del Año -->
-        <div class="col mb-5 mt-5">
+    <!-- Tabla de Ganancias de la Semana -->
+    <div class="row">
+        <div class="col-md-12">
             <div class="rounded p-3 shadow-lg">
-                <h2 class="text-warning fw-bold text-center mb-4 fs-3">Ganancias del Año</h2>
-                <table class="table table-bordered text-center">
-                    <thead>
-                        <tr class="table-danger">
-                            <th>Mes</th>
-                            <th>Ganancia</th>
+                <h2 class="text-warning fw-bold text-center mb-4 fs-3">Ganancias de la Última Semana</h2>
+                <table class="table table-bordered">
+                    <thead class="table-warning">
+                        <tr>
+                            <th class="text-center">Día</th>
+                            <th class="text-center">Total</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($gananciasAnio as $mes => $ganancia) {
-                            echo "<tr>
-                                <td>" . ucfirst($mes) . " $anioActual</td>
-                                <td>$ " . number_format($ganancia, 0, ',', '.') . "</td>
-                            </tr>";
+                        if (!empty($gananciasSemana)) {
+                            foreach ($gananciasSemana as $dia => $total) {
+                                echo "<tr>
+                                            <td class='text-center'>$dia</td>
+                                            <td class='text-center'>$ " . number_format($total, 0, ',', '.') . "</td>
+                                          </tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='2' class='text-center'>No hay ventas en los últimos 7 días</td></tr>";
                         }
                         ?>
                     </tbody>
                 </table>
             </div>
         </div>
+    </div>
 
-        <!-- Botón de Generar Reporte -->
-        <div class="text-end">
-            <a href="home.php?pg=3007" target="_blank" class="btn btn-outline-danger mt-2">
-                <i class="fa-regular fa-file-pdf"></i> Generar Reporte
-            </a>
+    <!-- Tabla de Ganancias del Año -->
+    <div class="col mb-5 mt-5">
+        <div class="rounded p-3 shadow-lg">
+            <h2 class="text-warning fw-bold text-center mb-4 fs-3">Ganancias del Año</h2>
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr class="table-danger">
+                        <th>Mes</th>
+                        <th>Ganancia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($gananciasAnio as $mes => $ganancia) {
+                        echo "<tr>
+                                <td>" . ucfirst($mes) . " $anioActual</td>
+                                <td>$ " . number_format($ganancia, 0, ',', '.') . "</td>
+                            </tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
+
+    <!-- Botón de Generar Reporte -->
+    <div class="text-end">
+        <a href="PDF/Bar/GananciasBar.php" target="_blank" class="btn btn-outline-danger mt-2">
+            <i class="fa-regular fa-file-pdf"></i> Generar Reporte
+        </a>
+    </div>
+</div>
 </div>

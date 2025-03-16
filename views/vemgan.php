@@ -113,9 +113,8 @@ $datFiltered = $datAll;
     </div>
     <!-- Botón de Generar Reporte -->
     <div class="text-end">
-            <a href="home.php?pg=2007" target="_blank" class="btn btn-outline-danger mt-2">
-                <i class="fa-regular fa-file-pdf"></i> Generar Reporte
-            </a>
-        </div>
+        <a href="PDF/Empleado/GananciasEmp.php" target="_blank" class="btn btn-outline-danger mt-2">
+            <i class="fa-regular fa-file-pdf"></i> Generar Reporte
+        </a>
+    </div>
 </div>
-

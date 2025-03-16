@@ -1,7 +1,8 @@
 <?php
 require_once 'conexion.php';
 
-class Factura {
+class Factura
+{
     private $idfact;
     private $idpedido;
     private $fecha;
@@ -14,49 +15,140 @@ class Factura {
     private $idemp;
     private $idbar;
     private $estado;
-    
+
     private $iddetfact;
     private $idprod;
     private $precio_unitario;
-    
+
     // Métodos Getter
-    public function getIdfact() { return $this->idfact; }
-    public function getIdpedido() { return $this->idpedido; }
-    public function getFecha() { return $this->fecha; }
-    public function getCantidad() { return $this->cantidad; }
-    public function getTotal() { return $this->total; }
-    public function getIdusu() { return $this->idusu; }
-    public function getDireccion() { return $this->direccion; }
-    public function getEstadoPago() { return $this->estado_pago; }
-    public function getMetodoPago() { return $this->metodo_pago; }
-    public function getIdemp() { return $this->idemp; }
-    public function getIdbar() { return $this->idbar; }
-    public function getEstado() { return $this->estado; }
-    
-    public function getIddetfact() { return $this->iddetfact; }
-    public function getIdprod() { return $this->idprod; }
-    public function getPrecioUnitario() { return $this->precio_unitario; }
+    public function getIdfact()
+    {
+        return $this->idfact;
+    }
+    public function getIdpedido()
+    {
+        return $this->idpedido;
+    }
+    public function getFecha()
+    {
+        return $this->fecha;
+    }
+    public function getCantidad()
+    {
+        return $this->cantidad;
+    }
+    public function getTotal()
+    {
+        return $this->total;
+    }
+    public function getIdusu()
+    {
+        return $this->idusu;
+    }
+    public function getDireccion()
+    {
+        return $this->direccion;
+    }
+    public function getEstadoPago()
+    {
+        return $this->estado_pago;
+    }
+    public function getMetodoPago()
+    {
+        return $this->metodo_pago;
+    }
+    public function getIdemp()
+    {
+        return $this->idemp;
+    }
+    public function getIdbar()
+    {
+        return $this->idbar;
+    }
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    public function getIddetfact()
+    {
+        return $this->iddetfact;
+    }
+    public function getIdprod()
+    {
+        return $this->idprod;
+    }
+    public function getPrecioUnitario()
+    {
+        return $this->precio_unitario;
+    }
 
     // Métodos Setter
-    public function setIdfact($idfact) { $this->idfact = $idfact; }
-    public function setIdpedido($idpedido) { $this->idpedido = $idpedido; }
-    public function setFecha($fecha) { $this->fecha = $fecha; }
-    public function setCantidad($cantidad) { $this->cantidad = $cantidad; }
-    public function setTotal($total) { $this->total = $total; }
-    public function setIdusu($idusu) { $this->idusu = $idusu; }
-    public function setDireccion($direccion) { $this->direccion = $direccion; }
-    public function setEstadoPago($estado_pago) { $this->estado_pago = $estado_pago; }
-    public function setMetodoPago($metodo_pago) { $this->metodo_pago = $metodo_pago; }
-    public function setIdemp($idemp) { $this->idemp = $idemp; }
-    public function setIdbar($idbar) { $this->idbar = $idbar; }
-    public function setEstado($estado) { $this->estado = $estado; }
+    public function setIdfact($idfact)
+    {
+        $this->idfact = $idfact;
+    }
+    public function setIdpedido($idpedido)
+    {
+        $this->idpedido = $idpedido;
+    }
+    public function setFecha($fecha)
+    {
+        $this->fecha = $fecha;
+    }
+    public function setCantidad($cantidad)
+    {
+        $this->cantidad = $cantidad;
+    }
+    public function setTotal($total)
+    {
+        $this->total = $total;
+    }
+    public function setIdusu($idusu)
+    {
+        $this->idusu = $idusu;
+    }
+    public function setDireccion($direccion)
+    {
+        $this->direccion = $direccion;
+    }
+    public function setEstadoPago($estado_pago)
+    {
+        $this->estado_pago = $estado_pago;
+    }
+    public function setMetodoPago($metodo_pago)
+    {
+        $this->metodo_pago = $metodo_pago;
+    }
+    public function setIdemp($idemp)
+    {
+        $this->idemp = $idemp;
+    }
+    public function setIdbar($idbar)
+    {
+        $this->idbar = $idbar;
+    }
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+    }
 
-    public function setIddetfact($iddetfact) { $this->iddetfact = $iddetfact; }
-    public function setIdprod($idprod) { $this->idprod = $idprod; }
-    public function setPrecioUnitario($precio_unitario) { $this->precio_unitario = $precio_unitario; }
+    public function setIddetfact($iddetfact)
+    {
+        $this->iddetfact = $iddetfact;
+    }
+    public function setIdprod($idprod)
+    {
+        $this->idprod = $idprod;
+    }
+    public function setPrecioUnitario($precio_unitario)
+    {
+        $this->precio_unitario = $precio_unitario;
+    }
 
     // Obtener Factura y su Detalle
-    public function getFacturaDetalle($idfact) {
+    public function getFacturaDetalle($idfact)
+    {
         $sql = "SELECT 
                     f.idfact, f.fecha, f.total, f.metodo_pago, f.estado_pago,
                     u.nomusu AS usuario, e.nomemp AS empleado, b.nombar AS bar,
@@ -68,14 +160,45 @@ class Factura {
                 INNER JOIN empleado e ON f.idemp = e.idemp
                 INNER JOIN bar b ON f.idbar = b.idbar
                 WHERE f.idfact = :idfact";
-        
+
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
         $result = $conexion->prepare($sql);
         $result->bindParam(":idfact", $idfact);
         $result->execute();
-        
+
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
-    
+    public function getFacturasActivasPagadasMesActual($idusu)
+    {
+        $sql = "SELECT idfact, metodo_pago, total, fecha
+        FROM factura
+        WHERE idemp = :idemp 
+        AND estado = 'activa'  -- Cambiado a 'activa' en lugar de 'Activo'
+        AND estado_pago = 'Pagado'
+        AND fecha BETWEEN DATE_FORMAT(NOW(), '%Y-%m-01') AND LAST_DAY(NOW())";
+        $modelo = new Conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+        $result->bindParam(":idemp", $idusu, PDO::PARAM_INT);
+        $result->execute();
+
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getFacturasActivasPagadasMesActualBar($idusu)
+    {
+        $sql = "SELECT idfact, metodo_pago, total, fecha
+        FROM factura
+        WHERE idbar = :idbar 
+        AND estado = 'activa'  -- Cambiado a 'activa' en lugar de 'Activo'
+        AND estado_pago = 'Pagado'
+        AND fecha BETWEEN DATE_FORMAT(NOW(), '%Y-%m-01') AND LAST_DAY(NOW())";
+        $modelo = new Conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+        $result->bindParam(":idbar", $idusu, PDO::PARAM_INT);
+        $result->execute();
+
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
