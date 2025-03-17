@@ -16,9 +16,10 @@ $pedidos = $pedidoController->listarPedidos();
                         </a>
                     </div>
                     <div>
-                        <h6 class="fw-bold">No. Pedido <?php echo $pedido['idpedido']; ?></h6>
+                        <h4 class="fw-bold">No. Pedido <?php echo $pedido['idpedido']; ?></h4>
                         <h6>Dirección: <?php echo $pedido['direccion']; ?></h6>
                         <h6>Cant Productos: <?php echo $pedido['cantidad']; ?></h6>
+                        <h5><strong>Servicio Bartender: <?php echo $pedido['servicio']; ?></strong></h5>
                         <div class="d-flex justify-content-center mb-2 mt-3">
                             <div class="col-8 border-top border-warning border-3"></div>
                         </div>

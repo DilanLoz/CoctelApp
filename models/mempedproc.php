@@ -18,6 +18,7 @@ class Mempedproc {
     private $estado_pedido;
     private $idemp;
     private $passecret;
+    private $servicio;
 
 
     // Métodos GET
@@ -69,6 +70,9 @@ class Mempedproc {
     public function getPassecret() {
         return $this->passecret;
     }
+    public function getServicio() {
+        return $this->servicio;
+    }
 
     // Métodos SET
     public function setIdpedido($idpedido) {
@@ -119,13 +123,17 @@ class Mempedproc {
     public function setPassecret($passecret) {
         $this->passecret = $passecret;
     }
+    public function setServicio($servicio) {
+        $this->servicio = $servicio;
+    }
     // Método para obtener los pedidos en proceso (menos de 24 horas y no aceptados)
     public function getAll() {
         try {
             $sql = "SELECT p.idpedido, p.idcarrito, p.cantidad, p.fecha_pedido, p.estado, p.total, 
-               p.idusu, p.direccion, p.estado_pago, p.metodo_pago, p.estado_pedido, p.telefono
+               p.idusu, p.direccion, p.estado_pago, p.metodo_pago, p.estado_pedido, p.telefono, p.servicio
         FROM pedido AS p 
-        WHERE p.estado_pedido = 1";
+        WHERE p.estado_pedido = 1
+        ORDER BY p.idpedido DESC";
             
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();

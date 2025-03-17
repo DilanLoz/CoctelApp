@@ -13,11 +13,13 @@ foreach ($pedidos as $producto) {
             'direccion' => $producto['direccion'],
             'nomemp' => $producto['nomemp'],
             'fecha_pedido' => $producto['fecha_pedido'],
+            'servicio' => $producto['servicio'], // Se agrega el campo servicio
             'productos' => []
         ];
     }
     $pedidosAgrupados[$idpedido]['productos'][] = $producto;
 }
+
 ?>
 
 <div class="container mt-4">
@@ -47,6 +49,7 @@ foreach ($pedidos as $producto) {
                                 <p class="mb-1"><strong>Empleado:</strong> <?php echo $pedido['nomemp'] ?: 'Pendiente'; ?></p>
                                 <p class="mb-1"><strong>Usuario:</strong> <?php echo $pedido['productos'][0]['nomusu']; ?></p>
                                 <p class="mb-0"><strong>Dirección:</strong> <?php echo htmlspecialchars($pedido['direccion']); ?></p>
+                                <p class="mb-0 text-primary"><strong>Servicio Bartender: <?php echo htmlspecialchars($pedido['servicio']); ?></strong></p>
                             </div>
                         </div>
 
@@ -96,6 +99,7 @@ foreach ($pedidos as $producto) {
                                 <p class="mb-1"><strong>Empleado:</strong> <?php echo $pedido['nomemp'] ?: 'Pendiente'; ?></p>
                                 <p class="mb-1"><strong>Usuario:</strong> <?php echo $pedido['productos'][0]['nomusu']; ?></p>
                                 <p class="mb-0"><strong>Dirección:</strong> <?php echo htmlspecialchars($pedido['direccion']); ?></p>
+                                <p class="mb-0 text-primary"><strong>Servicio Bartender: <?php echo htmlspecialchars($pedido['servicio']); ?></strong></p>
                             </div>
 
                         </div>

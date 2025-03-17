@@ -9,6 +9,7 @@ $totalGeneral = 0;
 $direccionPedido = isset($productos[0]['direccion']) ? $productos[0]['direccion'] : 'No disponible';
 $mensajePedido = isset($productos[0]['mensaje']) ? $productos[0]['mensaje'] : 'Sin mensaje';
 $estadoPedido = (!empty($productos) && isset($productos[0]['estado'])) ? $productos[0]['estado'] : 'Sin estado';
+$servicioPedido = (!empty($productos) && isset($productos[0]['servicio'])) ? $productos[0]['servicio'] : 'Sin servicio';
 
 // Calcular el total antes de mostrarlo
 foreach ($productos as $producto) {
@@ -35,7 +36,7 @@ if ($estadoPedido === "En pendiente") {
     <div class="col-md-8 mx-auto text-center">
       <!-- Mostrar el estado -->
       <div class="mt-3">
-        <div class="estado-pedido <?php echo $estadoClase; ?> text-center p-2 rounded fw-bold">
+        <div class="estado-pedido border border-2 border-dark rounded <?php echo $estadoClase; ?> text-center p-2 rounded fw-bold">
           <?php echo htmlspecialchars($estadoPedido); ?>
         </div>
         <button class="btn btn-warning btn-confirmar mt-3"
@@ -53,16 +54,21 @@ if ($estadoPedido === "En pendiente") {
         <h4 class="fw-bold">Total General: $<?php echo number_format($totalGeneral, 2); ?></h4>
       </div>
 
-      <div class="mt-4 p-3 bg-light rounded text-dark text-center w-100">
+      <div class="mt-4 p-3 bg-white rounded text-dark text-center w-100">
         <h5 class="fw-bold">Dirección de Entrega:</h5>
         <p class="mb-0"><?php echo htmlspecialchars($direccionPedido); ?></p>
       </div>
 
-      <div class="mt-2 mb-2 p-3 bg-light rounded text-dark text-center">
+      <div class="mt-2 mb-2 p-3 bg-white rounded text-dark text-center">
         <h5 class="fw-bold">Mensaje:</h5>
         <p class="mb-0"><?php echo htmlspecialchars($mensajePedido); ?></p>
       </div>
 
+      <div class="mt-2 mb-2 p-3 bg-white rounded text-dark text-center">
+        <h5 class="fw-bold">Servicio Bartender:</h5>
+        <p class="mb-0"><?php echo htmlspecialchars($servicioPedido); ?></p>
+      </div>
+      <br>
       <h3 class="mb-4 fw-bold">Detalles de Pedido</h3>
 
       <?php if (!empty($productos)): ?>

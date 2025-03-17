@@ -84,7 +84,7 @@ class Mdetpedido
             $sql = "SELECT dp.iddetpedido, dp.idpedido, dp.idprod, dp.cantidad, dp.precio, 
             (dp.cantidad * dp.precio) AS total, dp.idusu, dp.idbar, 
             p.fotprod, p.nomprod AS nombre_producto, p.mililitros, 
-            b.nombar, ped.direccion, ped.mensaje, ped.metodo_pago, ped.estado
+            b.nombar, ped.direccion, ped.mensaje, ped.metodo_pago, ped.estado, ped.servicio
         FROM detpedido AS dp
         INNER JOIN producto AS p ON dp.idprod = p.idprod
         INNER JOIN bar AS b ON dp.idbar = b.idbar
@@ -111,7 +111,7 @@ class Mdetpedido
                         p.nomprod AS nombre_producto, p.mililitros, p.fotprod, 
                         b.nombar, ped.direccion, 
                         emp.nomemp, ped.fecha_pedido, 
-                        usu.nomusu, ped.estado_pedido, ped.estado_pago, 
+                        usu.nomusu, ped.estado_pedido, ped.estado_pago, ped.servicio, 
                         (SELECT SUM(dp2.cantidad * dp2.precio) 
                          FROM detpedido dp2 
                          WHERE dp2.idpedido = dp.idpedido) AS total_pedido  
