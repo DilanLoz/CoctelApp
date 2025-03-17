@@ -57,7 +57,7 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
                     <h3 class="mt-3 fw-bold fs-4 fs-md-3 fs-lg-2">🛒 Tu carrito está vacío</h3>
                     <img src="./img/coctelapp/svg/Ecommerce_campaign.gif" alt="Carrito vacío" class="img-fluid w-50 w-md-50 w-lg-25">
                     <p class="mt-3 text-muted">¡No te quedes sin tus productos favoritos! Explora nuestro catálogo y encuentra lo que necesitas.</p>
-                    <a href="productos.php" class="btn btn-warning mt-3">🛍️ Explorar Productos</a>
+                    <a href="home.php?pg=1006" class="btn btn-warning mt-3"><i class="fa-solid fa-wine-glass"></i> Explorar Productos</a>
                 </div>
 
             <?php } ?>
@@ -104,38 +104,41 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
             </div>
             <div class="modal-body">
                 <form id="finalizarPedidoForm">
+
+                    <!-- Mensaje sobre pago contraentrega -->
+                    <div class="alert alert-success text-center" role="alert">
+                        <img src="img/coctelapp/svg/cash-outline.svg" alt="Pago Contraentrega" width="40" height="40" class="mb-2">
+                        <h5 class="fw-bold">Pagos Contraentrega</h5>
+                        <p class="mb-1">Este pedido se paga al momento de la entrega.</p>
+                        <p class="mb-0">¡No pagues hasta recibirlo en tus manos!</p>
+                    </div>
+
                     <div class="mb-3">
                         <label for="direccion" class="form-label">Dirección</label>
-                        <input class="form-control" type="text" name="direccion" value="<?php echo isset($datOne[0]['direccion']) ? $datOne[0]['direccion'] : ''; ?>" required>
+                        <input class="form-control" type="text" name="direccion" required>
                     </div>
                     <div class="mb-3">
                         <label for="telefono" class="form-label">Teléfono</label>
-                        <input class="form-control" type="number" name="telefono" value="<?php echo isset($datOne[0]['telefono']) ? $datOne[0]['telefono'] : ''; ?>" required>
+                        <input class="form-control" type="number" name="telefono" required>
                     </div>
                     <div class="mb-3">
                         <label for="referencia" class="form-label">Mensaje de recomendaciones</label>
-                        <input class="form-control" type="text" name="mensaje" value="<?php echo isset($datOne[0]['mensaje']) ? $datOne[0]['mensaje'] : ''; ?>" required>
+                        <input class="form-control" type="text" name="mensaje" required>
                     </div>
+
                     <div class="mb-3">
                         <label for="metodo_pago" class="form-label">Método de Pago</label>
                         <select class="form-select" name="metodo_pago" required>
                             <?php
-                            // Conectar a la base de datos
                             require_once __DIR__ . '/../models/conexion.php';
                             $conexion = (new Conexion())->get_conexion();
-
-                            // Consulta para obtener los valores del ENUM
                             $sql = "SHOW COLUMNS FROM carrito LIKE 'metodo_pago'";
                             $stmt = $conexion->prepare($sql);
                             $stmt->execute();
                             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
                             if ($row) {
-                                // Extraer los valores del ENUM
                                 $enum_values = str_replace(["enum(", ")", "'"], "", $row['Type']);
                                 $opciones = explode(",", $enum_values);
-
-                                // Generar las opciones del select
                                 foreach ($opciones as $opcion) {
                                     echo '<option value="' . htmlspecialchars($opcion) . '">' . htmlspecialchars($opcion) . '</option>';
                                 }
@@ -144,26 +147,91 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
                         </select>
                     </div>
 
-                    <button type="button" class="btn btn-primary" id="confirmarPedido">
+                    <div class="mb-3">
+                        <label for="servicio" class="form-label">Servicio de Bartender</label>
+                        <select class="form-select" name="servicio" id="servicioSelect" required>
+                            <?php
+                            $sql = "SHOW COLUMNS FROM carrito LIKE 'servicio'";
+                            $stmt = $conexion->prepare($sql);
+                            $stmt->execute();
+                            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                            if ($row) {
+                                $enum_values = str_replace(["enum(", ")", "'"], "", $row['Type']);
+                                $opciones = explode(",", $enum_values);
+                                foreach ($opciones as $opcion) {
+                                    echo '<option value="' . htmlspecialchars($opcion) . '">' . htmlspecialchars($opcion) . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <!-- Mensaje de advertencia (oculto por defecto) -->
+                    <div id="bartenderMessage" class="alert alert-warning text-dark p-3 text-start" style="display: none;">
+                        <strong><i class="fa-solid fa-circle-exclamation"></i> Atención:</strong> Si eliges el servicio de bartender, recuerda que:
+                        <ul class="mt-2 mb-0 ps-3">
+                            <li class="text-start">Es un servicio exclusivo para <b>cócteles presenciales</b>.</li>
+                            <li class="text-start">Tiene un costo de <b>$25,000 COP por hora</b>.</li>
+                            <li class="text-start">Debe contratarse para un mínimo de <b>40 personas</b>.</li>
+                            <li class="text-start"><b>El pago no está incluido en el total del pedido</b>, se paga directamente al bartender en persona.</li>
+                            <li class="text-start">Si el evento tiene más de <b>40 personas</b>, <b>se aplicará un costo adicional por cada 40 personas</b>. Comunícate con el bar para gestionar los detalles.</li>
+                            <li class="text-start">Si no se cumplen las normas establecidas para el servicio, se aplicará una <b>multa de $100,000 COP</b>.</li>
+                        </ul>
+                    </div>
+                    <button type="button" class="btn btn-success w-100" id="confirmarPedido">
                         Confirmar Pedido
                     </button>
-
                 </form>
             </div>
         </div>
     </div>
 </div>
-<!-- Modal de Carga -->
+
+<!-- Modal de Carga con animación y confirmación -->
 <div class="modal fade" id="pedidoConfirmadoModal" tabindex="-1" aria-labelledby="pedidoConfirmadoLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content text-center p-4">
             <div class="modal-body">
-                <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;"></div>
-                <h5 class="mt-3">Pedido Confirmado</h5>
+                <!-- Animación de carga -->
+                <div id="loadingAnimation">
+                    <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;"></div>
+                    <p class="mt-2">Procesando tu pedido...</p>
+                </div>
+                
+                <!-- Mensaje de confirmación oculto por defecto -->
+                <div id="confirmationMessage" class="d-none">
+                    <i class="fa-solid fa-circle-check text-success fa-3x mb-3"></i>
+                    <img src="img/coctelapp/svg/Successful-purchase-cuate.png" alt="Compra Exitosa" class="img-fluid mb-3" style="max-width: 150px;">
+                    <h5 class="text-success">¡Pedido Confirmado!</h5>
+                    <p class="mb-0">Gracias por comprar en <strong>CoctelApp</strong>. Tu pedido está en camino.</p>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    let modalElement = document.getElementById('pedidoConfirmadoModal');
+    let modal = new bootstrap.Modal(modalElement);
+    let confirmarPedidoBtn = document.getElementById('confirmarPedido');
+
+    confirmarPedidoBtn.addEventListener("click", function() {
+        // Mostrar la modal cuando se haga clic en "Confirmar Pedido"
+        modal.show();
+
+        // Restablecer la animación de carga y ocultar el mensaje de confirmación
+        document.getElementById("loadingAnimation").classList.remove("d-none");
+        document.getElementById("confirmationMessage").classList.add("d-none");
+
+        // Simular tiempo de procesamiento antes de mostrar la confirmación
+        setTimeout(() => {
+            document.getElementById("loadingAnimation").classList.add("d-none");
+            document.getElementById("confirmationMessage").classList.remove("d-none");
+        }, 3000); // 3 segundos de espera
+    });
+});
+</script>
+
 
 <style>
     /* Fondo gris claro para toda la página */
@@ -272,4 +340,12 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
     function mostrarNombreCompleto(elemento) {
         elemento.parentElement.innerHTML = elemento.dataset.nombre + " | " + elemento.parentElement.innerHTML.split("|")[1];
     }
+    document.getElementById('servicioSelect').addEventListener('change', function() {
+        let bartenderMessage = document.getElementById('bartenderMessage');
+        if (this.value === 'Si') {
+            bartenderMessage.style.display = 'block';
+        } else {
+            bartenderMessage.style.display = 'none';
+        }
+    });
 </script>

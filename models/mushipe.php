@@ -15,6 +15,7 @@ class Mushipe {
     private $metodo_pago;
     private $estado_pedido;
     private $idemp;
+    private $servicio; // Se agregó el atributo servicio
 
     private $iddetpedido;
     private $idprod;
@@ -22,6 +23,7 @@ class Mushipe {
     private $idbar;
 
     // Métodos Getter
+    public function getServicio() { return $this->servicio; }
     public function getIdpedido() { return $this->idpedido; }
     public function getIdcarrito() { return $this->idcarrito; }
     public function getCantidad() { return $this->cantidad; }
@@ -41,6 +43,7 @@ class Mushipe {
     public function getIdbar() { return $this->idbar; }
 
     // Métodos Setter
+    public function setServicio($servicio) { $this->servicio = $servicio; }
     public function setIdpedido($idpedido) { $this->idpedido = $idpedido; }
     public function setIdcarrito($idcarrito) { $this->idcarrito = $idcarrito; }
     public function setCantidad($cantidad) { $this->cantidad = $cantidad; }
@@ -68,15 +71,17 @@ class Mushipe {
                     p.estado_pedido, 
                     p.total, 
                     COALESCE(e.nomemp, 'Pendiente') AS nomemp,
+                    COALESCE(e.celemp, 'No disponible') AS celemp, -- Se agregó la columna celemp
                     p.direccion, 
                     p.mensaje, 
                     p.metodo_pago,
                     p.estado, 
-                    p.estado_pago
+                    p.estado_pago,
+                    p.servicio -- Se agregó la columna servicio
                 FROM pedido p
                 LEFT JOIN empleado e ON p.idemp = e.idemp
                 WHERE p.idusu = :idusu
-                ORDER BY p.idpedido DESC";  // Aquí agregamos el ORDER BY para ordenar por idpedido de mayor a menor
+                ORDER BY p.idpedido DESC";  // Ordenar por idpedido de mayor a menor
     
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
@@ -102,7 +107,8 @@ class Mushipe {
                 INNER JOIN producto p ON dp.idprod = p.idprod
                 LEFT JOIN bar b ON dp.idbar = b.idbar
                 INNER JOIN pedido pd ON dp.idpedido = pd.idpedido
-                WHERE dp.idpedido = :idpedido";
+                WHERE dp.idpedido = :idpedido
+                ORDER BY dp.iddetpedido DESC";
     
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
@@ -112,10 +118,5 @@ class Mushipe {
     
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
-    
-        
-    
-    
-    
-    
 }
+?>

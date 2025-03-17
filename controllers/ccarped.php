@@ -2,7 +2,6 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-
 require_once __DIR__ . '/../models/mcarped.php';
 require_once __DIR__ . '/../models/conexion.php';
 
@@ -22,8 +21,9 @@ try {
             $mensaje = $_POST['mensaje'] ?? null;
             $telefono = $_POST['telefono'] ?? null;
             $metodo_pago = $_POST['metodo_pago'] ?? null;
+            $servicio = $_POST['servicio'] ?? null; // Nuevo campo
 
-            if (!$direccion || !$metodo_pago) {
+            if (!$direccion || !$metodo_pago || !$servicio) {
                 echo json_encode(['success' => false, 'error' => 'Faltan datos obligatorios']);
                 exit;
             }
@@ -34,6 +34,7 @@ try {
             $mpcarrito->setMensaje($mensaje);
             $mpcarrito->setTelefono($telefono);
             $mpcarrito->setMetodoPago($metodo_pago);
+            $mpcarrito->setServicio($servicio); // Asignamos el servicio
 
             $resultado = $mpcarrito->saveCarrito();
             if ($resultado === true) {

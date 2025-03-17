@@ -51,7 +51,10 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
                             <?= $pedido['estado'] ?>
                         </td>
                         <td>$<?= number_format($pedido['total'], 2) ?></td>
-                        <td><?= $pedido['nomemp'] ?: 'Pendiente' ?></td>
+                        <td>
+                            <?= $pedido['nomemp'] ?: 'Pendiente' ?><br>
+                            <small class="text-muted">Telefono: <?= $pedido['celemp'] ?: 'No disponible' ?></small>
+                        </td>
                         <td>
                             <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#pedidoModal<?= $pedido['idpedido'] ?>">
                                 <i class="fa-solid fa-eye"></i>
@@ -73,6 +76,7 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
                                     <p><strong>Mensaje:</strong> <?= $pedido['mensaje'] ?? 'No disponible'; ?></p>
                                     <p><strong>Método de Pago:</strong> <?= $pedido['metodo_pago'] ?? 'No especificado'; ?></p>
                                     <p><strong>Estado de Pago:</strong> <?= $pedido['estado_pago'] ?? 'No especificado'; ?></p>
+                                    <p><strong>Servicio de Bartender:</strong> <?= $pedido['servicio'] ?? 'No especificado'; ?></p>
                                     <hr>
 
                                     <h5 class="text-center">Productos</h5>
@@ -141,10 +145,10 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
 
 <!-- Script para marcar la fila -->
 <script>
-        document.querySelectorAll(".select-row").forEach(button => {
-            button.addEventListener("click", function () {
-                let row = this.closest("tr");
-                row.classList.toggle("selected");
-            });
+    document.querySelectorAll(".select-row").forEach(button => {
+        button.addEventListener("click", function() {
+            let row = this.closest("tr");
+            row.classList.toggle("selected");
         });
+    });
 </script>
