@@ -13,9 +13,15 @@ $pg = isset($_GET["pg"]) ? $_GET["pg"] : NULL;
         <span class="linea"></span>
         <span class="linea"></span>
         <span class="linea"></span>
+        <span class="linea"></span>
     </button>
     <div id="menu-principal">
         <ul id="lista-menu">
+            <li>
+                <a href="index.php?pg=1005" class="enlace-menu <?php echo ($pg == '1005') ? 'activo' : ''; ?>">
+                    Productos
+                </a>
+            </li>
             <li>
                 <a href="index.php?pg=1002" class="enlace-menu <?php echo ($pg == '1002') ? 'activo' : ''; ?>">
                     Iniciar Sesión
