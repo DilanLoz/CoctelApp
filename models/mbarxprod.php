@@ -220,10 +220,11 @@ class Mbarxprod {
 }
 public function getAllProd() {
     try {
-        $sql = "SELECT p.idprod, p.nomprod, p.desprod, p.vlrprod, p.fotprod, p.idbar, p.cantprod, b.nombar, p.tipoprod, p.mililitros 
+        $sql = "SELECT p.idprod, p.nomprod, p.desprod, p.vlrprod, p.fotprod, p.idbar, p.cantprod, 
+                       b.nombar, p.tipoprod, p.mililitros 
                 FROM producto AS p 
                 INNER JOIN bar AS b ON p.idbar = b.idbar 
-                WHERE b.estado = 1";  // Filtra solo los bares con estado = 1
+                WHERE b.estado = 1"; 
 
         $modelo = new conexion();
         $conexion = $modelo->get_conexion();
@@ -234,6 +235,25 @@ public function getAllProd() {
         echo "Error: " . $e->getMessage();
     }
 }
+public function getAllProdIni() {
+    try {
+        $sql = "SELECT p.idprod, p.nomprod, p.desprod, p.vlrprod, p.fotprod, p.idbar, p.cantprod, 
+                       b.nombar, p.tipoprod, p.mililitros 
+                FROM producto AS p 
+                INNER JOIN bar AS b ON p.idbar = b.idbar 
+                WHERE b.estado = 1
+                ORDER BY RAND()"; 
+
+        $modelo = new conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+        $result->execute();
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
 
 } 
 

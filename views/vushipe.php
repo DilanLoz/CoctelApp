@@ -25,12 +25,9 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
         <table id="example" class="table table-striped table-bordered text-center">
             <thead class="table-dark">
                 <tr>
-                    <th>ID Pedido</th>
-                    <th>Fecha Pedido</th>
+                    <th>ID Pedido y Fecha</th>
                     <th>Estado</th>
                     <th>Total</th>
-                    <th>Empleado</th>
-                    <th>Detalles</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,25 +38,17 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
                 <?php foreach ($pedidos as $pedido): ?>
                     <tr id="pedido-<?= $pedido['idpedido'] ?>">
                         <td>
-                            <button class="btn btn-outline-dark select-row btn-sm me-2">
-                                <i class="fas fa-check" style="font-size: 16px;"></i>
-                            </button>
-                            <?= $pedido['idpedido'] ?>
-                        </td>
-                        <td><?= $pedido['fecha_pedido'] ?></td>
-                        <td class="fw-bold <?= ($pedido['estado_pedido'] == 'Entregado') ? 'text-success' : 'text-warning' ?>">
-                            <?= $pedido['estado'] ?>
-                        </td>
-                        <td>$<?= number_format($pedido['total'], 2) ?></td>
-                        <td>
-                            <?= $pedido['nomemp'] ?: 'Pendiente' ?><br>
-                            <small class="text-muted">Telefono: <?= $pedido['celemp'] ?: 'No disponible' ?></small>
-                        </td>
-                        <td>
                             <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#pedidoModal<?= $pedido['idpedido'] ?>">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
+                            <br>
+                            <?= $pedido['idpedido'] ?> <br>
+                            <?= $pedido['fecha_pedido'] ?>
                         </td>
+                        <td class="fw-bold <?= ($pedido['estado_pedido'] == 'Entregado') ? 'text-success' : 'text-warning' ?>">
+                            <?= $pedido['estado'] ?>
+                        </td>
+                        <td>$<?= number_format($pedido['total'], ) ?></td>
                     </tr>
 
                     <!-- MODAL DETALLE DE PEDIDO -->
@@ -72,6 +61,9 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
                                 </div>
                                 <div class="modal-body">
                                     <h5 class="text-center">Detalles del Pedido</h5>
+                                    <p><strong>Empleado asignado: </strong><?= $pedido['nomemp'] ?: 'Pendiente' ?> -
+                                        Telefono: <?= $pedido['celemp'] ?: 'No disponible' ?>
+                                    </p>
                                     <p><strong>Dirección:</strong> <?= $pedido['direccion'] ?? 'No disponible'; ?></p>
                                     <p><strong>Mensaje:</strong> <?= $pedido['mensaje'] ?? 'No disponible'; ?></p>
                                     <p><strong>Método de Pago:</strong> <?= $pedido['metodo_pago'] ?? 'No especificado'; ?></p>
