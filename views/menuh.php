@@ -10,15 +10,7 @@ $pg = isset($_GET["pg"]) ? $_GET["pg"] : NULL;
 
 <div id="contenedor-barra">
     <div>
-        <a id="logo-navegacion" target="_blank">
-            <img src="img/coctelapp/logo.png" id="logococtelapp">
-            <div class="barra-busqueda">
-                <input type="text" id="input-buscar" placeholder="Buscar...">
-                <button type="button" id="boton-buscar">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-            </div>
-        </a>
+        <?php require_once("buscador.php") ?>
     </div>
     <button id="boton-toggle" aria-controls="menu-principal" aria-expanded="false">
         <span class="linea"></span>
@@ -84,29 +76,4 @@ $pg = isset($_GET["pg"]) ? $_GET["pg"] : NULL;
         });
     });
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const inputBuscar = document.getElementById("input-buscar");
-        const botonBuscar = document.getElementById("boton-buscar");
-
-        // Función para realizar la búsqueda
-        function realizarBusqueda() {
-            const termino = inputBuscar.value.trim();
-            if (termino) {
-                alert(`Buscando: ${termino}`); // Aquí puedes redirigir o hacer la búsqueda
-                // Ejemplo: window.location.href = `buscar.php?q=${termino}`;
-            } else {
-                alert("Por favor, ingresa un término de búsqueda.");
-            }
-        }
-
-        // Buscar al presionar Enter
-        inputBuscar.addEventListener("keydown", function(e) {
-            if (e.key === "Enter") {
-                realizarBusqueda();
-            }
-        });
-
-        // Buscar al hacer clic en el botón
-        botonBuscar.addEventListener("click", realizarBusqueda);
-    });
 </script>
