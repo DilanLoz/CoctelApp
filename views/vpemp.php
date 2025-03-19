@@ -8,6 +8,15 @@ if (session_status() == PHP_SESSION_NONE) {
 include('controllers/cpusu.php');
 require_once('admin/controllers/cubi.php');
 require_once('admin/controllers/cval.php');
+
+$idbar = $_SESSION['idbar'] ?? null;
+$nombar = '';
+
+if ($idbar) {
+    $mpusu = new Mpusu(); // Instancia del modelo
+    $nombar = $mpusu->obtenerNombreBar($idbar); // Método corregido para obtener el nombre del bar
+}
+
 ?>
 
 <div id="perfil" class="container mt-5 mb-5" style="text-align: left; display: block;">
@@ -86,9 +95,9 @@ require_once('admin/controllers/cval.php');
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-group" for="idbar">Nombre Del Bar Asosciado *</label>
-                            <input type="text" class="form-control restricted" name="idbar" id="idbar"
-                                value="<?= $_SESSION['idbar'] ?? ''; ?>" readonly>
+                            <label class="form-group" for="nombar">Nombre Del Bar Asociado *</label>
+                            <input type="text" class="form-control restricted" name="nombar" id="nombar"
+                                value="<?= htmlspecialchars($nombar); ?>" readonly>
                         </div>
                         <div class="mb-3">
                             <label class="form-group" for="imgusu">Imagen</label>
@@ -132,10 +141,10 @@ require_once('admin/controllers/cval.php');
         const showConfirmModal = document.getElementById("showConfirmModal");
         const confirmSave = document.getElementById("confirmSave");
         const form = document.querySelector("form");
+        const infoButton = document.getElementById("infoButton");
 
         showConfirmModal.addEventListener("click", function() {
-            const modal = new bootstrap.Modal(document.getElementById("confirmModal"));
-            modal.show();
+            new bootstrap.Modal(document.getElementById("confirmModal")).show();
         });
 
         confirmSave.addEventListener("click", function() {
@@ -143,7 +152,7 @@ require_once('admin/controllers/cval.php');
         });
 
         infoButton.addEventListener("click", function() {
-            alert("La contraseña no se puede modificar en perfil, solo se puede modificar en 'Cambiar Contraseña'.");
+            alert("La contraseña no se puede modificar en perfil, solo en 'Cambiar Contraseña'.");
         });
     });
 </script>

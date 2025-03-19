@@ -200,6 +200,27 @@ WHERE u.idusu = :idusu;";
             return "Error en la consulta: " . $e->getMessage();
         }
     }
+    public function obtenerNombreBar()
+{
+    $res = NULL;
+    $sql = "SELECT b.nombar 
+            FROM bar AS b
+            WHERE b.idbar = :idbar";
+    
+    try {
+        $modelo = new conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+        $result->bindParam(":idbar", $_SESSION['idbar'], PDO::PARAM_INT); // Usamos el idbar de la sesión
+        $result->execute();
+        $res = $result->fetch(PDO::FETCH_ASSOC);
+        return $res ? $res['nombar'] : "Error: Bar no encontrado.";
+    } catch (PDOException $e) {
+        return "Error en la consulta: " . $e->getMessage();
+    }
+}
+
+    
 
 //-----------------------EMPLEADOS-------------------------------------
     public function getOneEmpleado()

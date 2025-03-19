@@ -16,8 +16,8 @@ foreach ($productos as $producto) {
   $totalGeneral += $producto['total'];
 }
 $estadoClase = "";
-if ($estadoPedido === "En pendiente") {
-  $estadoClase = "estado-pendiente";
+if ($estadoPedido === "En preparacion") {
+  $estadoClase = "estado-preparacion";
 } elseif ($estadoPedido === "En camino") {
   $estadoClase = "estado-camino";
 } elseif ($estadoPedido === "Entregado") {
@@ -50,21 +50,21 @@ if ($estadoPedido === "En pendiente") {
 
       </div>
       <!-- Mostrar el total general antes de la lista -->
-      <div class="mt-4 mb-4 p-3 bg-dark rounded text-white text-center">
+      <div class="mt-4 mb-4 p-3 bg-dark rounded text-white text-center ">
         <h4 class="fw-bold">Total General: $<?php echo number_format($totalGeneral, 2); ?></h4>
       </div>
 
-      <div class="mt-4 p-3 bg-white rounded text-dark text-center w-100">
+      <div class="mt-4 p-3 bg-white rounded text-dark text-center w-100 shadow-lg">
         <h5 class="fw-bold">Dirección de Entrega:</h5>
         <p class="mb-0"><?php echo htmlspecialchars($direccionPedido); ?></p>
       </div>
 
-      <div class="mt-2 mb-2 p-3 bg-white rounded text-dark text-center">
+      <div class="mt-2 mb-2 p-3 bg-white rounded text-dark text-center shadow-lg">
         <h5 class="fw-bold">Mensaje:</h5>
         <p class="mb-0"><?php echo htmlspecialchars($mensajePedido); ?></p>
       </div>
 
-      <div class="mt-2 mb-2 p-3 bg-white rounded text-dark text-center">
+      <div class="mt-2 mb-2 p-3 bg-white rounded text-dark text-center shadow-lg">
         <h5 class="fw-bold">Servicio Bartender:</h5>
         <p class="mb-0"><?php echo htmlspecialchars($servicioPedido); ?></p>
       </div>
@@ -160,7 +160,7 @@ if ($estadoPedido === "En pendiente") {
   }
 
   /* Estado: En pendiente */
-  .estado-pendiente {
+  .estado-preparacion {
     background-color: #f8d7da;
     color: #dc3545;
   }
