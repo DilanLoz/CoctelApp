@@ -17,7 +17,7 @@
     --bg-color: #fff;
 }
 body {
-    background-color: #f8f9fa; /* Un gris claro tipo Bootstrap */
+    background-color: #fffffff4; /* Un gris claro tipo Bootstrap */
 }
 
 
@@ -211,7 +211,7 @@ header {
 
 .product-box {
     background-color: white; /* Fondo blanco */
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    box-shadow: 6px 6px 10px 6px rgba(0, 0, 0, 0.166); /* Sombra suave */
     border-radius: 8px; /* Bordes redondeados */
     padding: 15px; /* Espaciado interno */
     margin-right: 20px;

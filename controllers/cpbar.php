@@ -77,3 +77,5 @@ if ($ope == "edi" && $idbar) {
 
 // Obtener todos los bares
 $datAll = $mpbar->getAll();
+$datAllBar = $mpbar->getAllBar();
+

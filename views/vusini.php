@@ -10,7 +10,7 @@ $datAll = $mbarxprod->getAllProdIni(); // Cargar los primeros 12 productos
 <link rel="stylesheet" href="css/carcomp.css">
 <br>
 <br>
-<h1>Productos</h1>
+<h1><i class="fa-solid fa-bottle-droplet"></i> Productos</h1>
 <hr>
 <br>
 

@@ -176,5 +176,23 @@ public function edit() {
             echo "Error: " . $e->getMessage();
         }
     }
+    public function getAllBar() {
+        try {
+            $sql = "SELECT idbar, nombar, nompropi, nit, emabar, telbar, pssbar, dircbar, horbar, fotbar, codubi, idper, idval 
+                    FROM bar 
+                    WHERE estado = 1
+                    ORDER BY RAND()";
+            $modelo = new conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            $result->execute();
+            return $result->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    
+    
+
 }
 ?>

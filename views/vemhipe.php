@@ -25,13 +25,9 @@ $facturas = $facturaModel->getHistorialPedidos($idusu);
         <table id="example" class="table table-striped table-bordered text-center">
             <thead class="table-warning">
                 <tr>
-                    <th>Marcar</th>
-                    <th>ID Factura</th>
                     <th>ID Pedido</th>
                     <th>Fecha</th>
-                    <th>Total</th>
                     <th>Comisión (2%)</th>
-                    <th>Estado de Pago</th>
                     <th>PDF</th>
                 </tr>
             </thead>
@@ -41,17 +37,11 @@ $facturas = $facturaModel->getHistorialPedidos($idusu);
                     foreach ($facturas as $factura) {
                         $comision = $factura['total'] * 0.02; // 2% del total
                         echo "<tr>
-                            <td>
-                                <button class='btn btn-outline-dark select-row'>
+                            <td><button class='btn btn-outline-dark select-row'>
                                     <i class='fas fa-check'></i>
-                                </button>
-                            </td>
-                            <td>{$factura['idfact']}</td>
-                            <td>{$factura['idpedido']}</td>
+                                </button> {$factura['idpedido']}</td>
                             <td>{$factura['fecha']}</td>
-                            <td>$ " . number_format($factura['total'], 0, ',', '.') . "</td>
                             <td>$ " . number_format($comision, 0, ',', '.') . "</td>
-                            <td>{$factura['estado_pago']}</td>
                             <td>
                                 <a href='PDF/Empleado/HisFacturaEmp.php?idfact={$factura["idfact"]}' 
                                 class='btn btn-outline-danger btn-sm' 

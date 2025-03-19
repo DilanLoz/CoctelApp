@@ -10,11 +10,11 @@ $datAll = $mbarxprod->getAllProdIni(); // Cargar los primeros 12 productos
 ?>
 
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <link rel="stylesheet" href="css/carcomp.css">
-<link rel="stylesheet" href="css/modal.css"> <!-- Asegúrate de crear este archivo para el diseño del modal -->
 <br>
 <br>
-<h1 class="text-center">Productos</h1>
+<h1 class="text-center"> Productos</h1>
 <hr>
 <br>
 

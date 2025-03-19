@@ -224,7 +224,8 @@ public function getAllProd() {
                        b.nombar, p.tipoprod, p.mililitros 
                 FROM producto AS p 
                 INNER JOIN bar AS b ON p.idbar = b.idbar 
-                WHERE b.estado = 1"; 
+                WHERE b.estado = 1
+                ORDER BY RAND()"; 
 
         $modelo = new conexion();
         $conexion = $modelo->get_conexion();

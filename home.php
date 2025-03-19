@@ -26,7 +26,7 @@
     <link rel="icon" href="img/coctelapp/favicon.png">
     <style>
         body {
-            background-color: #f8f9fa !important;
+            background-color:rgb(255, 255, 255) !important;
             /* Un gris claro */
         }
     </style>

@@ -10,7 +10,7 @@ $datAll = $mbarxprod->getAllProd();
 <link rel="stylesheet" href="css/carcomp.css">
 <br>
 <br>
-<h1><i class="fa-solid fa-whiskey-glass"></i> Licores</h1>
+<h1><i class="fa-solid fa-wine-bottle"></i> Licores</h1>
 <hr>
 <br>
 

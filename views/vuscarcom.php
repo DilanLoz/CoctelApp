@@ -57,7 +57,7 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
                     <h3 class="mt-3 fw-bold fs-4 fs-md-3 fs-lg-2">🛒 Tu carrito está vacío</h3>
                     <img src="./img/coctelapp/svg/Ecommerce_campaign.gif" alt="Carrito vacío" class="img-fluid w-50 w-md-50 w-lg-25">
                     <p class="mt-3 text-muted">¡No te quedes sin tus productos favoritos! Explora nuestro catálogo y encuentra lo que necesitas.</p>
-                    <a href="home.php?pg=1006" class="btn btn-warning mt-3"><i class="fa-solid fa-wine-glass"></i> Explorar Productos</a>
+                    <a href="home.php?pg=1015" class="btn btn-warning mt-3"><i class="fa-solid fa-wine-glass"></i> Explorar Productos</a>
                 </div>
 
             <?php } ?>

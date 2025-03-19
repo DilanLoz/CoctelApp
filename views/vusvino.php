@@ -9,7 +9,8 @@ $datAll = $mbarxprod->getAllProd();
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <link rel="stylesheet" href="css/carcomp.css">
 <br>
-<h1><i class="fa-solid fa-wine-bottle"></i> Vinos</h1>
+<br>
+<h1><i class="fa-solid fa-wine-glass"></i> Vinos</h1>
 <hr>
 <br>
 

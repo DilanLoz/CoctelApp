@@ -31,17 +31,6 @@ include_once('controllers/cpassword.php');
                         <div class="alert <?php echo (strpos($messageRegistro, 'exitosamente') !== false) ? 'alert-success' : 'alert-danger'; ?>">
                             <?php echo $messageRegistro; ?>
                         </div>
-                    <?php elseif (!empty($messagePassword)): ?>
-                        <div class="alert <?php echo (strpos($messagePassword, 'exitosamente') !== false) ? 'alert-success' : 'alert-danger'; ?>">
-                            <?php echo $messagePassword; ?>
-                        </div>
-                    <?php endif; ?>
-
-                    <!-- Mostrar mensaje cuenta inactiva -->
-                    <?php if (!empty($_GET['msg'])): ?>
-                        <div class="alert <?php echo (strpos($_GET['msg'], 'Error') !== false) ? 'alert-danger' : 'alert-success'; ?>">
-                            <?php echo htmlspecialchars($_GET['msg']); ?>
-                        </div>
                     <?php endif; ?>
 
 

@@ -32,9 +32,11 @@
             require_once("views/planesbar.php");
         if ($pg == "1004")
             require_once("views/vpassword.php");
-            if ($pg == "1005")
+        if ($pg == "1005")
             require_once("views/vinicio.php");
-        elseif ($pg == "1006") {
+        if ($pg == "1006")
+            require_once("views/vbares.php");
+        elseif ($pg == "1007") {
             echo "
             <br>
             <div style='max-width: 600px; margin: auto; padding: 40px; border: 1px solid #e0e0e0; border-radius: 10px; background-color: #f9f9f9; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);'>

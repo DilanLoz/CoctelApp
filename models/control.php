@@ -74,7 +74,7 @@ function valida($usu, $pas) {
 
         // Redirigir al home.php según el perfil del usuario
         $redirectPages = [
-            10 => "home.php?pg=1002",
+            10 => "home.php?pg=1015",
             20 => "home.php?pg=2001",
             30 => "home.php?pg=3001",
             40 => "home.php?pg=4100"

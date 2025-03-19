@@ -1,15 +1,14 @@
 <?php
 require_once ('models/conexion.php');
-require_once ('models/mpbar.php');
+require_once ('controllers/cpbar.php');
 $mpbar = new Mpbar();
 $datAllBar = $mpbar->getAllBar(); // Cargar los primeros 12 productos
 ?>
 
 <div class="container mt-5 mb-5">
-<h1><i class="fa-solid fa-store"></i>  Bares</h1>
+<h1 class="text-center"> Bares Asociados</h1>
 <hr>
 <br>
-
     <div class="row">
         <?php 
         // Verificar si tienes datos en $datAll y si no está vacío

@@ -181,7 +181,26 @@ class Mprod {
             echo "Error: " . $e;
         }
     }
-
+    public function getRandomProducts($idActual) {
+        try {
+            $sql = "SELECT p.idprod, p.nomprod, p.vlrprod, p.fotprod, p.mililitros, b.nombar 
+                    FROM producto AS p 
+                    INNER JOIN bar AS b ON p.idbar = b.idbar 
+                    WHERE p.idprod != :idActual AND b.estado = 1
+                    ORDER BY RAND() 
+                    LIMIT 4";  // 🔥 Selecciona 4 productos aleatorios excluyendo el actual
+    
+            $modelo = new conexion();
+            $conexion = $modelo->get_conexion();
+            $stmt = $conexion->prepare($sql);
+            $stmt->bindParam(':idActual', $idActual, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    
 } // This closes the class
 
 ?>
