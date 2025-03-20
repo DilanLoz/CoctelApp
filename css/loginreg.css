@@ -431,21 +431,32 @@ footer h4 {
 
 /* En pantallas móviles */
 @media (max-width: 768px) {
+  /* Redondear las esquinas del contenedor principal del carrusel */
   .container-carousel {
       height: 217px;
       overflow: hidden;
-      border-radius: 20px;
+      border-radius: 20px; /* Redondea las esquinas del contenedor */
+  }
+  .container-carousel{
+    border-radius: 20px !important;
   }
 
+  /* Asegurarse de que el contenedor interno también tenga las esquinas redondeadas */
   .carousel-inner {
       height: 100%;
+      border-radius: 20px; /* Redondea las esquinas del contenedor interno */
+      overflow: hidden; /* Asegura que el contenido no sobresalga */
   }
 
+  /* Redondear las esquinas de las imágenes */
   .carousel-item img {
       height: 100%;
-      border-radius: 15px; /* Mantiene el borde redondeado en pantallas pequeñas */
+      width: 100%;
+      object-fit: cover;
+      border-radius: 20px; /* Redondea las esquinas de las imágenes */
   }
 }
+
 
 
 

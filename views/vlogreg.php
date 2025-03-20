@@ -186,13 +186,13 @@ include_once('controllers/cpassword.php');
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active" data-bs-interval="5000">
-                            <img src="img/coctelapp/pub1.jpg">
+                            <img src="img/coctelapp/publicidad/pub1.png">
                         </div>
                         <div class="carousel-item" data-bs-interval="5000">
-                            <img src="img/coctelapp/pub2.jpg">
+                            <img src="img/coctelapp/publicidad/pub2.png">
                         </div>
                         <div class="carousel-item" data-bs-interval="5000">
-                            <img src="img/coctelapp/pub3.jpg">
+                            <img src="img/coctelapp/publicidad/pub3.png">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
