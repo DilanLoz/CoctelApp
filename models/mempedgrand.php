@@ -10,6 +10,7 @@ class Mdetpedido
     private $total;
     private $idusu;
     private $idbar;
+    private $estado;
 
     // Métodos GET
     public function getIddetpedido()
@@ -43,6 +44,10 @@ class Mdetpedido
     public function getIdbar()
     {
         return $this->idbar;
+    }
+    public function getEstado()
+    {
+        return $this->estado;
     }
 
     // Métodos SET
@@ -78,6 +83,11 @@ class Mdetpedido
     {
         $this->idbar = $idbar;
     }
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+    }
+
     public function getDetallesPedido($idpedido)
     {
         try {
@@ -111,7 +121,7 @@ class Mdetpedido
                         p.nomprod AS nombre_producto, p.mililitros, p.fotprod, 
                         b.nombar, ped.direccion, 
                         emp.nomemp, ped.fecha_pedido, 
-                        usu.nomusu, ped.estado_pedido, ped.estado_pago, ped.servicio, 
+                        usu.nomusu, ped.estado_pedido, ped.estado_pago, ped.servicio, ped.estado,
                         (SELECT SUM(dp2.cantidad * dp2.precio) 
                          FROM detpedido dp2 
                          WHERE dp2.idpedido = dp.idpedido) AS total_pedido  

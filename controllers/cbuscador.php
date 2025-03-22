@@ -20,7 +20,7 @@ if (isset($_GET['query'])) {
         INNER JOIN bar AS b ON p.idbar = b.idbar 
         WHERE p.estado = '1' 
         AND (p.nomprod LIKE :query) 
-        LIMIT 10;";
+        LIMIT 5;";
 
         $stmt = $conexion->prepare($sql);
         $stmt->bindValue(':query', '%' . $searchQuery . '%', PDO::PARAM_STR);
@@ -44,7 +44,7 @@ if (isset($_GET['query'])) {
                 echo "</div></a>";
             }                
         } else {
-            echo "<p id='res-nf'>No se encontraron productos.</p>";
+            echo "<p id='res-nf'> No se encontraron productos.</p>";
         }
     } catch (PDOException $e) {
         echo "<p>Error en la búsqueda.</p>";

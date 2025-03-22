@@ -77,11 +77,11 @@ class Mushipe {
                     p.metodo_pago,
                     p.estado, 
                     p.estado_pago,
-                    p.servicio -- Se agregó la columna servicio
+                    p.servicio
                 FROM pedido p
                 LEFT JOIN empleado e ON p.idemp = e.idemp
                 WHERE p.idusu = :idusu
-                ORDER BY p.idpedido DESC";  // Ordenar por idpedido de mayor a menor
+                ORDER BY p.idpedido DESC";  
     
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
@@ -98,6 +98,7 @@ class Mushipe {
                     p.nomprod, 
                     dp.cantidad, 
                     dp.precio, 
+                    COALESCE(b.telbar, 'No hay numero telefonico') AS telbar,
                     COALESCE(b.nombar, 'No asignado') AS nombar,
                     pd.direccion, 
                     pd.mensaje, 

@@ -13,7 +13,8 @@ foreach ($pedidos as $producto) {
             'direccion' => $producto['direccion'],
             'nomemp' => $producto['nomemp'],
             'fecha_pedido' => $producto['fecha_pedido'],
-            'servicio' => $producto['servicio'], // Se agrega el campo servicio
+            'servicio' => $producto['servicio'],
+            'estado' => $producto['estado'],
             'productos' => []
         ];
     }
@@ -40,6 +41,7 @@ foreach ($pedidos as $producto) {
                                 <div class="text-success fw-bold fs-5 mt-2">
                                     Total: $<?php echo number_format($pedido['productos'][0]['total_pedido'], 2); ?>
                                     <hr class="mt-1 mb-0 border-2 border-success w-50 mx-auto">
+                                    <p class="mb-0 text-primary"><strong>Servicio Bartender: <?php echo htmlspecialchars($pedido['estado']); ?></strong></p>
                                 </div>
                             </div>
 
@@ -77,7 +79,7 @@ foreach ($pedidos as $producto) {
         <!-- Columna derecha: Pedidos Listos -->
         <div class="col-md-6 mt-5">
             <div class="border-start border-end border-top border-success rounded-top p-3 mb-3">
-                <h3 class="text-center text-success fw-bold"><i class="fa-regular fa-circle-check"></i> Pedidos Listos</h3>
+                <h3 class="text-center text-success fw-bold"><i class="fa-regular fa-circle-check"></i> Pedidos En camino</h3>
             </div>
             <?php foreach ($pedidosAgrupados as $idpedido => $pedido): ?>
                 <?php if ($pedido['productos'][0]['estado_pedido'] == 2): ?>
@@ -90,6 +92,7 @@ foreach ($pedidos as $producto) {
                                 <div class="text-success fw-bold fs-5 mt-2">
                                     Total: $<?php echo number_format($pedido['productos'][0]['total_pedido'], 2); ?>
                                     <hr class="mt-1 mb-0 border-2 border-success w-50 mx-auto">
+                                    <p class="mb-0 text-primary fs-6"><strong>Estado: <?php echo htmlspecialchars($pedido['estado']); ?></strong></p>
                                 </div>
                             </div>
 
@@ -99,7 +102,7 @@ foreach ($pedidos as $producto) {
                                 <p class="mb-1"><strong>Empleado:</strong> <?php echo $pedido['nomemp'] ?: 'Pendiente'; ?></p>
                                 <p class="mb-1"><strong>Usuario:</strong> <?php echo $pedido['productos'][0]['nomusu']; ?></p>
                                 <p class="mb-0"><strong>Dirección:</strong> <?php echo htmlspecialchars($pedido['direccion']); ?></p>
-                                <p class="mb-0 text-primary"><strong>Servicio Bartender: <?php echo htmlspecialchars($pedido['servicio']); ?></strong></p>
+                                <p class="mb-0"><strong>Servicio Bartender: </strong><?php echo htmlspecialchars($pedido['servicio']); ?></p>
                             </div>
 
                         </div>

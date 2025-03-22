@@ -5,7 +5,6 @@ a {
 }
 
 
-
 a[title="Editar"], 
 a[title="Eliminar"] {
     color: black; /* Asegura que los enlaces no tengan color azul */

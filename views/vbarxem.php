@@ -114,10 +114,10 @@ if (isset($_GET['idusu']) && isset($_GET['ope']) && $_GET['ope'] == 'edi') {
                 <tr>
                     <td>
                         <div style="display: flex; align-items: center;">
-                            <?php if (!empty($dtb["fotiden"]) && file_exists("img/" . $dtb["fotiden"])) { ?>
-                                <img src="img/<?=$dtb["fotiden"];?>" width="120px" style="margin-right: 10px;">
+                            <?php if (!empty($dtb["fotiden"]) && file_exists("img/empleados/" . $dtb["fotiden"])) { ?>
+                                <img src="img/empleados/<?=$dtb["fotiden"];?>" width="120px" style="margin-right: 10px;">
                             <?php } else { ?>
-                                <img src="img/coctelapp/logo.png" width="120px" style="margin-right: 10px;">
+                                
                             <?php } ?> 
                             <td><?=$dtb["idusu"];?> </td>
                             <td><?=$dtb["nomusu"];?></td>

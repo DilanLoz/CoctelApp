@@ -67,7 +67,7 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
                                     <p><strong>Dirección:</strong> <?= $pedido['direccion'] ?? 'No disponible'; ?></p>
                                     <p><strong>Mensaje:</strong> <?= $pedido['mensaje'] ?? 'No disponible'; ?></p>
                                     <p><strong>Método de Pago:</strong> <?= $pedido['metodo_pago'] ?? 'No especificado'; ?></p>
-                                    <p><strong>Estado de Pago:</strong> <?= $pedido['estado_pago'] ?? 'No especificado'; ?></p>
+                                    </p>
                                     <p><strong>Servicio de Bartender:</strong> <?= $pedido['servicio'] ?? 'No especificado'; ?></p>
                                     <hr>
 
@@ -79,7 +79,7 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
                                     ?>
                                         <?php foreach ($detalles as $detalle): ?>
                                             <p>
-                                                <strong><?= $contador; ?>.</strong> <?= $detalle['nomprod']; ?> - Cant <?= $detalle['cantidad']; ?> - $<?= number_format($detalle['precio'], 2); ?> - Bar: <?= $detalle['nombar']; ?>
+                                                <strong><?= $contador; ?>.</strong> <?= $detalle['nomprod']; ?> - Cant <?= $detalle['cantidad']; ?> - $<?= number_format($detalle['precio'], 2); ?> - Bar: <?= $detalle['nombar']; ?>, Tel: <?= $detalle['telbar']; ?>
                                             </p>
                                             <?php
                                             $contador++; // Incrementa el contador en cada iteración

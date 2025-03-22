@@ -24,7 +24,7 @@ $fots = isset($_FILES['fots']['name']) ? $_FILES['fots']['name']:NULL;
 
 if ($fots){
 	if(file_exists($fotiden)) unlink($fotiden);
-	$ruta_completa = opti($_FILES['fots'], 'fot', 'img/', date('YmdHis')); 
+	$ruta_completa = opti($_FILES['fots'], 'fot', 'img/empleados/', date('YmdHis')); 
     $fotiden = basename($ruta_completa); // Extrae solo el nombre del archivo
 }
 
@@ -47,6 +47,7 @@ if ($ope == "save") {
     $mbarxem->setFecnausu($fecnausu);
     $mbarxem->setCodubi($codubi);
     $mbarxem->setIdval($idval);
+    $mbarxem->setFotiden($fotiden);
     $mbarxem->setIdbar($idbar = $_SESSION['idbar']);
     $mbarxem->setEstado($estado = 1);
 

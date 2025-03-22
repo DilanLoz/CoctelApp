@@ -281,7 +281,8 @@ class Mbarxem {
                     emausu=:emausu, 
                     celusu=:celusu, 
                     numdocu=:numdocu, 
-                    fecnausu=:fecnausu, 
+                    fecnausu=:fecnausu,
+                    fotiden=:fotiden,
                     pssusu=:pssusu, 
                     codubi=:codubi, 
                     idper=:idper,
@@ -311,6 +312,7 @@ class Mbarxem {
         $result->bindParam(":celusu", $this->celusu, PDO::PARAM_STR);
         $result->bindParam(":numdocu", $this->numdocu, PDO::PARAM_STR);
         $result->bindParam(":fecnausu", $this->fecnausu, PDO::PARAM_STR);
+        $result->bindParam(":fotiden", $this->fotiden, PDO::PARAM_STR);
         $result->bindParam(":pssusu", $passwordHash, PDO::PARAM_STR);
         $result->bindParam(":codubi", $this->codubi, PDO::PARAM_INT);
         $result->bindParam(":idper", $this->idper, PDO::PARAM_INT);
