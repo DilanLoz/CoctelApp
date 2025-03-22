@@ -1,161 +1,179 @@
-<?php include("controllers/cbarxem.php");
+<?php
+include_once("controllers/cbarxem.php");
 include_once('admin/controllers/cubi.php');
-include_once('admin/controllers/cval.php');?>
-<div class="container mt-5 mb-5" style="text-align: left; display: block;">
-    <h1 class="mb-4">Crear Empleado</h1>
-    <form action="#" method="post">
+include_once('admin/controllers/cval.php');
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (isset($_GET['idusu']) && isset($_GET['ope']) && $_GET['ope'] == 'edi') {
+    $idusu = $_GET['idusu'];
+    $objModelo = new Mbarxem(); // Reemplaza 'TuModelo' con el nombre real de tu clase modelo
+    $datOne = $objModelo->getOne($idusu); // Obtener los datos del usuario específico
+}
+?>
+
+<div class="container" style="text-align: left;">
+    <br><br><br>
+    <form id="frmins" action="home.php?pg=3004" enctype="multipart/form-data" method="POST">
+        <h1><i class=""></i>Crear Empleado</h1>
         <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="name">Nombre del empleado:</label>
-                    <input type="text" id="name" name="name" class="form-control" name="nomemp" id="nomemp" value="<?php if($dtOne && $dtOne[0]['nomemp']) echo $dtOne[0]['nomemp']; ?>" required>
-                </div>
-                <div class="form-group">
-                    <label for="description">Email empleado:</label>
-                    <input id="text" name="name" class="form-control"value="<?php if($dtOne && $dtOne[0]['emaemp']) echo $dtOne[0]['emaemp']; ?>" required>
-                </div>
-                <div class="form-group">
-                    <label for="identification">No. de identificación:</label>
-                    <input type="text" id="identification" name="identification" class="form-control" name="idemp" id="idemp" value="<?php if($dtOne && $dtOne[0]['idemp']) echo $dtOne[0]['idemp']; ?>" required>
-                </div>
-                <div class="form-group">
-                    <label for="idval">Valor:</label>
-                    <select id="idval" name="idval" class="form-control custom-select" >
-                    <option value="" disabled selected>Tipo de documento</option>
-                                <?php
-                                $valoresValidos = $mval->getDocumentos();
-                                if ($valoresValidos) {
-                                    foreach ($valoresValidos as $valor) {
-                                        echo '<option value="' . $valor['idval'] . '">' . $valor['nomval'] . '</option>';
-                                    }
-                                }
-                                ?>
-                    </select>
-                </div>
-                <div class="form-group">
-                <label for="employee-type">Contraseña:</label>
-                    <input type="password" class="form-control" id="inputPassword2" placeholder="Password" value="<?php if($dtOne && $dtOne[0]['pssemp']) echo $dtOne[0]['pssemp']; ?>" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Teléfono:</label>
-                    <input type="tel" id="phone" name="phone" class="form-control" name="celemp" id="celemp" value="<?php if($dtOne && $dtOne[0]['celemp']) echo $dtOne[0]['celemp']; ?>" required>
-                </div>
-                
-                
+            <div class="form-group col-md-6">
+                <label for="nomusu"><strong>Nombre del empleado:</strong></label>
+                <input type="text" name="nomusu" id="nomusu" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne['nomusu']) ? $datOne['nomusu'] : ''; ?>" required>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="photo">Foto del empleado:</label>
-                    <input type="file" id="photo" name="photo" accept="image/*" class="form-control" >
+
+            <div class="form-group col-md-6">
+                <label for="emausu"><strong>Email empleado:</strong></label>
+                <input type="text" name="emausu" id="emausu" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne['emausu']) ? $datOne['emausu'] : ''; ?>" required>
             </div>
-                <div class="form-group">
-                    <label for="codubi" class="form-label">Ubicación Actual:</label>
-                    <select id="codubi" name="codubi" class="form-control" >
-                    <option value="" disabled selected>Seleccione una ciudad</option>
-                                <?php
-                                $dataUbicaciones = $mubi->getCodubiNomubi();
-                                if ($dataUbicaciones) {
-                                    foreach ($dataUbicaciones as $ubicacion) {
-                                        echo '<option value="' . $ubicacion['codubi'] . '">' . $ubicacion['nomubi'] . '</option>';
-                                    }
-                                }
-                                ?>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="bar">Bar donde el empleado está asignado:</label>
-                    <input type="text" id="bar" name="bar" class="form-control" value="<?php if($dtOne && $dtOne[0]['nombar']) echo $dtOne[0]['nombar']; ?>" required>
-                </div>
-                <div class="form-group">
-                    <label for="employee-type">Tipo de empleado:</label>
-                    <select id="employee-type" name="employee-type" class="form-control custom-select" >
-                        <option value="domiciliario">Domiciliario</option>
-                        <option value="bartender">Bartender</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="employee-type">Perfil:</label>
-                    <select id="employee-type" name="employee-type" class="form-control custom-select" >
-                        <option value="empleado">Empleado</option>
-                        <option value="bar">Bar</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="dob">Fecha de nacimiento:</label>
-                    <input type="date" id="dob" name="dob" class="form-control" name="fecnaemp" id="fecnaemp" value="<?php if($dtOne && $dtOne[0]['fecnaemp']) echo $dtOne[0]['fecnaemp']; ?>" required>
-                </div>
+
+            <div class="form-group col-md-6">
+                <label for="numdocu"><strong>No. de identificación:</strong></label>
+                <input type="number" name="numdocu" id="numdocu" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne['numdocu']) ? $datOne['numdocu'] : ''; ?>" required>
             </div>
-        </div>
-        <div class="text-end mt-3">
-            <input type="submit" value="Crear empleado" class="btn btn-warning" id="crearemBtn" <?php if($dtOne && $dtOne[0]['idemp']) echo $dtOne[0]['idemp']; ?>>
-        </div>
-    </form>
-    <div>
-    <table id="example" class="table table-striped" style="width:100%">
-    <thead>
-        <tr>
-            <th>foto</th>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>No. Documento</th>
-            <th>Fecha de Nacimiento</th>
-            <th>Bar Asignado</th>
-            <th>Tipo Servicio</th>
-            <th>Ubicacion</th>
-            <th>Email</th>
-            <th>Telefono</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php if($dat){ foreach ($dat as $dt) { ?>
+
+            <div class="form-group col-md-6">
+                <label for="idval">Tipo de documento:</label>
+                <select id="idval" name="idval" class="form-control">
+                    <option value="" disabled selected>Seleccione</option>
+                    <?php
+                    if (!empty($datDoc)) {
+                        foreach ($datDoc as $valor) {
+                            $selected = isset($datOne['idval']) && $datOne['idval'] == $valor['idval'] ? 'selected' : '';
+                            echo "<option value='{$valor['idval']}' $selected>{$valor['nomval']}</option>";
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="pssusu"><strong>Contraseña:</strong></label>
+                <input type="password" name="pssusu" id="pssusu" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne['pssusu']) ? $datOne['pssusu'] : ''; ?>" required>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="codubi">Ubicación Actual:</label>
+                <select id="codubi" name="codubi" class="form-control">
+                <option value="" disabled selected>Seleccione una ciudad</option>
+                    <?php
+                    if (!empty($dataAll)) {
+                        foreach ($dataAll as $ubicacion) {
+                            $selected = isset($datOne['codubi']) && $datOne['codubi'] == $ubicacion['codubi'] ? 'selected' : '';
+                            echo "<option value='{$ubicacion['codubi']}' $selected>{$ubicacion['nomubi']}</option>";
+                        }
+                    }
+                    ?>
+                </select>
+            </div>
+
+
+            <div class="form-group col-md-6">
+                <label for="fecnausu"><strong>Fecha de nacimiento:</strong></label>
+                <input type="date" name="fecnausu" id="fecnausu" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne['fecnausu']) ? $datOne['fecnausu'] : ''; ?>" required>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="celusu"><strong>Teléfono:</strong></label>
+                <input type="number" name="celusu" id="celusu" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne['celusu']) ? $datOne['celusu'] : ''; ?>" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="fotiden">Foto del empleado:</label>
+                <input type="file" class="form-control form-control" name="fots" accept="image/*" id="fotiden">
+                <input type="hidden" name="fotiden" value="<?php if($dtOne && $dtOne['fotiden']) echo $dtOne['fotiden']; ?>">
+            </div>
+
+            <div class="form-group col-md-6">
+                <br>
+                <input class="btn btn-outline-warning shadow-sm" type="submit" value="Enviar">
+                <input type="hidden" name="ope" value="save">
+                <input type="hidden" name="idusu" id="idusu" value="<?php echo isset($datOne['idusu']) ? $datOne['idusu'] : ''; ?>">
+            </div>
+        </form>
+
+        <br><br><br>
+        <table id="example" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>foto</th>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>No. Documento</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>Bar Asignado</th>
+                    <th>Ubicacion</th>
+                    <th>Email</th>
+                    <th>Telefono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>    
+            <tbody>
+                <?php if (isset($dattab) && !empty($dattab)) { foreach ($dattab as $dtb) { ?>
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center;">
+                            <?php if (!empty($dtb["fotiden"]) && file_exists("img/" . $dtb["fotiden"])) { ?>
+                                <img src="img/<?=$dtb["fotiden"];?>" width="120px" style="margin-right: 10px;">
+                            <?php } else { ?>
+                                <img src="img/coctelapp/logo.png" width="120px" style="margin-right: 10px;">
+                            <?php } ?> 
+                            <td><?=$dtb["idusu"];?> </td>
+                            <td><?=$dtb["nomusu"];?></td>
+                            <td>
+                                <div>
+                                    <small>
+                                        <strong>Tipo: </strong><?=$dtb["nomval"];?><br> <!--Hay que llamar a nomval, para mostrar si es CC o NIT -->
+                                        <strong>Numero: </strong><?=$dtb["numdocu"];?><br>
+                                    </small>
+                                </div>
+                            </td>
+                            <td>-<?=$dtb["fecnausu"];?></td>
+                            <td><?=$dtb["nombar"];?></td>
+                            <td><?=$dtb["nomubi"];?></td>
+                            <td><?=$dtb["emausu"];?></td>
+                            <td><?=$dtb["celusu"];?></td>
+                        </div>
+                    </td>
+                    <td>
+                        <?php if($dtb['estado']==1){ ?>
+                                <a href="home.php?pg=<?=$pg;?>&idusu=<?=$dtb['idusu'];?>&ope=acti&estado=2">
+                                    <i class="fa fa-solid fa-circle-check fa-2x"></i>
+                                </a>
+                            <?php }else{ ?>
+                                <a href="home.php?pg=<?=$pg;?>&idusu=<?=$dtb['idusu'];?>&ope=acti&estado=1">
+                                <i class="fa fa-solid fa-circle-xmark fa-2x" style="color: #ff0000;"></i>
+                                </a>
+                            <?php } ?>
+                            <a href="home.php?pg=<?=$pg;?>&idusu=<?=$dtb['idusu'];?>&ope=edi" title="Editar" class="ms-3">
+                            <i class="fa-solid fa-pen-to-square fa"></i>
+                        </a>
+                    </td>
+                </tr>
+                <?php }} ?>
+            </tbody>
+
+            <tfoot>
             <tr>
-                <td>
-                    <?php if (file_exists($dt["fotiden"])) { ?>
-                        <img src="<?=$dt["fotiden"];?>" width="150px"> 
-                    <?php } ?>
-                </td>
-                <td><?=$dt["idemp"];?> </td>
-                <td><?=$dt["nomemp"];?></td>
-                <td>
-                    <div>
-                        <small>
-                            <strong>Tipo: </strong><?=$dt["nomval"];?><br> <!--Hay que llamar a nomval, para mostrar si es CC o NIT -->
-                            <strong>Numero: </strong><?=$dt["numdocu"];?><br>
-                        </small>
-                    </div>
-                </td>
-                <td>-<?=$dt["fecnaemp"];?></td>
-                <td><?=$dt["nombar"];?></td>
-                <td><?=$dt["nomserv"];?></td>
-                <td><?=$dt["nomubi"];?></td>
-                <td><?=$dt["emaemp"];?></td>
-                <td><?=$dt["celemp"];?></td>
-                <td class="row">
-                    <a href="home.php?pg=3004&ope=edi&idemp=<?=$dt["idemp"];?>" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
-                    <a href="home.php?pg=3004&ope=del&idemp=<?=$dt["idemp"];?>" onclick="return eli();" title="Eliminar"><i class="fa-solid fa-trash"></i></a>
-                </td>
+                <th>foto</th>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>No. Documento</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Bar Asignado</th>
+                <th>Ubicacion</th>
+                <th>Email</th>
+                <th>Telefono</th>
+                <th>Acciones</th>
             </tr>
-        <?php }} ?>
-    </tbody>
-
-    <tfoot>
-        <tr>
-            <th>foto</th>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>No. Documento</th>
-            <th>Fecha de Nacimiento</th>
-            <th>Bar Asignado</th>
-            <th>Tipo Servicio</th>
-            <th>Ubicacion</th>
-            <th>Email</th>
-            <th>Telefono</th>
-            <th></th>
-        </tr>
-    </tfoot>
-</table>
-
-    </div>
-    <script src="js/alertas.js"></script>
+        </tfoot>
+        </table>
 </div>
+<script>
+    function eliminar() {
+        console.log("Intentando eliminar: " + window.location.href);
+        return confirm("¿Estás seguro de que deseas eliminar este Empleado?");
+    }
+</script>
+

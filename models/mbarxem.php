@@ -1,122 +1,133 @@
 <?php
 
-class Mbarxem{
+class Mbarxem {
 
-    //atributos
+    private $idusu;
 	private $idemp;
-	private $nomemp;
-	private $emaemp;
-	private $celemp;
-	private $fecnaemp;
-    private $numdocu;
-	private $fotiden;
-	private $pssemp;
-	private $idserv;
+	private $nomusu;
+    private $emausu;
+    private $celusu;
+    private $fotiden;
+    private $fecnausu;
+    private $pssusu;
+	private $numdocu;
 	private $idbar;
     private $codubi;
 	private $idper;
 	private $idval;
-
-    //Metodos get
-
-    public function getIdemp(){
-		return $this->idemp;
-	}
-	public function getNomemp(){
-		return $this->nomemp;
-	}
-	public function getEmaemp(){
-		return $this->emaemp;
-	}
-    public function getCelemp(){
-		return $this->celemp;
-	}
-	public function getFecnaemp(){
-		return $this->fecnaemp;
-	}
-	public function getNumdocu(){
-		return $this->numdocu;
-	}
-	public function getFotiden(){
-		return $this->fotiden;
-	}
-    public function getPssemp(){
-		return $this->pssemp;
-	}
-    public function getIdserv(){
-		return $this->idserv;
-	}
-	public function getIdbar(){
-		return $this->idbar;
-	}
-	public function getCodubi(){
-		return $this->codubi;
-	}
-	public function getIdper(){
-		return $this->idper;
-	}
-	public function getIdval(){
-		return $this->idval;
-	}
+    private $estado;
 
 
+    public function getIdusu() {
+        return $this->idusu;
+    }
+
+    public function getIdemp() {
+        return $this->idemp;
+    }
+
+    public function getNomusu() {
+        return $this->nomusu;
+    }
+
+    public function getEmausu() {
+        return $this->emausu;
+    }
+
+    public function getCelusu() {
+        return $this->celusu;
+    }
 
 
+    public function getFotiden() {
+        return $this->fotiden;
+    }
 
-    //Metodos Set
+    public function getFecnausu() {
+        return $this->fecnausu;
+    }
 
-    public function setIdemp($idemp){
-		$this->idemp = $idemp;
-	}
-	public function setNomemp($nomemp){
-		$this->nomemp = $nomemp;
-	}
-	public function setEmaemp($emaemp){
-		$this->emaemp = $emaemp;
-	}
-	public function setCelemp($celemp){
-		$this->celemp = $celemp;
-	}
-	public function setFecnaemp($fecnaemp){
-		$this->fecnaemp = $fecnaemp;
-	}
-	public function setNumdocu($numdocu){
-		$this->numdocu = $numdocu;
-	}
-	public function setFotiden($fotiden){
-		$this->fotiden = $fotiden;
-	}
-    public function setPssemp($pssemp){
-		$this->pssemp = $pssemp;
-	}
-	public function setIdserv($idserv){
-		$this->idserv = $idserv;
-	}
-	public function setIdbar($idbar){
-		$this->idbar = $idbar;
-	}
-	public function setCodubi($codubi){
-		$this->codubi = $codubi;
-	}
-	public function setIdper($idper){
-		$this->idper = $idper;
-	}
-	public function setIdval($idval){
-		$this->idval = $idval;
-	}
+    public function getPssusu() {
+        return $this->pssusu;
+    }
 
-    //Funciones
+    public function getNumdocu() {
+        return $this->numdocu;
+    }
+    public function getIdbar() {
+        return $this->idbar;
+    }
+	public function getCodubi() {
+        return $this->codubi;
+    }
+	public function getIdper() {
+        return $this->idper;
+    }
+	public function getIdval() {
+        return $this->idval;
+    }
+    public function getEstado() {
+        return $this->estado;
+    }
+
+
+    public function setIdusu($idusu) {
+        $this->idusu = $idusu;
+    }
+    
+    public function setIdemp($idemp) {
+        $this->idemp = $idemp;
+    }
+    
+    public function setNomusu($nomusu) {
+        $this->nomusu = $nomusu;
+    }
+    
+    public function setEmausu($emausu) {
+        $this->emausu = $emausu;
+    }
+    
+    public function setCelusu($celusu) {
+        $this->celusu = $celusu;
+    }
+    
+    
+    public function setFotiden($fotiden) {
+        $this->fotiden = $fotiden;
+    }
+    
+    public function setFecnausu($fecnausu) {
+        $this->fecnausu = $fecnausu;
+    }
+
+    public function setPssusu($pssusu) {
+        $this->pssusu = $pssusu;
+    }
+    
+    public function setNumdocu($numdocu) {
+        $this->numdocu = $numdocu;
+    }
+    public function setIdbar($idbar) {
+        $this->idbar = $idbar;
+    }
+	public function setCodubi($codubi) {
+        $this->codubi = $codubi;
+    }
+	public function setIdper($idper) {
+        $this->idper = $idper;
+    }
+	public function setIdval($idval) {
+        $this->idval = $idval;
+    }
+    public function setEstado($estado) {
+        $this->estado = $estado;
+    }
+
+    // Methods (getAll, getOne, save, edit, del) should be closed with }
+
     public function getAll() {
 		$res = NULL;
-		$sql = "SELECT 
-					e.idemp, e.nomemp, e.emaemp, e.celemp, e.fecnaemp, e.numdocu, 
-					e.fotiden, e.pssemp, e.idserv, e.idbar, e.codubi, e.idper, e.idval,
-					v.nomval, b.nombar, s.nomserv, u.nomubi
-				FROM empleado e
-				LEFT JOIN valor AS v ON e.idval = v.idval
-				LEFT JOIN bar AS b ON e.idbar = b.idbar
-				LEFT JOIN servicio AS s ON e.idserv = s.idserv
-				LEFT JOIN ubicacion AS u ON e.codubi = u.codubi";
+		$sql = "SELECT * FROM empleado";
 		
 		$modelo = new Conexion();
 		$conexion = $modelo->get_conexion();
@@ -126,85 +137,213 @@ class Mbarxem{
 		
 		return $res;
 	}
-	
 
-    public function save(){
-		$sql = "INSERT INTO empleado (idemp, nomemp, emaemp, celemp, fecnaemp, numdocu, fotiden, pssemp, idserv, idbar, codubi, idper, idval) VALUES (:idemp, :nomemp, :emaemp, :celemp, :fecnaemp, :numdocu, :fotiden, :pssemp, :idserv, :idbar, :codubi, :idper, :idval)";
-		$modelo = new Conexion();
-		$conexion = $modelo->get_conexion();
-		$result = $conexion->prepare($sql);
-		$idemp = $this->getIdemp();
-		$result->bindParam(":idemp", $idemp);
-		$nomemp = $this->getNomemp();
-		$result->bindParam(":nomemp", $nomemp);
-		$emaemp = $this->getEmaemp();
-		$result->bindParam(":emaemp", $emaemp);
-		$celemp = $this->getCelemp();
-		$result->bindParam(":celemp", $celemp);
-        $fecnaemp = $this->getFecnaemp();
-		$result->bindParam(":fecnaemp", $fecnaemp);
-        $numdocu = $this->getNumdocu();
-		$result->bindParam(":numdocu", $numdocu);
-        $fotiden = $this->getFotiden();
-		$result->bindParam(":fotiden", $fotiden);
-        $pssemp = $this->getPssemp();
-		$result->bindParam(":pssemp", $pssemp);
-        $idserv = $this->getIdserv();
-		$result->bindParam(":idserv", $idserv);
-        $idbar = $this->getIdbar();
-		$result->bindParam(":idbar", $idbar);
-        $codubi = $this->getCodubi();
-		$result->bindParam(":codubi", $codubi);
-        $idper = $this->getIdper();
-		$result->bindParam(":idper", $idper);
-        $idval = $this->getIdval();
-		$result->bindParam(": idval", $idval);
-		$result->execute();
-	}
-	public function edit(){
-		$sql = "UPDATE empleado SET nomemp=:nomemp, emaemp=:emaemp, celemp=:celemp, fecnaemp=:fecnaemp, numdocu=:numdocu, fotiden=:fotiden, pssemp=:pssemp, idserv=:idserv, idbar=:idbar, codubi=:codubi, idper=:idper, idval=:idval WHERE idemp=:idemp";
-		$modelo = new Conexion();
-		$conexion = $modelo->get_conexion();
-		$result = $conexion->prepare($sql);
-		$idemp = $this->getIdemp();
-		$result->bindParam(":idemp", $idemp);
-		$nomemp = $this->getNomemp();
-		$result->bindParam(":nomemp", $nomemp);
-		$emaemp = $this->getEmaemp();
-		$result->bindParam(":emaemp", $emaemp);
-		$celemp = $this->getCelemp();
-		$result->bindParam(":celemp", $celemp);
-        $fecnaemp = $this->getFecnaemp();
-		$result->bindParam(":fecnaemp", $fecnaemp);
-        $numdocu = $this->getNumdocu();
-		$result->bindParam(":numdocu", $numdocu);
-        $fotiden = $this->getFotiden();
-		$result->bindParam(":fotiden", $fotiden);
-        $pssemp = $this->getPssemp();
-		$result->bindParam(":pssemp", $pssemp);
-        $idserv = $this->getIdserv();
-		$result->bindParam(":idserv", $idserv);
-        $idbar = $this->getIdbar();
-		$result->bindParam(":idbar", $idbar);
-        $codubi = $this->getCodubi();
-		$result->bindParam(":codubi", $codubi);
-        $idper = $this->getIdper();
-		$result->bindParam(":idper", $idper);
-        $idval = $this->getIdval();
-		$result->bindParam(": idval", $idval);
-		$result->execute();
-	}
-
-	public function del(){
-		$sql = "DELETE FROM empleado WHERE idemp=:idemp";
-		$modelo = new Conexion();
-		$conexion = $modelo->get_conexion();
-		$result = $conexion->prepare($sql);
-		$idemp = $this->getIdemp();
-		$result->bindParam(":id", $id);
-		$result->execute();
-	}
+    public function getOne($idusu) {
+        $res = NULL;
+        $sql = "SELECT
+                    us.fotiden,
+                    us.idusu,
+                    us.nomusu,
+                    us.numdocu,
+                    v.nomval,
+                    us.fecnausu,
+                    us.pssusu,
+                    b.nombar,
+                    u.nomubi,
+                    us.emausu,
+                    us.celusu,
+                    b.idbar,
+                    v.idval, 
+                    u.codubi,
+                    us.estado
+                FROM usuario AS us
+                INNER JOIN bar AS b ON us.idbar = b.idbar
+                INNER JOIN ubicacion AS u ON us.codubi = u.codubi
+                INNER JOIN valor AS v ON us.idval = v.idval
+                WHERE us.idusu = :idusu";  // Corrección aquí: falta prefijo en idusu
+    
+        $modelo = new Conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+        $result->bindParam(":idusu", $idusu, PDO::PARAM_INT); // Se recomienda definir tipo de dato
+        $result->execute();
+        $res = $result->fetch(PDO::FETCH_ASSOC); // fetch en lugar de fetchAll, ya que esperas un solo resultado
+    
+        return $res;
+    }
     
 
+    public function gettabla() {
+		$res = NULL;
+		$idbar = $_SESSION['idbar']; // Obtener el idbar de la sesión
+	
+		$sql = "SELECT
+				us.fotiden,
+				us.idusu,
+				us.nomusu,
+				us.numdocu,
+				v.nomval,
+				us.fecnausu,
+				b.nombar,
+				u.nomubi,
+				us.emausu,
+				us.celusu,
+				b.idbar,
+				v.idval, 
+				u.codubi,
+				us.estado
+				FROM usuario AS us
+				INNER JOIN bar AS b ON us.idbar = b.idbar
+				INNER JOIN ubicacion AS u ON us.codubi = u.codubi
+				INNER JOIN valor AS v ON us.idval = v.idval
+				WHERE v.idval IN (101, 102, 103) 
+				AND us.idbar = :idbar
+				AND us.idper = 20";
+	
+		$modelo = new Conexion();
+		$conexion = $modelo->get_conexion();
+		$result = $conexion->prepare($sql);
+		$result->bindParam(':idbar', $idbar, PDO::PARAM_INT); // Vincular parámetro
+		$result->execute();
+		$res = $result->fetchAll(PDO::FETCH_ASSOC);
+	
+		return $res;
+	}
+
+    public function getbar() {
+        $res = NULL;
+		$idbar = $_SESSION['idbar'];
+        $sql = "SELECT 
+				e.idemp, 
+				b.idbar, 
+				b.nombar 
+				FROM empleado AS e 
+				INNER JOIN bar b ON e.idbar = b.idbar WHERE e.idbar = :idbar";
+
+        $modelo = new Conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+		$result->bindParam(':idbar', $idbar, PDO::PARAM_INT);
+        $result->execute();
+        $res = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        return $res;
+    }
+    
+    
+
+    public function del($idusu) {
+        try {
+            $sql = "UPDATE usuario SET estado = :estado WHERE idusu = :idusu";
+            $modelo = new Conexion();
+            $conexion = $modelo->get_conexion();
+            $result = $conexion->prepare($sql);
+            $estado = 2; // Nuevo valor del estado
+            $result->bindParam(":estado", $estado, PDO::PARAM_INT);
+            $result->bindParam(":idusu", $idusu, PDO::PARAM_INT);
+            return $result->execute();
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    
+
+    public function saveUsuario()
+    {
+        $sql = "INSERT INTO usuario (nomusu, emausu, celusu, fotiden, numdocu, fecnausu, pssusu, codubi, idper, idval, idbar, estado) 
+                VALUES (:nomusu, :emausu, :celusu, :fotiden, :numdocu, :fecnausu, :pssusu, :codubi, :idper, :idval, :idbar, :estado)";
+
+        $modelo = new Conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+
+        $result->bindParam(":nomusu", $this->nomusu);
+        $result->bindParam(":emausu", $this->emausu);
+        $result->bindParam(":celusu", $this->celusu);
+        $result->bindParam(":fotiden", $this->fotiden);
+        $result->bindParam(":numdocu", $this->numdocu);
+        $result->bindParam(":fecnausu", $this->fecnausu);
+        $result->bindParam(":pssusu", $this->pssusu);
+        $result->bindParam(":codubi", $this->codubi);
+        $result->bindParam(":idper", $this->idper);
+        $result->bindParam(":idval", $this->idval);
+        $result->bindParam(":idbar", $this->idbar);
+        $result->bindParam(":estado", $this->estado);
+        return $result->execute();
+    }
+    
+
+    public function editUsuario()
+{
+    try {
+        $sql = "UPDATE usuario SET 
+                    nomusu=:nomusu, 
+                    emausu=:emausu, 
+                    celusu=:celusu, 
+                    numdocu=:numdocu, 
+                    fecnausu=:fecnausu, 
+                    pssusu=:pssusu, 
+                    codubi=:codubi, 
+                    idper=:idper,
+                    idval=:idval,
+                    idbar=:idbar 
+                WHERE idusu=:idusu";
+
+        $modelo = new Conexion();
+        $conexion = $modelo->get_conexion();
+
+        if (!$conexion) {
+            throw new Exception("Error en la conexión a la base de datos");
+        }
+
+        $result = $conexion->prepare($sql);
+
+        // Verificar y encriptar contraseña si es necesario
+        if (!empty($this->pssusu)) {
+            $passwordHash = password_hash($this->pssusu, PASSWORD_DEFAULT);
+        } else {
+            throw new Exception("La contraseña no puede estar vacía");
+        }
+
+        $result->bindParam(":idusu", $this->idusu, PDO::PARAM_INT);
+        $result->bindParam(":nomusu", $this->nomusu, PDO::PARAM_STR);
+        $result->bindParam(":emausu", $this->emausu, PDO::PARAM_STR);
+        $result->bindParam(":celusu", $this->celusu, PDO::PARAM_STR);
+        $result->bindParam(":numdocu", $this->numdocu, PDO::PARAM_STR);
+        $result->bindParam(":fecnausu", $this->fecnausu, PDO::PARAM_STR);
+        $result->bindParam(":pssusu", $passwordHash, PDO::PARAM_STR);
+        $result->bindParam(":codubi", $this->codubi, PDO::PARAM_INT);
+        $result->bindParam(":idper", $this->idper, PDO::PARAM_INT);
+        $result->bindParam(":idval", $this->idval, PDO::PARAM_INT);
+        $result->bindParam(":idbar", $this->idbar, PDO::PARAM_INT);
+
+        if ($result->execute()) {
+            return ["status" => "success", "message" => "Usuario actualizado correctamente"];
+        } else {
+            throw new Exception("Error al actualizar el usuario");
+        }
+    } catch (Exception $e) {
+        return ["status" => "error", "message" => $e->getMessage()];
+    }
 }
+public function editEstado() {
+    try {
+        $sql = "UPDATE usuario SET estado = :estado WHERE idusu = :idusu";
+        $modelo = new conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+        
+        $result->bindParam(":idusu", $this->idusu);
+        $result->bindParam(":estado", $this->estado);
+        
+        return $result->execute();
+    } catch (Exception $e) {
+        throw new Exception("Error al actualizar estado: " . $e->getMessage());
+    }
+}
+
+
+
+} 
+
 ?>

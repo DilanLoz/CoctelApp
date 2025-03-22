@@ -2,58 +2,93 @@
 include("models/mbarxem.php");
 include("controllers/optimg.php");
 
-$idemp = isset($_REQUEST['idemp']) ? $_REQUEST['idemp']:NULL;
-$nomemp = isset($_POST['nomemp']) ? $_POST['nomemp']:NULL;
-$emaemp = isset($_POST['emaemp']) ? $_POST['emaemp']:NULL;
-$celemp = isset($_POST['celemp']) ? $_POST['celemp']:NULL;
-$fotiden = isset($_POST['fotiden']) ? $_POST['fotiden']:NULL;
-$fecnaemp = isset($_POST['fecnaemp']) ? $_POST['fecnaemp']:NULL;
-$numdocu = isset($_POST['numdocu']) ? $_POST['numdocu']:NULL;
-$pssemp = isset($_POST['pssemp']) ? $_POST['pssemp']:NULL;
-$idserv = isset($_POST['idserv']) ? $_POST['idserv']:NULL;
-$idbar = isset($_POST['idbar']) ? $_POST['idbar']:NULL;
-$codubi = isset($_POST['codubi']) ? $_POST['codubi']:NULL;
-$idper = isset($_POST['idper']) ? $_POST['idper']:NULL;
-$idval = isset($_POST['idval']) ? $_POST['idval']:NULL;
+$mbarxem = new Mbarxem();
 
-$ope = isset($_REQUEST['ope']) ? $_REQUEST['ope']:NULL;
+
+$idusu = isset($_REQUEST['idusu']) ? $_REQUEST['idusu'] : NULL;
+$nomusu = isset($_POST['nomusu']) ? $_POST['nomusu'] : NULL;
+$emausu = isset($_POST['emausu']) ? $_POST['emausu'] : NULL;
+$celusu = isset($_POST['celusu']) ? $_POST['celusu'] : NULL;
+$fecnausu = isset($_POST['fecnausu']) ? $_POST['fecnausu']:NULL;
+$pssusu = isset($_POST['pssusu']) ? $_POST['pssusu']:NULL;
+$idbar = isset($_POST['idbar']) ? $_POST['idbar'] : NULL;
+$idemp = isset($_POST['idemp']) ? $_POST['idemp'] : NULL;
+$fotiden = isset($_POST['fotiden']) ? $_POST['fotiden'] : NULL;
+$numdocu = isset($_POST['numdocu']) ? $_POST['numdocu'] : NULL;
+$codubi = isset($_POST['codubi']) ? $_POST['codubi'] : NULL;
+$idper = isset($_POST['idper']) ? $_POST['idper'] : NULL;
+$idval = isset($_POST['idval']) ? $_POST['idval'] : NULL;
+$estado = isset($_REQUEST['estado']) ? $_REQUEST['estado'] : NULL;
+
 $fots = isset($_FILES['fots']['name']) ? $_FILES['fots']['name']:NULL;
 
 if ($fots){
 	if(file_exists($fotiden)) unlink($fotiden);
-	$fotiden = opti($_FILES['fots'], 'fot','jotos',date('YmdHis'));
+	$ruta_completa = opti($_FILES['fots'], 'fot', 'img/', date('YmdHis')); 
+    $fotiden = basename($ruta_completa); // Extrae solo el nombre del archivo
 }
 
 
-$mbarxem=new Mbarxem();
-$mbarxem->setIdemp($idemp);
-if ($ope=="save") {
-	$mbarxem->setNomemp($nomemp);
-	$mbarxem->setEmaemp($emaemp);
-	$mbarxem->setCelemp($celemp);
-	$mbarxem->setFotiden($fotiden);
-    $mbarxem->setFecnaemp($fecnaemp);
+
+$ope = isset($_REQUEST['ope']) ? $_REQUEST['ope'] : NULL;
+$datOne = NULL;
+
+$mbarxem->setIdusu($idusu);
+
+if ($ope == "save") {
+    // Configuración de datos para guardar o actualizar
+    $mbarxem->setIdusu($idusu);
+    $mbarxem->setNomusu($nomusu);
+    $mbarxem->setEmausu($emausu);
+    $mbarxem->setCelusu($celusu);
+    $mbarxem->setFotiden($fotiden);
     $mbarxem->setNumdocu($numdocu);
-	$mbarxem->setPssemp($pssemp);
-	$mbarxem->setIdserv($idserv);
-	$mbarxem->setIdbar($idbar);
+    $mbarxem->setIdper($idper = 20);
+    $mbarxem->setFecnausu($fecnausu);
     $mbarxem->setCodubi($codubi);
-	$mbarxem->setIdper($idper);
-	$mbarxem->setIdval($idval);
+    $mbarxem->setIdval($idval);
+    $mbarxem->setIdbar($idbar = $_SESSION['idbar']);
+    $mbarxem->setEstado($estado = 1);
 
-	if($idemp) $mbarxem->edit();
-	else $mbarxem->save();
+    // Validar y encriptar contraseña solo si se proporciona una nueva
+    if (!empty($pssusu)) {
+        $mbarxem->setPssusu(password_hash($pssusu, PASSWORD_DEFAULT));
+    }
+
+    // Si el ID existe y no está vacío, se actualiza. Si no, se crea un nuevo registro.
+    if (!empty($idusu)) {
+        $result = $mbarxem->editUsuario();
+    } else {
+        $result = $mbarxem->saveUsuario();
+    }
+
+    // Verificación del resultado y manejo de errores
+    if ($result) {
+        echo "Operación exitosa";
+    } else {
+        echo "Error al procesar la solicitud";
+    }
 }
 
-$m=2;
-if ($ope=="del" && $idemp) $mbarxem->del();
-if ($ope=="edi" && $idemp){
-	$dtOne = $mbarxem->getOne();
-	$m=1;
-}else{ 
-	$dtOne=NULL;
+// Si la operación es 'eli' y hay un id de producto, eliminar el producto
+if ($ope == "eli" && $idusu) {
+    $mbarxem->del($idusu);
+    echo "<script>window.location.href = 'home.php?pg=3004';</script>";
+    exit();
 }
 
-$dat=$mbarxem->getAll();
+if($idusu && $ope=="acti"){
+    $mbarxem->setEstado($estado);
+    $mbarxem->editEstado();
+}
+
+// Si la operación es 'edi' y hay un id de producto, obtener el producto para editar
+if ($ope == "edi" && $idusu) {
+    $datOne = $mbarxem->getOne($idusu);
+}
+
+// Obtener todos los productos
+$dattab = $mbarxem->gettabla();
+$datbar = $mbarxem->getbar();
 
 ?>

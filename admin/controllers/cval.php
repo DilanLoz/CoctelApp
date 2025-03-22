@@ -31,5 +31,6 @@ if($opera=="edi" && $idval) $datOne = $mval->getOne();
 
 //MOSTRAR TODOS LOS datos
 $datAll = $mval->getAll();
+$datDoc = $mval->getDocumentos();
 $datDom = $mdom-> getALL();
 ?>
