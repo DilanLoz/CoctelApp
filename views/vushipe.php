@@ -48,7 +48,7 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
                         <td class="fw-bold <?= ($pedido['estado_pedido'] == 'Entregado') ? 'text-success' : 'text-warning' ?>">
                             <?= $pedido['estado'] ?>
                         </td>
-                        <td>$<?= number_format($pedido['total'], ) ?></td>
+                        <td>$<?= number_format($pedido['total'],) ?></td>
                     </tr>
 
                     <!-- MODAL DETALLE DE PEDIDO -->
@@ -61,43 +61,59 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
                                 </div>
                                 <div class="modal-body">
                                     <h5 class="text-center">Detalles del Pedido</h5>
-                                    <p><strong>Empleado asignado: </strong><?= $pedido['nomemp'] ?: 'Pendiente' ?> -
-                                        Telefono: <?= $pedido['celemp'] ?: 'No disponible' ?>
-                                    </p>
+
+                                    <!-- Empleado asignado -->
+                                    <div class="d-flex align-items-center mb-3">
+                                        <img src="img/empleados/<?= htmlspecialchars($pedido['fotiden'] ?: 'default.jpg'); ?>"
+                                            class="rounded-circle me-3"
+                                            style="width: 50px; height: 50px; object-fit: cover;"
+                                            alt="Foto del Empleado">
+                                        <div>
+                                            <p class="mb-0"><strong>Empleado asignado:</strong> <?= $pedido['nomemp'] ?: 'Pendiente' ?></p>
+                                            <p class="mb-0"><strong>Teléfono:</strong> <?= $pedido['celemp'] ?: 'No disponible' ?></p>
+                                        </div>
+                                    </div>
+
                                     <p><strong>Dirección:</strong> <?= $pedido['direccion'] ?? 'No disponible'; ?></p>
                                     <p><strong>Mensaje:</strong> <?= $pedido['mensaje'] ?? 'No disponible'; ?></p>
                                     <p><strong>Método de Pago:</strong> <?= $pedido['metodo_pago'] ?? 'No especificado'; ?></p>
-                                    </p>
                                     <p><strong>Servicio de Bartender:</strong> <?= $pedido['servicio'] ?? 'No especificado'; ?></p>
-                                    <hr>
 
+                                    <hr>
                                     <h5 class="text-center">Productos</h5>
+
                                     <?php
                                     $detalles = $detalleModel->getDetallesPorPedido($pedido['idpedido']);
                                     if (!empty($detalles)):
-                                        $contador = 1; // Inicializa el contador
+                                        $contador = 1;
                                     ?>
                                         <?php foreach ($detalles as $detalle): ?>
-                                            <p>
-                                                <strong><?= $contador; ?>.</strong> <?= $detalle['nomprod']; ?> - Cant <?= $detalle['cantidad']; ?> - $<?= number_format($detalle['precio'], 2); ?> - Bar: <?= $detalle['nombar']; ?>, Tel: <?= $detalle['telbar']; ?>
-                                            </p>
-                                            <?php
-                                            $contador++; // Incrementa el contador en cada iteración
-                                            ?>
+                                            <div class="d-flex align-items-center mb-3">
+                                                <img src="img/<?= htmlspecialchars($detalle['fotprod'] ?: 'default.jpg'); ?>"
+                                                    class="rounded me-3"
+                                                    style="width: 90px; height: 90px; object-fit: cover;"
+                                                    alt="Imagen del Producto">
+                                                <div>
+                                                    <p class="mb-0"><strong><?= $contador; ?>.</strong> <?= $detalle['nomprod']; ?></p>
+                                                    <p class="mb-0"><strong>Cantidad:</strong> <?= $detalle['cantidad']; ?></p>
+                                                    <p class="mb-0"><strong>Precio:</strong> $<?= number_format($detalle['precio'], 2); ?></p>
+                                                    <p class="mb-0"><strong>Bar:</strong> <?= $detalle['nombar']; ?>, <strong>Tel:</strong> <?= $detalle['telbar']; ?></p>
+                                                </div>
+                                            </div>
+                                            <?php $contador++; ?>
                                         <?php endforeach; ?>
                                     <?php else: ?>
                                         <p class="text-danger">No hay productos disponibles.</p>
                                     <?php endif; ?>
+
                                 </div>
-                                <!-- MODAL DETALLE DE PEDIDO -->
                                 <div class="modal-footer">
                                     <?php
-                                    // Obtener la factura asociada al pedido actual
                                     $facturaPedido = null;
                                     foreach ($facturas as $factura) {
                                         if ($factura["idpedido"] == $pedido["idpedido"]) {
                                             $facturaPedido = $factura;
-                                            break; // Salir del bucle cuando se encuentra la factura correspondiente
+                                            break;
                                         }
                                     }
 
@@ -115,6 +131,7 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
                             </div>
                         </div>
                     </div>
+
                     <!-- FIN MODAL -->
                 <?php endforeach; ?>
             </tbody>

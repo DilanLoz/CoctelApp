@@ -71,7 +71,8 @@ class Mushipe {
                     p.estado_pedido, 
                     p.total, 
                     COALESCE(e.nomemp, 'Pendiente') AS nomemp,
-                    COALESCE(e.celemp, 'No disponible') AS celemp, -- Se agregó la columna celemp
+                    COALESCE(e.celemp, 'No disponible') AS celemp,
+                    COALESCE(e.fotiden, 'default.jpg') AS fotiden,
                     p.direccion, 
                     p.mensaje, 
                     p.metodo_pago,
@@ -96,9 +97,10 @@ class Mushipe {
         $sql = "SELECT 
                     dp.iddetpedido, 
                     p.nomprod, 
+                    p.fotprod, -- Agregado para obtener la imagen del producto
                     dp.cantidad, 
                     dp.precio, 
-                    COALESCE(b.telbar, 'No hay numero telefonico') AS telbar,
+                    COALESCE(b.telbar, 'No hay número telefónico') AS telbar,
                     COALESCE(b.nombar, 'No asignado') AS nombar,
                     pd.direccion, 
                     pd.mensaje, 
@@ -119,5 +121,6 @@ class Mushipe {
     
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
+    
 }
 ?>
