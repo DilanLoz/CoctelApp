@@ -6,7 +6,7 @@ $pg = isset($_GET["pg"]) ? $_GET["pg"] : NULL;
     <div>
         <a id="logo-navegacion" target="_blank">
             <img src="img/coctelapp/logo.png" id="logococtelapp">
-            <img src="img/coctelapp/logocompra.png">
+            <img src="img/coctelapp/CoctelApp1.png" style="width: 90px; height: auto;">
         </a>
     </div>
     <button id="boton-toggle" aria-controls="menu-principal" aria-expanded="false">

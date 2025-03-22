@@ -22,17 +22,18 @@ if ($datOne) {
                     <h3><strong><?= $dta['nomprod']; ?></strong></h3>
                     <div class="border border-2 border-warning rounded"></div>
                     <br>
-                    <h4>
-                        <strong>
-                            <i class="fa-solid fa-circle text-warning icono-circulo me-2"></i>
-                            $<?= $dta['vlrprod']; ?> - <?= $dta['mililitros']; ?> ml
-                        </strong>
-                    </h4>
-                    <br>
+                    <div>
+                        <h4 class="mt-2">
+                            <strong>$ <?= number_format($dta['vlrprod'], 0, ',', '.'); ?></strong>
+                        </h4>
+                        <p class="border border-dark rounded d-inline-block px-2 py-1">
+                            <?= $dta['mililitros']; ?> ml
+                        </p>
+                    </div>
                     <!-- Descripción -->
                     <div class="mt-4">
-                        <h5 for="desprod" class="form-label">Descripción:</h5>
-                        <h5><?= $dta['desprod']; ?></h5>
+                        <h6 for="desprod" class="form-label">Descripción del producto:</h6>
+                        <small><?= $dta['desprod']; ?></small>
                     </div>
                     <br>
                     <!-- Botón agregar al carrito -->

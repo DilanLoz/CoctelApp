@@ -19,6 +19,7 @@ $fotprod = isset($_POST['fotprod']) ? $_POST['fotprod'] : NULL;
 $idbar = isset($_POST['idbar']) ? $_POST['idbar'] : NULL;
 $cantprod = isset($_POST['cantprod']) ? $_POST['cantprod'] : NULL;
 $tipoprod = isset($_POST['tipoprod']) ? $_POST['tipoprod'] : NULL;
+$caracter = isset($_POST['caracter']) ? $_POST['caracter'] : NULL;
 
 $ope = isset($_REQUEST['ope']) ? $_REQUEST['ope'] : NULL;
 $datOne = NULL;

@@ -5,11 +5,13 @@ require_once '../tcpdf/tcpdf.php';
 if (!isset($_GET['idfact'])) {
     die('ID de factura no proporcionado.');
 }
-
 date_default_timezone_set('America/Bogota');
-
-$fecha_generacion = date('Y-m-d H:i:s');
+setlocale(LC_TIME, 'es_ES.UTF-8', 'Spanish_Spain', 'Spanish'); // Configurar el locale en español
+$fecha_generacion = strftime('%d de %B de %Y, %H:%M:%S');
+$fecha_generacion = utf8_encode($fecha_generacion); // Asegurar caracteres especiales
 $fecha_archivo = date('Y-m-d_H-i-s');
+$nombre_mes = strftime('%B %Y');
+$nombre_mes = utf8_encode($nombre_mes); // Convertir caracteres especiales
 
 $idfact = $_GET['idfact'];
 $facturaModel = new Factura();
@@ -29,18 +31,19 @@ if (!$datos) {
 $nombreArchivo = "fact_{$idfact}_{$fecha_archivo}_ca.pdf";
 
 class PDF extends TCPDF {
+    public $fecha_impresion;
     public function Header() {
         $this->SetY(15); // Ajusta la posición Y del encabezado
         $this->SetFont('dejavusans', 'B', 14);
         $this->Cell(190, 10, 'CoctelApp - Facturación', 0, 1, 'C');
         $this->Ln(10); // Agrega espacio extra después del título
     }
-    
-    
+
     public function Footer() {
-        $this->SetY(-15);
+        $this->SetY(-20);
         $this->SetFont('dejavusans', 'I', 10);
-        $this->Cell(0, 10, 'Factura Generada Por CoctelApp', 0, 0, 'C');
+        $this->Cell(0, 10, 'Factura Generada Por CoctelApp', 0, 1, 'C');
+        $this->Cell(0, 10, 'Fecha de impresión: ' . $this->fecha_impresion, 0, 0, 'C'); // Agregando la fecha
     }
 }
 
@@ -53,10 +56,6 @@ $pdf->SetTextColor(255, 0, 0);
 $pdf->Cell(190, 10, 'Factura #'.$datos[0]['idfact'], 0, 1, 'C');
 $pdf->Ln(5);
 
-$pdf->SetFont('dejavusans', 'I', 12);
-$pdf->SetTextColor(100, 100, 100);
-$pdf->Cell(190, 10, "Generado el: ".$fecha_generacion, 0, 1, 'C');
-$pdf->Ln(5);
 
 // Cuadro de Información General
 $pdf->SetFont('dejavusans', 'B', 12);
@@ -119,7 +118,8 @@ $pdf->SetTextColor(255, 255, 255);
 $pdf->Cell(155, 10, 'Total General', 1, 0, 'R', true);
 $pdf->Cell(35, 10, "$".number_format($totalGeneral, 2, ',', '.'), 1, 1, 'C', true);
 
-$pdf->Output($nombreArchivo, 'I'); // Descarga el PDF en lugar de abrirlo en el navegador
+$pdf->fecha_impresion = $fecha_generacion; // Asigna la fecha de impresión
+$pdf->Output($nombreArchivo, 'I');
 exit;
 
 ?>
