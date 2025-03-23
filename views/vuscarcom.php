@@ -187,18 +187,14 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
 </div>
 
 <!-- Modal de Carga con animación y confirmación -->
-<div class="modal fade" id="pedidoConfirmadoModal" tabindex="-1" aria-labelledby="pedidoConfirmadoLabel" aria-hidden="true">
+<div class="modal fade" id="pedidoConfirmadoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="pedidoConfirmadoLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content text-center p-4">
             <div class="modal-body">
-                <!-- Animación de carga -->
-                <div id="loadingAnimation">
+                <!-- Contenedor de la animación y mensaje -->
+                <div id="loadingContainer">
                     <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;"></div>
                     <p class="mt-2">Procesando tu pedido...</p>
-                </div>
-                
-                <!-- Mensaje de confirmación oculto por defecto -->
-                <div id="confirmationMessage" class="d-none">
                     <i class="fa-solid fa-circle-check text-success fa-3x mb-3"></i>
                     <img src="img/coctelapp/svg/Successful-purchase-cuate.png" alt="Compra Exitosa" class="img-fluid mb-3" style="max-width: 150px;">
                     <h5 class="text-success">¡Pedido Confirmado!</h5>
@@ -208,29 +204,6 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
         </div>
     </div>
 </div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    let modalElement = document.getElementById('pedidoConfirmadoModal');
-    let modal = new bootstrap.Modal(modalElement);
-    let confirmarPedidoBtn = document.getElementById('confirmarPedido');
-
-    confirmarPedidoBtn.addEventListener("click", function() {
-        // Mostrar la modal cuando se haga clic en "Confirmar Pedido"
-        modal.show();
-
-        // Restablecer la animación de carga y ocultar el mensaje de confirmación
-        document.getElementById("loadingAnimation").classList.remove("d-none");
-        document.getElementById("confirmationMessage").classList.add("d-none");
-
-        // Simular tiempo de procesamiento antes de mostrar la confirmación
-        setTimeout(() => {
-            document.getElementById("loadingAnimation").classList.add("d-none");
-            document.getElementById("confirmationMessage").classList.remove("d-none");
-        }, 3000); // 3 segundos de espera
-    });
-});
-</script>
 
 
 <style>
@@ -348,4 +321,29 @@ document.addEventListener("DOMContentLoaded", function() {
             bartenderMessage.style.display = 'none';
         }
     });
+    document.addEventListener("DOMContentLoaded", function() {
+    let modalElement = document.getElementById('pedidoConfirmadoModal');
+    let modal = new bootstrap.Modal(modalElement);
+    let confirmarPedidoBtn = document.getElementById('confirmarPedido');
+
+    confirmarPedidoBtn.addEventListener("click", function() {
+        modal.show();
+
+        // Restablecer la animación de carga y ocultar el mensaje de confirmación
+        document.getElementById("loadingAnimation").classList.remove("d-none");
+        document.getElementById("confirmationMessage").classList.add("d-none");
+
+        // Simular tiempo de procesamiento antes de mostrar la confirmación
+        setTimeout(() => {
+            document.getElementById("loadingAnimation").classList.add("d-none");
+            document.getElementById("confirmationMessage").classList.remove("d-none");
+
+            // Mantener el mensaje de confirmación visible por más tiempo
+            setTimeout(() => {
+                modal.hide();
+            }, 10000); // 5 segundos antes de ocultar el modal
+        }, 3000); // 3 segundos de espera para simular procesamiento
+    });
+});
+
 </script>
