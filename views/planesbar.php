@@ -152,7 +152,6 @@ main::before {
         background: rgba(99, 99, 99, 0.59);
         /* Fondo semitransparente */
         backdrop-filter: blur(50px);
-        /* Efecto blur */
         border-radius: 12px;
         padding: 25px;
         text-align: center;
