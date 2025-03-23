@@ -67,9 +67,12 @@ include_once('controllers/cpassword.php');
                             <label><i class="fa-solid fa-envelope" style="color: #ffffff;"></i> Correo Electrónico</label>
                         </div>
 
-                        <div class="input-wrap">
+                        <div class="input-wrap" style="position: relative;">
                             <input type="password" minlength="4" id="password" name="pss" class="input-field" autocomplete="off" required />
                             <label><i class="fa-solid fa-lock" style="color: #ffffff;"></i> Contraseña</label>
+                            <i class="fa-solid fa-eye toggle-password" data-target="password"
+                                style="color: #ffffff; cursor: pointer; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
+                            </i>
                         </div>
 
                         <div class="recaptcha-container mb-3">
@@ -149,19 +152,26 @@ include_once('controllers/cpassword.php');
                             <label><i class="fa-regular fa-envelope" style="color: #ffffff;"></i> Correo Electrónico</label>
                         </div>
 
-                        <div class="input-wrap">
-                            <input type="password" minlength="4" class="input-field" autocomplete="off" name="pssusu" id="pssusu" value="<?php echo isset($datOne[0]['pssusu']) ? $datOne[0]['pssusu'] : ''; ?>" required />
+                        <div class="input-wrap" style="position: relative;">
+                            <input type="password" minlength="4" class="input-field" autocomplete="off" name="pssusu" id="pssusu"
+                                value="<?php echo isset($datOne[0]['pssusu']) ? $datOne[0]['pssusu'] : ''; ?>" required />
                             <label><i class="fa-solid fa-lock" style="color: #ffffff;"></i> Contraseña</label>
+                            <i class="fa-solid fa-eye toggle-password" data-target="pssusu"
+                                style="color: #ffffff; cursor: pointer; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
+                            </i>
+                        </div>
+                        <div class="recaptcha-container mb-3">
+                            <div class="g-recaptcha" data-sitekey="6Lcz88sqAAAAAHoXXpy3WpvPQtpfSKGTD9_YfbPm"></div>
                         </div>
 
                         <input type="submit" value="Registrar" class="registro-btn" />
                     </div>
                 </form>
-                <form action="controllers/cenviar_correo.php" method="POST" autocomplete="off" class="recovery-form" style="display: none;" >
+                <form action="controllers/cenviar_correo.php" method="POST" autocomplete="off" class="recovery-form" style="display: none;">
                     <div class="heading">
                         <h2>Cambiar Contraseña</h2>
                     </div>
-                    <p class="text"><i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i> Al momento de cambiar la contraseña, confirma en el correo electrónico la nueva contraseña.</p>
+                    <p class="text"><i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i> Al momento de cambiar la contraseña, confirma en el correo electrónico y realiza los pasos para cambiarla.</p>
                     <div class="actual-form">
                         <div class="input-wrap">
                             <input type="email" class="input-field" autocomplete="off" name="emausu" id="emausu" required />
@@ -209,26 +219,47 @@ include_once('controllers/cpassword.php');
     </div>
 </main>
 
-
 <script>
-document.getElementById("formRecuperar").addEventListener("submit", function(event) {
-    event.preventDefault();
-    let formData = new FormData(this);
+    window.onload = function() {
+        // Manejo del formulario de recuperación
+        document.getElementById("formRecuperar")?.addEventListener("submit", function(event) {
+            event.preventDefault();
+            let formData = new FormData(this);
 
-    fetch("cenviar_correo.php", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.message);
-        if (data.status === "success") {
-            window.location.href = "index.php?pg=1002";
-        }
-    })
-    .catch(error => console.error("Error:", error));
-});
+            fetch("cenviar_correo.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.status === "success") {
+                        window.location.href = "index.php?pg=1002";
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+        });
 
+        // Funcionalidad para mostrar/ocultar contraseña
+        document.querySelectorAll(".toggle-password").forEach(icon => {
+            icon.addEventListener("click", function() {
+                const target = document.getElementById(this.getAttribute("data-target"));
+
+                if (target) {
+                    if (target.type === "password") {
+                        target.type = "text";
+                        this.classList.replace("fa-eye", "fa-eye-slash");
+                    } else {
+                        target.type = "password";
+                        this.classList.replace("fa-eye-slash", "fa-eye");
+                    }
+                    console.log("Estado del input:", target.type); // Para depuración
+                } else {
+                    console.error("No se encontró el input con ID:", this.getAttribute("data-target"));
+                }
+            });
+        });
+    };
 </script>
 
 

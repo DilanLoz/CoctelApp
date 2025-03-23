@@ -36,6 +36,10 @@
             require_once("views/vinicio.php");
         if ($pg == "1006")
             require_once("views/vbares.php");
+        if ($pg == "2001")
+            require_once("views/vform_planes.php");
+        if ($pg == "2002")
+            require_once("views/vcontacto.php");
         elseif ($pg == "1007") {
             echo "
             <br>

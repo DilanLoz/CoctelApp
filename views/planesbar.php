@@ -36,7 +36,9 @@
                     <div class="plan-commission">
                         <box-icon name='bolt-circle'></box-icon> Comisión: <strong>1%</strong> sobre las ventas totales en el mes.
                     </div>
-                    <button class="btn btn-primary btn-block">Contratar Plan</button>
+                    <button class="btn btn-primary btn-block" onclick="window.location.href='index.php?pg=2001'">
+                        Contratar Plan
+                    </button>
                 </div>
             </div>
 
@@ -74,7 +76,9 @@
                     <div class="plan-commission">
                         <box-icon name='bolt-circle'></box-icon> Comisión: <strong>0.2%</strong> sobre las ventas totales en el mes.
                     </div>
-                    <button class="btn btn-warning btn-block">Contratar Plan</button>
+                    <button class="btn btn-warning btn-block" onclick="window.location.href='index.php?pg=2001'">
+                        Contratar Plan
+                    </button>
                 </div>
             </div>
         </div>
@@ -118,33 +122,36 @@
 </main>
 
 <style>
-    
     /* Estilos generales */
     main {
-    position: relative; /* Importante para el pseudo-elemento */
-    width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
-    padding: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black; /* Texto blanco en elementos fuera de los planes */
-}
+        position: relative;
+        /* Importante para el pseudo-elemento */
+        width: 100%;
+        min-height: 100vh;
+        overflow: hidden;
+        padding: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: black;
+        /* Texto blanco en elementos fuera de los planes */
+    }
 
-main::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('./img/coctelapp/registro.jpg');
-    background-size: cover;
-    background-position: center;
-    filter: blur(10px); /* Aplica el desenfoque */
-    z-index: -1; /* Lo envía detrás del contenido */
-}
+    main::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('./img/coctelapp/registro.jpg');
+        background-size: cover;
+        background-position: center;
+        filter: blur(10px);
+        /* Aplica el desenfoque */
+        z-index: -1;
+        /* Lo envía detrás del contenido */
+    }
 
 
     /* Estilos para las tarjetas de planes */
