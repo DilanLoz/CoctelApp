@@ -19,6 +19,10 @@ $facturas = $facturaModel->getHistorialPedidos($idusu);
 <link rel="stylesheet" href="css/style.css">
 
 <div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-end mt-4">
+        <button class="btn btn-dark btn-md" onclick="window.location.href='home.php?pg=3030'"><i class="fa-solid fa-headset"></i>
+        </button>
+    </div>
     <h2 class="text-center text-warning fw-bold mb-4">Historial de Pedidos</h2>
 
     <div class="table-responsive">
@@ -78,22 +82,22 @@ $facturas = $facturaModel->getHistorialPedidos($idusu);
 
 <!-- Agregar el script de selección de fila -->
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll(".select-row").forEach(button => {
-        button.addEventListener("click", function() {
-            let row = this.closest("tr");
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".select-row").forEach(button => {
+            button.addEventListener("click", function() {
+                let row = this.closest("tr");
 
-            // Alternar la clase "selected"
-            row.classList.toggle("selected");
+                // Alternar la clase "selected"
+                row.classList.toggle("selected");
+            });
         });
     });
-});
 </script>
 
 <!-- Estilos CSS para destacar la fila seleccionada -->
 <style>
-.selected {
-    background-color: rgba(255, 193, 7, 0.5) !important; /* Amarillo con opacidad */
-}   
+    .selected {
+        background-color: rgba(255, 193, 7, 0.5) !important;
+        /* Amarillo con opacidad */
+    }
 </style>
-

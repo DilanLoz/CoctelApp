@@ -14,6 +14,10 @@ $datFiltered = $datAll;
 
 <div class="container mt-5 mb-5" id="ganancias">
     <div class="row">
+    <div class="d-flex justify-content-end mt-4">
+        <button class="btn btn-dark btn-md" onclick="window.location.href='home.php?pg=3030'"><i class="fa-solid fa-headset"></i>
+        </button>
+    </div>
         <!-- Ganancias del Día -->
         <div class="col-md-6 mb-5 mt-5">
             <div class="rounded p-3 shadow-lg">

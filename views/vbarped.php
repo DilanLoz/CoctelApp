@@ -25,8 +25,12 @@ foreach ($pedidos as $producto) {
 
 <div class="container mt-4">
     <div class="row">
+    <div class="d-flex justify-content-end mt-4">
+        <button class="btn btn-dark btn-md" onclick="window.location.href='home.php?pg=3030'"><i class="fa-solid fa-headset"></i>
+        </button>
+    </div>
         <!-- Columna izquierda: Pedidos sin empleado -->
-        <div class="col-md-6 mt-5">
+        <div class="col-md-6 mt-2">
             <div class="border-start border-end border-top border-primary rounded-top p-3 mb-3">
                 <h3 class="text-center text-primary fw-bold"><i class="fa-solid fa-person-walking-arrow-loop-left"></i> Pedidos Sin Empleado</h3>
             </div>
@@ -77,7 +81,7 @@ foreach ($pedidos as $producto) {
         </div>
 
         <!-- Columna derecha: Pedidos Listos -->
-        <div class="col-md-6 mt-5">
+        <div class="col-md-6 mt-2">
             <div class="border-start border-end border-top border-success rounded-top p-3 mb-3">
                 <h3 class="text-center text-success fw-bold"><i class="fa-regular fa-circle-check"></i> Pedidos En camino</h3>
             </div>

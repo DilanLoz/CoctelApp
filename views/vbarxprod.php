@@ -8,6 +8,10 @@ require_once('controllers/cbarxprod.php'); ?>
 <div class="container" style="text-align: left;">
     <br><br><br>
     <form id="frmins" action="home.php?pg=3003" enctype="multipart/form-data" method="POST">
+    <div class="d-flex justify-content-end mt-4">
+        <button class="btn btn-dark btn-md" onclick="window.location.href='home.php?pg=3030'"><i class="fa-solid fa-headset"></i>
+        </button>
+    </div>
         <h1><i class=""></i> Crear producto y Historial del producto</h1>
         <div class="row">
             <div class="form-group col-md-6">
