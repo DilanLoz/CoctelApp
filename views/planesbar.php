@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <main class="py-5">
     <div class="container">
         <div class="row justify-content-center">
@@ -42,7 +43,7 @@
             <!-- Plan Semestral -->
             <div class="col-md-5 mb-4">
                 <div class="plan-card shadow-lg">
-                    <div class="plan-header bg-warning text-white">
+                    <div class="plan-header bg-warning text-black">
                         <div class="plan-image">
                             <img src="img/coctelapp/logo.png" alt="Semestral" style="width: 35px; height: auto;">
                         </div>
@@ -128,7 +129,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white; /* Texto blanco en elementos fuera de los planes */
+    color: black; /* Texto blanco en elementos fuera de los planes */
 }
 
 main::before {
@@ -138,7 +139,7 @@ main::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('./img/coctelapp/bg6.jpg');
+    background-image: url('./img/coctelapp/registro.jpg');
     background-size: cover;
     background-position: center;
     filter: blur(10px); /* Aplica el desenfoque */
@@ -148,9 +149,9 @@ main::before {
 
     /* Estilos para las tarjetas de planes */
     .plan-card {
-        background: rgba(72, 72, 72, 0.57);
+        background: rgba(99, 99, 99, 0.59);
         /* Fondo semitransparente */
-        backdrop-filter: blur(30px);
+        backdrop-filter: blur(50px);
         /* Efecto blur */
         border-radius: 12px;
         padding: 25px;
@@ -166,7 +167,7 @@ main::before {
 
     .plan-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.2);
+        box-shadow: 0px 5px 15px rgba(100, 100, 100, 0.58);
     }
 
     /* Encabezado del plan */
@@ -256,7 +257,7 @@ main::before {
     }
 
     .plan-commission box-icon {
-        fill: black;
+        fill: white;
     }
 
     .btn {
