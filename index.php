@@ -40,6 +40,12 @@
             require_once("views/vform_planes.php");
         if ($pg == "2002")
             require_once("views/vcontacto.php");
+        if ($pg == "2003")
+            require_once("views/politicas.php");
+        if ($pg == "2004")
+            require_once("views/legal.php");
+        if ($pg == "2005")
+            require_once("views/nosotros.php");
         elseif ($pg == "1007") {
             echo "
             <br>

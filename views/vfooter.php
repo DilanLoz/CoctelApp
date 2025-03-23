@@ -20,10 +20,10 @@
                     <div class="info-section float-end">
                         <h4>Nuestra Información</h4>
                         <div class="col-md-12 border border-warning border-1 rounded-3 mb-3"></div>
-                        <a href="#sobre-nosotros" class="d-block mb-2 text-decoration-none text-grey">Sobre Nosotros</a>
-                        <a href="#informacion-legal" class="d-block mb-2 text-decoration-none text-grey">Información Legal</a>
-                        <a href="#contacto" class="d-block mb-2 text-decoration-none text-grey">Contacto</a>
-                        <a href="#politica-cookies" class="d-block mb-2 text-decoration-none text-grey">Política de Cookies</a>
+                        <a href="index.php?pg=2005" class="d-block mb-2 text-decoration-none text-grey">Sobre Nosotros</a>
+                        <a href="index.php?pg=2004" class="d-block mb-2 text-decoration-none text-grey">Información Legal</a>
+                        <a href="index.php?pg=2002" class="d-block mb-2 text-decoration-none text-grey">Contacto</a>
+                        <a href="index.php?pg=2003" class="d-block mb-2 text-decoration-none text-grey">Política de Cookies</a>
                     </div>
                 </div>
             </div>

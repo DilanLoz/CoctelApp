@@ -15,28 +15,28 @@
         </div>
     <?php endif; ?>
 
-    <form action="controllers/contacto_quejas.php" method="POST" autocomplete="off" class="container text-white p-4 mt-5 rounded">
+    <form action="controllers/soporte_tecnico.php" method="POST" autocomplete="off" class="container text-white p-4 mt-5 rounded">
         <div class="mb-4 text-center">
-            <h2 class="text-warning">Contacto y Quejas</h2>
-            <p><i class="fa-solid fa-circle-info text-warning"></i> Déjanos tu mensaje y te responderemos lo antes posible.</p>
+            <h2 class="text-warning">Soporte Técnico</h2>
+            <p><i class="fa-solid fa-circle-info text-warning"></i> Los de Plan mensual cuentan con soporte técnico en 24 a 48 horas. y los de Plan semestral cuentan con soporte técnico en 16 horas.</p>
         </div>
 
         <div class="row g-3">
-            <!-- Nombre -->
+            <!-- Nombre del Bar -->
             <div class="col-md-6">
-                <label for="nombre" class="form-label">Nombre Completo</label>
+                <label for="nombre_bar" class="form-label">Nombre</label>
                 <div class="input-group">
-                    <span class="input-group-text bg-warning text-dark"><i class="fa-solid fa-user"></i></span>
-                    <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ej: Juan Pérez" required />
+                    <span class="input-group-text bg-warning text-dark"><i class="fa-solid fa-store"></i></span>
+                    <input type="text" class="form-control" name="nombre_bar" id="nombre_bar" placeholder="Ej: Bar El Paraíso" required />
                 </div>
             </div>
 
             <!-- Correo Electrónico -->
             <div class="col-md-6">
-                <label for="email" class="form-label">Correo Electrónico</label>
+                <label for="email" class="form-label">Correo Electrónica</label>
                 <div class="input-group">
                     <span class="input-group-text bg-warning text-dark"><i class="fa-regular fa-envelope"></i></span>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Ej: usuario@example.com" required />
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Ej: contacto@barejemplo.com" required />
                 </div>
             </div>
 
@@ -49,46 +49,31 @@
                 </div>
             </div>
 
-            <!-- Asunto -->
-            <div class="col-md-6">
-                <label for="asunto" class="form-label">Asunto</label>
-                <div class="input-group">
-                    <span class="input-group-text bg-warning text-dark"><i class="fa-solid fa-comment-dots"></i></span>
-                    <select class="form-select" name="asunto" id="asunto" required>
-                        <option value="consulta">Consulta</option>
-                        <option value="queja">Queja</option>
-                        <option value="sugerencia">Sugerencia</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Mensaje -->
+            <!-- Descripción del Problema -->
             <div class="col-12">
-                <label for="mensaje" class="form-label">Mensaje</label>
-                <textarea class="form-control" name="mensaje" id="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                <label for="mensaje" class="form-label">Descripción del Problema</label>
+                <textarea class="form-control" name="mensaje" id="mensaje" rows="4" placeholder="Describe el problema que estás experimentando..." required></textarea>
             </div>
 
             <!-- Botón de envío -->
             <div class="col-12 text-center">
-                <button type="submit" class="btn btn-warning text-dark fw-bold px-4">Enviar Mensaje</button>
+                <button type="submit" class="btn btn-warning text-dark fw-bold px-4">Solicitar Soporte</button>
             </div>
         </div>
     </form>
 </main>
 
 <style>
-    /* Imagen de fondo */
     body, main {
         position: relative;
         width: 100%;
         height: 100vh;
-        background-image: url('./img/coctelapp/registro.jpg');
+        background-image: url('./img/coctelapp/soporte.jpg');
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
     }
 
-    /* Capa de desenfoque */
     form::before {
         content: "";
         position: absolute;
@@ -99,7 +84,6 @@
         z-index: -1;
     }
 
-    /* Contenedor del formulario con efecto blur */
     .container {
         background: rgba(0, 0, 0, 0.48);
         backdrop-filter: blur(5px);
