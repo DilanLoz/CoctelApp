@@ -3,20 +3,19 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require '../vendor/autoload.php';
-require '../config/database.php'; // Asegúrate de incluir la conexión a la base de datos
 
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (!isset($_SESSION['idusu']) || !isset($_SESSION['tipo']) || $_SESSION['tipo'] !== 'bar') {
-        header("Location: ../index.php?pg=soporte&error=1&msg=" . urlencode("Solo los bares pueden solicitar soporte."));
+    if (!isset($_SESSION['idusu']) || !isset($_SESSION['idper']) || (int)$_SESSION['idper'] !== 30) { 
+        header("Location: ../home.php?pg=3030&error=1&msg=" . urlencode("Solo los bares pueden solicitar soporte."));
         exit();
     }
 
-    $nombre_bar = $_POST['nombre_bar'];
-    $email = $_POST['email'];
-    $telefono = $_POST['telefono'];
-    $mensaje = $_POST['mensaje'];
+    $nombre_bar = htmlspecialchars(trim($_POST['nombre_bar']));
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $telefono = htmlspecialchars(trim($_POST['telefono']));
+    $mensaje = htmlspecialchars(trim($_POST['mensaje']));
 
     $mail = new PHPMailer(true);
 
@@ -61,3 +60,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+

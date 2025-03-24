@@ -11,7 +11,7 @@
                         </div>
                         <div class="plan-title">Mensual</div>
                     </div>
-                    <div class="plan-price">$62,248 COP</div>
+                    <div class="plan-price">$55,000 COP</div>
                     <div class="plan-old-price">Pagando 6 meses: <del>$373,488 COP</del></div>
                     <ul class="plan-features">
                         <li>
@@ -51,7 +51,7 @@
                         </div>
                         <div class="plan-title text-dark">Semestral</div>
                     </div>
-                    <div class="plan-price">$336,138 COP</div>
+                    <div class="plan-price">$280,500 COP</div>
                     <div class="plan-save">Ahorras <strong>$37,350 COP</strong></div>
                     <ul class="plan-features">
                         <li>
@@ -74,7 +74,7 @@
                         </li>
                     </ul>
                     <div class="plan-commission">
-                        <box-icon name='bolt-circle'></box-icon> Comisión: <strong>0.2%</strong> sobre las ventas totales en el mes.
+                        <box-icon name='bolt-circle'></box-icon> Comisión: <strong>0.3%</strong> sobre las ventas totales en el mes.
                     </div>
                     <button class="btn btn-warning btn-block" onclick="window.location.href='index.php?pg=2001'">
                         Contratar Plan

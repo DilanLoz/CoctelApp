@@ -2,12 +2,12 @@
 
 <main>
     <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
-        <div class="alert alert-success text-center">
+        <div class="alert alert-success text-center mt-5">
             <i class="fa-solid fa-check-circle"></i>
             ¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.
         </div>
     <?php elseif (isset($_GET['error']) && $_GET['error'] == 1): ?>
-        <div class="alert alert-danger text-center">
+        <div class="alert alert-danger text-center mt-5">
             <i class="fa-solid fa-times-circle"></i>
             Hubo un error al enviar tu mensaje. Inténtalo de nuevo más tarde.
             <br>
@@ -18,7 +18,7 @@
     <form action="controllers/soporte_tecnico.php" method="POST" autocomplete="off" class="container text-white p-4 mt-5 rounded">
         <div class="mb-4 text-center">
             <h2 class="text-warning">Soporte Técnico</h2>
-            <p><i class="fa-solid fa-circle-info text-warning"></i> Los de Plan mensual cuentan con soporte técnico en 24 a 48 horas. y los de Plan semestral cuentan con soporte técnico en 16 horas.</p>
+            <p><i class="fa-solid fa-circle-info text-warning"></i> El Plan mensual cuenta con soporte técnico en 24 a 48 horas. El Plan semestral cuenta con soporte técnico en 16 horas.</p>
         </div>
 
         <div class="row g-3">
@@ -33,7 +33,7 @@
 
             <!-- Correo Electrónico -->
             <div class="col-md-6">
-                <label for="email" class="form-label">Correo Electrónica</label>
+                <label for="email" class="form-label">Correo Electrónico</label>
                 <div class="input-group">
                     <span class="input-group-text bg-warning text-dark"><i class="fa-regular fa-envelope"></i></span>
                     <input type="email" class="form-control" name="email" id="email" placeholder="Ej: contacto@barejemplo.com" required />
@@ -64,29 +64,47 @@
 </main>
 
 <style>
-    body, main {
-        position: relative;
-        width: 100%;
-        height: 100vh;
-        background-image: url('./img/coctelapp/soporte.jpg');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-    }
+     body, main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-image: url('./img/coctelapp/registro.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
 
-    form::before {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: inherit;
-        filter: blur(10px);
-        z-index: -1;
+/* Elimina la imagen de fondo duplicada */
+form::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    filter: blur(10px);
+    z-index: -1;
+}
+
+@media (max-width: 768px) {
+    body, main {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: scroll;
     }
 
     .container {
-        background: rgba(0, 0, 0, 0.48);
+        background: rgba(0, 0, 0, 0.5);
+        padding: 15px;
+    }
+}
+
+    .container {
+        background: rgba(0, 0, 0, 0.6); /* Ajusta la opacidad */
         backdrop-filter: blur(5px);
         border-radius: 10px;
+        padding: 20px;
     }
+
+
 </style>
