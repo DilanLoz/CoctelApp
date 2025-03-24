@@ -23,7 +23,7 @@ $fots = isset($_FILES['fots']['name']) ? $_FILES['fots']['name']:NULL;
 
 if ($fots){
 	if(file_exists($fotprod)) unlink($fotprod);
-	$ruta_completa = opti($_FILES['fots'], 'fot', 'img/', date('YmdHis')); 
+	$ruta_completa = opti($_FILES['fots'], 'fot', 'img/productos/', date('YmdHis')); 
     $fotprod = basename($ruta_completa); // Extrae solo el nombre del archivo
 }
 

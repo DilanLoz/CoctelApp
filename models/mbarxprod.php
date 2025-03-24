@@ -203,6 +203,7 @@ class Mbarxprod {
                 nomprod=:nomprod, 
                 desprod=:desprod, 
                 vlrprod=:vlrprod,
+                fotprod=:fotprod,
                 idbar=:idbar, 
                 cantprod=:cantprod, 
                 tipoprod=:tipoprod,  -- Aquí la coma
@@ -216,6 +217,7 @@ class Mbarxprod {
     $result->bindParam(":nomprod", $this->nomprod);
     $result->bindParam(":desprod", $this->desprod);
     $result->bindParam(":vlrprod", $this->vlrprod);
+    $result->bindParam(":fotprod", $this->fotprod);
     $result->bindParam(":idbar", $this->idbar);
     $result->bindParam(":cantprod", $this->cantprod);
     $result->bindParam(":tipoprod", $this->tipoprod);

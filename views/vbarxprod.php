@@ -36,7 +36,7 @@ require_once('controllers/cbarxprod.php'); ?>
 
             <div class="form-group col-md-6">
                 <label for="tipoprod"><strong>Tipo de Producto</strong></label>
-                <select name="tipoprod" id="tipoprod" class="form-control" required>
+                <select name="tipoprod" id="tipoprod" class="form-control form-select" required>
                     <option value="licor" <?php echo (isset($datOne[0]['tipoprod']) && $datOne[0]['tipoprod'] == 'licor') ? 'selected' : ''; ?>>Licor</option>
                     <option value="vino" <?php echo (isset($datOne[0]['tipoprod']) && $datOne[0]['tipoprod'] == 'vino') ? 'selected' : ''; ?>>Vino</option>
                     <option value="coctel" <?php echo (isset($datOne[0]['tipoprod']) && $datOne[0]['tipoprod'] == 'coctel') ? 'selected' : ''; ?>>Coctel</option>
@@ -65,6 +65,8 @@ require_once('controllers/cbarxprod.php'); ?>
         <thead>
             <tr>
                 <th>Producto</th>
+                <th>Cantidad en Stock</th>
+                <th>Precio</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -74,8 +76,8 @@ require_once('controllers/cbarxprod.php'); ?>
                     <tr>
                         <td>
                             <div style="display: flex; align-items: center;">
-                                <?php if (!empty($dta["fotprod"]) && file_exists("img/" . $dta["fotprod"])) { ?>
-                                    <img src="img/<?= $dta["fotprod"]; ?>" width="120px" style="margin-right: 10px;">
+                                <?php if (!empty($dta["fotprod"]) && file_exists("img/productos/" . $dta["fotprod"])) { ?>
+                                    <img src="img/productos/<?= $dta["fotprod"]; ?>" width="120px" style="margin-right: 10px;">
                                 <?php } else { ?>
                                     <img src="img/coctelapp/logo.png" width="120px" style="margin-right: 10px;">
                                 <?php } ?>
@@ -83,14 +85,14 @@ require_once('controllers/cbarxprod.php'); ?>
                                     <strong><?= $dta['idprod']; ?> - <?= $dta['nomprod']; ?></strong><br>
                                     <small>
                                         <strong>Descripción: </strong><?= $dta['desprod']; ?><br>
-                                        <strong>Valor producto: </strong><?= $dta['vlrprod']; ?><br>
-                                        <strong>Cantidad Producto: </strong><?= $dta['cantprod']; ?><br>
                                         <strong>Mililitros: </strong><?= $dta['mililitros']; ?><br>
                                         <strong>Tipo de producto: </strong><?= $dta['tipoprod']; ?><br>
                                     </small>
                                 </div>
                             </div>
                         </td>
+                        <td><?= $dta['cantprod']; ?><br></td>
+                        <td><?= $dta['vlrprod']; ?><br></td>
                         <td style="text-align:center;">
                         <?php if ($dta['estado'] == 1) { ?>
                                 <a href="home.php?pg=<?= $pg; ?>&idprod=<?= $dta['idprod']; ?>&ope=acti&estado=1" title="Estado del Producto Activado">
