@@ -299,13 +299,6 @@ class Mbarxem {
 
         $result = $conexion->prepare($sql);
 
-        // Verificar y encriptar contraseña si es necesario
-        if (!empty($this->pssusu)) {
-            $passwordHash = password_hash($this->pssusu, PASSWORD_DEFAULT);
-        } else {
-            throw new Exception("La contraseña no puede estar vacía");
-        }
-
         $result->bindParam(":idusu", $this->idusu, PDO::PARAM_INT);
         $result->bindParam(":nomusu", $this->nomusu, PDO::PARAM_STR);
         $result->bindParam(":emausu", $this->emausu, PDO::PARAM_STR);
@@ -313,7 +306,7 @@ class Mbarxem {
         $result->bindParam(":numdocu", $this->numdocu, PDO::PARAM_STR);
         $result->bindParam(":fecnausu", $this->fecnausu, PDO::PARAM_STR);
         $result->bindParam(":fotiden", $this->fotiden, PDO::PARAM_STR);
-        $result->bindParam(":pssusu", $passwordHash, PDO::PARAM_STR);
+        $result->bindParam(":pssusu", $this->pssusu, PDO::PARAM_STR); // Contraseña ya viene hasheada desde el controlador
         $result->bindParam(":codubi", $this->codubi, PDO::PARAM_INT);
         $result->bindParam(":idper", $this->idper, PDO::PARAM_INT);
         $result->bindParam(":idval", $this->idval, PDO::PARAM_INT);
@@ -328,6 +321,7 @@ class Mbarxem {
         return ["status" => "error", "message" => $e->getMessage()];
     }
 }
+
 public function editEstado() {
     try {
         $sql = "UPDATE usuario SET estado = :estado WHERE idusu = :idusu";
@@ -343,8 +337,6 @@ public function editEstado() {
         throw new Exception("Error al actualizar estado: " . $e->getMessage());
     }
 }
-
-
 
 } 
 

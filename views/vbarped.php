@@ -45,7 +45,7 @@ foreach ($pedidos as $producto) {
                                 <div class="text-success fw-bold fs-5 mt-2">
                                     Total: $<?php echo number_format($pedido['productos'][0]['total_pedido'], 2); ?>
                                     <hr class="mt-1 mb-0 border-2 border-success w-50 mx-auto">
-                                    <p class="mb-0 text-primary"><strong>Servicio Bartender: <?php echo htmlspecialchars($pedido['estado']); ?></strong></p>
+                                    <p class="mb-0 text-primary fs-6"><strong>Estado: <?php echo htmlspecialchars($pedido['estado']); ?></strong></p>
                                 </div>
                             </div>
 
@@ -55,7 +55,7 @@ foreach ($pedidos as $producto) {
                                 <p class="mb-1"><strong>Empleado:</strong> <?php echo $pedido['nomemp'] ?: 'Pendiente'; ?></p>
                                 <p class="mb-1"><strong>Usuario:</strong> <?php echo $pedido['productos'][0]['nomusu']; ?></p>
                                 <p class="mb-0"><strong>Dirección:</strong> <?php echo htmlspecialchars($pedido['direccion']); ?></p>
-                                <p class="mb-0 text-primary"><strong>Servicio Bartender: <?php echo htmlspecialchars($pedido['servicio']); ?></strong></p>
+                                <p class="mb-0"><strong>Servicio Bartender: </strong><?php echo htmlspecialchars($pedido['servicio']); ?></p>
                             </div>
                         </div>
 

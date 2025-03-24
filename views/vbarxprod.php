@@ -92,13 +92,18 @@ require_once('controllers/cbarxprod.php'); ?>
                             </div>
                         </td>
                         <td style="text-align:center;">
-                            <a href="home.php?pg=<?= $pg; ?>&idprod=<?= $dta['idprod']; ?>&ope=edi" title="Editar">
-                                <i class="fa-solid fa-pen-to-square fa"></i>
-                            </a>
-                            <a href="home.php?pg=<?= $pg; ?>&idprod=<?= $dta['idprod']; ?>&ope=eli" title="Eliminar" onclick="return eliminar();">
-                                <i class="fa-solid fa-trash-can fa"></i>
-                            </a>
+                        <?php if ($dta['estado'] == 1) { ?>
+                                <a href="home.php?pg=<?= $pg; ?>&idprod=<?= $dta['idprod']; ?>&ope=acti&estado=1" title="Estado del Producto Activado">
+                                    <i class="fa fa-solid fa-circle-check fa-2x"></i>
+                                </a>
+                            <?php } else { ?>
+                                <a href="home.php?pg=<?= $pg; ?>&idprod=<?= $dta['idprod']; ?>&ope=acti&estado=2" title="Estado del Producto Desactivado">
+                                    <i class="fa fa-solid fa-circle-xmark fa-2x" style="color: #ff0000;"></i>
+                                </a>
+                            <?php } ?>
 
+                            <a href="home.php?pg=<?= $pg; ?>&idprod=<?= $dta['idprod']; ?>&ope=edi" title="Editar" class="ms-3"> 
+                                <i class="fa-solid fa-pen-to-square fa"></i>
                             </a>
                         </td>
                     </tr>

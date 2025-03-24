@@ -4,7 +4,6 @@ include("controllers/optimg.php");
 
 $mbarxem = new Mbarxem();
 
-
 $idusu = isset($_REQUEST['idusu']) ? $_REQUEST['idusu'] : NULL;
 $nomusu = isset($_POST['nomusu']) ? $_POST['nomusu'] : NULL;
 $emausu = isset($_POST['emausu']) ? $_POST['emausu'] : NULL;
@@ -27,8 +26,6 @@ if ($fots){
 	$ruta_completa = opti($_FILES['fots'], 'fot', 'img/empleados/', date('YmdHis')); 
     $fotiden = basename($ruta_completa); // Extrae solo el nombre del archivo
 }
-
-
 
 $ope = isset($_REQUEST['ope']) ? $_REQUEST['ope'] : NULL;
 $datOne = NULL;
@@ -53,7 +50,8 @@ if ($ope == "save") {
 
     // Validar y encriptar contraseña solo si se proporciona una nueva
     if (!empty($pssusu)) {
-        $mbarxem->setPssusu(password_hash($pssusu, PASSWORD_DEFAULT));
+        $pssusuHashed = sha1(md5($pssusu . 'Jd#')); // Aplica el mismo hash
+        $mbarxem->setPssusu($pssusuHashed);
     }
 
     // Si el ID existe y no está vacío, se actualiza. Si no, se crea un nuevo registro.

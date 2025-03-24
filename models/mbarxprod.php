@@ -12,6 +12,7 @@ class Mbarxprod {
     private $idusu;
     private $tipoprod;
     private $mililitros;
+    private $estado;
 
 
     public function getIdprod() {
@@ -52,6 +53,9 @@ class Mbarxprod {
     }
     public function getMililitros() {
         return $this->mililitros;
+    }
+    public function getEstado() {
+        return $this->estado;
     }
 
 
@@ -94,7 +98,9 @@ class Mbarxprod {
     public function setMililitros($mililitros) {
         $this->mililitros = $mililitros;
     }
-
+    public function setEstado($estado) {
+        $this->estado = $estado;
+    }
     // Methods (getAll, getOne, save, edit, del) should be closed with }
 
     public function getAll() {
@@ -139,8 +145,7 @@ class Mbarxprod {
                     p.estado
                 FROM producto AS p
                 INNER JOIN bar AS b ON p.idbar = b.idbar
-                WHERE p.idbar = :idbar
-                AND p.estado != 2"; // Filtra los productos cuyo estado NO sea 2
+                WHERE p.idbar = :idbar"; // Filtra los productos cuyo estado NO sea 2
     
         $modelo = new Conexion();
         $conexion = $modelo->get_conexion();
@@ -156,20 +161,21 @@ class Mbarxprod {
 
 
 
-    public function del($idprod) {
+    public function toggleEstado($idprod, $estadoActual) {
         try {
+            $nuevoEstado = ($estadoActual == 1) ? 2 : 1;
             $sql = "UPDATE producto SET estado = :estado WHERE idprod = :idprod";
             $modelo = new Conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
-            $estado = 2; // Nuevo valor del estado
-            $result->bindParam(":estado", $estado, PDO::PARAM_INT);
+            $result->bindParam(":estado", $nuevoEstado, PDO::PARAM_INT);
             $result->bindParam(":idprod", $idprod, PDO::PARAM_INT);
             return $result->execute();
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
         }
     }
+    
 
     public function saveprod() {
         $sql = "INSERT INTO producto (nomprod, desprod, vlrprod, fotprod, idbar, cantprod, tipoprod, mililitros) VALUES (:nomprod, :desprod, :vlrprod, :fotprod, :idbar, :cantprod, :tipoprod, :mililitros)";
@@ -254,8 +260,21 @@ public function getAllProdIni() {
         echo "Error: " . $e->getMessage();
     }
 }
-
-
+public function editEstado() {
+    try {
+        $sql = "UPDATE producto SET estado = :estado WHERE idprod = :idprod";
+        $modelo = new conexion();
+        $conexion = $modelo->get_conexion();
+        $result = $conexion->prepare($sql);
+        
+        $result->bindParam(":idprod", $this->idprod);
+        $result->bindParam(":estado", $this->estado);
+        
+        return $result->execute();
+    } catch (Exception $e) {
+        throw new Exception("Error al actualizar estado: " . $e->getMessage());
+    }
+}
 } 
 
 ?>
