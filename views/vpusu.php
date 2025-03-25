@@ -29,7 +29,7 @@ require_once('admin/controllers/cval.php');
                         <div class="mb-3">
                             <label class="form-group" for="nomusu">Nombre *</label>
                             <input type="text" class="form-control restricted" name="nomusu" id="nomusu"
-                                   value="<?= $_SESSION['nomusu'] ?? ''; ?>" required>
+                                value="<?= $_SESSION['nomusu'] ?? ''; ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="idval" class="form-label">Tipo de documento *</label>
@@ -37,7 +37,7 @@ require_once('admin/controllers/cval.php');
                                 <option value="" disabled>Tipo de documento</option>
                                 <?php
                                 $valoresValidos = $mval->getDocumentos();
-                                $selectedDocumento = $_SESSION['idval'] ?? ''; 
+                                $selectedDocumento = $_SESSION['idval'] ?? '';
                                 if ($valoresValidos) {
                                     foreach ($valoresValidos as $valor) {
                                         $selected = ($selectedDocumento == $valor['idval']) ? 'selected' : '';
@@ -50,24 +50,24 @@ require_once('admin/controllers/cval.php');
                         <div class="mb-3">
                             <label class="form-group" for="fecnausu">Fecha de Nacimiento *</label>
                             <input type="date" class="form-control restricted" name="fecnausu" id="fecnausu"
-                                   value="<?= $_SESSION['fecnausu'] ?? ''; ?>" required>
+                                value="<?= $_SESSION['fecnausu'] ?? ''; ?>" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-group" for="celusu">Celular</label>
                             <input type="number" class="form-control" name="celusu" id="celusu"
-                                   value="<?= $_SESSION['celusu'] ?? ''; ?>" required>
+                                value="<?= $_SESSION['celusu'] ?? ''; ?>" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-group" for="emausu">Email</label>
                             <input type="email" class="form-control" name="emausu" id="emausu"
-                                   value="<?= $_SESSION['emausu'] ?? ''; ?>" required>
+                                value="<?= $_SESSION['emausu'] ?? ''; ?>" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-group" for="numdocu">No. Documento *</label>
                             <input type="text" class="form-control restricted" name="numdocu" id="numdocu"
-                                   value="<?= $_SESSION['numdocu'] ?? ''; ?>" required>
+                                value="<?= $_SESSION['numdocu'] ?? ''; ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="codubi" class="form-label">Ubicación:</label>
@@ -75,7 +75,7 @@ require_once('admin/controllers/cval.php');
                                 <option value="" disabled>Seleccione una ciudad</option>
                                 <?php
                                 $dataUbicaciones = $mubi->getCodubiNomubi();
-                                $selectedUbicacion = $_SESSION['codubi'] ?? ''; 
+                                $selectedUbicacion = $_SESSION['codubi'] ?? '';
                                 if ($dataUbicaciones) {
                                     foreach ($dataUbicaciones as $ubicacion) {
                                         $selected = ($selectedUbicacion == $ubicacion['codubi']) ? 'selected' : '';
@@ -85,10 +85,10 @@ require_once('admin/controllers/cval.php');
                                 ?>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-group" for="imgusu">Imagen</label>
-                            <input type="file" class="form-control" name="fots" accept="image/*" id="imgusu">
-                            <input type="hidden" name="imgusu" value="<?= $_SESSION['imgusu'] ?? ''; ?>">
+                        <div class="form-group col-md-12">
+                            <label for="fotiden">Foto Producto:</label>
+                            <input type="file" class="form-control form-control" name="fots" accept="image/*" id="fotiden">
+                            <input type="hidden" name="fotiden" value="<?php if ($dtOne && $dtOne[0]['fotiden']) echo $dtOne[0]['fotiden']; ?>">
                         </div>
                     </div>
                     <div class="text-center mt-3">

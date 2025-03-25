@@ -252,43 +252,47 @@ WHERE u.idusu = :idusu;";
     //-----------------------EMPLEADOS-------------------------------------
     //-----------------------USUARIOS-------------------------------------
     public function getOneUsuario()
-    {
-        $res = NULL;
+{
+    $res = NULL;
 
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        if (isset($_SESSION['idusu'])) {
-            $idusu = $_SESSION['idusu'];
-
-            $sql = "SELECT u.idusu, u.nomusu, u.numdocu, u.emausu, u.pssusu, u.celusu, u.fotiden, u.fecnausu, u.codubi, u.idval, u.idbar, b.nombar, u.nompropi, u.dircbar, u.horbar
-            FROM usuario u
-            LEFT JOIN bar AS b ON u.idbar = b.idbar
-            WHERE u.idusu = :idusu";
-            $modelo = new Conexion();
-            $conexion = $modelo->get_conexion();
-            $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            $result = $conexion->prepare($sql);
-            $result->bindParam(":idusu", $idusu, PDO::PARAM_INT);
-            $result->execute();
-
-            $res = $result->fetch(PDO::FETCH_ASSOC);
-
-            // Depuración
-            if ($res) {
-                error_log("Datos del usuario recuperados: " . json_encode($res));
-            } else {
-                error_log("No se encontraron datos para el usuario con ID: " . $idusu);
-            }
-        } else {
-            error_log("No hay usuario en sesión.");
-        }
-
-        return $res;
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
     }
 
+    if (isset($_SESSION['idusu'])) {
+        $idusu = $_SESSION['idusu'];
+
+        $sql = "SELECT u.idusu, u.nomusu, u.numdocu, u.emausu, u.pssusu, u.celusu, 
+                       u.fotiden, u.fecnausu, u.codubi, u.idval, u.idbar, 
+                       b.nombar, u.nompropi, u.dircbar, u.horbar
+                FROM usuario u
+                LEFT JOIN bar AS b ON u.idbar = b.idbar
+                WHERE u.idusu = :idusu";
+
+        $modelo = new Conexion();
+        $conexion = $modelo->get_conexion();
+        $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $result = $conexion->prepare($sql);
+        $result->bindParam(":idusu", $idusu, PDO::PARAM_INT);
+        $result->execute();
+
+        $res = $result->fetch(PDO::FETCH_ASSOC);
+
+        if ($res) {
+            // Modificamos el array para que siempre tenga la ruta de la imagen correcta
+            $res['fotiden'] = !empty($res['fotiden']) ? 'img/usuarios/' . $res['fotiden'] : 'img/usuarios/default.png';
+
+            error_log("Datos del usuario recuperados: " . json_encode($res));
+        } else {
+            error_log("No se encontraron datos para el usuario con ID: " . $idusu);
+        }
+    } else {
+        error_log("No hay usuario en sesión.");
+    }
+
+    return $res;
+}
 
     public function saveUsuario()
     {
@@ -328,7 +332,6 @@ WHERE u.idusu = :idusu;";
                     codubi=:codubi, 
                     celusu=:celusu, 
                     idval=:idval, 
-                    idserv=:idserv, 
                     idbar=:idbar,
                     nompropi=:nompropi,
                     horbar=:horbar,
@@ -348,7 +351,6 @@ WHERE u.idusu = :idusu;";
         $result->bindParam(":codubi", $this->codubi);
         $result->bindParam(":celusu", $this->celusu);
         $result->bindParam(":idval", $this->idval);
-        $result->bindParam(":idserv", $this->idserv);
         $result->bindParam(":idbar", $this->idbar);
         $result->bindParam(":nompropi", $this->nompropi);
         $result->bindParam(":horbar", $this->horbar);
