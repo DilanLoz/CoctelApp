@@ -231,7 +231,7 @@ header {
 
 .product-img {
     width: 200px;
-    height: 250px;
+    height: 220px;
     margin-bottom: 0.5rem;
     overflow: hidden; /* Esconde la parte de la imagen que exceda el contenedor */
     display: flex;    /* Asegura el posicionamiento interno */

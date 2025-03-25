@@ -23,7 +23,7 @@ $datAll = $mbarxprod->getAllProdIni(); // Cargar los primeros 12 productos
         ?>
                 <div class="product-box">
                     <a href="home.php?pg=1014&idprod=<?= $dta['idprod']; ?>">
-                        <img src="img/<?= $dta["fotprod"]; ?>" alt="" class="product-img">
+                        <img src="img/productos/<?= $dta["fotprod"]; ?>" alt="" class="product-img">
                     </a>
                     <strong class="product-name"><?= $dta['nomprod']; ?></strong>
                     <br>

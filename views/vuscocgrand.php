@@ -13,8 +13,8 @@ if ($datOne) {
         <div class="container mb-5 mt-5">
             <div class="row mt-5">
                 <!-- Columna de imagen grande -->
-                <div class="img-container">
-                    <img src="img/<?= $dta["fotprod"]; ?>" alt="" class="product-img" id="zoom-image">
+                <div class="img-container border border-dark rounded">
+                    <img src="img/productos/<?= $dta["fotprod"]; ?>" alt="" class="product-img" id="zoom-image">
                 </div>
 
                 <!-- Columna de información del cóctel -->
@@ -69,9 +69,9 @@ if ($datOne) {
                 ?>
                         <div class="product-box">
                             <a href="home.php?pg=1014&idprod=<?= $prod['idprod']; ?>">
-                                <img src="img/<?= $prod["fotprod"]; ?>" alt="" class="product-img">
+                                <img src="img/productos/<?= $prod["fotprod"]; ?>" alt="" class="product-img2">
                             </a>
-                            <strong class="product-name"><?= substr($prod['nomprod'], 0, 30) . (strlen($prod['nomprod']) > 30 ? "..." : ""); ?></strong>
+                            <strong class="product-name"><?= substr($prod['nomprod'], 0, 20) . (strlen($prod['nomprod']) > 20 ? "..." : ""); ?></strong>
                             <br>
                             <strong class="product-price" style="font-size: 18px; color: green;">$<?= $formattedPrice; ?></strong>
                             <br>
@@ -165,13 +165,30 @@ if ($datOne) {
         color: green;
         font-weight: bold;
     }
+    .product-img {
+        width: 350px;
+        height: 350px;
+    }
+    .product-img2 {
+        width: 350px;
+        height: 350px;
+    }
+    .product-img2 {
+        max-width: 180px;
+        /* ✅ Se ajusta para que todas las imágenes sean más pequeñas */
+        height: 200px;
+        object-fit: cover;
+        /* ✅ Evita que se deforme la imagen */
+        border-radius: 8px;
+    }
+
 
     /* ✅ Efecto de lupa */
     .img-container {
         position: relative;
         width: 100%;
         max-width: 400px;
-        height: 400px;
+        height: 450px;
         overflow: hidden;
         display: flex;
         justify-content: center;
