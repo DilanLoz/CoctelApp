@@ -12,7 +12,7 @@
                         <div class="plan-title">Mensual</div>
                     </div>
                     <div class="plan-price">$55,000 COP</div>
-                    <div class="plan-old-price">Pagando 6 meses: <del>$373,488 COP</del></div>
+                    <div class="plan-old-price">Pagando 6 meses: <del>$330,000 COP</del></div>
                     <ul class="plan-features">
                         <li>
                             <svg width="24" height="24" viewBox="0 0 24 24">
@@ -52,7 +52,7 @@
                         <div class="plan-title text-dark">Semestral</div>
                     </div>
                     <div class="plan-price">$280,500 COP</div>
-                    <div class="plan-save">Ahorras <strong>$37,350 COP</strong></div>
+                    <div class="plan-save">Ahorras <strong>$49,500 COP</strong></div>
                     <ul class="plan-features">
                         <li>
                             <svg width="24" height="24" viewBox="0 0 24 24">

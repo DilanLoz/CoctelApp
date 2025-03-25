@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<main class="container text-white p-5 mt-5 rounded">
+<main class="container text-white p-5 mt-5 mb-5 rounded">
     <div class="mb-4 text-center">
         <h2 class="text-warning"><i class="fa-solid fa-scale-balanced"></i> Información Legal</h2>
         <p>Última actualización: Marzo 2025</p>
@@ -61,11 +61,10 @@
     body, main {
         position: relative;
         width: 100%;
-        height: 100vh;
+        height: 100%;
         background-image: url('./img/coctelapp/fondo-legal.jpg');
         background-size: cover;
         background-position: center;
-        background-attachment: fixed;
     }
 
     .container {

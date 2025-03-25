@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<main class="container text-white p-5 mt-5 rounded">
+<main class="container text-white p-5 mt-5 mb-5 rounded">
     <div class="mb-4 text-center">
         <h2 class="text-warning"><i class="fa-solid fa-users"></i> Sobre Nosotros</h2>
         <p>Conectamos bares y clientes con la mejor experiencia digital.</p>
@@ -52,7 +52,7 @@
     body, main {
         position: relative;
         width: 100%;
-        height: 100vh;
+        height: 100%;
         background-image: url('./img/coctelapp/equipo.jpg');
         background-size: cover;
         background-position: center;

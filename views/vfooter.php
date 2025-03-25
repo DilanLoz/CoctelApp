@@ -16,18 +16,18 @@
                 <img src="img/coctelapp/coctelapp.png" class="img-fluid mb-3 mt-2" alt="coctel" height="160px" width="160px">
             </div>
             <div class="col-md-4 mb-4 mt-5">
-                <div class="col-md">
+                <<div class="col-md">
                     <div class="info-section float-end">
                         <h4>Nuestra Información</h4>
                         <div class="col-md-12 border border-warning border-1 rounded-3 mb-3"></div>
-                        <a href="index.php?pg=2005" class="d-block mb-2 text-decoration-none text-grey">Sobre Nosotros</a>
-                        <a href="index.php?pg=2004" class="d-block mb-2 text-decoration-none text-grey">Información Legal</a>
-                        <a href="index.php?pg=2002" class="d-block mb-2 text-decoration-none text-grey">Contacto</a>
-                        <a href="index.php?pg=2003" class="d-block mb-2 text-decoration-none text-grey">Política de Cookies</a>
+                        <a href="index.php?pg=2005" class="d-block mb-2 text-decoration-none text-grey" target="_blank">Sobre Nosotros</a>
+                        <a href="index.php?pg=2004" class="d-block mb-2 text-decoration-none text-grey" target="_blank">Información Legal</a>
+                        <a href="index.php?pg=2002" class="d-block mb-2 text-decoration-none text-grey" target="_blank">Contacto</a>
+                        <a href="index.php?pg=2003" class="d-block mb-2 text-decoration-none text-grey" target="_blank">Política de Cookies</a>
                     </div>
-                </div>
             </div>
         </div>
+    </div>
     </div>
     <!-- Texto de derechos reservados centrado -->
     <div class="text-center text-white py-3">
