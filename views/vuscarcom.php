@@ -6,16 +6,15 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
         <h1 class="text-warning fw-bold" style="font-size: 30px">
             <i class="fa-solid fa-cart-shopping"></i> Carrito
         </h1>
-
-        <div class="rounded-3 border border-secondary p-4">
+        <div class="rounded-3 border border-secondary">
             <?php if (!empty($dtCarrito)) { ?>
                 <?php foreach ($dtCarrito as $producto) { ?>
-                    <div class="row product-item pt-3 ps-3 pe-3 mt-3  rounded-3 m-4">
+                    <div class="row product-item pt-3 ps-3 pe-3 mt-3 rounded-3 m-4">
                         <div class="col-3 col-sm-2 d-flex justify-content-center">
                             <a href="home.php?pg=1014&idprod=<?= $producto['idprod']; ?>">
-                                <img src="<?php echo 'img/' . htmlspecialchars($producto['fotprod']); ?>"
+                                <img src="<?php echo 'img/productos/' . htmlspecialchars($producto['fotprod']); ?>"
                                     class="prodcar" draggable="false"
-                                    style="width: 50px; height: 70px;">
+                                    style="width: 90px; height: 90px;">
                             </a>
                         </div>
 
@@ -25,17 +24,19 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
                                     <b>
                                         <?php
                                         $nombreCompleto = htmlspecialchars($producto['nomprod']);
-                                        $nombreCorto = strlen($producto['nomprod']) > 35
-                                            ? substr($producto['nomprod'], 0, 35) . "<span class='ver-mas' onclick='mostrarNombreCompleto(this)' data-nombre='" . $nombreCompleto . "'>...</span>"
+                                        $maxCaracteres = (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/Mobile|Android|iPhone/', $_SERVER['HTTP_USER_AGENT'])) ? 15 : 35;
+                                        $nombreCorto = strlen($producto['nomprod']) > $maxCaracteres
+                                            ? substr($producto['nomprod'], 0, $maxCaracteres) . "<span class='ver-mas' onclick='mostrarNombreCompleto(this)' data-nombre='" . $nombreCompleto . "'>...</span>"
                                             : $nombreCompleto;
                                         ?>
                                         <span><?= $nombreCorto . " | " . htmlspecialchars($producto['mililitros']) . "ml" ?></span>
                                     </b>
                                 </li>
                                 <li><b style="font-size: 13px;"><?php echo htmlspecialchars($producto['nombar']); ?></b></li>
-                                <li><b class="text-warning"><?php echo "$" . number_format($producto['vlrprod'], 2); ?></b></li>
+                                <li><b class="text-warning precio-producto"><?php echo "$" . number_format($producto['vlrprod'], 2); ?></b></li>
                             </ul>
                         </div>
+
                         <div class="col-3 d-flex justify-content-between align-items-center mb-3">
                             <div class="counter d-flex align-items-center">
                                 <button class="btn btn-outline-success btn-sm increment" data-idprod="<?= $producto['idprod'] ?>" data-idusu="<?= $_SESSION['idusu'] ?>">
@@ -59,7 +60,6 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
                     <p class="mt-3 text-muted">¡No te quedes sin tus productos favoritos! Explora nuestro catálogo y encuentra lo que necesitas.</p>
                     <a href="home.php?pg=1015" class="btn btn-warning mt-3"><i class="fa-solid fa-wine-glass"></i> Explorar Productos</a>
                 </div>
-
             <?php } ?>
         </div>
 
@@ -70,11 +70,14 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
                 </div>
                 <div class="bx-seg-dt_fech">
                     <div class="row align-items-center">
+                        <!-- Primera columna: Etiquetas -->
                         <div class="col-12 col-md-4">
-                            <p>Total de productos:</p>
+                            <p>Productos:</p>
                             <p>Envío:</p>
                             <p>Total General:</p>
                         </div>
+
+                        <!-- Segunda columna: Valores -->
                         <div class="col-12 col-md-4 text-md-end">
                             <?php foreach ($dtValoresCarrito as $dts) { ?>
                                 <p>$<?= number_format($dts['valor_productos'], 2, ",", ".") ?></p>
@@ -84,6 +87,8 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
                                 <p class="tot-carr">$<?= number_format($dtTotCarrito['total_productos'], 2, ",", ".") ?></p>
                             <?php } ?>
                         </div>
+
+                        <!-- Tercera columna: Botón de pago -->
                         <div class="col-12 col-md-4 text-md-end order-md-last mt-3 mt-md-0 subir-boton">
                             <input type="hidden" name="productos" id="productos">
                             <button type="button" class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#finalizarModal">Ir a Pagar</button>
@@ -225,6 +230,8 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
         /* Espaciado interno */
         margin: 10px 0;
         /* Espaciado entre productos */
+        display: flex;
+        /* Para distribuir el contenido */
         transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out, border 0.4s ease-in-out;
     }
 
@@ -232,6 +239,7 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
         transform: scale(1.02);
         box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15);
     }
+
 
     .subir-boton {
         position: relative;
@@ -263,6 +271,35 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
         padding: 5px;
         margin: 0 5px;
     }
+    @media (max-width: 768px) {
+    .bx-seg-dt_fech .row {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .bx-seg-dt_fech .col-12 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .bx-seg-dt_fech p {
+        margin: 0;
+    }
+
+    .bx-seg-dt_fech .subir-boton {
+        width: 100%;
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .bx-seg-dt_fech .subir-boton .btn {
+        width: 100%;
+    }
+}
 
     /* 🔹 Solo para móviles (menos de 768px) */
     @media (max-width: 768px) {
@@ -322,28 +359,27 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
         }
     });
     document.addEventListener("DOMContentLoaded", function() {
-    let modalElement = document.getElementById('pedidoConfirmadoModal');
-    let modal = new bootstrap.Modal(modalElement);
-    let confirmarPedidoBtn = document.getElementById('confirmarPedido');
+        let modalElement = document.getElementById('pedidoConfirmadoModal');
+        let modal = new bootstrap.Modal(modalElement);
+        let confirmarPedidoBtn = document.getElementById('confirmarPedido');
 
-    confirmarPedidoBtn.addEventListener("click", function() {
-        modal.show();
+        confirmarPedidoBtn.addEventListener("click", function() {
+            modal.show();
 
-        // Restablecer la animación de carga y ocultar el mensaje de confirmación
-        document.getElementById("loadingAnimation").classList.remove("d-none");
-        document.getElementById("confirmationMessage").classList.add("d-none");
+            // Restablecer la animación de carga y ocultar el mensaje de confirmación
+            document.getElementById("loadingAnimation").classList.remove("d-none");
+            document.getElementById("confirmationMessage").classList.add("d-none");
 
-        // Simular tiempo de procesamiento antes de mostrar la confirmación
-        setTimeout(() => {
-            document.getElementById("loadingAnimation").classList.add("d-none");
-            document.getElementById("confirmationMessage").classList.remove("d-none");
-
-            // Mantener el mensaje de confirmación visible por más tiempo
+            // Simular tiempo de procesamiento antes de mostrar la confirmación
             setTimeout(() => {
-                modal.hide();
-            }, 10000); // 5 segundos antes de ocultar el modal
-        }, 3000); // 3 segundos de espera para simular procesamiento
-    });
-});
+                document.getElementById("loadingAnimation").classList.add("d-none");
+                document.getElementById("confirmationMessage").classList.remove("d-none");
 
+                // Mantener el mensaje de confirmación visible por más tiempo
+                setTimeout(() => {
+                    modal.hide();
+                }, 10000); // 5 segundos antes de ocultar el modal
+            }, 3000); // 3 segundos de espera para simular procesamiento
+        });
+    });
 </script>
