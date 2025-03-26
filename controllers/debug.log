@@ -25,3 +25,6 @@ Pedido 100158 actualizado correctamente
 ID recibido: 100158
 Consulta ejecutada correctamente para pedido 100158
 Pedido 100158 actualizado correctamente
+ID recibido: 100167
+Excepción SQL: SQLSTATE[HY000]: General error: 1442 Can't update table 'pedido' in stored function/trigger because it is already used by statement which invoked this stored function/trigger
+Error al actualizar el pedido 100167
