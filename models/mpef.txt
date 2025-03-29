@@ -1,0 +1,152 @@
+<?php 
+    class Mpef{
+        private $idpef;
+        private $nompef;
+        private $pagpri;
+
+        private $idpag;
+
+        function getIdpef(){
+            return $this->idpef;
+        }
+        function getNompef(){
+            return $this->nompef;
+        }
+        function getPagpri(){
+            return $this->pagpri;
+        }
+
+        function getIdpag(){
+            return $this->idpag;
+        }
+
+        function setIdpef($idpef){
+            $this->idpef = $idpef;
+        }
+        function setNompef($nompef){
+            $this->nompef = $nompef;
+        }
+        function setPagpri($pagpri){
+            $this->pagpri = $pagpri;
+        }
+
+        function setIdpag($idpag){
+            $this->idpag = $idpag;
+        }
+
+        public function getAll(){
+            $resultado = NULL;
+            $modelo = new conexion();
+            $conexion = $modelo->get_conexion();
+            $sql = "SELECT p.idpef, p.nompef, p.pagpri, g.nompag FROM perfil AS p LEFT JOIN pagina AS g ON p.pagpri=g.idpag";
+            $result = $conexion->prepare($sql);
+            $result->execute();
+            while($f=$result->fetch()){
+                $resultado[]=$f;
+            }
+            return $resultado;
+        }
+        public function getOne(){
+            $resultado = NULL;
+            $modelo = new conexion();
+            $conexion = $modelo->get_conexion();
+            $sql = "SELECT idpef, nompef, pagpri FROM perfil WHERE idpef=:idpef";
+            $result = $conexion->prepare($sql);
+            $idpef = $this->getIdpef();
+            $result->bindParam(":idpef",$idpef);
+            $result->execute();
+            while($f=$result->fetch()){
+                $resultado[]=$f;
+            }
+            return $resultado;
+        }
+        public function save(){
+            $modelo = new conexion();
+            $conexion = $modelo->get_conexion();
+            $sql = "INSERT INTO perfil(nompef, pagpri) VALUES (:nompef, :pagpri)";
+            $result = $conexion->prepare($sql);
+
+            $nompef = $this->getNompef();
+            $result->bindParam(":nompef",$nompef);
+            $pagpri = $this->getPagpri();
+            $result->bindParam(":pagpri",$pagpri);
+
+            $result->execute();
+        }
+        public function edit(){
+            $modelo = new conexion();
+            $conexion = $modelo->get_conexion();
+            $sql = "UPDATE perfil SET nompef=:nompef, pagpri=:pagpri WHERE idpef=:idpef";
+            //echo $sql."<br>";
+            //echo "'".$idpef."','".$nompef."','".$pagpri."'";
+            $result = $conexion->prepare($sql);
+
+            $idpef = $this->getIdpef();
+            $result->bindParam(":idpef",$idpef);
+            $nompef = $this->getNompef();
+            $result->bindParam(":nompef",$nompef);
+            $pagpri = $this->getPagpri();
+            $result->bindParam(":pagpri",$pagpri);
+
+            $result->execute();
+        }
+        public function del(){
+            $modelo = new conexion();
+            $conexion = $modelo->get_conexion();
+            $sql = "DELETE FROM perfil WHERE idpef=:idpef";
+            $result = $conexion->prepare($sql);
+            $idpef = $this->getIdpef();
+            $result->bindParam(":idpef",$idpef);
+            $result->execute();
+        }
+        public function getPag(){
+            $resultado = NULL;
+            $modelo = new conexion();
+            $conexion = $modelo->get_conexion();
+            $sql = "SELECT idpag, nompag, icopag FROM pagina";
+            $result = $conexion->prepare($sql);
+            $result->execute();
+            while($f=$result->fetch()){
+                $resultado[]=$f;
+            }
+            return $resultado;
+        }
+        public function getPxP(){
+            $resultado = NULL;
+            $modelo = new conexion();
+            $conexion = $modelo->get_conexion();
+            $sql = "SELECT idpag FROM pagper WHERE idpef=:idpef AND idpag=:idpag";
+            $result = $conexion->prepare($sql);
+            $idpef = $this->getIdpef();
+            $result->bindParam(":idpef",$idpef);
+            $idpag = $this->getIdpag();
+            $result->bindParam(":idpag",$idpag);
+            // echo "<br><br>".$sql." '".$idpef."','".$idpag."'<br><br>";
+            $result->execute();
+            while($f=$result->fetch()){
+                $resultado[]=$f;
+            }
+            return $resultado;
+        }
+        public function delPXP(){
+            $modelo = new conexion();
+            $conexion = $modelo->get_conexion();
+            $sql = "DELETE FROM pagper WHERE idpef=:idpef";
+            $result = $conexion->prepare($sql);
+            $idpef = $this->getIdpef();
+            $result->bindParam(":idpef",$idpef);
+            $result->execute();
+        }
+        public function insPxP(){
+            $modelo = new conexion();
+            $conexion = $modelo->get_conexion();
+            $sql = "INSERT INTO pagper (idpag,idpef) VALUES (:idpag,:idpef);";
+            $result = $conexion->prepare($sql);
+            $idpef = $this->getIdpef();
+            $result->bindParam(":idpef",$idpef);
+            $idpag = $this->getIdpag();
+            $result->bindParam(":idpag",$idpag);
+            $result->execute();
+        }
+    }
+?>

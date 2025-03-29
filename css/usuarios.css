@@ -1,0 +1,404 @@
+/* ---------------------------BARES-----------------------*/
+
+.imguno {
+    width: 100%; 
+    height: 200px; 
+    overflow: hidden; 
+}
+.imguno img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
+
+/*------------------------BARES----------------------- */
+/*------------------------COCTEL GRANDE----------------------- */
+
+.boton-estilo {
+    border: 3px solid #ffc107; /* Amarillo */
+    border-radius: 5px;
+    margin-top: 4px;
+}
+#btnSi{
+    width: 200px;
+}
+#btnNo{
+    width: 200px;
+}
+
+#imagenReferencia {
+    width: 400px;
+}
+#imagenCoctel{
+    height: 500px;
+}
+#selecmili{
+    width: 200px;
+}
+#contenedordeventa{
+    font-size: 15px;
+    width: 225px;
+    margin: auto;
+}
+
+/*------------------------COCTEL GRANDE----------------------- */
+
+/*------------------------HISTORIAL PEDIDOS----------------------- */
+
+.number {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+#usnumped{
+    margin-left: 10%;
+}
+/*css de compra final*/
+#imgcompra {
+    max-width: 200px; /* Define el ancho máximo */
+    max-height: 200px; /* Define la altura máxima */
+    display: block; /* Hace que la imagen sea un bloque para poder centrarla */
+    margin: 0 auto; /* Centra horizontalmente */
+}
+#logococ{
+    width: 100px; 
+    height: auto;
+}
+
+.btn-order {
+margin-left: 4px;
+}
+
+.product-description {
+margin-top: 50px;
+}
+#detpedpq{
+    color: #ffffff !important;
+}
+
+/*------------------------HISTORIAL PEDIDOS----------------------- */
+/*------------------------COMPRA FINAL----------------------- */
+.btn-seleccionado {
+    background-color: #ffc107; /* Color del botón seleccionado */
+    color: #000;
+    border-color: #ffc107;
+}
+/*------------------------COMPRA FINAL----------------------- */
+/*------------------------MEDIAS PARA MOVIL ----------------------- */
+
+@media screen and (max-width: 780px) {
+    .barra-busqueda input[type="text"] {
+        width: 200px; /* ajusta el tamaño según sea necesario */
+    }
+    #vlrprod{
+        width: 190px;
+    }
+    #intro {
+        width: 90% !important;
+    }
+    .marg {
+        margin-bottom: 20px; /* Agrega espacio entre los elementos en dispositivos móviles */
+    }
+
+    .marg ul {
+        padding-left: 0; /* Quita el padding izquierdo de las listas en dispositivos móviles */
+    }
+
+    .marg ul li {
+        margin-left: 0; /* Quita el margen izquierdo de los elementos de lista en dispositivos móviles */
+    }
+}
+@media screen and (max-width: 480px) {
+    #borrarprd {
+        margin-left: 10px; /* Cambia el margen izquierdo */
+    }
+
+    #opcprd {
+        margin-top: 20px; /* Cambia la margen superior */
+        width: 30px; /* Cambia el ancho del select */
+    }
+}
+
+/*------------------------MEDIAS PARA MOVIL ----------------------- */
+
+/* ---------------------------MAS CSS DE USUARIOS-----------------------*/
+/*css de coctel linea amarilla*/
+#lineatil {
+    width: 20px;
+    height: 20px;
+}
+/*css de productos seleccion de ml*/
+#selecmili {
+    width: 200px;
+}
+#contenedordeventa {
+    font-size: 15px;
+    width: 225px;
+    margin: auto;
+}
+/*css de coctel grande */
+.boton-estilo {
+    border: 3px solid #ffc107; /* Amarillo */
+    border-radius: 5px;
+    margin-top: 4px;
+}
+#btnSi {
+    width: 200px;
+}
+#btnNo {
+    width: 200px;
+}
+#imagenReferencia {
+    width: 400px;
+}
+#imagenCoctel {
+    height: 500px;
+}
+/* para historial pedidos*/
+.number {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#usnumped {
+    margin-left: 10%;
+}
+/*css de compra final*/
+#imgcompra {
+    max-width: 200px;
+    max-height: 200px;
+    display: block;
+    margin: 0 auto;
+}
+#logococ {
+    width: 100px;
+    height: auto;
+}
+.btn-order {
+    margin-left: 4px;
+}
+.product-description {
+    margin-top: 50px;
+}
+/*margenes de los bares*/
+.imguno {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+.imguno img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/*css de ubicomp de detalles de pedido*/
+#detpedpq {
+    color: #ffffff !important;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 780px) {
+    #vlrprod {
+        width: 190px;
+    }
+    #intro {
+        width: 90% !important;
+    }
+    .marg {
+        margin-bottom: 20px;
+    }
+    .marg ul {
+        padding-left: 0;
+    }
+    .marg ul li {
+        margin-left: 0;
+    }
+}
+@media screen and (max-width: 480px) {
+    #borrarprd {
+        margin-left: 10px;
+    }
+    #opcprd {
+        margin-top: 20px;
+        width: 30px;
+    }
+}
+
+/*-----------------------CSS PARA LA IMAGEN DE BAR PARA PRODUCTOS------------------*/
+.header-image {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    justify-content: end;
+}
+/*-----------------------CSS PEDIDOS EN PROCESO DE BAR Y EMPLEADO------------------*/
+
+.prodcar {
+    border-radius: 30%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+/* CSS de productos y carrito */
+.product-item {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.prodcar {
+    border-radius: 30%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.selcprod{
+    border-radius: 5px;
+    background-color: #fff;
+}
+.costenvio{
+    margin-left: 130px;
+}
+@media (max-width: 768px) {
+    /* Para pantallas pequeñas y medianas (tablets y móviles) */
+    .product-item {
+        flex-direction: row; /* Mostramos los productos en fila */
+        align-items: center; /* Alineamos verticalmente los items */
+        padding: 10px 0;
+    }
+
+    .prodcar {
+        width: 60px; /* Hacemos la imagen un poco más pequeña */
+        height: 60px;
+    }
+
+    .col-7, .col-8 {
+        margin-top: 5px; /* Reducimos los márgenes */
+        font-size: 14px; /* Hacemos el texto un poco más pequeño */
+    }
+
+    .col-2 {
+        margin-top: 10px;
+    }
+
+    /* Aseguramos que los botones y select se alineen mejor */
+    select {
+        width: 80%; /* Ajustamos el tamaño del select */
+        font-size: 14px;
+    }
+
+    .btn-warning {
+        font-size: 14px; /* Reducimos el tamaño del botón */
+        width: 100%;
+    }
+
+    .text-warning {
+        font-size: 20px; /* Hacemos el título un poco más pequeño */
+    }
+}
+
+@media (max-width: 480px) {
+    /* Para pantallas muy pequeñas (móviles) */
+    .product-item {
+        flex-direction: row; /* Seguimos mostrando en fila */
+        padding: 8px 0;
+    }
+
+    .prodcar {
+        width: 50px; /* Hacemos la imagen más pequeña */
+        height: 50px;
+    }
+
+    .col-8 {
+        text-align: left; /* Alineamos el texto al centro */
+        margin-top: 5px;
+    }
+
+    .col-2 {
+        margin-top: 5px;
+    }
+
+    .col-md-6 {
+        width: 100%;
+    }
+
+    .btn-warning {
+        width: 100%;
+        font-size: 12px; /* Reducimos el tamaño del botón */
+    }
+
+    .text-warning {
+        font-size: 18px; /* Hacemos el texto aún más pequeño */
+    }
+    .trash{
+        margin-left: 60px;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Para pantallas móviles en resolución muy baja */
+    .prodcar {
+        width: 40px; /* Más pequeño */
+        height: 40px;
+    }
+    
+
+    .col-8 {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 12px; /* Hacemos el texto más pequeño */
+    }
+
+    .product-item {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    select {
+        width: 80%;
+        font-size: 12px; /* Reducimos aún más el tamaño del select */
+    }
+}
+/*css de vistas*/
+
+
+
+/* Ajustes generales para mejorar la apariencia en pantallas pequeñas */
+.container {
+    padding: 5px; /* Reducimos los márgenes */
+}
+
+.text-warning {
+    font-size: 18px;
+}
+
+.border-warning {
+    border-color: #ffc107 !important;
+}
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    .counter {
+        flex-direction: column; /* Cambia el diseño a vertical */
+    }
+
+    .counter button {
+        width: 35px; /* Botones más pequeños */
+        height: 35px;
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    .counter input {
+        width: 40px;
+        font-size: 12px;
+        text-align: center;
+    }
+}

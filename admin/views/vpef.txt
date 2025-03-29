@@ -1,0 +1,85 @@
+<?php
+require_once 'controllers/cpef.php';
+echo titulo("<i class='".$icono."'></i> Perfil");
+?>
+
+<div id="ocultar">
+    <form class="m-tb-40" action="home.php?pg=<?=$pg;?>" method="POST">
+        <div class="row">
+            <input type="hidden" name="idpef" id="idpef" value="<?php if($datOne) echo $datOne[0]['idpef']; ?>">
+            <div class = "form-group col-md-6">
+                <label for="nompef">Nombre de perfil</label>
+                <input type="text" name="nompef" id="nompef" class="form-control" required value="<?php if($datOne) echo $datOne[0]['nompef']; ?>">
+            </div>
+            <div class = "form-group col-md-6">
+                <label for="pagpri">Pagina Inicial</label>
+                <select name="pagpri" id="pagpri" class="form-select">
+                    <?php
+                        if($datpag){
+                            foreach ($datpag  as $dt) {
+                    ?>
+                                <option value="<?=$dt['idpag'];?>"
+                                    <?php
+                                        if($datOne && $datOne[0]['pagpri']==$dt['idpag']) echo " selected ";
+                                    ?>              
+                                >
+                                    <?=$dt['nompag'];?>
+                                </option>
+                    <?php
+                            }
+                        }
+                    ?>
+                </select>
+            </div>
+            <div class = "form-group col-md-6">
+                <input type="hidden" name="ope" value="save">
+                <input type="submit" class="btn btn-primary" value="Registrar">
+            </div>
+        </div>
+    </form>
+</div>
+
+<table id="myt" class="table table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php 
+            if($dat){
+                foreach($dat AS $d){
+        ?>
+                <tr>
+                    <td><?=$d['idpef'];?></td>
+                    <td>
+                        <?=$d['nompef'];?>
+                        <br>
+                        <small><?=$d['nompag'];?></small>
+                    </td>
+                    <td style="text-align: right;">
+                        <i class="fa-solid fa-list-check fa-2x btndesact" data-bs-toggle="modal" data-bs-target="#myModal<?=$d['idpef'];?>" title="Ver Páginas" ></i>
+                        <?php echo modal($d['idpef'], $d['nompef'], $pg); ?>
+                        <a href="home.php?pg=<?=$pg;?>&idpef=<?=$d['idpef'];?>&ope=edi" class="faok">
+                            <i class="fa-solid fa-pen-to-square fa-2x" title="Editar" style="margin: 5px;"></i>
+                        </a>
+                        <a href="home.php?pg=<?=$pg;?>&idpef=<?=$d['idpef'];?>&ope=eli" class="faok" onclick="return eli();">
+                        <i class="fa-solid fa-trash-can fa-2x" title="Eliminar" style="margin: 5px;"></i>
+                    </a>
+                    </td>
+                </tr>
+        <?php
+                }
+            }
+        ?>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th></th>
+        </tr>
+    </tfoot>
+</table>
