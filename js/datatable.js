@@ -1,2 +1,0 @@
-	
-new DataTable('#example');
