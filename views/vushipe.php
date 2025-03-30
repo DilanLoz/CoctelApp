@@ -45,8 +45,13 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
                             <?= $pedido['idpedido'] ?> <br>
                             <?= $pedido['fecha_pedido'] ?>
                         </td>
-                        <td class="fw-bold <?= ($pedido['estado_pedido'] == 'Entregado') ? 'text-success' : 'text-warning' ?>">
-                            <?= $pedido['estado'] ?>
+                        <td>
+                            <div class="estado-box border rounded 
+                                <?= ($pedido['estado'] == 'En preparacion') ? 'text-danger bg-light-red border-danger' : '' ?>
+                                <?= ($pedido['estado'] == 'En camino') ? 'text-primary bg-light-blue border-primary' : '' ?>
+                                <?= ($pedido['estado'] == 'Entregado') ? 'text-success bg-light-green border-success' : '' ?>">
+                                <?= $pedido['estado'] ?>
+                            </div>
                         </td>
                         <td>$<?= number_format($pedido['total'],) ?></td>
                     </tr>
@@ -150,6 +155,32 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
         background-color: rgba(255, 193, 7, 0.5) !important;
         /* Amarillo con opacidad */
     }
+
+    .estado-box {
+        padding: 5px;
+        border-radius: 5px;
+        display: inline-block;
+        font-weight: bold;
+        min-width: 120px;
+        text-align: center;
+    }
+
+    /* Colores de fondo más claros */
+    .bg-light-red {
+        background-color: #f8d7da;
+    }
+
+    /* Rojo claro */
+    .bg-light-blue {
+        background-color: #cce5ff;
+    }
+
+    /* Azul claro */
+    .bg-light-green {
+        background-color: #d4edda;
+    }
+
+    /* Verde claro */
 </style>
 
 <!-- Script para marcar la fila -->
