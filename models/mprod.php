@@ -1,6 +1,7 @@
 <?php
 require_once 'models/conexion.php';
-class Mprod {
+class Mprod
+{
 
     private $idprod;
     private $nomprod;
@@ -12,80 +13,99 @@ class Mprod {
     private $tipoprod;
     private $mililitros;
 
-    public function getIdprod() {
+    public function getIdprod()
+    {
         return $this->idprod;
     }
 
-    public function getNomprod() {
+    public function getNomprod()
+    {
         return $this->nomprod;
     }
 
-    public function getDesprod() {
+    public function getDesprod()
+    {
         return $this->desprod;
     }
 
-    public function getVlrprod() {
+    public function getVlrprod()
+    {
         return $this->vlrprod;
     }
 
-    public function getFotprod() {
+    public function getFotprod()
+    {
         return $this->fotprod;
     }
 
 
-    public function getIdbar() {
+    public function getIdbar()
+    {
         return $this->idbar;
     }
 
-    public function getCantprod() {
+    public function getCantprod()
+    {
         return $this->cantprod;
     }
 
 
-    public function getTipoprod() {
+    public function getTipoprod()
+    {
         return $this->tipoprod;
     }
-    public function getMililitros() {
+    public function getMililitros()
+    {
         return $this->mililitros;
     }
 
-    public function setIdprod($idprod) {
+    public function setIdprod($idprod)
+    {
         $this->idprod = $idprod;
     }
-    
-    public function setNomprod($nomprod) {
+
+    public function setNomprod($nomprod)
+    {
         $this->nomprod = $nomprod;
     }
-    
-    public function setDesprod($desprod) {
+
+    public function setDesprod($desprod)
+    {
         $this->desprod = $desprod;
     }
-    
-    public function setVlrprod($vlrprod) {
+
+    public function setVlrprod($vlrprod)
+    {
         $this->vlrprod = $vlrprod;
     }
-    
-    public function setFotprod($fotprod) {
+
+    public function setFotprod($fotprod)
+    {
         $this->fotprod = $fotprod;
     }
-  
-    public function setIdbar($idbar) {
+
+    public function setIdbar($idbar)
+    {
         $this->idbar = $idbar;
     }
-    
-    public function setCantprod($cantprod) {
+
+    public function setCantprod($cantprod)
+    {
         $this->cantprod = $cantprod;
     }
-    
-    public function setTipoprod($tipoprod) {
+
+    public function setTipoprod($tipoprod)
+    {
         $this->tipoprod = $tipoprod;
     }
-    public function setMililitros($mililitros) {
+    public function setMililitros($mililitros)
+    {
         $this->mililitros = $mililitros;
     }
 
     // Methods (getAll, getOne, save, edit, del) should be closed with }
-    public function getAll() {
+    public function getAll()
+    {
         try {
             $sql = "SELECT p.idprod, p.nomprod, p.desprod, p.caracter, p.vlrprod, p.fotprod, p.idbar, p.cantprod, b.nombar, p.tipoprod, p.mililitros FROM producto AS p INNER JOIN bar AS b ON p.idbar=b.idbar";
             $modelo = new conexion();
@@ -98,9 +118,15 @@ class Mprod {
             echo "Error: " . $e;
         }
     }
-    public function getOne() {
+    public function getOne()
+    {
         try {
-            $sql = "SELECT idprod, nomprod, desprod, caracter, vlrprod, fotprod, idbar, cantprod,  tipoprod, mililitros FROM producto WHERE idprod=:idprod";
+            $sql = "SELECT p.idprod, p.nomprod, p.desprod, p.caracter, p.vlrprod, p.fotprod, 
+                p.idbar, p.cantprod, p.tipoprod, p.mililitros, b.nombar 
+            FROM producto p
+            INNER JOIN bar b ON p.idbar = b.idbar
+            WHERE p.idprod = :idprod;
+            ";
             $modelo = new conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
@@ -114,7 +140,8 @@ class Mprod {
         }
     }
 
-    public function save() {
+    public function save()
+    {
         try {
             $sql = "INSERT INTO producto (nomprod, desprod, vlrprod, fotprod, idbar, cantprod, tipoprod) VALUES (:nomprod, :desprod, :vlrprod, :fotprod, :idbar, :cantprod, :tipoprod)";
             $modelo = new conexion();
@@ -140,7 +167,8 @@ class Mprod {
         }
     }
 
-    public function edit() {
+    public function edit()
+    {
         try {
             $sql = "UPDATE producto SET nomprod=:nomprod, desprod=:desprod, vlrprod=:vlrprod, fotprod=:fotprod, idbar=:idbar, cantprod=:cantprod, tipoprod=:tipoprod WHERE idprod=:idprod";
             $modelo = new conexion();
@@ -168,7 +196,8 @@ class Mprod {
         }
     }
 
-    public function del() {
+    public function del()
+    {
         try {
             $sql = "DELETE FROM producto WHERE idprod=:idprod";
             $modelo = new conexion();
@@ -181,7 +210,8 @@ class Mprod {
             echo "Error: " . $e;
         }
     }
-    public function getRandomProducts($idActual) {
+    public function getRandomProducts($idActual)
+    {
         try {
             $sql = "SELECT p.idprod, p.nomprod, p.vlrprod, p.fotprod, p.mililitros, b.nombar 
                     FROM producto AS p 
@@ -189,7 +219,7 @@ class Mprod {
                     WHERE p.idprod != :idActual AND b.estado = 1
                     ORDER BY RAND() 
                     LIMIT 4";  // 🔥 Selecciona 4 productos aleatorios excluyendo el actual
-    
+
             $modelo = new conexion();
             $conexion = $modelo->get_conexion();
             $stmt = $conexion->prepare($sql);
@@ -200,7 +230,4 @@ class Mprod {
             echo "Error: " . $e->getMessage();
         }
     }
-    
 } // This closes the class
-
-?>

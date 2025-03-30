@@ -16,6 +16,7 @@ if ($datOne) {
                 <div class="img-container border border-dark rounded">
                     <img src="img/productos/<?= $dta["fotprod"]; ?>" alt="" class="product-img" id="zoom-image">
                 </div>
+                <div class="cart-notification" id="cart-notification"><i class="fa-solid fa-cart-arrow-down"></i> Producto agregado al carrito</div>
 
                 <!-- Columna de información del cóctel -->
                 <div class="col-md-6 mt-5">
@@ -26,8 +27,9 @@ if ($datOne) {
                         <h4 class="mt-2">
                             <strong>$ <?= number_format($dta['vlrprod'], 0, ',', '.'); ?></strong>
                         </h4>
+
                         <p class="border border-dark rounded d-inline-block px-2 py-1">
-                            <?= $dta['mililitros']; ?> ml
+                            <?= $dta['mililitros']; ?> ml - <small><?= htmlspecialchars($dta['nombar']); ?></small>
                         </p>
                     </div>
                     <!-- Descripción -->
@@ -96,6 +98,42 @@ if ($datOne) {
 
 
 <style>
+      .cart-notification {
+        display: none;
+        position: fixed;
+        top:77px; /* Ajustado para que no se superponga con el menú */
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #28a745;
+        color: white;
+        padding: 15px 25px; /* Ajuste de padding */
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        font-size: 16px;
+        z-index: 1000;
+        opacity: 0;
+        width: 50%;
+    }
+
+    @keyframes slideDown {
+        0% {
+            transform: translate(-50%, -20px);
+            opacity: 0;
+        }
+        100% {
+            transform: translate(-50%, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeOut {
+        0%, 80% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
     /* ✅ Ajuste del tamaño de imágenes y divs en productos recomendados */
     .shop-content {
         display: flex;
@@ -165,14 +203,17 @@ if ($datOne) {
         color: green;
         font-weight: bold;
     }
+
     .product-img {
         width: 350px;
         height: 350px;
     }
+
     .product-img2 {
         width: 350px;
         height: 350px;
     }
+
     .product-img2 {
         max-width: 180px;
         /* ✅ Se ajusta para que todas las imágenes sean más pequeñas */
@@ -325,6 +366,24 @@ if ($datOne) {
 
         imgContainer.addEventListener("mouseleave", function() {
             img.style.transform = "scale(1)";
+        });
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                let notification = document.getElementById('cart-notification');
+                
+                // Mostrar y animar la notificación
+                notification.style.display = 'block';
+                notification.style.animation = 'none';
+                void notification.offsetWidth; // Reiniciar animación
+                notification.style.animation = 'slideDown 0.5s ease-in-out forwards, fadeOut 3s ease-in-out forwards';
+
+                // Ocultar después de 3 segundos
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 5000);
+            });
         });
     });
 </script>
