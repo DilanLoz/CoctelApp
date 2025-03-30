@@ -85,11 +85,6 @@ require_once('admin/controllers/cval.php');
                                 ?>
                             </select>
                         </div>
-                        <div class="form-group col-md-12">
-                            <label for="fotiden">Foto Producto:</label>
-                            <input type="file" class="form-control form-control" name="fots" accept="image/*" id="fotiden">
-                            <input type="hidden" name="fotiden" value="<?php if ($dtOne && $dtOne[0]['fotiden']) echo $dtOne[0]['fotiden']; ?>">
-                        </div>
                     </div>
                     <div class="text-center mt-3">
                         <input type="hidden" name="ope" value="save">

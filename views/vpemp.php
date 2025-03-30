@@ -99,11 +99,6 @@ if ($idbar) {
                             <input type="text" class="form-control restricted" name="nombar" id="nombar"
                                 value="<?= htmlspecialchars($nombar); ?>" readonly>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-group" for="imgusu">Imagen</label>
-                            <input type="file" class="form-control" name="fots" accept="image/*" id="imgusu">
-                            <input type="hidden" name="imgusu" value="<?= $_SESSION['imgusu'] ?? ''; ?>">
-                        </div>
                     </div>
                     <div class="text-center mt-3">
                         <input type="hidden" name="ope" value="save">
