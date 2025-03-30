@@ -175,7 +175,7 @@ class Mbarxem {
 
     public function gettabla() {
 		$res = NULL;
-		$idbar = $_SESSION['idbar']; // Obtener el idbar de la sesión
+		$idbar = $_SESSION['idusu']; // Obtener el idbar de la sesión
 	
 		$sql = "SELECT
 				us.fotiden,

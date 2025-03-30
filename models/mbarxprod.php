@@ -131,7 +131,7 @@ class Mbarxprod {
 
     public function gettabla() {
         $res = NULL;
-        $idbar = $_SESSION['idbar']; // Asegurar que $_SESSION['idbar'] tiene un valor válido
+        $idbar = $_SESSION['idusu']; // Asegurar que $_SESSION['idbar'] tiene un valor válido
     
         $sql = "SELECT
                     p.fotprod,
