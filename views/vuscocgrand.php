@@ -183,11 +183,9 @@ if ($datOne) {
     }
 
     .product-img {
-        max-width: 180px;
-        /* ✅ Se ajusta para que todas las imágenes sean más pequeñas */
-        height: 200px;
+        max-width: 380px;
+        height: 300px;
         object-fit: cover;
-        /* ✅ Evita que se deforme la imagen */
         border-radius: 8px;
     }
 
@@ -207,6 +205,7 @@ if ($datOne) {
     .product-img {
         width: 350px;
         height: 350px;
+        object-fit: contain;
     }
 
     .product-img2 {
