@@ -1,13 +1,13 @@
 <?php
 error_reporting(0);
 ini_set('display_errors', 0);
-
 require_once 'models/conexion.php';
 require_once 'controllers/cbarxprod.php';
 
 $mbarxprod = new Mbarxprod();
-$datAll = $mbarxprod->getAllProdIni(); // Cargar los primeros 12 productos
+$datAll = $mbarxprod->getAllProdIni(100, 0); // Cargar todos los productos
 ?>
+<!-- FontAwesome CDN -->
 
 <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
@@ -21,10 +21,10 @@ $datAll = $mbarxprod->getAllProdIni(); // Cargar los primeros 12 productos
 <section class="shop container">
     <div class="shop-content" id="product-container">
         <?php if ($datAll) {
-            foreach ($datAll as $dta) {
+            foreach ($datAll as $index => $dta) {
                 $formattedPrice = number_format($dta['vlrprod'], 0, ',', '.');
         ?>
-                <div class="product-box">
+                <div class="product-box" style="display: <?= $index < 8 ? 'block' : 'none'; ?>;">
                     <a href="#" class="mostrar-modal">
                         <img src="img/productos/<?= $dta["fotprod"]; ?>" alt="" class="product-img">
                     </a>
@@ -43,6 +43,12 @@ $datAll = $mbarxprod->getAllProdIni(); // Cargar los primeros 12 productos
             }
         } ?>
     </div>
+    <!-- Botón para cargar más -->
+    <div class="text-center mt-4">
+        <button id="loadMore" class="btn-load-more">
+            Ver más 
+        </button>
+    </div>
 </section>
 
 <!-- MODAL -->
@@ -58,67 +64,92 @@ $datAll = $mbarxprod->getAllProdIni(); // Cargar los primeros 12 productos
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const modal = document.getElementById("modal-sesion");
-        const cerrar = document.querySelector(".cerrar-modal");
-        const enlaces = document.querySelectorAll(".mostrar-modal");
+        let offset = 4; // Inicialmente se muestran 8 productos
+        const products = document.querySelectorAll(".product-box");
+        const loadMoreButton = document.getElementById("loadMore");
 
-        enlaces.forEach(enlace => {
-            enlace.addEventListener("click", function(event) {
-                event.preventDefault();
-                modal.style.display = "flex";
-            });
-        });
-
-        cerrar.addEventListener("click", function() {
-            modal.style.display = "none";
-        });
-
-        window.addEventListener("click", function(event) {
-            if (event.target === modal) {
-                modal.style.display = "none";
+        loadMoreButton.addEventListener("click", function() {
+            let count = 0;
+            for (let i = offset; i < products.length && count < 4; i++, count++) {
+                products[i].style.display = "block"; // Asegura que se muestren los productos ocultos
+            }
+            offset += 4;
+            if (offset >= products.length) {
+                loadMoreButton.style.display = "none"; // Oculta el botón si no hay más productos
             }
         });
     });
 </script>
 
 <style>
-/* Estilos del modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-}
+    /* Estilos del modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
 
-.modal-contenido {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    max-width: 400px;
-    width: 90%;
-}
+    .modal-contenido {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+    }
 
-.cerrar-modal {
-    float: right;
-    font-size: 24px;
-    cursor: pointer;
-}
+    .cerrar-modal {
+        float: right;
+        font-size: 24px;
+        cursor: pointer;
+    }
 
-.btn-modal {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 20px;
-    background: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
+    .btn-modal {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        background: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    /* Estilo del botón */
+    .btn-load-more {
+        background-color: #ffc107;
+        /* Color warning */
+        color: #000;
+        border: none;
+        padding: 12px 30px;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 50px;
+        /* Bordes completamente redondeados */
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 4px 10px rgba(255, 193, 7, 0.4);
+        outline: none;
+    }
+
+    /* Efecto hover */
+    .btn-load-more:hover {
+        background-color: #ffdd75;
+        /* Amarillo pastel */
+        color: #000000;
+        /* Texto oscuro para contraste */
+        box-shadow: 0 6px 15px rgba(255, 221, 117, 0.6);
+    }
+
+    /* Animación al hacer clic */
+    .btn-load-more:active {
+        transform: scale(0.95);
+        box-shadow: 0 2px 5px rgba(255, 193, 7, 0.5);
+    }
 </style>
- <!-- #region -->
