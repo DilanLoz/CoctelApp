@@ -95,10 +95,10 @@ require_once('admin/controllers/cval.php');
                             <input type="text" class="form-control restricted" name="horbar" id="horbar"
                                    value="<?= $_SESSION['horbar'] ?? ''; ?>" required>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-group" for="imgusu">Imagen</label>
-                            <input type="file" class="form-control" name="fots" accept="image/*" id="imgusu">
-                            <input type="hidden" name="imgusu" value="<?= $_SESSION['imgusu'] ?? ''; ?>">
+                        <div class="form-group">
+                            <label for="fotbar">Imagen</label>
+                            <input type="file" class="form-control form-control" name="fots" accept="image/*" id="fotbar">
+                            <input type="hidden" name="fotbar" value="<?php echo isset($datOne[0]['fotbar']) && !empty($datOne[0]['fotbar']) ? $datOne[0]['fotbar'] : ''; ?>">
                         </div>
                     </div>
                     <div class="text-center mt-3">

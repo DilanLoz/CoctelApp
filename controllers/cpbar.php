@@ -34,7 +34,7 @@ if (isset($_FILES['fotbar']) && $_FILES['fotbar']['error'] == UPLOAD_ERR_OK) {
     $fileExtension = strtolower(end($fileNameCmps));
     
     // Carpeta de destino
-    $uploadFileDir = 'img/';
+    $uploadFileDir = 'img/bares/';
     $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
     $dest_path = $uploadFileDir . $newFileName;
 
