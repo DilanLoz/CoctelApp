@@ -1,126 +1,176 @@
-<div class="titulo">
-    <?php include("admin/controllers/cbar.php"); ?>
-</div>
+<?php
+include_once("admin/controllers/cbar.php");
+include_once('admin/controllers/cubi.php');
 
-<br><br>
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
-<div id="ins">
-    <h1>Bares</h1>
-    <form action="#" method="POST" enctype="multipart/form-data">
+if (isset($_GET['idusu']) && isset($_GET['ope']) && $_GET['ope'] == 'edi') {
+    $idusu = $_GET['idusu'];
+    $objModelo = new Mbar(); // Reemplaza 'TuModelo' con el nombre real de tu clase modelo
+    $datOne = $objModelo->getOne($idusu); // Obtener los datos del usuario específico
+}
+?>
+
+<div class="container" style="text-align: left;">
+    <br><br><br>
+    <form id="frmins" action="home.php?pg=4050" enctype="multipart/form-data" method="POST">
+        <h1><i class=""></i>Crear Bar</h1>
         <div class="row">
-            <!-- Nombre del bar -->
-            <div class="form-group col-md-4">
-                <label for="idusu">ID del bar</label>
-                <input type="text" class="form-control" name="idusu" id="idusu" 
-                    value="<?php if($dtOne && $dtOne[0]['idusu']) echo $dtOne[0]['idusu']; ?>" required>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="nomusu">Nombre del bar</label>
-                <input type="text" class="form-control" name="nomusu" id="nomusu" 
-                    value="<?php if($dtOne && $dtOne[0]['nomusu']) echo $dtOne[0]['nomusu']; ?>" required>
+            <div class="form-group col-md-6">
+                <label for="nomusu"><strong>Nombre del Bar:</strong></label>
+                <input type="text" name="nomusu" id="nomusu" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne['nomusu']) ? $datOne['nomusu'] : ''; ?>" required>
             </div>
 
-            <!-- Correo electrónico -->
-            <div class="form-group col-md-4">
-                <label for="emausu">Correo electrónico</label>
-                <input type="email" class="form-control" name="emausu" id="emausu" 
-                    value="<?php if($dtOne && $dtOne[0]['emausu']) echo $dtOne[0]['emausu']; ?>" required>
+            <div class="form-group col-md-6">
+                <label for="emausu"><strong>Email Bar:</strong></label>
+                <input type="text" name="emausu" id="emausu" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne['emausu']) ? $datOne['emausu'] : ''; ?>" required>
             </div>
 
-            <!-- Celular -->
-            <div class="form-group col-md-4">
-                <label for="celusu">Celular</label>
-                <input type="text" class="form-control" name="celusu" id="celusu" 
-                    value="<?php if($dtOne && $dtOne[0]['celusu']) echo $dtOne[0]['celusu']; ?>">
+            <div class="form-group col-md-6">
+                <label for="numdocu"><strong>Nit del Bar</strong></label>
+                <input type="text" name="numdocu" id="numdocu" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne['numdocu']) ? $datOne['numdocu'] : ''; ?>" required>
             </div>
 
-            <!-- Número de identificación -->
-            <div class="form-group col-md-4">
-                <label for="numdocu">Número de identificación</label>
-                <input type="text" class="form-control" name="numdocu" id="numdocu" 
-                    value="<?php if($dtOne && $dtOne[0]['numdocu']) echo $dtOne[0]['numdocu']; ?>">
+
+            <div class="form-group col-md-6">
+                <label for="pssusu"><strong>Contraseña:</strong></label>
+                <input type="password" name="pssusu" id="pssusu" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne['pssusu']) ? $datOne['pssusu'] : ''; ?>" required>
             </div>
 
-            <!-- Cambie esto pero no se si sirva -->
-            <div class="form-group col-md-4">
-                <label for="fotbar">Foto del bar</label>
-                <input type="file" class="form-control form-control" name="fots" accept="image/*" id="fotbar">
-                <input type="hidden" name="fotbar" value="<?php echo isset($datOne[0]['fotbar']) && !empty($datOne[0]['fotbar']) ? $datOne[0]['fotbar'] : ''; ?>">
+            <div class="form-group col-md-6">
+                <label for="codubi"><strong>Ubicación Actual:</strong></label>
+                <select id="codubi" name="codubi" class="form-control">
+                <option value="" disabled selected>Seleccione una ciudad</option>
+                    <?php
+                    if (!empty($dataAll)) {
+                        foreach ($dataAll as $ubicacion) {
+                            $selected = isset($datOne['codubi']) && $datOne['codubi'] == $ubicacion['codubi'] ? 'selected' : '';
+                            echo "<option value='{$ubicacion['codubi']}' $selected>{$ubicacion['nomubi']}</option>";
+                        }
+                    }
+                    ?>
+                </select>
             </div>
 
-            <!-- Contraseña -->
-            <div class="form-group col-md-4">
-                <label for="pssusu">Contraseña</label>
-                <input type="password" class="form-control" name="pssusu" id="pssusu" 
-                    value="<?php if($dtOne && $dtOne[0]['pssusu']) echo $dtOne[0]['pssusu']; ?>">
+
+            <div class="form-group col-md-6">
+                <label for="celusu"><strong>Teléfono del Bar:</strong></label>
+                <input type="number" name="celusu" id="celusu" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne['celusu']) ? $datOne['celusu'] : ''; ?>" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="dircbar"><strong>Direcccion del Bar:</strong></label>
+                <input type="text" name="dircbar" id="dircbar" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne['dircbar']) ? $datOne['dircbar'] : ''; ?>" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="fotiden"><strong>Foto del Bar:</strong></label>
+                <input type="file" class="form-control form-control" name="fots" accept="image/*" id="fotiden">
+                <input type="hidden" name="fotiden" value="<?php if($dtOne && $dtOne['fotiden']) echo $dtOne['fotiden']; ?>">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="nompropi"><strong>Nobre del propietario</strong></label>
+                <input type="text" name="nompropi" id="nompropi" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne['nompropi']) ? $datOne['nompropi'] : ''; ?>" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="horbar"><strong>Horario de Atencion del Bar</strong></label>
+                <input type="text" name="horbar" id="horbar" class="form-control" cursive-label="Default select example" value="<?php echo isset($datOne['horbar']) ? $datOne['horbar'] : ''; ?>" required>
             </div>
 
-            <!-- Botón de envío -->
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
                 <br>
+                <input class="btn btn-outline-warning shadow-sm" type="submit" value="Enviar">
                 <input type="hidden" name="ope" value="save">
-                <input type="hidden" name="idusu" 
-                    value="<?php if($dtOne && $dtOne[0]['idusu']) echo $dtOne[0]['idusu']; ?>" required>
-                <input type="submit" class="btn btn-primary" value="Enviar">
+                <input type="hidden" name="idusu" id="idusu" value="<?php echo isset($datOne['idusu']) ? $datOne['idusu'] : ''; ?>">
             </div>
-        </div>
-    </form>
-</div>
+        </form>
 
-<br>
-
-<!-- Tabla de bares -->
-<table id="example" class="table table-striped" style="width:100%">
-    <thead>
-        <tr>
-            <th>Foto</th>
-            <th>Id</th>
-            <th>Nombres</th>
-            <th>Correo</th>
-            <th>Celular</th>
-            <th>Num. Documento</th>
-            <th>Contraseña</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php if ($dat) {
-            foreach ($dat as $dt) { ?>
+        <br><br><br>
+        <table id="example" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>foto</th>
+                    <th>Id</th>
+                    <th>Información</th>
+                    <th>Ubicacion</th>
+                    <th>Contacto</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>    
+            <tbody>
+                <?php if (isset($dattab) && !empty($dattab)) { foreach ($dattab as $dtb) { ?>
                 <tr>
                     <td>
-                        <?php if (!empty($dt["fotiden"]) && file_exists("img/fotbar/" . $dt["fotiden"])) { ?>
-                            <img src="img/fotbar/<?= $dt["fotiden"]; ?>" width="120px" style="margin-right: 10px;">
-                        <?php } else { ?>
-                            <img src="img/coctelapp/bar1.jpg" width="120px" style="margin-right: 10px;">
-                        <?php } ?>
+                        <div style="display: flex; align-items: center;">
+                            <?php if (!empty($dtb["fotiden"]) && file_exists("img/bares/" . $dtb["fotiden"])) { ?>
+                                <img src="img/bares/<?=$dtb["fotiden"];?>" width="120px" style="margin-right: 10px;">
+                            <?php } else { ?>
+                                
+                            <?php } ?> 
+                            <td><?=$dtb["idusu"];?> </td>
+                            <td>
+                                <div>
+                                    <small>
+                                        <strong>Nombre: </strong><?=$dtb["nomusu"];?><br>
+                                        <strong>Tipo: </strong><?=$dtb["nomval"];?><br> <!--Hay que llamar a nomval, para mostrar si es CC o NIT -->
+                                        <strong>Numero: </strong><?=$dtb["numdocu"];?><br>
+                                    </small>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <small>
+                                        <strong>Ciudad: </strong><?=$dtb["nomubi"];?><br> <!--Hay que llamar a nomval, para mostrar si es CC o NIT -->
+                                        <strong>Dirección: </strong><?=$dtb["dircbar"];?><br>
+                                        <strong>Horario: </strong><?=$dtb["horbar"];?><br>
+                                    </small>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <small>
+                                        <strong>Email: </strong><?=$dtb["emausu"];?><br> <!--Hay que llamar a nomval, para mostrar si es CC o NIT -->
+                                        <strong>Celular: </strong><?=$dtb["celusu"];?><br>
+                                        <strong>Propietario: </strong><?=$dtb["nompropi"];?><br>
+                                    </small>
+                                </div>
+                            </td>
+                        </div>
                     </td>
-                    <td><?= $dt["idusu"]; ?></td>
-                    <td><?= $dt["nomusu"]; ?></td>
-                    <td><?= $dt["emausu"]; ?></td>
-                    <td><?= $dt["celusu"]; ?></td>
-                    <td><?= $dt["numdocu"]; ?></td>
-                    <td><?= $dt["pssusu"]; ?></td>
                     <td>
-                        <a href="home.php?pg=4050&ope=edit&idusu=<?= $dt["idusu"]; ?>" title="Editar">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
-                        <a href="home.php?pg=4050&ope=del&idusu=<?= $dt["idusu"]; ?>" title="Eliminar">
-                            <i class="fa-solid fa-trash"></i>
+                        <?php if($dtb['estado']==1){ ?>
+                                <a href="home.php?pg=<?=$pg;?>&idusu=<?=$dtb['idusu'];?>&ope=acti&estado=2">
+                                    <i class="fa fa-solid fa-circle-check fa-2x"></i>
+                                </a>
+                            <?php }else{ ?>
+                                <a href="home.php?pg=<?=$pg;?>&idusu=<?=$dtb['idusu'];?>&ope=acti&estado=1">
+                                <i class="fa fa-solid fa-circle-xmark fa-2x" style="color: #ff0000;"></i>
+                                </a>
+                            <?php } ?>
+                            <a href="home.php?pg=<?=$pg;?>&idusu=<?=$dtb['idusu'];?>&ope=edi" title="Editar" class="ms-3">
+                            <i class="fa-solid fa-pen-to-square fa"></i>
                         </a>
                     </td>
                 </tr>
-        <?php } } ?>
-    </tbody>
-    <tfoot>
-        <tr>
-            <th>Foto</th>
-            <th>Id</th>
-            <th>Nombres</th>
-            <th>Correo</th>
-            <th>Celular</th>
-            <th>Num. Documento</th>
-            <th>Contraseña</th>
-            <th>Acciones</th>
-        </tr>
-    </tfoot>
-</table>
+                <?php }} ?>
+            </tbody>
+
+            <tfoot>
+            <tr>
+                <th>foto</th>
+                <th>Id</th>
+                <th>Información</th>
+                <th>Ubicacion</th>
+                <th>Contacto</th>
+                <th>Acciones</th>
+            </tr>
+        </tfoot>
+        </table>
+</div>
+<script>
+    function eliminar() {
+        console.log("Intentando eliminar: " + window.location.href);
+        return confirm("¿Estás seguro de que deseas eliminar este Bar?");
+    }
+</script>
+

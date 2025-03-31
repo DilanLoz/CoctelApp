@@ -20,46 +20,54 @@ foreach ($pedidos as $producto) {
     }
     $pedidosAgrupados[$idpedido]['productos'][] = $producto;
 }
-
 ?>
 
 <div class="container mt-4">
     <div class="row">
-    <div class="d-flex justify-content-end mt-4">
-        <button class="btn btn-dark btn-md" onclick="window.location.href='home.php?pg=3030'"><i class="fa-solid fa-headset"></i>
-        </button>
-    </div>
+        <div class="d-flex justify-content-end mt-4">
+            <button class="btn btn-dark btn-md" onclick="window.location.href='home.php?pg=3030'"><i class="fa-solid fa-headset"></i>
+            </button>
+        </div>
         <!-- Columna izquierda: Pedidos sin empleado -->
         <div class="col-md-6 mt-2">
             <div class="border-start border-end border-top border-primary rounded-top p-3 mb-3">
-                <h3 class="text-center text-primary fw-bold"><i class="fa-solid fa-person-walking-arrow-loop-left"></i> Pedidos Sin Empleado</h3>
+                <h3 class="text-center text-primary fw-bold">
+                    <i class="fa-solid fa-person-walking-arrow-loop-left"></i> Pedidos Sin Empleado
+                </h3>
             </div>
+
             <?php foreach ($pedidosAgrupados as $idpedido => $pedido): ?>
                 <?php if ($pedido['productos'][0]['estado_pedido'] == 1): ?>
+                    <?php
+                    $estado = "En preparación";
+                    $claseEstado = 'text-danger bg-danger-subtle';
+                    ?>
                     <div class="p-4 mb-4 shadow-lg bg-white rounded">
-                        <!-- Contenedor flexible: ID + Total a la izquierda | Info del pedido a la derecha -->
                         <div class="d-flex align-items-center">
-                            <!-- ID del pedido y Total -->
                             <div class="me-4 text-center">
-                                <h4 class="fw-bold bg-warning text-dark px-3 py-2 rounded">Pedido No. <?php echo $idpedido; ?></h4>
+                                <h4 class="fw-bold bg-warning text-dark px-3 py-2 rounded">
+                                    Pedido No. <?php echo $idpedido; ?>
+                                </h4>
                                 <div class="text-success fw-bold fs-5 mt-2">
                                     Total: $<?php echo number_format($pedido['productos'][0]['total_pedido'], 2); ?>
                                     <hr class="mt-1 mb-0 border-2 border-success w-50 mx-auto">
-                                    <p class="mb-0 text-primary fs-6"><strong>Estado: <?php echo htmlspecialchars($pedido['estado']); ?></strong></p>
+                                </div>
+                                <div class="mt-2">
+                                    <p class="mb-0 fs-6 p-2 rounded <?php echo $claseEstado; ?>">
+                                        <strong>Estado:</strong> <?php echo $estado; ?>
+                                    </p>
                                 </div>
                             </div>
 
-                            <!-- Información del pedido -->
                             <div class="text-end flex-grow-1">
                                 <p class="mb-1"><strong>Fecha:</strong> <?php echo $pedido['fecha_pedido']; ?></p>
-                                <p class="mb-1"><strong>Empleado:</strong> <?php echo $pedido['nomemp'] ?: 'Pendiente'; ?></p>
                                 <p class="mb-1"><strong>Usuario:</strong> <?php echo $pedido['productos'][0]['nomusu']; ?></p>
-                                <p class="mb-0"><strong>Dirección:</strong> <?php echo htmlspecialchars($pedido['direccion']); ?></p>
-                                <p class="mb-0"><strong>Servicio Bartender: </strong><?php echo htmlspecialchars($pedido['servicio']); ?></p>
+                                <p class="mb-1"><strong>Dirección:</strong> <?php echo htmlspecialchars($pedido['direccion']); ?></p>
+                                <p class="mb-1"><strong>Empleado:</strong> <?php echo $pedido['nomemp'] ?: 'Pendiente'; ?></p>
+                                <p class="mb-1"><strong>Servicio Bartender: </strong><?php echo htmlspecialchars($pedido['servicio']); ?></p>
                             </div>
                         </div>
 
-                        <!-- Lista de productos -->
                         <ul class="list-group mt-3">
                             <?php foreach ($pedido['productos'] as $producto): ?>
                                 <li class="list-group-item d-flex align-items-center">
@@ -87,6 +95,10 @@ foreach ($pedidos as $producto) {
             </div>
             <?php foreach ($pedidosAgrupados as $idpedido => $pedido): ?>
                 <?php if ($pedido['productos'][0]['estado_pedido'] == 2): ?>
+                    <?php
+                    $estado = "En camino";
+                    $claseEstado = 'text-primary bg-primary-subtle';
+                    ?>
                     <div class="p-4 mb-4 shadow-lg bg-white rounded">
                         <!-- Contenedor flexible: ID + Total a la izquierda | Info del pedido a la derecha -->
                         <div class="d-flex align-items-center">
@@ -96,17 +108,21 @@ foreach ($pedidos as $producto) {
                                 <div class="text-success fw-bold fs-5 mt-2">
                                     Total: $<?php echo number_format($pedido['productos'][0]['total_pedido'], 2); ?>
                                     <hr class="mt-1 mb-0 border-2 border-success w-50 mx-auto">
-                                    <p class="mb-0 text-primary fs-6"><strong>Estado: <?php echo htmlspecialchars($pedido['estado']); ?></strong></p>
+                                </div>
+                                <div class="mt-2">
+                                    <p class="mb-0 fs-6 p-2 rounded <?php echo $claseEstado; ?>">
+                                        <strong>Estado:</strong> <?php echo $estado; ?>
+                                    </p>
                                 </div>
                             </div>
 
                             <!-- Información del pedido -->
                             <div class="text-end flex-grow-1">
                                 <p class="mb-1"><strong>Fecha:</strong> <?php echo $pedido['fecha_pedido']; ?></p>
-                                <p class="mb-1"><strong>Empleado:</strong> <?php echo $pedido['nomemp'] ?: 'Pendiente'; ?></p>
                                 <p class="mb-1"><strong>Usuario:</strong> <?php echo $pedido['productos'][0]['nomusu']; ?></p>
-                                <p class="mb-0"><strong>Dirección:</strong> <?php echo htmlspecialchars($pedido['direccion']); ?></p>
-                                <p class="mb-0"><strong>Servicio Bartender: </strong><?php echo htmlspecialchars($pedido['servicio']); ?></p>
+                                <p class="mb-1"><strong>Dirección:</strong> <?php echo htmlspecialchars($pedido['direccion']); ?></p>
+                                <p class="mb-1"><strong>Empleado:</strong> <?php echo $pedido['nomemp'] ?: 'Pendiente'; ?></p>
+                                <p class="mb-1"><strong>Servicio Bartender: </strong><?php echo htmlspecialchars($pedido['servicio']); ?></p>
                             </div>
 
                         </div>
