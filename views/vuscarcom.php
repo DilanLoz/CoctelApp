@@ -72,7 +72,6 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
                     <div class="row align-items-center">
                         <!-- Primera columna: Etiquetas -->
                         <div class="col-12 col-md-4">
-                            <p>Productos:</p>
                             <p>Envío:</p>
                             <p>Total General:</p>
                         </div>
@@ -80,7 +79,6 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
                         <!-- Segunda columna: Valores -->
                         <div class="col-12 col-md-4 text-md-end">
                             <?php foreach ($dtValoresCarrito as $dts) { ?>
-                                <p>$<?= number_format($dts['valor_productos'], 2, ",", ".") ?></p>
                                 <p class="vl-green">Gratis</p>
                             <?php } ?>
                             <?php if (!empty($dtTotCarrito) && is_array($dtTotCarrito)) { ?>
@@ -299,10 +297,7 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
     .bx-seg-dt_fech .subir-boton .btn {
         width: 100%;
     }
-}
-
-    /* 🔹 Solo para móviles (menos de 768px) */
-    @media (max-width: 768px) {
+     @media (max-width: 768px) {
         .counter {
             flex-direction: column;
         }
@@ -340,7 +335,50 @@ include_once(__DIR__ . "/../controllers/ccarped.php"); ?>
         .trash {
             margin-top: 5px;
         }
+
+        .product-item {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .product-item .col-3 {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .product-item .col-6 {
+            text-align: center;
+            width: 100%;
+        }
+
+        .product-item ul {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .product-item ul li {
+            width: 100%;
+        }
+
+        .counter {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .precio-producto {
+            font-size: 16px;
+            margin-left: 10px;
+        }
     }
+}
 </style>
 <script src="js/carrito.js"></script>
 <script src="js/carrito_sum_rest.js"></script>
