@@ -117,7 +117,7 @@ class Mubi {
     }
     public function getCodubiNomubi() {
         try {
-            $sql = "SELECT codubi, nomubi FROM ubicacion";
+            $sql = "SELECT codubi, nomubi FROM ubicacion ORDER BY nomubi ASC";
             $modelo = new conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);

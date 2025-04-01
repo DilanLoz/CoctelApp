@@ -83,7 +83,9 @@ form.sign-up-form {
   opacity: 0;
   pointer-events: none;
 }
-
+.ubi{
+  padding-bottom: -50px;
+}
 .logo {
   display: flex;
   align-items: center;
@@ -246,7 +248,6 @@ label {
 .text a:hover {
   color: #fff;
 }
-
 main.sign-up-mode form.sign-in-form {
   opacity: 0;
   pointer-events: none;
@@ -431,13 +432,24 @@ footer h4 {
 
 /* En pantallas móviles */
 @media (max-width: 768px) {
+  /* Centrar el formulario y ajustarlo */
+  .sign-in-form, .sign-up-form, .recovery-form {
+    margin: 0 auto;
+    padding: 0 15px; /* Añadir algo de espacio a los lados */
+    max-width: 100%; /* Asegura que no se corte en pantallas pequeñas */
+    width: 83%; /* Limitar el ancho al 90% */
+    /* Cambiar el margen para mover el formulario hacia la izquierda */
+    margin-left: 10px; /* Añadir margen izquierdo para moverlo hacia la izquierda */
+  }
+
   /* Redondear las esquinas del contenedor principal del carrusel */
   .container-carousel {
-      height: 217px;
+      height: 200px;
       overflow: hidden;
-      border-radius: 20px; /* Redondea las esquinas del contenedor */
+      border-radius: 100% !important; /* Redondea las esquinas del contenedor */
   }
-  .container-carousel{
+
+  .container-carousel {
     border-radius: 20px !important;
   }
 
@@ -456,8 +468,15 @@ footer h4 {
       border-radius: 20px;
       overflow: hidden;
   }
-}
 
+  /* Ajustar la posición de los íconos */
+  .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
 
 
 

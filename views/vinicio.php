@@ -63,22 +63,47 @@ $datAll = $mbarxprod->getAllProdIni(100, 0); // Cargar todos los productos
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        let offset = 4; // Inicialmente se muestran 8 productos
-        const products = document.querySelectorAll(".product-box");
-        const loadMoreButton = document.getElementById("loadMore");
+document.addEventListener("DOMContentLoaded", function() {
+    let offset = 4; // Inicialmente se muestran 8 productos
+    const products = document.querySelectorAll(".product-box");
+    const loadMoreButton = document.getElementById("loadMore");
+    const modal = document.getElementById("modal-sesion");
+    const closeModal = document.querySelector(".cerrar-modal");
+    const showModalButtons = document.querySelectorAll(".mostrar-modal");
 
-        loadMoreButton.addEventListener("click", function() {
-            let count = 0;
-            for (let i = offset; i < products.length && count < 4; i++, count++) {
-                products[i].style.display = "block"; // Asegura que se muestren los productos ocultos
-            }
-            offset += 4;
-            if (offset >= products.length) {
-                loadMoreButton.style.display = "none"; // Oculta el botón si no hay más productos
-            }
+    // Mostrar productos adicionales al hacer clic en "Ver más"
+    loadMoreButton.addEventListener("click", function() {
+        let count = 0;
+        for (let i = offset; i < products.length && count < 4; i++, count++) {
+            products[i].style.display = "block"; // Asegura que se muestren los productos ocultos
+        }
+        offset += 4;
+        if (offset >= products.length) {
+            loadMoreButton.style.display = "none"; // Oculta el botón si no hay más productos
+        }
+    });
+
+    // Mostrar la modal al hacer clic en los botones de mostrar modal
+    showModalButtons.forEach(button => {
+        button.addEventListener("click", function(event) {
+            event.preventDefault(); // Evita que el enlace navegue
+            modal.style.display = "flex"; // Muestra la modal
         });
     });
+
+    // Cerrar la modal al hacer clic en la "X"
+    closeModal.addEventListener("click", function() {
+        modal.style.display = "none"; // Oculta la modal
+    });
+
+    // Cerrar la modal si se hace clic fuera de ella
+    window.addEventListener("click", function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none"; // Oculta la modal
+        }
+    });
+});
+
 </script>
 
 <style>

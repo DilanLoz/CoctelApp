@@ -26,41 +26,59 @@ include_once('controllers/cpassword.php');
                     <div class="logo">
                         <img src="img/coctelapp/coctelapp.png" alt="Logo" />
                     </div>
-                    <!-- Mostrar mensaje de retroalimentación -->
-                    <?php if (!empty($messageRegistro)): ?>
-                        <div class="alert <?php echo (strpos($messageRegistro, 'exitosamente') !== false) ? 'alert-success' : 'alert-danger'; ?>">
-                            <?php echo $messageRegistro; ?>
-                        </div>
-                    <?php endif; ?>
-
-
-                    <?php if (isset($_GET['err'])): ?>
-                        <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
-                            <i class="fa-solid fa-circle-exclamation"></i>
+                    <!-- Mostrar mensaje de retroalimentación unificado -->
+                    <?php if (!empty($messageRegistro) || isset($_GET['err'])): ?>
+                        <div class="alert 
                             <?php
-                            switch ($_GET['err']) {
-                                case 'recaptcha':
-                                    echo "<strong>Advertencia:</strong> Por favor, complete el reCAPTCHA antes de continuar.";
-                                    break;
-                                case 'invalid':
-                                    echo "<strong>Error:</strong> Datos incorrectos, por favor inténtelo de nuevo.";
-                                    break;
-                                case 'faltan_datos':
-                                    echo "<strong>Error:</strong> Faltan datos en el formulario.";
-                                    break;
-                                default:
-                                    echo "<strong>Error:</strong> Ocurrió un problema, intente nuevamente.";
+                            if (!empty($messageRegistro) && strpos($messageRegistro, 'exitosamente') !== false) {
+                                echo 'alert-success'; // Mensaje de éxito
+                            } elseif (!empty($messageRegistro)) {
+                                echo 'alert-danger'; // Mensaje de error en registro
+                            } elseif (isset($_GET['err'])) {
+                                echo 'alert-warning'; // Advertencias y errores
+                            } ?> alert-dismissible fade show mt-3 position-relative" role="alert">
+
+                            <!-- Botón de cierre en la esquina superior derecha -->
+                            <button type="button" class="btn-close position-absolute top-0 end-0 m-2" data-bs-dismiss="alert" aria-label="Close"></button>
+
+                            <!-- Icono dinámico (Solo se mostrará UNO) -->
+                            <i class="fa-solid 
+                            <?php
+                            if (!empty($messageRegistro) && strpos($messageRegistro, 'exitosamente') !== false) {
+                                echo 'fa-check-circle'; // Icono de éxito
+                            } else {
+                                echo 'fa-circle-exclamation'; // Icono de error/advertencia
+                            } ?> me-2"></i>
+
+                            <!-- Mensaje de alerta -->
+                            <?php
+                            if (!empty($messageRegistro)) {
+                                echo $messageRegistro;
+                            } elseif (isset($_GET['err'])) {
+                                switch ($_GET['err']) {
+                                    case 'recaptcha':
+                                        echo "<strong>Advertencia:</strong> Por favor, complete el reCAPTCHA antes de continuar.";
+                                        break;
+                                    case 'invalid':
+                                        echo "<strong>Error:</strong> Datos incorrectos, por favor inténtelo de nuevo.";
+                                        break;
+                                    case 'faltan_datos':
+                                        echo "<strong>Error:</strong> Faltan datos en el formulario.";
+                                        break;
+                                    default:
+                                        echo "<strong>Error:</strong> Ocurrió un problema, intente nuevamente.";
+                                }
                             }
                             ?>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     <?php endif; ?>
-
                     <div class="heading">
+                        <p class="text fw-bold text-warning fs-7">
+                            <i class="fas fa-map-marker-alt"></i> Por el momento solo operamos en Bogotá.
+                        </p>
                         <h6 class="fw-bold">¿Aún no posee una cuenta?</h6>
                         <a href="#" class="toggle fw-bold">Presione aquí para registrarse.</a>
                     </div>
-
                     <div class="actual-form">
                         <div class="input-wrap">
                             <input type="text" minlength="4" id="email" name="usu" class="input-field" autocomplete="off" required />
@@ -78,16 +96,6 @@ include_once('controllers/cpassword.php');
                         <div class="recaptcha-container mb-3">
                             <div class="g-recaptcha" data-sitekey="6Lcz88sqAAAAAHoXXpy3WpvPQtpfSKGTD9_YfbPm"></div>
                         </div>
-                        <?php
-                        // Mostrar mensaje de error si se reciben parámetros incorrectos
-                        $error = isset($_GET['err']) ? $_GET['err'] : NULL;
-                        if ($error === 'invalid'): ?>
-                            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                                <i class="fa-solid fa-circle-exclamation"></i>
-                                <strong>Error:</strong> Datos incorrectos, por favor inténtelo de nuevo.
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        <?php endif; ?>
                         <input type="submit" value="Iniciar Sesión" class="sign-btn" />
                         <p class="text fw-bold">
                             ¿Ha olvidado su contraseña?
