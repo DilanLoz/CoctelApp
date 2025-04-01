@@ -178,10 +178,26 @@ public function edit() {
     }
     public function getAllBar() {
         try {
-            $sql = "SELECT idbar, nombar, nompropi, nit, emabar, telbar, pssbar, dircbar, horbar, fotbar, codubi, idper, idval 
-                    FROM bar 
-                    WHERE estado = 1
+            $sql = "SELECT 
+                        b.idbar, 
+                        b.nombar, 
+                        b.nompropi, 
+                        b.nit, 
+                        b.emabar, 
+                        b.telbar, 
+                        b.pssbar, 
+                        b.dircbar, 
+                        b.horbar, 
+                        b.fotbar, 
+                        b.codubi, 
+                        u.nomubi, 
+                        b.idper, 
+                        b.idval 
+                    FROM bar b
+                    INNER JOIN ubicacion u ON b.codubi = u.codubi  -- Relación con la tabla ubicacion
+                    WHERE b.estado = 1
                     ORDER BY RAND()";
+    
             $modelo = new conexion();
             $conexion = $modelo->get_conexion();
             $result = $conexion->prepare($sql);
@@ -191,6 +207,7 @@ public function edit() {
             echo "Error: " . $e->getMessage();
         }
     }
+    
     
     
 

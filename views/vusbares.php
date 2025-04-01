@@ -30,6 +30,7 @@ $datAllBar = $mpbar->getAllBar(); // Obtener todos los bares
                 <div class="text-center mt-2">
                     <small>
                         <strong class="fs-5"><?php echo $dtu['nombar']; ?></strong><br>
+                        <strong>Ubicación: </strong><?php echo $dtu['nomubi']; ?><br>
                         <strong>Dirección: </strong><?php echo $dtu['dircbar']; ?><br>
                         <strong>Horario: </strong><?php echo $dtu['horbar']; ?><br>
                     </small>

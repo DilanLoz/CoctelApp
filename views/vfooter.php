@@ -29,8 +29,15 @@
         </div>
     </div>
     </div>
+    <div style="text-align: center;">
+        <p style="color: gray; width: 70%; font-style: italic; margin: 0 auto;">
+            El exceso de alcohol es perjudicial para la salud. Ley 30 de 1986.
+            Prohíbase el expendio de bebidas embriagantes a menores de edad y mujeres embarazadas. Ley 124 de 1994.
+        </p>
+    </div>
     <!-- Texto de derechos reservados centrado -->
     <div class="text-center text-white py-3">
         &copy; 2025 Derechos reservados CoctelApp
     </div>
+
 </footer>

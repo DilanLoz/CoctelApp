@@ -73,7 +73,7 @@ include_once('controllers/cpassword.php');
                         </div>
                     <?php endif; ?>
                     <div class="heading">
-                        <p class="text fw-bold text-warning fs-7">
+                        <p class="text fw-bold text-white fs-7">
                             <i class="fas fa-map-marker-alt"></i> Por el momento solo operamos en Bogotá.
                         </p>
                         <h6 class="fw-bold">¿Aún no posee una cuenta?</h6>
