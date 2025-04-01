@@ -16,7 +16,7 @@
                 <img src="img/coctelapp/coctelapp.png" class="img-fluid mb-3 mt-2" alt="coctel" height="160px" width="160px">
             </div>
             <div class="col-md-4 mb-4 mt-5">
-                <<div class="col-md">
+                <div class="col-md">
                     <div class="info-section float-end">
                         <h4>Nuestra Información</h4>
                         <div class="col-md-12 border border-warning border-1 rounded-3 mb-3"></div>
@@ -35,7 +35,6 @@
             Prohíbase el expendio de bebidas embriagantes a menores de edad y mujeres embarazadas. Ley 124 de 1994.
         </p>
     </div>
-    <!-- Texto de derechos reservados centrado -->
     <div class="text-center text-white py-3">
         &copy; 2025 Derechos reservados CoctelApp
     </div>
