@@ -2,8 +2,9 @@
 $idper = isset($_SESSION['idper']) ? $_SESSION['idper'] : null;
 ?>
 
-<a id="logo-navegacion" target="_blank">
+<a id="logo-navegacion" href="<?php echo ($idper == 10) ? 'home.php?pg=1015' : (($idper == 20) ? 'home.php?pg=2001' : (($idper == 30) ? 'home.php?pg=3001' : '#')); ?>">
     <img src="img/coctelapp/logo.png" id="logococtelapp">
+    
     <?php if ($idper == 20 || $idper == 30) : ?>
         <img src="img/coctelapp/CoctelApp1.png" style="width: 90px; height: auto;">
     <?php endif; ?>

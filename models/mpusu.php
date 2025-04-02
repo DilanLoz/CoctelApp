@@ -281,7 +281,7 @@ WHERE u.idusu = :idusu;";
 
         if ($res) {
             // Modificamos el array para que siempre tenga la ruta de la imagen correcta
-            $res['fotiden'] = !empty($res['fotiden']) ? 'img/usuarios/' . $res['fotiden'] : 'img/usuarios/default.png';
+            $res['fotiden'] = !empty($res['fotiden']) ? 'img/bares/' . $res['fotiden'] : 'img/bares/default.png';
 
             error_log("Datos del usuario recuperados: " . json_encode($res));
         } else {

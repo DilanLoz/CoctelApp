@@ -4,7 +4,7 @@ $pg = isset($_GET["pg"]) ? $_GET["pg"] : NULL;
 
 <div id="contenedor-barra">
     <div>
-        <a id="logo-navegacion" target="_blank">
+        <a id="logo-navegacion"  href="index.php?pg=1002">
             <img src="img/coctelapp/logo.png" id="logococtelapp">
             <img src="img/coctelapp/CoctelApp1.png" style="width: 90px; height: auto;">
         </a>
