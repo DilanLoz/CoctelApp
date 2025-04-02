@@ -432,15 +432,22 @@ footer h4 {
 
 /* En pantallas móviles */
 @media (max-width: 768px) {
-  /* Centrar el formulario y ajustarlo */
-  .sign-in-form, .sign-up-form, .recovery-form {
+   /* Centrar el formulario */
+   .form-container { /* Asegúrate de que este div envuelve el formulario */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+  }
+
+   .sign-in-form, .sign-up-form, .recovery-form {
     margin: 0 auto;
     padding: 0 15px; /* Añadir algo de espacio a los lados */
     max-width: 100%; /* Asegura que no se corte en pantallas pequeñas */
-    width: 83%; /* Limitar el ancho al 90% */
-    /* Cambiar el margen para mover el formulario hacia la izquierda */
+    width: 85%; /* Limitar el ancho al 90% */
     margin-left: 10px; /* Añadir margen izquierdo para moverlo hacia la izquierda */
   }
+
 
   /* Redondear las esquinas del contenedor principal del carrusel */
   .container-carousel {

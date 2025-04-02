@@ -2,24 +2,35 @@
 $idper = isset($_SESSION['idper']) ? $_SESSION['idper'] : null;
 ?>
 
-<a id="logo-navegacion" href="<?php echo ($idper == 10) ? 'home.php?pg=1015' : (($idper == 20) ? 'home.php?pg=2001' : (($idper == 30) ? 'home.php?pg=3001' : '#')); ?>">
-    <img src="img/coctelapp/logo.png" id="logococtelapp">
-    
+<div class="contenedor-nav">
+    <!-- Logo con enlace -->
+    <a id="logo-navegacion" href="<?php echo ($idper == 10) ? 'home.php?pg=1015' : (($idper == 20) ? 'home.php?pg=2001' : (($idper == 30) ? 'home.php?pg=3001' : '#')); ?>">
+        <img src="img/coctelapp/logo.png" id="logococtelapp">
+    </a>
+
+    <!-- Imágenes adicionales (fuera del <a> pero alineadas) -->
     <?php if ($idper == 20 || $idper == 30) : ?>
-        <img src="img/coctelapp/CoctelApp1.png" style="width: 90px; height: auto;">
+        <img src="img/coctelapp/CoctelApp1.png" class="img-adicional">
     <?php endif; ?>
 
-    <!-- Mostrar barra de búsqueda solo si idper es 10 -->
+    <!-- Barra de búsqueda solo si idper es 10 -->
     <?php if ($idper == 10): ?>
         <div class="barra-busqueda">
-            <input type="search" name="query" id="search-input" placeholder="Buscar productos...">
+            <input type="search" name="query" id="search-input" placeholder="Buscar...">
             <button type="button" id="boton-buscar">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
         </div>
         <div id="search-results"></div>
     <?php endif; ?>
-</a>
+</div>
+<style>
+.contenedor-nav {
+    display: flex;
+    align-items: center; /* Alinea verticalmente */
+    gap: 10px; /* Espacio entre elementos */
+}
+</style>
 
 <script>
 function setupSearch() {
