@@ -69,13 +69,21 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
 
                                     <!-- Empleado asignado -->
                                     <div class="d-flex align-items-center mb-3">
-                                        <img src="img/empleados/<?= htmlspecialchars($pedido['fotiden'] ?: 'default.jpg'); ?>"
+                                        <img src="img/empleados/<?= htmlspecialchars($pedido['fotiden'] ?: 'sinempleado.jpeg'); ?>"
                                             class="rounded-circle me-3"
                                             style="width: 50px; height: 50px; object-fit: cover;"
-                                            alt="Foto del Empleado">
+                                            alt="Foto del Empleado"
+                                            onerror="this.onerror=null; this.src='img/empleados/sinempleado.jpeg';">
                                         <div>
                                             <p class="mb-0"><strong>Empleado asignado:</strong> <?= $pedido['nomemp'] ?: 'Pendiente' ?></p>
-                                            <p class="mb-0"><strong>Teléfono:</strong> <?= $pedido['celemp'] ?: 'No disponible' ?></p>
+                                            <p class="mb-0">
+                                                <strong>Teléfono:</strong>
+                                                <span id="telefono-<?= $pedido['idpedido'] ?>"><?= $pedido['celemp'] ?: 'No disponible' ?></span>
+                                                <?php if (!empty($pedido['celemp'])): ?>
+                                                    <i class="fa-solid fa-copy text-primary ms-2" style="cursor: pointer;"
+                                                        onclick="copiarAlPortapapeles('telefono-<?= $pedido['idpedido'] ?>')"></i>
+                                                <?php endif; ?>
+                                            </p>
                                         </div>
                                     </div>
 
@@ -182,13 +190,16 @@ $facturas = $facturaModel->getHistorialPedidos($idusu) ?? []; // Obtener factura
 
     /* Verde claro */
 </style>
-
-<!-- Script para marcar la fila -->
 <script>
-    document.querySelectorAll(".select-row").forEach(button => {
-        button.addEventListener("click", function() {
-            let row = this.closest("tr");
-            row.classList.toggle("selected");
+    function copiarAlPortapapeles(id) {
+        const elemento = document.getElementById(id);
+        if (!elemento) return;
+
+        const texto = elemento.innerText || elemento.textContent;
+        navigator.clipboard.writeText(texto).then(() => {
+            alert("Número copiado: " + texto);
+        }).catch(err => {
+            console.error("Error al copiar: ", err);
         });
-    });
+    }
 </script>
