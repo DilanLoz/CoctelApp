@@ -30,8 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'coctelapp.info@gmail.com';
-            $mail->Password = 'nqme fzom dbic opmq'; // Usa una contraseña de aplicación
+            $mail->Username = 'xxxxxx';
+            $mail->Password = 'xxxxx'; // Usa una contraseña de aplicación
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
